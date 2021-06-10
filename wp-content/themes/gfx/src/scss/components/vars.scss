@@ -22,9 +22,11 @@ $font-size-md:               14px;
 $font-size-lg:               18px;
 $font-size-xl:               20px;
 
+$helvetica-now-display: 'HelveticaNowDisplay', sans-serif;
+
 $line-height:                1.4;
 
-$font-family-base:           Arial, sans-serif;
+$font-family-base:           $helvetica-now-display;
 
 $light:                      300;
 $regular:                    400;
@@ -34,7 +36,14 @@ $black:                      900;
 
 //COLORS
 $white:                    #fff;
+$semi-white:               #fbfbfb;
 $black:                    #000;
+$grey:                     #091220;
+$red:                      #ff0036;
+$blue:                     #121d2f;
+$dark-blue:                #050913;
+$light-blue:               #0f94f1;
+$submenu-blue-bg:          #0f223f;
 
 //BASE
 $transition:              0.35s;

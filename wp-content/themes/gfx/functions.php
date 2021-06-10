@@ -12,26 +12,12 @@ function inclusion_enqueue() {
 }
 add_action('wp_enqueue_scripts', 'inclusion_enqueue');
 
-// Add Page Options
-if (function_exists('acf_add_options_page')) {
-	acf_add_options_page(
-		[
-			'page_title' 	=> 'Options',
-			'menu_title'	=> 'Options',
-			'menu_slug' 	=> 'options',
-			'capability'	=> 'edit_posts',
-			'redirect'		=> false
-		]
-	);
+add_theme_support('post-thumbnails');
+
+if ( function_exists( 'add_image_size' ) ) {
+    add_image_size( 'logo', 60, 45 );
 }
 
-add_theme_support('post-thumbnails');
-// add_image_size('full-width', 1920);
-
-// Register menu
-register_nav_menus(
-	[
-		'header_menu'	=> 'Header Menu',
-		'footer_menu'	=> 'Footer Menu'
-	]
-);
+include_once('includes/menus.php');
+include_once('includes/acf.php');
+include_once('includes/theme-functions.php');
