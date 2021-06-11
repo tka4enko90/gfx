@@ -34,6 +34,17 @@
 		}
 	});
 
+	// close sub-menu on click not in sub-menus area
+	$(document).mouseup(function (e){
+		if($(window).width() > 960) {
+			var div = $('.header .menu-holder > ul > li.menu-item-has-children > a').next('.sub-menu');
+			if (!div.is(e.target)
+				&& div.has(e.target).length === 0) {
+				div.fadeOut(100);
+			}
+		}
+	});
+
 	// show mobile menu on click
 	$('.header .burger-btn').on('click', function () {
 		$('.header .menu-holder').slideToggle(200);

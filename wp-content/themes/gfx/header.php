@@ -57,19 +57,21 @@
 
                 <?php if (has_nav_menu('header_menu')) : ?>
                     <div class="menu-holder">
-                        <?php wp_nav_menu(['theme_location' => 'header_menu', 'menu' => 16, 'container' => '']); ?>
+                        <?php wp_nav_menu(['theme_location' => 'header_menu', 'container' => '']); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (has_nav_menu('login_menu')) : ?>
                     <div class="login-menu-holder">
-                        <?php wp_nav_menu(['theme_location' => 'login_menu', 'menu' => 19, 'container' => '']); ?>
+                        <?php wp_nav_menu(['theme_location' => 'login_menu', 'container' => '']); ?>
                     </div>
                 <?php endif; ?>
 
-                <button class="burger-btn">
-                    <img src="<?php echo get_template_directory_uri() ?>/static/img/menu-icon.svg" alt="menu icon">
-                </button>
+                <?php if (has_nav_menu('header_menu')) : ?>
+                    <button class="burger-btn">
+                        <img src="<?php echo get_template_directory_uri() ?>/static/img/menu-icon.svg" alt="menu icon">
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
     </header>

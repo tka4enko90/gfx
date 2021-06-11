@@ -1,0 +1,142 @@
+.footer {
+  & > .main-block {
+    background-color: $footer-bg;
+    padding: 80px 0 120px;
+
+    @media (max-width: $sm) {
+      padding: 60px 0;
+    }
+
+
+
+    .inner {
+      display: flex;
+
+      @media (max-width: $md) {
+        flex-direction: column;
+      }
+    }
+
+    .logo-holder {
+
+      @media (max-width: $md) {
+        margin-bottom: 40px;
+      }
+
+      & > a {
+        display: flex;
+        align-items: center;
+        color: $white;
+        font-size: 34px;
+        font-family: $helvetica-now-display;
+        font-weight: bold;
+
+        @media (max-width: $sm) {
+          font-size: 30px;
+        }
+
+        span {
+          display: block;
+          line-height: 44px;
+
+          &.red {
+            color: $red;
+          }
+        }
+      }
+    }
+
+    .menu-holder {
+      font-family: $helvetica-now-display;
+      font-weight: normal;
+      width: 100%;
+      max-width: 1100px;
+      padding-left: 200px;
+      padding-top: 15px;
+
+      @media (max-width: $lg) {
+        padding-left: 100px;
+      }
+
+      @media (max-width: $md) {
+        padding: 0;
+      }
+
+      & > ul {
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: $sm) {
+          flex-wrap: wrap;
+          & > li {
+            margin-bottom: 40px;
+            flex: 1 1 50%;
+          }
+        }
+
+        @media (max-width: $xs) {
+          & > li {
+            flex: 1 1 100%;
+          }
+        }
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          list-style-type: none;
+          padding: 0;
+
+          &.not-a-link {
+            font-size: 16px;
+
+            & > a {
+              color: $red;
+              font-weight: bold;
+              margin-bottom: 25px;
+            }
+          }
+        }
+      }
+
+      & > ul {
+        display: flex;
+      }
+
+      .sub-menu {
+        li {
+          margin-bottom: 20px;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          a {
+            color: $white;
+
+            &:hover {
+              color: silver;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & > .copyrights-block {
+    background-color: $dark-blue;
+    padding: 29px 0;
+    font-weight: normal;
+
+    .copyright-text {
+      font-size: 12px;
+      color: #576479;
+      line-height: 1.194;
+    }
+  }
+
+  .container {
+    max-width: 1750px;
+  }
+}
