@@ -1,38 +1,31 @@
 // GRID
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-);
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px
-);
+//$grid-breakpoints: (
+//  xs: 0,
+//  sm: 576px,
+//  md: 768px,
+//  lg: 992px,
+//  xl: 1200px
+//);
+//$container-max-widths: (
+//  sm: 540px,
+//  md: 720px,
+//  lg: 960px,
+//  xl: 1140px
+//);
 
-$grid-gutter-width:  20px;
+$xs: 540px;
+$sm: 769px;
+$md: 960px;
+$lg: 1140px;
 
 // FONTS
-$font-size-base:             1rem;
-$font-size-sm:               12px;
-$font-size-md:               14px;
-$font-size-lg:               18px;
-$font-size-xl:               20px;
+$font-size-base:               18px;
 
-$helvetica-now-display: 'HelveticaNowDisplay', sans-serif;
+$helvetica-now-display:        'HelveticaNowDisplay', sans-serif;
 
 $line-height:                1.4;
 
 $font-family-base:           $helvetica-now-display;
-
-$light:                      300;
-$regular:                    400;
-$medium:                     500;
-$bold:                       700;
-$black:                      900;
 
 //COLORS
 $white:                    #fff;
@@ -44,8 +37,8 @@ $blue:                     #121d2f;
 $dark-blue:                #050913;
 $light-blue:               #0f94f1;
 $submenu-blue-bg:          #0f223f;
+$dark:                     #07101d;
 
 //BASE
-$transition:              0.35s;
-$border-radius:           8px;
+$transition:               0.2s;
 

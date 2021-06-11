@@ -4,16 +4,23 @@ html, body {
 }
 
 body {
+    padding: 0;
+    margin: 0;
     font-family: $font-family-base;
     font-size: $font-size-base;
     line-height: $line-height;
-    color: $dark;
+    color: $white;
     min-width: 300px;
     position: relative;
-    background-color: $white;
+    background-color: $dark;
     display: flex;
     height: auto;
     background-image: url("../img/bg.png");
+}
+
+.container {
+    max-width: 1510px;
+    padding: 0 15px;
 }
 
 img {
@@ -70,7 +77,8 @@ img.alignright, .wp-caption.alignright {
     font-family: $font-family-base;
     font-size: 18px;
 }
-@include media-breakpoint-down(xs) {
+
+@media (max-width: $xs) {
     img.alignleft, .wp-caption.alignleft {
         float: none;
         margin-right: 0;

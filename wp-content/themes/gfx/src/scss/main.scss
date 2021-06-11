@@ -1,14 +1,15 @@
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/mixins";
-@import "../../node_modules/bootstrap/scss/reboot";
-@import "../../node_modules/bootstrap/scss/transitions";
+//@import "../../node_modules/bootstrap/scss/functions";
+//@import "../../node_modules/bootstrap/scss/variables";
+//@import "../../node_modules/bootstrap/scss/mixins";
+//@import "../../node_modules/bootstrap/scss/reboot";
+//@import "../../node_modules/bootstrap/scss/transitions";
 
 @import 'components/fonts.scss';
 @import 'components/vars.scss';
 @import 'components/base.scss';
 @import 'components/grid.scss';
 @import 'components/typography.scss';
+@import 'components/button.scss';
 
 @import 'components/header.scss';
 @import 'components/footer.scss';
