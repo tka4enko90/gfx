@@ -1,6 +1,16 @@
 (function($){
     'use strict';
 
+    // add sticky class for header after scroll
+	$(window).on('scroll', function () {
+		var scrollTop = $(document).scrollTop();
+		if(scrollTop > 20 ){
+			$('.header').addClass('sticky');
+		} else {
+			$('.header').removeClass('sticky');
+		}
+	});
+
     // preventDefault for not a link link menu
     $('.not-a-link > a').on('click', function (e) {
 		e.preventDefault();

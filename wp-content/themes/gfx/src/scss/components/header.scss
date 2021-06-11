@@ -1,8 +1,16 @@
 .header {
   padding: 24px 0;
+  position: fixed;
+  width: 100%;
+  background-color: rgba(0,0,0,0);
+  transition: background-color.1s;
 
   @media (max-width: $sm) {
     padding: 15px 0;
+  }
+
+  &.sticky {
+    background-color: #070f1c;
   }
 
   & > .container {
