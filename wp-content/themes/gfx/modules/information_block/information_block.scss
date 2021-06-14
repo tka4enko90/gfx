@@ -1,0 +1,158 @@
+@import '../../src/scss/components/vars';
+
+.information-block {
+  background-color: rgba($dark-blue, 0.8);
+  padding: 100px 0;
+
+  @media (max-width: $sm) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .section-holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+      padding: 0 80px;
+    }
+
+    @media (max-width: $sm) {
+      padding: 0 40px;
+    }
+
+    @media (max-width: $xs) {
+      padding: 0 20px;
+    }
+
+    @media (max-width: $xxs) {
+      padding: 0;
+    }
+
+    &.right {
+      flex-direction: row-reverse;
+
+      @media (max-width: $md) {
+        flex-direction: column-reverse;
+      }
+
+      .content-holder {
+        max-width: 563px;
+
+        .block-content {
+          max-width: 100%;
+        }
+      }
+
+      .image-holder {
+        margin-left: 0;
+        margin-right: 40px;
+
+        @media (max-width: $md) {
+          margin: 0 0 60px 0;
+        }
+
+        @media (max-width: $sm) {
+          margin: 0 0 50px 0;
+        }
+      }
+    }
+  }
+
+  .content-holder {
+    width: 100%;
+    max-width: 485px;
+
+    & > h3 {
+      margin-bottom: 40px;
+
+      @media (max-width: $sm) {
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .block-content {
+      max-width: 420px;
+      font-size: 18px;
+      color: $text-color;
+      line-height: 1.389;
+
+      @media (max-width: $xs) {
+        font-size: 16px;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      ul {
+        padding: 0;
+        margin: 35px 0;
+
+        @media (max-width: $xs) {
+          margin: 20px 0;
+        }
+
+        li {
+          color: $text-color-light;
+          list-style-type: none;
+          position: relative;
+          padding-left: 15px;
+          margin-bottom: 10px;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          &::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: $red;
+          }
+        }
+      }
+    }
+
+    .primary-button {
+      margin-top: 50px;
+
+      @media (max-width: $sm) {
+        margin-top: 30px;
+      }
+
+      @media (max-width: $xs) {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .image-holder {
+    margin-left: 40px;
+    max-width: 580px;
+
+    @media (max-width: $md) {
+      margin-left: 0;
+      margin-top: 60px;
+    }
+
+    @media (max-width: $sm) {
+      margin-top: 50px;
+    }
+
+    img {
+      display: block;
+    }
+  }
+}

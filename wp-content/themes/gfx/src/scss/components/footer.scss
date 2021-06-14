@@ -1,6 +1,6 @@
 .footer {
   & > .main-block {
-    background-color: $footer-bg;
+    background-color: rgba($dark-blue, 0.8);
     padding: 80px 0 120px;
 
     @media (max-width: $sm) {

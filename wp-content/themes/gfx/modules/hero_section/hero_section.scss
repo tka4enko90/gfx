@@ -1,0 +1,153 @@
+@import '../../src/scss/components/vars';
+
+.hero-section {
+  padding: 130px 0;
+
+  @media (max-width: $md) {
+    padding: 100px 0;
+  }
+
+  @media (max-width: $sm) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .section-holder {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+    }
+  }
+
+  .content-col {
+    margin-right: 122px;
+    max-width: 680px;
+
+    @media (max-width: $lg) {
+      margin-right: 80px;
+    }
+
+    @media (max-width: $md) {
+      margin-right: 0;
+    }
+
+    .subtitle {
+      margin-bottom: 45px;
+      font-size: 14px;
+      color: rgb(85, 98, 120);
+
+      @media (max-width: $sm) {
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 20px;
+      }
+
+      p {
+        line-height: 1.391;
+        margin: 0;
+      }
+
+      a {
+        color: $white;
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+
+    .title {
+      h1 {
+        font-weight: bold;
+        margin-bottom: 50px;
+
+        @media (max-width: $sm) {
+          margin-bottom: 40px;
+        }
+
+        @media (max-width: $xs) {
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+
+  .video-col {
+    width: 100%;
+    max-width: 644px;
+    height: 362px;
+    position: relative;
+
+    @media (max-width: $md) {
+      margin-top: 60px;
+    }
+
+    @media (max-width: $xs) {
+      margin-top: 40px;
+      height: 300px;
+      display: none;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .element {
+      position: absolute;
+
+      @media (max-width: $xs) {
+        display: none;
+      }
+
+      &:nth-child(1) {
+        top: 34px;
+        left: -30px;
+        width: 73px;
+        height: 108px;
+
+        @media (max-width: $md) {
+          left: -10px;
+        }
+      }
+
+      &:nth-child(2) {
+        bottom: -42px;
+        left: 112px;
+        width: 94px;
+        height: 108px;
+      }
+
+      &:nth-child(3) {
+        right: -20px;
+        top: 30px;
+        width: 47px;
+        height: 61px;
+
+        @media (max-width: $md) {
+          right: -10px;
+        }
+      }
+
+      &:nth-child(4) {
+        right: -43px;
+        bottom: 105px;
+        width: 33px;
+        height: 48px;
+
+        @media (max-width: $md) {
+          right: -10px;
+        }
+      }
+    }
+  }
+
+}

@@ -47,7 +47,7 @@
                 <div class="logo-holder">
                     <a href="<?php echo get_home_url(); ?>">
                         <?php $header_logo = get_field('header_logo', 'option');
-                        if ($header_logo) : ?>
+                        if ($header_logo['url']) : ?>
                             <img src="<?php echo $header_logo['url']; ?>" alt="logo icon">
                         <?php endif; ?>
                         <span>Premade</span>

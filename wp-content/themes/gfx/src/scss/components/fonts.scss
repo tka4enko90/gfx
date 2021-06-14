@@ -9,6 +9,15 @@
 
 @font-face {
   font-family: 'HelveticaNowDisplay';
+  src: url('../fonts/HelveticaNowDisplay-Medium.woff2') format('woff2'),
+  url('../fonts/HelveticaNowDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HelveticaNowDisplay';
   src: url('../fonts/HelveticaNowDisplay-Bold.woff2') format('woff2'),
   url('../fonts/HelveticaNowDisplay-Bold.woff') format('woff');
   font-weight: bold;

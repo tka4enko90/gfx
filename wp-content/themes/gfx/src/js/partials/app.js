@@ -17,13 +17,13 @@
 	});
 
     // show submenu on click
-	$('li.menu-item-has-children > a').on('click', function (e) {
+	$('.header li.menu-item-has-children > a').on('click', function (e) {
 		e.preventDefault();
 
 		var subMenu = $(this).next('.sub-menu');
-		var subMenus = $('.menu > li.menu-item-has-children > .sub-menu');
-		var links = $('li.menu-item-has-children > a');
-		var listItems = $('li.menu-item-has-children');
+		var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
+		var links = $('.header li.menu-item-has-children > a');
+		var listItems = $('.header li.menu-item-has-children');
 
 		if($(window).width() > 960) {
 			subMenus.fadeOut(100);

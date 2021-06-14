@@ -10,3 +10,24 @@ button {
   width: 25px;
   height: 25px;
 }
+
+.primary-button {
+  border-radius: 10px;
+  background-color: $red;
+  color: $white;
+  font-size: 16px;
+  font-family: $helvetica-now-display;
+  font-weight: bold;
+  line-height: 1;
+  padding: 14px 31px;
+  box-shadow: 0px 0px 15px 1px rgba($red, 0);
+  transition: box-shadow $transition;
+
+  @media (max-width: $xs) {
+    padding: 12px 25px;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 15px 1px rgba($red, 0.5);
+  }
+}
