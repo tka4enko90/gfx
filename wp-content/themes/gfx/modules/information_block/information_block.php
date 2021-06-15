@@ -3,7 +3,7 @@
 <?php $information_block_title = get_sub_field('information_block_title'); ?>
 <?php $information_block_content = get_sub_field('information_block_content'); ?>
 <?php $information_block_button = get_sub_field('information_block_button'); ?>
-<?php $information_block_image = get_sub_field('information_block_image'); ?>
+<?php $information_block_image_id = get_sub_field('information_block_image'); ?>
 <?php $information_block_content_position = get_sub_field('information_block_content_position'); ?>
 
 <div class="information-block">
@@ -26,9 +26,9 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-            <?php if ($information_block_image) : ?>
+            <?php if ($information_block_image_id) : ?>
                 <div class="image-holder">
-                    <img src="<?php echo $information_block_image['url']; ?>" alt="<?php echo $information_block_image['title']; ?>">
+                    <?php echo wp_get_attachment_image( $information_block_image_id, 'gfx_medium' ); ?>
                 </div>
             <?php endif; ?>
         </div>

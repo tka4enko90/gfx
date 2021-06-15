@@ -29,15 +29,18 @@
                 <div class="products-holder">
                     <?php foreach ($products as $item) :
                         $id = $item->ID;
-                        $product = wc_get_product($id);
-                        $product_price = $product->get_price();
-                        ?>
+                        if ($id) : $product = wc_get_product($id); endif;
+                        if (isset($product) && $product instanceof WC_Product) :
+                            $product_price = $product->get_price();
+                        endif; ?>
                         <div class="product-card">
-                            <div class="thumbnail">
-                                <?php echo get_the_post_thumbnail($id, 'gfx_semi_medium'); ?>
-                            </div>
+                            <?php if ($id) : ?>
+                                <div class="thumbnail">
+                                    <?php echo get_the_post_thumbnail($id, 'gfx_semi_medium'); ?>
+                                </div>
+                            <?php endif; ?>
                             <div class="title"><?php echo $item->post_title; ?></div>
-                            <?php if ($product_price) : ?>
+                            <?php if (isset($product_price)) : ?>
                                 <div class="price">
                                     <?php echo wc_price($product_price); ?>
                                 </div>

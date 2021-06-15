@@ -9,12 +9,19 @@
     <div class="main-block">
         <div class="container">
             <div class="inner">
-                <div class="logo-holder">
-                    <a href="<?php echo get_home_url(); ?>">
-                        <span>Premade</span>
-                        <span class="red">GFX</span>
-                    </a>
-                </div>
+                <?php
+                $logo_first = get_field('logo_first', 'option');
+                $logo_second = get_field('logo_second', 'option'); ?>
+
+                <?php if ($logo_first || $logo_second) : ?>
+                    <div class="logo-holder">
+                        <a href="<?php echo home_url(); ?>">
+                            <?php if ($logo_first) : ?><span><?php echo $logo_first; ?></span><?php endif; ?>
+                            <?php if ($logo_first) : ?><span
+                                    class="red"><?php echo $logo_second; ?></span><?php endif; ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
 
                 <?php if (has_nav_menu('footer_menu')) : ?>
                     <div class="menu-holder">

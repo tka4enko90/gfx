@@ -295,6 +295,7 @@
     }
 
     @media (max-width: $md) {
+      overflow: auto;
       display: none;
       position: absolute;
       top: 85px;
@@ -302,10 +303,13 @@
       background-color: $submenu-blue-bg;
       width: 100%;
       margin: 0;
+      height: calc(100vh - 85px);
+      padding-bottom: 8 0px;
     }
 
     @media (max-width: $sm) {
       top: 70px;
+      height: calc(100vh - 70px);
     }
 
     & > ul {
@@ -371,7 +375,7 @@
     display: none;
 
     @media (max-width: $md) {
-      display: block;
+      display: flex;
       margin-left: 24px;
     }
 

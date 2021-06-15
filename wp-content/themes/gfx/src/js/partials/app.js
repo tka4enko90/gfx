@@ -57,7 +57,16 @@
 
 	// show mobile menu on click
 	$('.header .burger-btn').on('click', function () {
-		$('.header .menu-holder').slideToggle(200);
+		var menu = $('.header .menu-holder');
+
+		if(menu.is(':visible')) {
+			$('body').css('overflow', 'auto');
+		} else {
+			$('body').css('overflow', 'hidden');
+		}
+
+		$(this).toggleClass('active');
+		menu.slideToggle(200);
 	});
 
 	$(function() {
