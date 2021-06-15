@@ -269,6 +269,93 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_60c87233ceb58": {
+                    "key": "layout_60c87233ceb58",
+                    "name": "join_server",
+                    "label": "Join server",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60c87342ceb5a",
+                            "label": "Title",
+                            "name": "join_server_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_60c87245ceb59",
+                            "label": "Image",
+                            "name": "join_server_image",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "30",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "id",
+                            "preview_size": "gfx_small",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": ""
+                        },
+                        {
+                            "key": "field_60c87347ceb5b",
+                            "label": "Subtitle",
+                            "name": "join_server_subtitle",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_60c8734dceb5c",
+                            "label": "Button",
+                            "name": "join_server_button",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Row",
@@ -293,5 +380,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1623745529
+    "modified": 1623750602
 }
