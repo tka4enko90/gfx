@@ -15,10 +15,6 @@
     <meta content="telephone=no" name="format-detection"/>
     <meta name="HandheldFriendly" content="true"/>
 
-    <title>
-        <?php wp_title('|', true, 'right'); ?>
-    </title>
-
     <!-- FAVICON -->
     <!-- /FAVICON -->
 

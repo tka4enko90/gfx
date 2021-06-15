@@ -132,7 +132,7 @@
         width: 47px;
         height: 61px;
 
-        @media (max-width: $md) {
+        @media (max-width: 1500px) {
           right: -10px;
         }
       }
@@ -143,8 +143,8 @@
         width: 33px;
         height: 48px;
 
-        @media (max-width: $md) {
-          right: -10px;
+        @media (max-width: 1540px) {
+          right: -5px;
         }
       }
     }

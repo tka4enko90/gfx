@@ -270,6 +270,76 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_60c87efc36483": {
+                    "key": "layout_60c87efc36483",
+                    "name": "testimonials_carousel",
+                    "label": "Testimonials carousel",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60c87f4836484",
+                            "label": "Title",
+                            "name": "testimonials_carousel_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_60c87f5036485",
+                            "label": "Subtitle",
+                            "name": "testimonials_carousel_subtitle",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_60c8a7c3605fa",
+                            "label": "Testimonials",
+                            "name": "testimonials_carousel_testimonials",
+                            "type": "post_object",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "testimonials"
+                            ],
+                            "taxonomy": "",
+                            "allow_null": 0,
+                            "multiple": 1,
+                            "return_format": "object",
+                            "ui": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_60c87233ceb58": {
                     "key": "layout_60c87233ceb58",
                     "name": "join_server",
@@ -380,5 +450,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1623750602
+    "modified": 1623763411
 }

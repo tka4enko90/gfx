@@ -13,6 +13,10 @@
                 // Information block
                 elseif (get_row_layout() == 'information_block') :
                     get_template_part( 'modules/information_block/information_block' );
+                // Testimonials carousel
+                elseif (get_row_layout() == 'testimonials_carousel') :
+                    get_template_part( 'modules/testimonials_carousel/testimonials_carousel' );
+                // Join server
                 elseif (get_row_layout() == 'join_server') :
                     get_template_part( 'modules/join_server/join_server' );
                 endif;
