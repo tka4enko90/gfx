@@ -7,7 +7,7 @@
 
 <footer class="footer">
     <div class="main-block">
-        <div class="container">
+        <div class="container large">
             <div class="inner">
                 <?php
                 $logo_first = get_field('logo_first', 'option');

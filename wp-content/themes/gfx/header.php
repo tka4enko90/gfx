@@ -26,7 +26,7 @@
 
 <div class="wrapper">
     <header class="header">
-        <div class="container">
+        <div class="container large">
             <div class="inner">
                 <?php
                 $header_logo = get_field('header_logo', 'option');
