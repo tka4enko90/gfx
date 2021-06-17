@@ -6,7 +6,7 @@
 <?php $information_block_image_id = get_sub_field('information_block_image'); ?>
 <?php $information_block_content_position = get_sub_field('information_block_content_position'); ?>
 
-<div class="information-block">
+<section class="information-block">
     <div class="container small">
         <div class="section-holder <?php if($information_block_content_position) { echo $information_block_content_position; } ?>">
             <?php if ($information_block_title || $information_block_content) : ?>
@@ -33,4 +33,4 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
+</section>

@@ -5,7 +5,7 @@
 <?php $join_server_subtitle = get_sub_field('join_server_subtitle'); ?>
 <?php $join_server_button = get_sub_field('join_server_button'); ?>
 
-<div class="join-server">
+<section class="join-server">
     <div class="container">
         <div class="section-holder">
 
@@ -33,4 +33,4 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
+</section>

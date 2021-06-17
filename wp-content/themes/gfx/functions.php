@@ -15,6 +15,7 @@ add_action('wp_enqueue_scripts', 'inclusion_enqueue');
 add_theme_support('post-thumbnails');
 
 if ( function_exists( 'add_image_size' ) ) {
+    add_image_size( 'gfx_logo_small', 25, 25 );
     add_image_size( 'logo', 60, 45 );
     add_image_size( 'gfx_avatar', 80, 80 );
     add_image_size( 'gfx_small', 73, 53 );

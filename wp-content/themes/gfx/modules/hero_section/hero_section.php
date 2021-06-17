@@ -5,7 +5,7 @@
 <?php $hero_section_button = get_sub_field('hero_section_button'); ?>
 <?php $hero_section_video = get_sub_field('hero_section_video'); ?>
 
-<div class="hero-section">
+<section class="hero-section">
     <div class="container">
         <div class="section-holder">
             <?php if ($hero_section_subtitle || $hero_section_title) : ?>
@@ -27,7 +27,7 @@
                 </div>
             <?php endif; ?>
 
-            <?php if ($hero_section_video['url']) : ?>
+            <?php if ($hero_section_video && $hero_section_video['url']) : ?>
                 <div class="video-col">
                     <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-1.png" alt="decorative image">
                     <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-2.png" alt="decorative image">
@@ -41,4 +41,4 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
+</section>

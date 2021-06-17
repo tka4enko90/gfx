@@ -8,7 +8,7 @@
 <?php $testimonials_carousel_subtitle = get_sub_field('testimonials_carousel_subtitle'); ?>
 <?php $testimonials_carousel_testimonials = get_sub_field('testimonials_carousel_testimonials'); ?>
 
-<div class="testimonials-carousel">
+<section class="testimonials-carousel">
     <div class="container">
         <div class="section-holder">
             <?php if ($testimonials_carousel_title) : ?>
@@ -22,7 +22,7 @@
             <?php endif; ?>
 
             <?php if ($testimonials_carousel_testimonials) : ?>
-                <div class="carousel">
+                <div class="carousel testimonials-carousel-slider">
                     <?php foreach ($testimonials_carousel_testimonials as $item) : ?>
                         <?php $item_id = $item->ID; ?>
 
@@ -56,4 +56,4 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
+</section>
