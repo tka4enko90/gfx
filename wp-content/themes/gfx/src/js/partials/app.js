@@ -3,11 +3,15 @@
 
     // add sticky class for header after scroll
     $(window).on('scroll', function () {
+        var header = $('.header');
         var scrollTop = $(document).scrollTop();
-        if (scrollTop > 20) {
-            $('.header').addClass('sticky');
-        } else {
-            $('.header').removeClass('sticky');
+
+        if (header.length) {
+            if (scrollTop > 20) {
+                header.addClass('sticky');
+            } else {
+                header.removeClass('sticky');
+            }
         }
     });
 
@@ -17,33 +21,40 @@
     });
 
     // show submenu on click
-    $('.header li.menu-item-has-children > a').on('click', function (e) {
-        e.preventDefault();
+    var hasChildrenLink = $('.header li.menu-item-has-children > a');
+    if (hasChildrenLink.length) {
+        hasChildrenLink.on('click', function (e) {
+            e.preventDefault();
 
-        var subMenu = $(this).next('.sub-menu');
-        var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
-        var links = $('.header li.menu-item-has-children > a');
-        var listItems = $('.header li.menu-item-has-children');
+            var subMenu = $(this).next('.sub-menu');
+            var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
 
-        if ($(window).width() > 960) {
-            subMenus.fadeOut(100);
-            links.removeClass('active');
+            if ($(window).width() > 960) {
+                if (subMenus.length) {
+                    subMenus.fadeOut(100);
+                    hasChildrenLink.removeClass('active');
+                }
 
-            if (!subMenu.is(':visible')) {
-                $(this).addClass('active');
-                subMenu.fadeIn(200).css('display', 'flex');
+                if (subMenu.length) {
+                    if (!subMenu.is(':visible')) {
+                        $(this).addClass('active');
+                        subMenu.fadeIn(200).css('display', 'flex');
+                    }
+                }
+            } else {
+                if (subMenus.length) {
+                    subMenus.slideUp(200);
+                    hasChildrenLink.removeClass('opened');
+                }
+
+                if (subMenu.length && !subMenu.is(':visible')) {
+                    $(this).addClass('opened');
+                    subMenu.slideDown(200).css('display', 'flex');
+                }
             }
-        } else {
-            subMenus.slideUp(200);
-            listItems.removeClass('active');
-            links.removeClass('active');
+        });
+    }
 
-            if (!subMenu.is(':visible')) {
-                $(this).addClass('active').closest('li.menu-item-has-children').addClass('active');
-                subMenu.slideDown(200).css('display', 'flex');
-            }
-        }
-    });
 
     // close sub-menu on click not in sub-menus area
     $(document).mouseup(function (e) {

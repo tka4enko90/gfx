@@ -135,8 +135,9 @@
                         header.css('width', 'calc(100% - '+margin+'px)');
                         body.css('width', 'calc(100% - '+margin+'px)');
                         body.css('overflow', 'hidden');
-                        popOut.fadeIn(200).css('display', 'flex');
                     }
+
+                    popOut.fadeIn(200).css('display', 'flex');
                 }
             }
         });

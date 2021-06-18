@@ -83,7 +83,14 @@
         margin-bottom: 30px;
       }
 
+      &:hover {
+        .thumbnail {
+          transform: scale(1.03);
+        }
+      }
+
       .thumbnail {
+        transition: transform $transition;
         border: 10px;
         margin-bottom: 17px;
 
@@ -217,7 +224,7 @@
             margin-right: 10px;
 
             &.added_to_cart.wc-forward {
-              display:none !important;
+              display: none !important;
             }
 
             @media (max-width: $xs) {

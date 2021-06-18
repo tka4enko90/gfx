@@ -95,7 +95,7 @@ iframe {
       margin-right: 0;
     }
 
-    &.slick-active {
+    &.slick-active, &:hover {
       button {
         background-color: $white;
       }

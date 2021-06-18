@@ -133,8 +133,15 @@
 
     .copyright-text {
       font-size: 12px;
-      color: #576479;
+      color: $text-color;
       line-height: 1.194;
+
+      a {
+        color: $text-color;
+        &:hover {
+          color: $red;
+        }
+      }
     }
   }
 }

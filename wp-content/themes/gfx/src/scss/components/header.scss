@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 
   @media (max-width: $sm) {
     padding: 15px 0;
@@ -101,10 +101,10 @@
         text-transform: uppercase;
 
         @media (max-width: $md) {
-          &.menu-item-has-children {
+          &.menu-item-has-children > a {
             position: relative;
 
-            &.active {
+            &.opened {
               &::after {
                 transform: rotate(180deg);
               }
@@ -113,8 +113,8 @@
             &::after {
               content: '';
               position: absolute;
-              top: 6px;
-              right: 0;
+              top: 5px;
+              right: -30px;
               width: 10px;
               height: 10px;
               background-image: url("../img/dropdown-icon.svg");
@@ -161,7 +161,7 @@
           color: $semi-white;
 
           @media (max-width: $md) {
-            width: 100%;
+            //width: 100%;
           }
 
           &:hover {
@@ -297,17 +297,23 @@
       overflow: auto;
       display: none;
       position: absolute;
-      top: 69px;
+      top: 68px;
       left: 0;
       background-color: $submenu-blue-bg;
       width: 100%;
       margin: 0;
-      height: calc(100vh - 85px);
+      height: calc(100vh - 68px);
       padding-bottom: 80px;
     }
 
     @media (max-width: $sm) {
-      height: calc(100vh - 70px);
+      top: 59px;
+      height: calc(100vh - 59px);
+    }
+
+    @media (max-width: $xs) {
+      top: 51px;
+      height: calc(100vh - 51px);
     }
 
     & > ul {
