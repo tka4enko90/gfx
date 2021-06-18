@@ -16,6 +16,10 @@
     background-color: #070f1c;
   }
 
+  & > .container {
+    position: relative;
+  }
+
   .inner {
     display: flex;
     align-items: center;

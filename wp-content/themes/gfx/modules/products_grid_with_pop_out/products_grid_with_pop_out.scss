@@ -216,6 +216,10 @@
           a {
             margin-right: 10px;
 
+            &.added_to_cart.wc-forward {
+              display:none !important;
+            }
+
             @media (max-width: $xs) {
               margin-right: 0;
 

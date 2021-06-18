@@ -34,6 +34,7 @@
                         if ($product_id) :
                             $product_pop_out_info["product_permalink"] = get_permalink($product_id);
                             $product_pop_out_info["product_title"] = get_the_title($product_id);
+                            $product_pop_out_info["product_id"] = $product_id;
 
                             $categories = get_the_terms($product_id, 'product_cat');
                             if (isset($categories) && !empty($categories)) :
@@ -48,6 +49,7 @@
                             $product = wc_get_product($product_id);
                             if (isset($product) && $product instanceof WC_Product) :
                                 $product_price = $product->get_price();
+                                $product_sku = $product->get_sku();
                                 $product_add_to_cart_url = $product->add_to_cart_url();
 
                                 if ($product_price) :
@@ -57,6 +59,11 @@
                                 if ($product_add_to_cart_url) :
                                     $product_pop_out_info["product_add_to_cart_url"] = $product_add_to_cart_url;
                                 endif;
+
+                                if ($product_sku) :
+                                    $product_pop_out_info["product_sku"] = $product_sku;
+                                endif;
+
                             endif;
 
                             $product_trailer = get_field('product_trailer', $product_id);
@@ -66,7 +73,7 @@
                             ?>
 
                             <div class="product-card product-card-open-pop-out"
-                                 data-productPopOut='<?php echo json_encode($product_pop_out_info); ?>'>
+                                 data-product-pop-out='<?php echo json_encode($product_pop_out_info); ?>'>
                                 <div class="thumbnail">
                                     <?php echo get_the_post_thumbnail($product_id, 'gfx_semi_medium'); ?>
                                 </div>
@@ -100,7 +107,8 @@
                 </button>
 
                 <div class="buttons-holder">
-                    <a href="" class="primary-button small add-to-cart-link"></a>
+                    <a href="" class="primary-button small add_to_cart_button ajax_add_to_cart " rel="nofollow"
+                       data-quantity="1" data-product_id="" data-product_title="" data-product_sku=""></a>
                     <a href="" class="secondary-button small more-info-link">More Info</a>
                 </div>
             </div>

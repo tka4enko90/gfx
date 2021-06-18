@@ -37,10 +37,8 @@
                                         <div class="title">
                                             <?php echo $item->post_title; ?>
                                         </div>
-                                        <?php if ($subheading) : ?>
-                                            <div class="subheading">
-                                                <?php echo $subheading; ?>
-                                            </div>
+                                        <?php if (isset($subheading) && $subheading['url']) : ?>
+                                            <a class="subheading" href="<?php echo $subheading['url']; ?>" target="<?php echo $subheading['target']; ?>"><?php echo $subheading['title']; ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>

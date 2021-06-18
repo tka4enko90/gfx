@@ -6,7 +6,7 @@
             "key": "field_60c8a6d48521f",
             "label": "Subheading",
             "name": "subheading",
-            "type": "text",
+            "type": "link",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,11 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "return_format": "array"
         },
         {
             "key": "field_60c8a6df85220",
@@ -58,5 +54,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1623765497
+    "modified": 1623939361
 }

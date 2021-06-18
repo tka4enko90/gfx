@@ -35,7 +35,13 @@
       margin-top: 30px;
     }
 
+    .slick-track {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
     .item {
+      height: auto;
       border-radius: 10px;
       padding: 32px 40px 32px 40px;
       background-color: rgba(5, 9, 19, 0.851);
@@ -78,6 +84,7 @@
           font-size: 26px;
           font-weight: bold;
           color: $white;
+          line-height: 1;
 
           @media (max-width: $md) {
             font-size: 24px;
@@ -96,6 +103,10 @@
           color: $text-color;
           font-size: 16px;
           line-height: 1.236;
+
+          &:hover {
+            color: $text-color-light;
+          }
         }
       }
 
@@ -114,10 +125,10 @@
     }
 
     .slick-dots {
-      margin-top: 65px;
+      margin-top: 54px;
 
       @media (max-width: $sm) {
-        margin-top: 40px;
+        margin-top: 29px;
       }
     }
   }

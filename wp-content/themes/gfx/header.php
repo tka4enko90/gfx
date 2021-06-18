@@ -66,5 +66,17 @@
                     </button>
                 <?php endif; ?>
             </div>
+
+            <div class="product-added-to-cart-popup">
+                <button class="product-added-to-cart-close-btn">
+                    <img src="<?php echo get_template_directory_uri() ?>/static/img/close-btn-icon.svg"
+                         alt="close icon">
+                </button>
+
+                <div class="product-name"></div>
+                <div class="additional-text">has been added to your cart.</div>
+                <?php $cart_link = wc_get_cart_url(); ?>
+                <a href="<?php echo $cart_link; ?>" class="primary-button extra-small">View Cart</a>
+            </div>
         </div>
     </header>
