@@ -16,6 +16,7 @@
     <meta name="HandheldFriendly" content="true"/>
 
     <!-- FAVICON -->
+    <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/static/img/favicon.ico" type="image/x-icon"/>
     <!-- /FAVICON -->
 
     <?php wp_head() ?>

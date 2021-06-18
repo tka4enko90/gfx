@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="copyrights-block">
-        <div class="container">
+        <div class="container large">
             <?php $footer_copyright_text = get_field('footer_copyright_text', 'option');
             if ($footer_copyright_text) : ?>
                 <div class="copyright-text">

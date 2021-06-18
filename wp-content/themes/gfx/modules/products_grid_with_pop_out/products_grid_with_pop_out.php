@@ -21,7 +21,10 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-
+        </div>
+    </div>
+    <div class="container products-container">
+        <div class="section-holder">
             <?php $products = get_posts([
                 'numberposts' => 6,
                 'post_type' => 'product',

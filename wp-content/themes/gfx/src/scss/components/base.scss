@@ -25,13 +25,17 @@ body {
 }
 
 .container {
-  max-width: 1510px;
+  max-width: 1560px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 40px;
   box-sizing: border-box;
 
+  @media (max-width: $xs) {
+    padding: 0 20px;
+  }
+
   &.large {
-    max-width: 1780px;
+    max-width: 1826px;
   }
 
   &.small {

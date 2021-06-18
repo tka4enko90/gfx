@@ -36,9 +36,10 @@
         } else {
             subMenus.slideUp(200);
             listItems.removeClass('active');
+            links.removeClass('active');
 
             if (!subMenu.is(':visible')) {
-                $(this).closest('li.menu-item-has-children').addClass('active');
+                $(this).addClass('active').closest('li.menu-item-has-children').addClass('active');
                 subMenu.slideDown(200).css('display', 'flex');
             }
         }
@@ -47,10 +48,12 @@
     // close sub-menu on click not in sub-menus area
     $(document).mouseup(function (e) {
         if ($(window).width() > 960) {
-            var div = $('.header .menu-holder > ul > li.menu-item-has-children > a').next('.sub-menu');
-            if (!div.is(e.target)
-                && div.has(e.target).length === 0) {
-                div.fadeOut(100);
+            var links = $('.header .menu-holder > ul > li.menu-item-has-children > a');
+            var submenu = $('.header .menu-holder > ul > li.menu-item-has-children > a').next('.sub-menu');
+            if (!submenu.is(e.target)
+                && submenu.has(e.target).length === 0) {
+                links.removeClass('active');
+                submenu.fadeOut(100);
             }
         }
     });
