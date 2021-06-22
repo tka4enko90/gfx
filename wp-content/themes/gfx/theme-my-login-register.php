@@ -6,15 +6,36 @@
             <section class="register-section">
                 <div class="container">
                     <div class="section-holder">
-                        <div class="form-holder">
-                            <?php $user_log = tml_get_form_field( 'register', 'user_email' ); ?>
-                            <?php $user_log->set_label( 'Email Address' ); ?>
+                        <div class="form-col">
+                            <h1>Sign Up</h1>
+                            <div class="form-holder">
+                                <?php $user_log = tml_get_form_field( 'register', 'user_email' ); ?>
+                                <?php $user_log->set_label( 'Email Address' ); ?>
 
-                            <?php the_content(); ?>
+                                <?php $button = tml_get_form_field( 'register', 'submit' ); ?>
+                                <?php $button->set_value( 'Sign Up' ); ?>
+
+                                <?php the_content(); ?>
+                            </div>
+
+                            <div class="have-an-account-text">
+                                Already have an account? <a href="<?php echo wp_login_url(); ?>">Log in</a>
+                            </div>
+
+                            <?php $register_page_bottom_text = get_field( 'register_page_bottom_text' ); ?>
+                            <?php if($register_page_bottom_text) : ?>
+                                <div class="description-text">
+                                    <?php echo $register_page_bottom_text; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <div class="image-holder">
-123
-                        </div>
+
+                        <?php $register_page_image = get_field( 'register_page_image' ); ?>
+                        <?php if ( $register_page_image ) : ?>
+                            <div class="image-col">
+                                <?php echo wp_get_attachment_image( $register_page_image, 'gfx_medium_2' ); ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>

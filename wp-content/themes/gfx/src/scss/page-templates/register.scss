@@ -1,10 +1,111 @@
 .register-section {
-  .section-holder {
-    display: flex;
+  padding: 90px 0 75px;
+
+  @media (max-width: $sm) {
+    padding: 60px 0;
   }
 
-  .form-holder {
+  @media (max-width: $xs) {
+    padding: 40px 0 60px;
+  }
+
+  .section-holder {
+    display: flex;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+    }
+  }
+
+  .form-col {
+    width: 100%;
     max-width: 542px;
-    background-color: pink;
+
+    & > h1 {
+      margin-bottom: 50px;
+
+      @media (max-width: $sm) {
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .form-holder {
+      padding: 49px 54px 34px 49px;
+      border-radius: 10px;
+      background-color: rgba($dark-blue, 0.851);
+
+      @media (max-width: $sm) {
+        padding: 40px 30px;
+      }
+
+      .tml-indicator-wrap, .tml-indicator_hint-wrap, .tml-links {
+        display: none;
+      }
+
+      .tml-submit-wrap {
+        text-align: center;
+      }
+    }
+
+    .have-an-account-text {
+      font-size: 18px;
+      color: $text-color;
+      line-height: 1.362;
+      margin-top: 30px;
+
+      @media (max-width: $xs) {
+        margin-top: 30px;
+        font-size: 16px;
+      }
+
+      a {
+        color: $red;
+        font-weight: bold;
+
+        &:hover {
+          color: silver;
+        }
+      }
+    }
+
+    .description-text {
+      margin-top: 43px;
+      font-size: 14px;
+      color: $text-color-dark;
+      line-height: 1.429;
+
+      @media (max-width: $xs) {
+        margin-top: 30px;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      a {
+        color: $text-color;
+
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+  }
+
+  .image-col {
+    padding-top: 60px;
+    margin-left: 200px;
+
+    @media (max-width: $lg) {
+      margin-left: 100px;
+    }
+
+    @media (max-width: $md) {
+      margin-left: 0;
+    }
   }
 }
