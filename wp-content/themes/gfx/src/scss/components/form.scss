@@ -107,6 +107,20 @@ input {
       }
     }
   }
+
+  .tml-error {
+    border-color: $red;
+    font-size: 16px;
+
+    a {
+      color: $red;
+      font-weight: bold;
+
+      &:hover {
+        color: $text-color;
+      }
+    }
+  }
 }
 
 .tml-register, .tml-login {

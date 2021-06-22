@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="section-holder">
                         <div class="form-col">
-                            <h1>Sign Up</h1>
+                            <h1><?php the_title(); ?></h1>
 
                             <div class="form-holder">
                                 <?php the_content(); ?>
