@@ -172,7 +172,15 @@
           }
         }
 
-        &.current-menu-item  {
+        &.menu-item-has-children.active > a {
+          color: grey;
+
+          &:active {
+            color: $red;
+          }
+        }
+
+        &.current-menu-item {
           & > a {
             color: $red;
             text-shadow: 0 0 16px rgba($red, 0.7);
@@ -181,17 +189,20 @@
               color: $red;
             }
           }
+
           &.border > a {
             border-color: $red;
           }
         }
 
         & > a {
+          position: relative;
+          z-index: 3;
           font-size: 14px;
           color: $semi-white;
 
           &:hover {
-            color: silver;
+            color: grey;
           }
 
           &:active, &.active {
@@ -235,10 +246,19 @@
 
           @media (max-width: $md) {
             position: static;
-            padding: 0;
             flex-direction: column;
             background-color: $submenu-blue-bg;
             padding: 20px 0;
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 0;
+            height: 200px;
+            width: 100%;
+            z-index: 0;
           }
 
           &::before {
@@ -303,7 +323,7 @@
               color: $white;
 
               &:hover {
-                color: silver;
+                color: grey;
               }
             }
           }
