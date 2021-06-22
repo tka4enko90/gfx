@@ -9,7 +9,7 @@ html, body {
 
 body {
   position: relative;
-  padding: 63px 0 0 0;
+  padding: 93px 0 0 0;
   margin: 0;
   font-family: $font-family-base;
   font-weight: normal;
@@ -22,6 +22,14 @@ body {
   display: flex;
   height: auto;
   background-image: url("../img/bg.png");
+
+  @media (max-width: $sm) {
+    padding: 74px 0 0 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 66px 0 0 0;
+  }
 }
 
 .container {
@@ -39,7 +47,7 @@ body {
   }
 
   &.small {
-    max-width: 1350px;
+    max-width: 1404px;
   }
 }
 
