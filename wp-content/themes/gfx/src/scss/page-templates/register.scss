@@ -1,4 +1,4 @@
-.register-section {
+.register-section, .login-section {
   padding: 90px 0 75px;
 
   @media (max-width: $sm) {
@@ -48,10 +48,14 @@
 
       .tml-submit-wrap {
         text-align: center;
+
+        button[type="submit"] {
+          min-width: 149px;
+        }
       }
     }
 
-    .have-an-account-text {
+    .have-an-account-text, .lost-password-link {
       font-size: 18px;
       color: $text-color;
       line-height: 1.362;
@@ -106,6 +110,16 @@
 
     @media (max-width: $md) {
       margin-left: 0;
+    }
+  }
+}
+
+.login-section {
+  .image-col {
+    padding-top: 10px;
+
+    @media (max-width: $md) {
+      padding-top: 60px;
     }
   }
 }

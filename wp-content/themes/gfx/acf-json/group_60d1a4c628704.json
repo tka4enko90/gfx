@@ -1,7 +1,26 @@
 {
     "key": "group_60d1a4c628704",
-    "title": "Register Page",
+    "title": "Register\/Login Page",
     "fields": [
+        {
+            "key": "field_60d1ac13c118c",
+            "label": "Bottom text",
+            "name": "register_page_bottom_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "75",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
+        },
         {
             "key": "field_60d1a4ca9722a",
             "label": "Image",
@@ -11,7 +30,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "30",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -25,25 +44,6 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
-        },
-        {
-            "key": "field_60d1ac13c118c",
-            "label": "Bottom text",
-            "name": "register_page_bottom_text",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "70",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "visual",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 1
         }
     ],
     "location": [
@@ -53,15 +53,22 @@
                 "operator": "==",
                 "value": "18"
             }
+        ],
+        [
+            {
+                "param": "page",
+                "operator": "==",
+                "value": "10"
+            }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "default",
+    "style": "acftc-group-0",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624354216
+    "modified": 1624357001
 }

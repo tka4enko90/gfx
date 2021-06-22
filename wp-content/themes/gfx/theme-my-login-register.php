@@ -8,13 +8,8 @@
                     <div class="section-holder">
                         <div class="form-col">
                             <h1>Sign Up</h1>
+
                             <div class="form-holder">
-                                <?php $user_log = tml_get_form_field( 'register', 'user_email' ); ?>
-                                <?php $user_log->set_label( 'Email Address' ); ?>
-
-                                <?php $button = tml_get_form_field( 'register', 'submit' ); ?>
-                                <?php $button->set_value( 'Sign Up' ); ?>
-
                                 <?php the_content(); ?>
                             </div>
 
