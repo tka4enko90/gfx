@@ -110,7 +110,27 @@
         addedToCartPopup.fadeOut(200);
     });
 
-    $(function () {
-        objectFitImages('img');
+    // smooth scroll
+    var slowScrollLink = $('.slow-scroll-link');
+    if(slowScrollLink.length) {
+        slowScrollLink.on('click', function (e) {
+            e.preventDefault();
+
+            var scrollHere = $(this).closest('section').next('.scroll-here');
+            if(scrollHere.length) {
+                var top = scrollHere.offset().top;
+
+                $('body,html').animate({scrollTop: top - 40}, 500);
+            }
+        });
+    }
+
+    // SINGLE PRODUCT PAGE
+    $('.single-product-hero h2>img').hover(function () {
+       var box = $(this).parent('h2').next('.compatible-with-box');
+       if(box.length) {
+           box.fadeToggle(200);
+       }
     });
+    // SINGLE PRODUCT PAGE
 })(jQuery);

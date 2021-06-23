@@ -1,51 +1,67 @@
 h1 {
-    font-size: 56px;
-    font-weight: bold;
-    line-height: 1.071;
-    margin: 0 0 20px 0;
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 1.071;
+  margin: 0 0 20px 0;
 
-    @media (max-width: $sm) {
-        font-size: 50px;
-    }
+  @media (max-width: $sm) {
+    font-size: 50px;
+  }
 
-    @media (max-width: $xs) {
-        font-size: 45px;
-    }
+  @media (max-width: $xs) {
+    font-size: 45px;
+  }
+}
+
+h2 {
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 1.284;
+  margin: 0 0 20px 0;
+
+  @media (max-width: $sm) {
+    font-size: 45px;
+  }
+
+  @media (max-width: $xs) {
+    font-size: 40px;
+  }
 }
 
 h3 {
-    font-weight: bold;
-    font-size: 30px;
-    line-height: 1.333;
-    margin: 0 0 20px 0;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 1.333;
+  margin: 0 0 20px 0;
 
-    @media (max-width: $xs) {
-        font-size: 28px;
-    }
+  @media (max-width: $xs) {
+    font-size: 28px;
+  }
 }
 
 h4 {
-    font-weight: bold;
-    font-size: 26px;
-    margin: 0 0 20px 0;
-    line-height: 1.27;
+  font-weight: bold;
+  font-size: 26px;
+  margin: 0 0 20px 0;
+  line-height: 1.27;
 }
 
 a {
-    display: inline-block;
+  display: inline-block;
+  text-decoration: none;
+  transition: color $transition, border-color $transition;
+
+  &:hover {
     text-decoration: none;
-    transition: color $transition, border-color $transition;
-    &:hover {
-        text-decoration: none;
-    }
+  }
 }
 
 p {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 b, strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 

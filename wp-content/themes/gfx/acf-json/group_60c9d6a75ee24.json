@@ -141,6 +141,25 @@
                     "maxlength": ""
                 }
             ]
+        },
+        {
+            "key": "field_60d32b987dd3a",
+            "label": "Complete Package Description",
+            "name": "complete_package_description",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
         }
     ],
     "location": [
@@ -160,5 +179,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1623925487
+    "modified": 1624452025
 }

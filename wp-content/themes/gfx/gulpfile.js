@@ -65,6 +65,15 @@ function acfModuleScripts() {
 		.pipe(browserSync.stream())
 }
 
+function pageTemplatesStyles() {
+	return src(['src/scss/page-templates/*.scss'])
+		.pipe(sass()) // Process.
+		.pipe(autoprefixer({overrideBrowserslist: ['last 10 versions']}))	// Add prefixes.
+		.pipe(cleancss(({level: {1: {specialComments: 0}}})))				// One-line minify.
+		.pipe(dest('static/css/page-templates/'))
+		.pipe(browserSync.stream())
+}
+
 // Minify images.
 function images() {
 	return src('src/img/**/*')	// Get all files from app/img/src/ directory.
@@ -84,6 +93,7 @@ function startwatch() {
 	watch('src/scss/**/*', styles);
 	watch('modules/*/*.scss', acfModuleStyles);
 	watch('modules/*/*.js', acfModuleScripts);
+	watch('src/scss/page-templates/*.scss', pageTemplatesStyles);
 	watch(['src/js/**/*.js'], scripts);
 	watch('**/*.php').on('change', browserSync.reload);
 	watch('src/**/*', images);
@@ -96,7 +106,8 @@ exports.scripts = scripts;
 exports.styles = styles;
 exports.acfModuleStyles = acfModuleStyles;
 exports.acfModuleScripts = acfModuleScripts;
+exports.pageTemplatesStyles = pageTemplatesStyles;
 exports.images = images;
 exports.fonts = fonts;
 // Use 'gulp' comand to run them all parallel.
-exports.default = parallel(scripts, styles, acfModuleStyles, acfModuleScripts, images, fonts, browsersync, startwatch);
+exports.default = parallel(scripts, styles, acfModuleStyles, acfModuleScripts, pageTemplatesStyles, images, fonts, browsersync, startwatch);

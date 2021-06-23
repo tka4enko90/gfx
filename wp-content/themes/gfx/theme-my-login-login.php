@@ -1,4 +1,7 @@
 <?php get_header(); ?>
+
+<?php wp_enqueue_style('register_page_styles', get_template_directory_uri() . '/static/css/page-templates/register.css', '', '', 'all'); ?>
+
 <main class="main">
     <?php
     while (have_posts()) :

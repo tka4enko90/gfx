@@ -1,4 +1,7 @@
 <?php get_header(); ?>
+
+<?php wp_enqueue_style('register_page_styles', get_template_directory_uri() . '/static/css/page-templates/register.css', '', '', 'all'); ?>
+
     <main class="main">
         <?php
         while (have_posts()) :
@@ -17,18 +20,18 @@
                                 Already have an account? <a href="<?php echo wp_login_url(); ?>">Log in</a>
                             </div>
 
-                            <?php $register_page_bottom_text = get_field( 'register_page_bottom_text' ); ?>
-                            <?php if($register_page_bottom_text) : ?>
+                            <?php $register_page_bottom_text = get_field('register_page_bottom_text'); ?>
+                            <?php if ($register_page_bottom_text) : ?>
                                 <div class="description-text">
                                     <?php echo $register_page_bottom_text; ?>
                                 </div>
                             <?php endif; ?>
                         </div>
 
-                        <?php $register_page_image = get_field( 'register_page_image' ); ?>
-                        <?php if ( $register_page_image ) : ?>
+                        <?php $register_page_image = get_field('register_page_image'); ?>
+                        <?php if ($register_page_image) : ?>
                             <div class="image-col">
-                                <?php echo wp_get_attachment_image( $register_page_image, 'gfx_medium_2' ); ?>
+                                <?php echo wp_get_attachment_image($register_page_image, 'gfx_medium_2'); ?>
                             </div>
                         <?php endif; ?>
                     </div>
