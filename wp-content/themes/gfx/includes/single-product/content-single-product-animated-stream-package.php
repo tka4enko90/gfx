@@ -22,13 +22,6 @@ defined('ABSPATH') || exit;
 global $product;
 $product_id = get_the_ID();
 
-/**
- * Hook: woocommerce_before_single_product.
- *
- * @hooked woocommerce_output_all_notices - 10
- */
-do_action('woocommerce_before_single_product');
-
 if (post_password_required()) {
     echo get_the_password_form(); // WPCS: XSS ok.
     return;
@@ -225,7 +218,3 @@ if (post_password_required()) {
         <?php woocommerce_output_related_products(); ?>
     <?php endif; ?>
 </div>
-
-<div class="test" style="background-color: palevioletred; height: 200px;"></div>
-
-<?php do_action('woocommerce_after_single_product'); ?>
