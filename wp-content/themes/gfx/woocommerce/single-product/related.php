@@ -20,32 +20,30 @@ if (!defined('ABSPATH')) {
 }
 
 if ($related_products) : ?>
-    <section class="related products">
+    <section class="related products single-product-related-products">
         <div class="container">
-
             <?php
             $heading = apply_filters('woocommerce_product_related_products_heading', __('Related products', 'woocommerce'));
-
-            if ($heading) :
-                ?>
-                <h4><?php echo esc_html($heading); ?></h4>
+            if ($heading) : ?>
+                <h3 class="title"><?php echo esc_html($heading); ?></h3>
+                <div class="subtitle">
+                    Here are some similar products we think you might like
+                </div>
             <?php endif; ?>
+        </div>
+        <div class="container products-container">
+            <ul class="products-holder">
+                <?php foreach ($related_products as $related_product) : ?>
 
-            <?php woocommerce_product_loop_start(); ?>
+                    <?php
+                    $post_object = get_post($related_product->get_id());
 
-            <?php foreach ($related_products as $related_product) : ?>
+                    setup_postdata($GLOBALS['post'] =& $post_object); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
 
-                <?php
-                $post_object = get_post($related_product->get_id());
-
-                setup_postdata($GLOBALS['post'] =& $post_object); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-
-                wc_get_template_part('content', 'product');
-                ?>
-
-            <?php endforeach; ?>
-
-            <?php woocommerce_product_loop_end(); ?>
+                    wc_get_template_part('content', 'product');
+                    ?>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </section>
 <?php

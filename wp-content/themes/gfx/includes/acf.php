@@ -38,4 +38,14 @@ if (function_exists('acf_add_options_page')) {
             'redirect'		=> false
         ]
     );
+
+    acf_add_options_page(
+        [
+            'page_title' 	=> 'Blocks',
+            'menu_title'	=> 'Blocks',
+            'parent_slug' => 'options',
+            'capability'	=> 'edit_posts',
+            'redirect'		=> false
+        ]
+    );
 }

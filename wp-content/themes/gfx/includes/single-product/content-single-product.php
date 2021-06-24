@@ -15,62 +15,39 @@
  * @version 3.6.0
  */
 
+wp_enqueue_style('single_product_page_styles', get_template_directory_uri() . '/static/css/page-templates/single-product.css', '', '', 'all');
+
 defined( 'ABSPATH' ) || exit;
 
 global $product;
-
-/**
- * Hook: woocommerce_before_single_product.
- *
- * @hooked woocommerce_output_all_notices - 10
- */
-do_action( 'woocommerce_before_single_product' );
+$product_id = get_the_ID();
 
 if ( post_password_required() ) {
     echo get_the_password_form(); // WPCS: XSS ok.
     return;
 }
 ?>
-<div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
-
-    <?php
-    /**
-     * Hook: woocommerce_before_single_product_summary.
-     *
-     * @hooked woocommerce_show_product_sale_flash - 10
-     * @hooked woocommerce_show_product_images - 20
-     */
-    do_action( 'woocommerce_before_single_product_summary' );
-    ?>
-
-    <div class="summary entry-summary">
+<div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
+    <?php if ($product_id) : ?>
         <?php
-        /**
-         * Hook: woocommerce_single_product_summary.
-         *
-         * @hooked woocommerce_template_single_title - 5
-         * @hooked woocommerce_template_single_rating - 10
-         * @hooked woocommerce_template_single_price - 10
-         * @hooked woocommerce_template_single_excerpt - 20
-         * @hooked woocommerce_template_single_add_to_cart - 30
-         * @hooked woocommerce_template_single_meta - 40
-         * @hooked woocommerce_template_single_sharing - 50
-         * @hooked WC_Structured_Data::generate_product_data() - 60
-         */
-        do_action( 'woocommerce_single_product_summary' );
-        ?>
-    </div>
 
-    <?php
-    /**
-     * Hook: woocommerce_after_single_product_summary.
-     *
-     * @hooked woocommerce_output_product_data_tabs - 10
-     * @hooked woocommerce_upsell_display - 15
-     * @hooked woocommerce_output_related_products - 20
-     */
-    do_action( 'woocommerce_after_single_product_summary' );
-    ?>
+        include_once('complete-package.php');
+
+        if (isset($product) && $product instanceof WC_Product) :
+            if ($product->get_type() == 'woosb') :
+                $bundled_items = $product->get_items();
+                if (isset($bundled_items) && !empty($bundled_items)) :
+                    include_once('also-from-this-package.php');
+                endif;
+            endif;
+        endif;
+    endif;
+
+    include_once('one-click-setup.php');
+
+    if (function_exists('woocommerce_output_related_products')) :
+        woocommerce_output_related_products();
+    endif;
+
+    include_once('need-help.php'); ?>
 </div>
-
-<?php do_action( 'woocommerce_after_single_product' ); ?>

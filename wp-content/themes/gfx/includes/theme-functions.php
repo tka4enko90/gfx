@@ -34,3 +34,29 @@ function change_login_form()
         $user_login->set_label('Email Address');
     }
 }
+
+// change count of related products
+add_filter( 'woocommerce_output_related_products_args', 'related_products_args', 20 );
+function related_products_args( $args ) {
+    $args['posts_per_page'] = 3; // 4 related products
+    return $args;
+}
+
+remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+
+// replace product thumbnail
+add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumb', 10 );
+if ( ! function_exists( 'woocommerce_template_loop_product_thumb' ) ) {
+    function woocommerce_template_loop_product_thumb() {
+        echo woocommerce_get_product_thumbnail('gfx_semi_medium');
+    }
+}
+
+
+// replace product title
+add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
+if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
+    function woocommerce_template_loop_product_title() {
+        echo '<div class="woocommerce-loop-product_title">' . get_the_title() . '</div>';
+    }
+}
