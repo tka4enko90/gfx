@@ -23,6 +23,7 @@ if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'gfx_semi_medium', 460, 260 );
     add_image_size( 'gfx_medium', 580, 335 );
     add_image_size( 'gfx_medium_2', 471, 567 );
+    add_image_size( 'gfx_wc_gallery_large', 744, 419 );
 }
 
 include_once('includes/menus.php');

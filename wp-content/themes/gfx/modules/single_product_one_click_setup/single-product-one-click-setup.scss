@@ -1,0 +1,119 @@
+@import '../../src/scss/components/vars';
+
+.single-product-one-click-setup {
+  padding: 80px 0;
+  background: linear-gradient(90deg, #070f1c 0%, #0e1727 100%);
+
+  @media (max-width: $sm) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .section-holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .video-col {
+      width: 50%;
+      max-width: 605px;
+
+      @media (max-width: $md) {
+        width: 100%;
+      }
+
+      .video-holder {
+        border-radius: 10px;
+
+        iframe {
+          height: 341px;
+          width: 100%;
+
+          @media (max-width: $sm) {
+            height: 300px;
+          }
+        }
+      }
+    }
+
+    .info-col {
+      width: 50%;
+      padding-left: 40px;
+      max-width: 650px;
+
+      @media (max-width: $md) {
+        padding-left: 0;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 30px;
+      }
+
+      h3 {
+        color: $white;
+        margin-bottom: 40px;
+        text-align: right;
+
+        @media (max-width: $md) {
+          text-align: left;
+          margin-bottom: 30px;
+        }
+
+        @media (max-width: $xs) {
+          margin-bottom: 20px;
+        }
+      }
+
+      .description {
+        font-size: 16px;
+        color: $text-color;
+
+        p {
+          margin-bottom: 30px;
+          text-align: right;
+
+          @media (max-width: $md) {
+            margin-bottom: 20px;
+            text-align: left !important;
+          }
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .buttons-holder {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 50px;
+
+        @media (max-width: $md) {
+          justify-content: flex-start;
+          margin-top: 40px;
+        }
+
+        @media (max-width: $xs) {
+          margin-top: 30px;
+        }
+
+        .primary-button {
+          margin-right: 16px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

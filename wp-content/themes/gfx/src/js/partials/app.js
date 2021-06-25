@@ -80,7 +80,8 @@
     // show added to cart popup
     var addedToCartPopup = $('.product-added-to-cart-popup');
     if (body.length) {
-        body.on('added_to_cart', function (event, fragments, cart_hash, button) {
+        $('body').bind('added_to_cart', function(event, fragments, cart_hash, button) {
+            alert('ready');
             var addedProductName = button.attr('data-product_title');
             var productPopOutCloseBtn = $('.product-pop-out-close-btn');
 
@@ -111,26 +112,17 @@
     });
 
     // smooth scroll
-    var slowScrollLink = $('.slow-scroll-link');
-    if(slowScrollLink.length) {
-        slowScrollLink.on('click', function (e) {
+    var scrollDownLink = $('.scroll-down-link');
+    if (scrollDownLink.length) {
+        scrollDownLink.on('click', function (e) {
             e.preventDefault();
 
             var scrollHere = $(this).closest('section').next('.scroll-here');
-            if(scrollHere.length) {
+            if (scrollHere.length) {
                 var top = scrollHere.offset().top;
 
                 $('body,html').animate({scrollTop: top - 40}, 500);
             }
         });
     }
-
-    // SINGLE PRODUCT PAGE
-    $('.single-product-hero h2>img').hover(function () {
-       var box = $(this).parent('h2').next('.compatible-with-box');
-       if(box.length) {
-           box.fadeToggle(200);
-       }
-    });
-    // SINGLE PRODUCT PAGE
 })(jQuery);

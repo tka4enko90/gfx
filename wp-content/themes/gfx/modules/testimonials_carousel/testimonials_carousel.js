@@ -2,7 +2,7 @@
     $(document).on('ready', function () {
         var testimonialsCarousel = $('.testimonials-carousel-slider');
         if (testimonialsCarousel.length) {
-            testimonialsCarousel.each(function (index) {
+            testimonialsCarousel.each(function () {
                 $(this).slick({
                     dots: true,
                     arrows: false,

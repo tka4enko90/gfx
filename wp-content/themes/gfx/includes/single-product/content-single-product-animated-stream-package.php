@@ -29,25 +29,17 @@ if (post_password_required()) {
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
     <?php if ($product_id) : ?>
-        <?php include_once('hero.php');
+        <?php
+        include_once(dirname(__FILE__) . "/../../modules/single_product_hero/single-product-hero.php");
+        include_once(dirname(__FILE__) . "/../../modules/single_product_product_info/single-product-product-info.php");
+        include_once(dirname(__FILE__) . "/../../modules/single_product_complete_package/single-product-complete-package.php");
+        include_once(dirname(__FILE__) . "/../../modules/single_product_also_from_this_package/single-product-also-from-this-package.php");
+        include_once(dirname(__FILE__) . "/../../modules/single_product_one_click_setup/single-product-one-click-setup.php");
 
-        include_once('complete-package.php');
-
-        if (isset($product) && $product instanceof WC_Product) :
-            if ($product->get_type() == 'woosb') :
-                $bundled_items = $product->get_items();
-                if (isset($bundled_items) && !empty($bundled_items)) :
-                    include_once('also-from-this-package.php');
-                endif;
-            endif;
+        if (function_exists('woocommerce_output_related_products')) :
+            woocommerce_output_related_products();
         endif;
-    endif;
 
-    include_once('one-click-setup.php');
-
-    if (function_exists('woocommerce_output_related_products')) :
-        woocommerce_output_related_products();
-    endif;
-
-    include_once('need-help.php'); ?>
+        include_once(dirname(__FILE__) . "/../../modules/single_product_need_help/single-product-need-help.php");
+    endif; ?>
 </div>

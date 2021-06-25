@@ -121,6 +121,36 @@ iframe {
   }
 }
 
+.slick-prev, .slick-next {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background-repeat: no-repeat;
+  z-index: 1;
+  cursor: pointer;
+  transition: opacity $transition;
+  background-size: 13px;
+  background-position: center;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.slick-prev {
+  left: -10px;
+  background-image: url("../img/prev-arrow.svg");
+}
+
+.slick-next {
+  right: -10px;
+  background-image: url("../img/next-arrow.svg");
+}
+
 /* STYLES FOR WP CONTENT */
 .page-content {
   clear: both;

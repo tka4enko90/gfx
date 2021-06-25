@@ -2,6 +2,8 @@
 <?php $complete_package_description = get_field('complete_package_description'); ?>
 
 <?php if ($complete_package_title || $complete_package_description || have_rows('complete_package_blocks')) : ?>
+    <?php wp_enqueue_style('single_product_complete_package_css', get_template_directory_uri() . '/static/css/modules/single_product_complete_package/single-product-complete-package.css', '', '', 'all'); ?>
+
     <section class="single-product-complete-package">
         <div class="container">
             <div class="section-holder">

@@ -1,3 +1,6 @@
+<?php wp_enqueue_style('single_product_hero_css', get_template_directory_uri() . '/static/css/modules/single_product_hero/single-product-hero.css', '', '', 'all'); ?>
+<?php wp_enqueue_script('single_product_hero_js', get_template_directory_uri() . '/static/js/modules/single_product_hero/single-product-hero.js', '', '', true); ?>
+
 <?php $product_trailer_youtube = get_field('product_trailer_youtube'); ?>
 
 <section class="single-product-hero">
@@ -44,7 +47,7 @@
 
                         </div>
                     <?php endif; ?>
-                    <a href="#" class="secondary-button slow-scroll-link">What’s Inside?</a>
+                    <a href="#" class="secondary-button scroll-down-link">What’s Inside?</a>
                 </div>
             </div>
             <?php if ($product_trailer_youtube) : ?>
@@ -55,3 +58,4 @@
         </div>
     </div>
 </section>
+<div class="scroll-here"></div>

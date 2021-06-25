@@ -1,0 +1,1 @@
+!function(e){e(".single-product-hero h2>img").hover((function(){var t=e(this).parent("h2").next(".compatible-with-box");t.length&&t.fadeToggle(200)}))}(jQuery);

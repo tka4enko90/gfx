@@ -5,6 +5,8 @@
 <?php $one_click_setup_button_2 = get_field('one_click_setup_button_2'); ?>
 
 <?php if ($one_click_setup_youtube_video_iframe || $one_click_setup_title || $one_click_setup_description || $one_click_setup_button_1 || $one_click_setup_button_2) : ?>
+    <?php wp_enqueue_style('single_product_one_click_setup_css', get_template_directory_uri() . '/static/css/modules/single_product_one_click_setup/single-product-one-click-setup.css', '', '', 'all'); ?>
+
     <section class="single-product-one-click-setup">
         <div class="container">
             <div class="section-holder">
