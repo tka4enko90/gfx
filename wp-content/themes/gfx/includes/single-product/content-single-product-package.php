@@ -14,10 +14,9 @@ if (post_password_required()) {
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
     <?php if ($product_id) : ?>
         <?php
-        get_template_part('template-parts/blocks/single_product_hero/single-product-hero', '', ['product' => $product, 'product_id' => $product_id]);
+        get_template_part('template-parts/blocks/single_product_hero/single-product-hero', '', ['product_id' => $product_id]);
         get_template_part('template-parts/blocks/single_product_product_info/single-product-product-info', '', ['product' => $product]);
         get_template_part('template-parts/blocks/single_product_complete_package/single-product-complete-package');
-        get_template_part('template-parts/blocks/single_product_get_full_package/single-product-get-full-package', '', ['product_id' => $product_id]);
         get_template_part('template-parts/blocks/single_product_also_from_this_package/single-product-also-from-this-package', '', ['product' => $product]);
         get_template_part('template-parts/blocks/single_product_one_click_setup/single-product-one-click-setup');
 

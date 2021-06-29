@@ -11,7 +11,7 @@ get_header(); ?>
     <?php $product_id = get_the_ID();
     if ($product_id) :
         if (has_term('animated-stream-package', 'product_cat', $product_id)) :
-            get_template_part( 'includes/single-product/content-single-product-animated-stream-package' );
+            get_template_part( 'includes/single-product/content-single-product-package' );
         else :
             get_template_part( 'includes/single-product/content-single-product' );
         endif;

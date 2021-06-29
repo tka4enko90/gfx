@@ -220,7 +220,7 @@
                     "name": "description",
                     "type": "wysiwyg",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -234,6 +234,60 @@
                     "delay": 1
                 }
             ]
+        },
+        {
+            "key": "field_60db2154c3d3a",
+            "label": "Hero",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_60db2162c3d3b",
+            "label": "Compatible box title",
+            "name": "hero_compatible_box_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_60db217ac3d3c",
+            "label": "Compatible box description",
+            "name": "hero_compatible_box_description",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_60d462b285e52",
@@ -400,6 +454,60 @@
             ]
         },
         {
+            "key": "field_60db1c5a5de2b",
+            "label": "Get the full package",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_60db1c745de2c",
+            "label": "Title",
+            "name": "get_full_package_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_60db1c8f5de2d",
+            "label": "Subtitle",
+            "name": "get_full_package_subtitle",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
+        },
+        {
             "key": "field_60d462cb85e53",
             "label": "One click setup",
             "name": "",
@@ -520,5 +628,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624628822
+    "modified": 1624973883
 }

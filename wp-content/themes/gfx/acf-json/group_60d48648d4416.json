@@ -3,6 +3,60 @@
     "title": "Blocks",
     "fields": [
         {
+            "key": "field_60db1fa5f4b1b",
+            "label": "Also from this package",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_60db1fb2f4b1c",
+            "label": "Title",
+            "name": "also_from_this_package_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_60db201c7a35c",
+            "label": "Description",
+            "name": "also_from_this_package_description",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
+        },
+        {
             "key": "field_60d486a8b603f",
             "label": "Need Help?",
             "name": "",
@@ -173,5 +227,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624546049
+    "modified": 1624973372
 }
