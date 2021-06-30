@@ -1,0 +1,156 @@
+@import '../../../src/scss/components/vars';
+
+.blog-posts-grid {
+  padding: 80px 0 50px;
+
+  @media (max-width: $sm) {
+    padding: 60px 0 50px;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  & > .container {
+    padding: 0 0 0 42px;
+
+    @media (max-width: $lg) {
+      padding: 0 6px 0 42px;
+    }
+
+    @media (max-width: $md) {
+      padding: 0 10px 0 42px;
+    }
+
+    @media (max-width: $xs) {
+      padding: 0 20px;
+    }
+  }
+
+  .posts-grid {
+    display: flex;
+    flex-wrap: wrap;
+
+    .post-card {
+      width: 25%;
+      margin-bottom: 60px;
+      padding-right: 42px;
+
+      @media (max-width: $lg) {
+        padding-right: 35px;
+        width: 33.33%;
+      }
+
+      @media (max-width: $md) {
+        width: 50%;
+        padding-right: 30px;
+        margin-bottom: 50px;
+      }
+
+      @media (max-width: $xs) {
+        width: 100%;
+        padding-right: 0;
+        margin-bottom: 40px;
+      }
+    }
+  }
+
+  .post-card {
+    &:hover {
+      h6 {
+        color: $red;
+      }
+    }
+
+    .thumbnail {
+      margin-bottom: 10px;
+
+      img {
+        width: 100%;
+        border-radius: 10px;
+        display: block;
+      }
+    }
+
+    h6 {
+      transition: color $transition;
+      margin: 0 0 2px;
+      color: $white;
+    }
+
+    .date {
+      font-size: 12px;
+      font-weight: 500;
+      color: $red;
+      line-height: 1.661;
+      text-transform: uppercase;
+    }
+  }
+
+  .posts-pagination {
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: $xs) {
+      margin-top: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      span, a {
+        padding: 0 13px;
+        font-size: 14px;
+        color: $text-color;
+
+        @media (max-width: $xs) {
+          padding: 0 9px;
+        }
+
+        &.current {
+          color: $red;
+        }
+      }
+
+      a {
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+
+    a.prev, a.next {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+
+      &:hover svg path {
+        fill: $white;
+      }
+
+      svg {
+        display: block;
+        width: 10px;
+
+        path {
+          transition: fill $transition;
+          fill: $text-color;
+        }
+      }
+    }
+
+    a.prev {
+      margin-right: 10px;
+    }
+
+    a.next {
+      margin-left: 10px;
+    }
+  }
+}

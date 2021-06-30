@@ -161,3 +161,53 @@ input {
     display: none;
   }
 }
+
+.search-form {
+  position: relative;
+
+  input[type="text"] {
+    padding: 0 20px 0 58px;
+    width: 100%;
+    border: 1px solid $text-color;
+    border-radius: 10px;
+    height: 42px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.314;
+    color: $text-color;
+
+    @media (max-width: $xs) {
+      padding: 0 10px 0 35px;
+    }
+
+    &::placeholder {
+      color: $text-color;
+    }
+  }
+
+  input[type="submit"] {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: 42px;
+    border: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../img/search-icon.svg");
+    background-size: 17px;
+
+    @media (max-width: $xs) {
+      width: 30px;
+      background-size: 15px;
+      left: 4px;
+    }
+
+    &:hover {
+      left: 9px;
+      transform: scale(1.15);
+    }
+  }
+}
