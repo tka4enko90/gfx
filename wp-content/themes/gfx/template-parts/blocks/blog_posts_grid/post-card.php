@@ -11,10 +11,10 @@
         <div class="date">
             <?php
             $post_date = get_the_date('Y-m-d H:i');
-            $current_date = new DateTime(); // текущее время на сервере
+            $current_date = new DateTime();
             if ($post_date && $current_date) :
-                $publication_date = DateTime::createFromFormat("Y-m-d H:i", $post_date); // задаем дату в любом формате
-                $interval = $current_date->diff($publication_date); // получаем разницу в виде объекта DateInterval
+                $publication_date = DateTime::createFromFormat("Y-m-d H:i", $post_date);
+                $interval = $current_date->diff($publication_date);
 
                 if ($interval) :
                     $years = $interval->y;

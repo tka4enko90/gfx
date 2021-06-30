@@ -1,0 +1,99 @@
+@import '../../../src/scss/components/vars';
+
+.single-product-related {
+  background-color: rgba($dark-blue, 0.8);
+  padding: 105px 0 85px;
+
+  @media (max-width: $sm) {
+    padding: 60px 0 40px;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0 20px;
+  }
+
+  .title {
+    color: $white;
+    margin-bottom: 0;
+  }
+
+  .subtitle {
+    color: $text-color;
+    font-size: 16px;
+    margin-bottom: 45px;
+
+    @media (max-width: $md) {
+      margin-bottom: 40px;
+    }
+  }
+
+  .products-holder {
+    margin: 0 -30px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (max-width: $md) {
+      margin: 0 -20px;
+    }
+
+    @media (max-width: $xs) {
+      margin: 0;
+    }
+
+    .product {
+      width: 33.33%;
+      padding: 0 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+
+      @media (max-width: $md) {
+        width: 50%;
+        padding: 0 20px;
+      }
+
+      @media (max-width: $xs) {
+        width: 100%;
+        padding: 0;
+      }
+
+      &:hover {
+        .woocommerce-loop-product_title {
+          color: $red;
+        }
+      }
+
+      .thumbnail {
+        img {
+          display: block;
+          width: 100%;
+          border-radius: 10px;
+          max-width: 454px;
+
+          @media (max-width: $xs) {
+            max-width: 100%;
+          }
+        }
+      }
+
+      .title {
+        padding-top: 13px;
+        color: $white;
+        transition: color $transition;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+
+      .price {
+        color: $red;
+        font-weight: 500;
+        font-size: 18px;
+
+        @media (max-width: $xs) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

@@ -11,45 +11,36 @@
     padding: 40px 0;
   }
 
-  & > .container {
-    padding: 0 0 0 42px;
-
-    @media (max-width: $lg) {
-      padding: 0 6px 0 42px;
-    }
-
-    @media (max-width: $md) {
-      padding: 0 10px 0 42px;
-    }
-
-    @media (max-width: $xs) {
-      padding: 0 20px;
-    }
-  }
-
   .posts-grid {
     display: flex;
     flex-wrap: wrap;
+    margin: 0 -21px;
+
+    @media (max-width: $lg) {
+      margin: 0 -15px;
+    }
 
     .post-card {
       width: 25%;
       margin-bottom: 60px;
-      padding-right: 42px;
+      padding: 0 21px;
 
       @media (max-width: $lg) {
-        padding-right: 35px;
+        padding: 0 15px;
         width: 33.33%;
       }
 
       @media (max-width: $md) {
         width: 50%;
-        padding-right: 30px;
         margin-bottom: 50px;
+      }
+
+      @media (max-width: $sm) {
+        margin-bottom: 40px;
       }
 
       @media (max-width: $xs) {
         width: 100%;
-        padding-right: 0;
         margin-bottom: 40px;
       }
     }
