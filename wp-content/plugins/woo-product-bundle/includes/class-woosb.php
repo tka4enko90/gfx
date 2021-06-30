@@ -1278,7 +1278,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 					if ( ! $fixed_price && $discount_percentage ) {
 						$_price *= (float) ( 100 - $discount_percentage ) / 100;
-						$_price = round( $_price, wc_get_price_decimals() );
+						//$_price = round( $_price, wc_get_price_decimals() );
 					}
 
 					// add to cart

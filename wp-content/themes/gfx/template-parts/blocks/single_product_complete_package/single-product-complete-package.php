@@ -10,7 +10,7 @@
                 <?php if ($complete_package_title || $complete_package_description) : ?>
                     <div class="left-col <?php if (!have_rows('complete_package_blocks')) : ?>full-width<?php endif; ?>">
                         <div class="red-text">
-                            You’ve selected the...
+                            <?php _e( 'You’ve selected the...', 'gfx' ); ?>
                         </div>
 
                         <?php if ($complete_package_title) : ?>

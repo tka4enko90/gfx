@@ -75,9 +75,9 @@
                 </button>
 
                 <div class="product-name"></div>
-                <div class="additional-text">has been added to your cart.</div>
+                <div class="additional-text"><?php _e( 'has been added to your cart.', 'gfx' ); ?></div>
                 <?php $cart_link = wc_get_cart_url(); ?>
-                <a href="<?php echo $cart_link; ?>" class="primary-button extra-small">View Cart</a>
+                <a href="<?php echo $cart_link; ?>" class="primary-button extra-small"><?php _e( 'View Cart', 'gfx' ); ?></a>
             </div>
         </div>
     </header>

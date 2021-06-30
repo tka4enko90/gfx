@@ -165,7 +165,7 @@ function woosb_check_ready($container) {
   }
 
   if (is_selection || is_empty || is_min || is_max) {
-    $btn.addClass('woosb-disabled disabled');
+    $btn.addClass('woosb-disabled');
 
     if (is_selection) {
       $alert.
@@ -192,7 +192,7 @@ function woosb_check_ready($container) {
     }
   } else {
     $alert.html('').slideUp();
-    $btn.removeClass('woosb-disabled disabled');
+    $btn.removeClass('woosb-disabled');
   }
 }
 

@@ -29,21 +29,19 @@
                         <?php $url = get_sub_field('url'); ?>
                         <?php $description = get_sub_field('description'); ?>
 
-                        <a href="<?php if ($url) {
-                            echo $url;
-                        } ?>" class="block">
+                        <a href="<?php if ($url) {echo $url;} ?>" class="block">
                             <div class="holder">
                                 <?php if ($icon_id) : ?>
                                     <?php echo wp_get_attachment_image($icon_id, 'gfx_semi_small'); ?>
                                 <?php endif; ?>
 
                                 <?php if ($title) : ?>
-                                    <h5><?php the_sub_field('title'); ?></h5>
+                                    <h5><?php echo $title; ?></h5>
                                 <?php endif; ?>
 
                                 <?php if ($description) : ?>
                                     <div class="description">
-                                        <?php the_sub_field('description'); ?>
+                                        <?php echo $description; ?>
                                     </div>
                                 <?php endif; ?>
                             </div>

@@ -269,11 +269,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				}
 
 				if ( $this->is_manage_stock() ) {
-					if ( $backorders === 'yes' ) {
-						return $parent_backorders;
-					} else {
-						return 'notify';
-					}
+					return $parent_backorders;
 				}
 
 				return $backorders;

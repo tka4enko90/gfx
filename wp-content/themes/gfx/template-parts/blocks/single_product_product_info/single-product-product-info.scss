@@ -249,6 +249,10 @@
         @media (max-width: $md) {
           padding-top: 40px;
         }
+
+        .added_to_cart.wc-forward {
+          display: none !important;
+        }
       }
     }
   }

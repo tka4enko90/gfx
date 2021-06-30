@@ -81,7 +81,6 @@
     var addedToCartPopup = $('.product-added-to-cart-popup');
     if (body.length) {
         body.on('added_to_cart', function (event, fragments, cart_hash, button) {
-            alert('ready');
             var addedProductName = button.attr('data-product_title');
             var productPopOutCloseBtn = $('.product-pop-out-close-btn');
 
