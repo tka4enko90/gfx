@@ -18,10 +18,8 @@
                     </div>
                 <?php endif; ?>
             </div>
-        </div>
 
-        <?php if (have_rows('need_help_links', 'option')) : ?>
-            <div class="container blocks-container">
+            <?php if (have_rows('need_help_links', 'option')) : ?>
                 <div class="blocks-holder">
                     <?php while (have_rows('need_help_links', 'option')) : the_row(); ?>
                         <?php $icon_id = get_sub_field('icon'); ?>
@@ -29,7 +27,9 @@
                         <?php $url = get_sub_field('url'); ?>
                         <?php $description = get_sub_field('description'); ?>
 
-                        <a href="<?php if ($url) {echo $url;} ?>" class="block">
+                        <a href="<?php if ($url) {
+                            echo $url;
+                        } ?>" class="block">
                             <div class="holder">
                                 <?php if ($icon_id) : ?>
                                     <?php echo wp_get_attachment_image($icon_id, 'gfx_semi_small'); ?>
@@ -48,7 +48,7 @@
                         </a>
                     <?php endwhile; ?>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
+        </div>
     </section>
 <?php endif; ?>

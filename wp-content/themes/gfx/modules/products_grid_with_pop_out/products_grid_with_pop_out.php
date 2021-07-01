@@ -21,10 +21,7 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-        </div>
-    </div>
-    <div class="container products-container">
-        <div class="section-holder">
+
             <?php $products = get_posts([
                 'numberposts' => 6,
                 'post_type' => 'product',
@@ -100,7 +97,6 @@
             <?php endif; ?>
         </div>
     </div>
-
     <div class="product-pop-out">
         <div class="popup">
             <div class="top-holder">

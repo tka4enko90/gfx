@@ -11,7 +11,7 @@
                 <?php $also_from_this_package_description = get_field('also_from_this_package_description', 'option'); ?>
 
                 <section class="single-product-also-from-this-package">
-                    <div class="container">
+                    <div class="container small">
                         <div class="section-holder">
                             <?php if ($also_from_this_package_title || $also_from_this_package_description) : ?>
                                 <div class="title-holder">
@@ -32,34 +32,10 @@
                                     if ($bundled_item_id) :
                                         $bundled_product = wc_get_product($bundled_item_id);
                                         if (isset($bundled_product) && $bundled_product instanceof WC_Product) :
-                                            $product_title = $bundled_product->get_title($bundled_item_id);
-                                            $product_price = $bundled_product->get_price($bundled_item_id);
-                                            $product_image = $bundled_product->get_image('gfx_semi_medium');
-
-                                            if ($product_price) :
-                                                $product_full_price = wc_price($product_price);
-                                            endif; ?>
-
-                                            <a class="product" href="<?php the_permalink($bundled_item_id); ?>">
-                                                <?php if ($product_image) : ?>
-                                                    <div class="thumbnail">
-                                                        <?php echo $product_image; ?>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php if ($product_title) : ?>
-                                                    <div class="title">
-                                                        <?php echo $product_title; ?>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php if (isset($product_full_price)) : ?>
-                                                    <div class="price">
-                                                        <?php echo $product_full_price; ?>
-                                                    </div>
-                                                <?php endif; ?>
-                                            </a>
-                                        <?php endif;
-                                    endif; ?>
-                                <?php endforeach; ?>
+                                            get_template_part('template-parts/product-card', '', array('product' => $bundled_product));
+                                        endif;
+                                    endif;
+                                endforeach; ?>
                             </div>
                         </div>
                     </div>

@@ -29,9 +29,12 @@ if (!empty($args)) :
 
                                     <div class="products-holder">
                                         <?php while ($related_products->have_posts()) : $related_products->the_post(); ?>
-                                            <?php global $product; ?>
-                                            <?php if ($product) : ?>
-                                                <?php get_template_part('template-parts/product-card', '', array('product' => $product)); ?>
+                                            <?php $post_id = get_the_ID(); ?>
+                                            <?php if($post_id) : ?>
+                                                <?php $product = wc_get_product($post_id); ?>
+                                                <?php if (isset($product) && $product instanceof WC_Product) : ?>
+                                                    <?php get_template_part('template-parts/product-card', '', array('product' => $product)); ?>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                         <?php endwhile; ?>
                                     </div>

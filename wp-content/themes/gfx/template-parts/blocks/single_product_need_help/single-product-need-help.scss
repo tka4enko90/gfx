@@ -31,6 +31,7 @@
 
       a {
         color: $red;
+
         &:hover {
           color: $white;
         }
@@ -38,92 +39,93 @@
     }
   }
 
-  .blocks-container {
-    padding: 45px 10px 0;
+  .blocks-holder {
+    padding-top: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -23px;
 
     @media (max-width: $md) {
-      padding: 40px 15px 0;
+      padding-top: 40px;
+      margin: 0 -20px;
     }
 
     @media (max-width: $sm) {
-      padding: 30px 30px 0;
+      padding-top: 30px;
+      margin: 0 -10px;
     }
 
     @media (max-width: $xs) {
-      padding: 20px;
+      padding-top: 20px;
+      margin: 0;
     }
 
-    .blocks-holder {
-      display: flex;
-      flex-wrap: wrap;
+    .block {
+      width: 33.33%;
+      padding: 0 23px;
 
-      .block {
-        width: 33%;
-        padding: 0 23px;
+      @media (max-width: $md) {
+        width: 50%;
+        padding: 0 20px;
+        margin-bottom: 40px;
+      }
 
-        @media (max-width: $md) {
-          width: 50%;
-          padding: 0 20px;
-          margin-bottom: 40px;
-        }
+      @media (max-width: $sm) {
+        padding: 0 10px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: $xs) {
+        width: 100%;
+        padding: 0;
+      }
+
+      .holder {
+        padding: 43px 20px;
+        border-radius: 10px;
+        background-color: $dark-blue;
+        max-width: 462px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
         @media (max-width: $sm) {
-          padding: 0 10px;
-          margin-bottom: 20px;
+          padding: 30px 20px;
         }
 
         @media (max-width: $xs) {
-          width: 100%;
-          padding: 0;
+          max-width: 100%;
+          padding: 20px;
         }
+      }
 
-        .holder {
-          padding: 43px 20px;
-          border-radius: 10px;
-          background-color: $dark-blue;
-          max-width: 462px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-
-          @media (max-width: $sm) {
-            padding: 30px 20px;
-          }
-
-          @media (max-width: $xs) {
-            max-width: 100%;
-            padding: 20px;
-          }
-        }
-
-        &:hover {
-          h5 {
-            color: $red;
-          }
-        }
-
-        img {
-          margin-bottom: 27px;
-
-          @media (max-width: $xs) {
-            margin-bottom: 20px;
-          }
-        }
-
+      &:hover {
         h5 {
-          color: $white;
-          margin-bottom: 8px;
-          transition: color $transition;
+          color: $red;
         }
+      }
 
-        .description {
-          font-size: 14px;
-          text-align: center;
-          color: $text-color;
-          max-width: 292px;
-          margin: 0 auto;
+      img {
+        margin-bottom: 27px;
+
+        @media (max-width: $xs) {
+          margin-bottom: 20px;
         }
+      }
+
+      h5 {
+        color: $white;
+        margin-bottom: 8px;
+        transition: color $transition;
+      }
+
+      .description {
+        font-size: 14px;
+        text-align: center;
+        color: $text-color;
+        max-width: 292px;
+        margin: 0 auto;
       }
     }
   }
