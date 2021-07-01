@@ -64,8 +64,27 @@
         padding: 0 10px;
       }
 
+      @media (max-width: $xs) {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+
       .thumbnail {
         margin-bottom: 7px;
+        height: 175px;
+
+        @media (max-width: $md) {
+          height: 150px;
+        }
+
+        @media (max-width: $xs) {
+          height: auto;
+        }
+
+        img {
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       .title {

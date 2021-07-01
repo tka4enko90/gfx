@@ -1,6 +1,4 @@
 <?php
-wp_enqueue_style('single_product_page_styles', get_template_directory_uri() . '/static/css/page-templates/single-product.css', '', '', 'all');
-
 defined('ABSPATH') || exit;
 
 global $product;

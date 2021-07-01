@@ -48,12 +48,13 @@
 
   .post-card {
     &:hover {
-      h6 {
-        color: $red;
+      .thumbnail {
+        transform: scale(1.03);
       }
     }
 
     .thumbnail {
+      transition: transform $transition;
       margin-bottom: 10px;
 
       img {
