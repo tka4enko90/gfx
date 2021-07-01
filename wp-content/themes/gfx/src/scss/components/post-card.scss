@@ -1,0 +1,32 @@
+.post-card {
+  &:hover {
+    .thumbnail {
+      transform: scale(1.03);
+    }
+  }
+
+  .thumbnail {
+    transition: transform $transition;
+    margin-bottom: 10px;
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+  }
+
+  .title {
+    transition: color $transition;
+    margin: 0 0 2px;
+    color: $white;
+  }
+
+  .date {
+    font-size: 12px;
+    font-weight: 500;
+    color: $red;
+    line-height: 1.661;
+    text-transform: uppercase;
+  }
+}

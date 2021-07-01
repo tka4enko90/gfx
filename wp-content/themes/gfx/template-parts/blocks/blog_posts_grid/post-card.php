@@ -7,7 +7,7 @@
                 <?php echo $post_thumbnail; ?>
             </div>
         <?php endif; ?>
-        <h6><?php the_title(); ?></h6>
+        <h6 class="title"><?php the_title(); ?></h6>
         <div class="date">
             <?php
             $post_date = get_the_date('Y-m-d H:i');

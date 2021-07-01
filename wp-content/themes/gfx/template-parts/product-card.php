@@ -19,9 +19,7 @@ if (!empty($args)) :
             </div>
         <?php endif; ?>
         <?php if ($product_title) : ?>
-            <div class="title">
-                <?php echo $product_title; ?>
-            </div>
+            <h6 class="title"><?php echo $product_title; ?></h6>
         <?php endif; ?>
         <?php if (isset($product_full_price)) : ?>
             <div class="price">

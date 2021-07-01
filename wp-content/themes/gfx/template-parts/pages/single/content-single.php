@@ -1,6 +1,8 @@
-<?php get_template_part( 'template-parts/blocks/single_post_hero/single-post-hero' ); ?>
+<?php
+get_template_part('template-parts/blocks/single_post_hero/single-post-hero');
+get_template_part('template-parts/blocks/single_post_content/single-post-content');
 
-<!--<article class="single-post">-->
-<!--    <h1>--><?php //the_title() ?><!--</h1>-->
-<!--    --><?php //the_content() ?>
-<!--</article>-->
+$post = get_post();
+if ($post) :
+    get_template_part('template-parts/blocks/single_product_related/single-product-related', '', array('post' => $post));
+endif; ?>
