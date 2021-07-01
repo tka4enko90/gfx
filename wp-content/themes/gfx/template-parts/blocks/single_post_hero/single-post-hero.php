@@ -1,4 +1,4 @@
-<?php $post_id = get_queried_object_id(); ?>
+<?php $post_id = get_the_ID(); ?>
 
 <?php if ($post_id) : ?>
     <?php $post_title = get_the_title($post_id); ?>

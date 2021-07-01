@@ -13,6 +13,7 @@ if (!empty($args)) :
                         $args = array(
                             'post_type' => 'product',
                             'posts_per_page' => 3,
+                            'post__not_in' => array($product_id),
                             'product_cat' => $product_category_slug
                         );
                         $related_products = new WP_Query($args);
