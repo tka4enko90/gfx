@@ -17,6 +17,7 @@ if (!empty($args) && isset($args['product_id'])) :
                 $get_full_package_subtitle = get_field('get_full_package_subtitle'); ?>
                 <?php wp_enqueue_style('single_product_get_full_package_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_get_full_package/single-product-get-full-package.css', '', '', 'all'); ?>
 
+                <?php if ($get_full_package_title || $get_full_package_subtitle || $parent_product_trailer_youtube) : ?>
                 <section class="single-product-get-full-package">
                     <div class="container">
                         <div class="section-holder">
@@ -48,6 +49,7 @@ if (!empty($args) && isset($args['product_id'])) :
                     </div>
                 </section>
             <?php endif;
+            endif;
         endif;
     endif;
 endif; ?>

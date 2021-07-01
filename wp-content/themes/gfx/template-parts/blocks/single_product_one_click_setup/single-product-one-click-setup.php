@@ -28,7 +28,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <?php if ($one_click_setup_button_1['url'] || $one_click_setup_button_2['url']) : ?>
+                    <?php if (isset($one_click_setup_button_1['url']) || isset($one_click_setup_button_2['url'])) : ?>
                         <div class="buttons-holder">
                             <?php if ($one_click_setup_button_1['url']) : ?>
                                 <a class="primary-button" href="<?php echo $one_click_setup_button_1['url']; ?>"

@@ -1,19 +1,10 @@
-<?php
-/**
- * @package WordPress
- * @subpackage gfx
- */
-get_header();
-?>
+<?php get_header(); ?>
 
-<main class="main">
-    <?php
-	while (have_posts()) :
-		the_post();
-		get_template_part('includes/single/content', get_post_type());
-	endwhile;
-	?>
-</main>
+    <main class="main">
+        <?php while (have_posts()) :
+            the_post();
+            get_template_part('template-parts/pages/single/content-single');
+        endwhile; ?>
+    </main>
 
-<?php
-get_footer();
+<?php get_footer(); ?>

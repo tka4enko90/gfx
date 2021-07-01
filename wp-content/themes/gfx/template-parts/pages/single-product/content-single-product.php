@@ -18,11 +18,7 @@ if (post_password_required()) {
         get_template_part('template-parts/blocks/single_product_get_full_package/single-product-get-full-package', '', array('product_id' => $product_id));
         get_template_part('template-parts/blocks/single_product_also_from_this_package/single-product-also-from-this-package', '', array('product' => $product));
         get_template_part('template-parts/blocks/single_product_one_click_setup/single-product-one-click-setup');
-
-        if (function_exists('woocommerce_output_related_products')) :
-            woocommerce_output_related_products();
-        endif;
-
+        get_template_part('template-parts/blocks/single_product_related/single-product-related', '', array('product' => $product));
         get_template_part('template-parts/blocks/single_product_need_help/single-product-need-help');
     endif; ?>
 </div>

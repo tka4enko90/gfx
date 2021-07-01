@@ -58,10 +58,13 @@
 
       .thumbnail {
         img {
+          object-fit: cover;
+          max-height: 255px;
           max-width: 454px;
 
           @media (max-width: $xs) {
             max-width: 100%;
+            max-height: 100%;
           }
         }
       }
