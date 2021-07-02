@@ -1130,13 +1130,14 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			$_product = wc_get_product( $product_id );
 
 			if ( $_product && $_product->is_type( 'woosb' ) ) {
-				if ( isset( $_POST['woosb_ids'] ) && ( $_product->is_optional() || $_product->has_variables() ) ) {
-					$ids = WPCleverWoosb_Helper::woosb_clean_ids( $_POST['woosb_ids'] );
+				if ( isset( $_REQUEST['woosb_ids'] ) ) {
+					//isset( $_REQUEST['woosb_ids'] ) && ( $_product->is_optional() || $_product->has_variables() )
+					$ids = WPCleverWoosb_Helper::woosb_clean_ids( $_REQUEST['woosb_ids'] );
 					$_product->build_items( $ids );
 				}
 
 				$items = $_product->get_items();
-				$qty   = isset( $_POST['quantity'] ) ? (int) $_POST['quantity'] : 1;
+				$qty   = isset( $_REQUEST['quantity'] ) ? (int) $_REQUEST['quantity'] : 1;
 
 				if ( ! empty( $items ) ) {
 					foreach ( $items as $item ) {
@@ -1208,9 +1209,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 			if ( $_product && $_product->is_type( 'woosb' ) && ( $ids = $_product->get_ids() ) ) {
 				// make sure that is bundle
-				if ( isset( $_POST['woosb_ids'] ) && ( $_product->is_optional() || $_product->has_variables() ) ) {
-					$ids = WPCleverWoosb_Helper::woosb_clean_ids( $_POST['woosb_ids'] );
-					unset( $_POST['woosb_ids'] );
+				if ( isset( $_REQUEST['woosb_ids'] ) ) {
+					//isset( $_REQUEST['woosb_ids'] ) && ($_product->is_optional() || $_product->has_variables())
+					$ids = WPCleverWoosb_Helper::woosb_clean_ids( $_REQUEST['woosb_ids'] );
+					unset( $_REQUEST['woosb_ids'] );
 				}
 
 				if ( ! empty( $ids ) ) {
@@ -2431,11 +2433,14 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 							}
 						}
 
+						$item_class = 'woosb-product';
+
 						if ( ( ! $_product->is_in_stock() || ! $_product->has_enough_stock( $_qty ) ) && ( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes' ) ) {
-							$_qty = 0;
+							$_qty       = 0;
+							$item_class .= ' woosb-product-unpurchasable';
 						}
 						?>
-                        <div class="woosb-product"
+                        <div class="<?php echo esc_attr( $item_class ); ?>"
                              data-name="<?php echo esc_attr( $_product->get_name() ); ?>"
                              data-id="<?php echo esc_attr( $_product->is_type( 'variable' ) ? 0 : $item['id'] ); ?>"
                              data-price="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_get_price_to_display( $_product, 1, 'min' ) ); ?>"

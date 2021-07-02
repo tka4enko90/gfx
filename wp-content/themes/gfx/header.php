@@ -37,8 +37,8 @@
                 <?php if ($header_logo || $logo_first || $logo_second) : ?>
                     <div class="logo-holder">
                         <a href="<?php echo home_url(); ?>">
-                            <?php if ($header_logo['url']) : ?>
-                                <img src="<?php echo $header_logo['url']; ?>" alt="logo icon">
+                            <?php if ($header_logo) : ?>
+                                <?php echo wp_get_attachment_image($header_logo, 'logo'); ?>
                             <?php endif; ?>
                             <?php if ($logo_first) : ?><span><?php echo $logo_first; ?></span><?php endif; ?>
                             <?php if ($logo_first) : ?><span

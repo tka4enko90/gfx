@@ -454,6 +454,11 @@
                 "param": "page",
                 "operator": "!=",
                 "value": "54"
+            },
+            {
+                "param": "page_template",
+                "operator": "!=",
+                "value": "template-contacts.php"
             }
         ]
     ],
@@ -465,5 +470,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1625043674
+    "modified": 1625153099
 }

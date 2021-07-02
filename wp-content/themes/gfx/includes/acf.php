@@ -21,26 +21,6 @@ if (function_exists('acf_add_options_page')) {
 
     acf_add_options_page(
         [
-            'page_title' 	=> 'Header',
-            'menu_title'	=> 'Header',
-            'parent_slug' => 'options',
-            'capability'	=> 'edit_posts',
-            'redirect'		=> false
-        ]
-    );
-
-    acf_add_options_page(
-        [
-            'page_title' 	=> 'Footer',
-            'menu_title'	=> 'Footer',
-            'parent_slug' => 'options',
-            'capability'	=> 'edit_posts',
-            'redirect'		=> false
-        ]
-    );
-
-    acf_add_options_page(
-        [
             'page_title' 	=> 'Blocks',
             'menu_title'	=> 'Blocks',
             'parent_slug' => 'options',

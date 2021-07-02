@@ -1,0 +1,96 @@
+@import '../../../src/scss/components/vars';
+
+.contact-hero {
+  background-color: rgba($dark-blue, 0.8);
+  padding: 62px 0 16px;
+
+  @media (max-width: $sm) {
+    padding: 50px 0 16px;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0 16px;
+  }
+
+  &.no-image {
+    padding: 62px 0;
+
+    @media (max-width: $sm) {
+      padding: 50px 0;
+    }
+
+    @media (max-width: $xs) {
+      padding: 40px 0;
+    }
+
+    .text-col {
+      padding: 0;
+      margin: 0;
+      max-width: 100%;
+    }
+  }
+
+  .section-holder {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: $lg) {
+      align-items: center;
+    }
+
+    @media (max-width: $md) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .text-col {
+    max-width: 600px;
+    padding-top: 60px;
+    padding-right: 40px;
+
+    @media (max-width: $lg) {
+      padding-top: 0;
+    }
+
+    @media (max-width: $md) {
+      margin-bottom: 40px;
+      padding-right: 0;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+
+      @media (max-width: $md) {
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .subtitle {
+      color: $text-color;
+      font-size: 18px;
+
+      @media (max-width: $xs) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .image-col {
+    width: 100%;
+    max-width: 638px;
+
+    @media (max-width: $md) {
+      max-width: 100%;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+}

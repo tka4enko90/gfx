@@ -62,3 +62,6 @@ if (!function_exists('woocommerce_template_loop_product_title')) {
         echo '<div class="woocommerce-loop-product_title">' . get_the_title() . '</div>';
     }
 }
+
+// remove cf7 default tags
+add_filter('wpcf7_autop_or_not', '__return_false');

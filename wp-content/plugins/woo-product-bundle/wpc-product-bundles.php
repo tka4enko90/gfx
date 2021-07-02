@@ -3,7 +3,7 @@
 Plugin Name: WPC Product Bundles for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: WPC Product Bundles is a plugin help you bundle a few products, offer them at a discount and watch the sales go up!
-Version: 5.7.3
+Version: 5.7.4
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: woo-product-bundle
@@ -16,7 +16,7 @@ WC tested up to: 5.4.1
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WOOSB_VERSION' ) && define( 'WOOSB_VERSION', '5.7.3' );
+! defined( 'WOOSB_VERSION' ) && define( 'WOOSB_VERSION', '5.7.4' );
 ! defined( 'WOOSB_FILE' ) && define( 'WOOSB_FILE', __FILE__ );
 ! defined( 'WOOSB_URI' ) && define( 'WOOSB_URI', plugin_dir_url( __FILE__ ) );
 ! defined( 'WOOSB_DIR' ) && define( 'WOOSB_DIR', plugin_dir_path( __FILE__ ) );
@@ -30,6 +30,7 @@ defined( 'ABSPATH' ) || exit;
 include 'includes/wpc-dashboard.php';
 include 'includes/wpc-menu.php';
 include 'includes/wpc-kit.php';
+include 'includes/wpc-notice.php';
 
 if ( ! function_exists( 'woosb_init' ) ) {
 	add_action( 'plugins_loaded', 'woosb_init', 11 );

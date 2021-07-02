@@ -1,6 +1,29 @@
-input {
+@import 'vars';
+
+input, textarea {
+  display: block;
+  font-family: $helvetica-now-display;
   outline: none;
-  background: none;
+  font-size: 16px;
+  color: $white;
+  border: 1px solid $text-color;
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 10px;
+  transition: border-color $transition;
+
+  &:focus {
+    border-color: $white;
+  }
+
+  &::placeholder {
+    color: $text-color;
+  }
+}
+
+textarea {
+  resize: none;
+  height: 186px;
 }
 
 .tml {
@@ -168,20 +191,12 @@ input {
   input[type="text"] {
     padding: 0 20px 0 58px;
     width: 100%;
-    border: 1px solid $text-color;
-    border-radius: 10px;
     height: 42px;
     font-size: 15px;
-    font-weight: 500;
     line-height: 1.314;
-    color: $white;
 
     @media (max-width: $xs) {
       padding: 0 10px 0 35px;
-    }
-
-    &::placeholder {
-      color: $text-color;
     }
   }
 
@@ -209,5 +224,29 @@ input {
       left: 9px;
       transform: scale(1.15);
     }
+  }
+}
+
+.wpcf7-response-output {
+  font-size: 16px;
+  border-width: 1px;
+  padding: 10px !important;
+  color: $white;
+}
+
+.wpcf7-not-valid-tip {
+  font-size: 13px;
+  font-family: $font-family-base;
+  color: $red;
+  margin-top: 3px;
+}
+
+form {
+  position: relative;
+
+  .ajax-loader {
+    position: absolute !important;
+    bottom: 0;
+    right: 0;
   }
 }
