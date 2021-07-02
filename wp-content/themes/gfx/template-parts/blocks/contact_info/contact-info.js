@@ -26,7 +26,6 @@
     }
 
     document.addEventListener( 'wpcf7mailsent', function( event ) {
-        console.log(event.detail);
         var form = $('body').find('form.sent');
         if(form.length) {
             var placeholder = form.find('.custom-placeholder');

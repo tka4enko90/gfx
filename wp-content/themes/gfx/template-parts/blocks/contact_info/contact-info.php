@@ -13,12 +13,14 @@
     <div class="contact-info">
         <div class="container">
             <div class="section-holder">
-                <?php if ($contact_form_shortcode) : ?>
+                <?php if ($contact_form_shortcode || $contact_form_title) : ?>
                     <div class="form-col">
                         <?php if ($contact_form_title) : ?>
                             <h3><?php echo $contact_form_title; ?></h3>
                         <?php endif; ?>
-                        <?php echo do_shortcode($contact_form_shortcode); ?>
+                        <?php if ($contact_form_shortcode) : ?>
+                            <?php echo do_shortcode($contact_form_shortcode); ?>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
 
