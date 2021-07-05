@@ -48,68 +48,9 @@
 
   .posts-pagination {
     margin-top: -10px;
-    display: flex;
-    justify-content: center;
 
     @media (max-width: $xs) {
       margin-top: 0;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      span, a {
-        padding: 0 13px;
-        font-size: 14px;
-        color: $text-color;
-
-        @media (max-width: $xs) {
-          padding: 0 9px;
-        }
-
-        &.current {
-          color: $red;
-        }
-      }
-
-      a {
-        &:hover {
-          color: $white;
-        }
-      }
-    }
-
-    a.prev, a.next {
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-
-      &:hover svg path {
-        fill: $white;
-      }
-
-      svg {
-        display: block;
-        width: 10px;
-
-        path {
-          transition: fill $transition;
-          fill: $text-color;
-        }
-      }
-    }
-
-    a.prev {
-      margin-right: 10px;
-    }
-
-    a.next {
-      margin-left: 10px;
     }
   }
 }
