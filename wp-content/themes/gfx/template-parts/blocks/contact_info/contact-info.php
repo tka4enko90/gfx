@@ -1,5 +1,6 @@
 <?php $contact_form_title = get_field('contact_form_title'); ?>
 <?php $contact_form_shortcode = get_field('contact_form_shortcode'); ?>
+<?php $contact_text_under_form = get_field('contact_text_under_form'); ?>
 
 <?php $contact_block_page_icon_id = get_field('contact_block_page_icon'); ?>
 <?php $contact_block_page_link = get_field('contact_block_page_link'); ?>
@@ -13,13 +14,20 @@
     <div class="contact-info">
         <div class="container">
             <div class="section-holder">
-                <?php if ($contact_form_shortcode || $contact_form_title) : ?>
+                <?php if ($contact_form_shortcode || $contact_form_title || $contact_text_under_form) : ?>
                     <div class="form-col">
-                        <?php if ($contact_form_title) : ?>
-                            <h3><?php echo $contact_form_title; ?></h3>
-                        <?php endif; ?>
-                        <?php if ($contact_form_shortcode) : ?>
-                            <?php echo do_shortcode($contact_form_shortcode); ?>
+                        <div class="form-holder">
+                            <?php if ($contact_form_title) : ?>
+                                <h3><?php echo $contact_form_title; ?></h3>
+                            <?php endif; ?>
+                            <?php if ($contact_form_shortcode) : ?>
+                                <?php echo do_shortcode($contact_form_shortcode); ?>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($contact_text_under_form) : ?>
+                            <div class="under-form-text">
+                                <?php echo $contact_text_under_form; ?>
+                            </div>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

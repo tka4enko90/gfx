@@ -135,6 +135,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_60e2b9cc567af",
+            "label": "Text under form",
+            "name": "contact_text_under_form",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 1
+        },
+        {
             "key": "field_60deeb75a0527",
             "label": "Additional Page icon",
             "name": "contact_block_page_icon",
@@ -210,5 +229,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1625234268
+    "modified": 1625471475
 }

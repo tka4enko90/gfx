@@ -23,139 +23,160 @@
   .form-col {
     width: 100%;
     max-width: 1094px;
-    padding: 45px 50px 40px;
-    position: relative;
 
-    @media (max-width: $sm) {
-      padding: 40px;
-    }
+    .form-holder {
+      position: relative;
+      padding: 45px 50px 40px;
 
-    @media (max-width: $xs) {
-      padding: 30px;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      border-radius: 10px;
-      background-color: rgba($dark-blue, 0.851);
-    }
-
-    & > h3 {
-      margin-bottom: 29px;
+      @media (max-width: $sm) {
+        padding: 40px;
+      }
 
       @media (max-width: $xs) {
-        margin-bottom: 25px;
-      }
-    }
-
-    form {
-      .holder {
-        display: flex;
-
-        @media (max-width: $sm) {
-          flex-direction: column;
-        }
-
-        .input-holder:first-of-type {
-          margin-right: 25px;
-
-          @media (max-width: $sm) {
-            margin-right: 0;
-          }
-        }
+        padding: 30px;
       }
 
-      .input-holder {
-        position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        margin-bottom: 23px;
+        height: 100%;
+        z-index: -2;
+        border-radius: 10px;
+        background-color: rgba($dark-blue, 0.851);
+      }
+
+      & > h3 {
+        margin-bottom: 29px;
 
         @media (max-width: $xs) {
-          margin-bottom: 20px;
+          margin-bottom: 25px;
         }
+      }
 
-        &.not-required {
-          input,
-          textarea {
-            border: 1px solid rgba($text-color, 0.6);
+      form {
+        .holder {
+          display: flex;
 
-            &::placeholder {
-              opacity: 0.6;
+          @media (max-width: $sm) {
+            flex-direction: column;
+          }
+
+          .input-holder:first-of-type {
+            margin-right: 25px;
+
+            @media (max-width: $sm) {
+              margin-right: 0;
             }
           }
         }
 
-        &.textarea {
-          margin-bottom: 0;
+        .input-holder {
+          position: relative;
+          width: 100%;
+          margin-bottom: 23px;
+
+          @media (max-width: $xs) {
+            margin-bottom: 20px;
+          }
+
+          &.not-required {
+            input,
+            textarea {
+              border: 1px solid rgba($text-color, 0.6);
+
+              &::placeholder {
+                opacity: 0.6;
+              }
+            }
+          }
+
+          &.textarea {
+            margin-bottom: 0;
+
+            .custom-placeholder {
+              top: 17px;
+
+              @media (max-width: $xs) {
+                top: 15px;
+              }
+            }
+          }
+
+          input, textarea {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0);
+          }
 
           .custom-placeholder {
-            top: 17px;
+            position: absolute;
+            top: 13px;
+            left: 28px;
+            color: $text-color;
+            font-size: 16px;
+            font-weight: 500;
+            z-index: -1;
 
             @media (max-width: $xs) {
-              top: 15px;
+              left: 17px;
             }
           }
-        }
-
-        input, textarea {
-          width: 100%;
-          background-color: rgba(0, 0, 0, 0);
         }
 
         .custom-placeholder {
-          position: absolute;
-          top: 13px;
-          left: 28px;
-          color: $text-color;
-          font-size: 16px;
-          font-weight: 500;
-          z-index: -1;
+          span {
+            color: $red;
+          }
+        }
+
+        .submit-holder {
+          display: flex;
+          justify-content: center;
+          padding-top: 34px;
+
+          input {
+            min-width: 152px;
+          }
+        }
+
+        input:not([type="submit"]) {
+          width: 100%;
+          height: 52px;
+          padding: 0 26px;
+          line-height: 1.298;
 
           @media (max-width: $xs) {
-            left: 17px;
+            padding: 0 15px;
+          }
+        }
+
+        textarea {
+          width: 100%;
+          padding: 17px 26px;
+
+          @media (max-width: $xs) {
+            padding: 15px;
           }
         }
       }
+    }
 
-      .custom-placeholder {
-        span {
-          color: $red;
-        }
+    .under-form-text {
+      font-size: 14px;
+      color: $text-color;
+      padding-top: 35px;
+
+      p {
+        margin: 0;
       }
 
-      .submit-holder {
-        display: flex;
-        justify-content: center;
-        padding-top: 34px;
+      a {
+        color: $text-color-light;
 
-        input {
-          min-width: 152px;
-        }
-      }
-
-      input:not([type="submit"]) {
-        width: 100%;
-        height: 52px;
-        padding: 0 26px;
-        line-height: 1.298;
-
-        @media (max-width: $xs) {
-          padding: 0 15px;
-        }
-      }
-
-      textarea {
-        width: 100%;
-        padding: 17px 26px;
-
-        @media (max-width: $xs) {
-          padding: 15px;
+        &:hover {
+          color: $white;
         }
       }
     }
