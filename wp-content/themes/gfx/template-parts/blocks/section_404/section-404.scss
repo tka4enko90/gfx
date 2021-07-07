@@ -1,0 +1,105 @@
+@import '../../../src/scss/components/vars';
+
+body.error404 {
+  main {
+    height: 100%;
+  }
+}
+
+.section-404 {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 150px 0;
+
+  @media (max-width: $md) {
+    padding: 120px 0;
+  }
+
+  @media (max-width: $sm) {
+    padding: 100px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 80px 0;
+  }
+
+  .section-holder {
+    display: flex;
+    flex-direction: column;
+    max-width: 770px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0;
+    color: $white;
+    font-size: 78px;
+    line-height: 0.823;
+
+    @media (max-width: $sm) {
+      font-size: 70px;
+    }
+
+    @media (max-width: $xs) {
+      font-size: 65px;
+    }
+  }
+
+  h2 {
+    margin: 20px 0 0 0;
+    color: $white;
+
+    @media (max-width: $md) {
+      font-size: 40px;
+    }
+
+    @media (max-width: $sm) {
+      font-size: 35px;
+    }
+
+    @media (max-width: $xs) {
+      font-size: 30px;
+      margin: 15px 0 0 0;
+    }
+  }
+
+  .subtitle {
+    font-size: 24px;
+    color: $text-color;
+    margin-top: 35px;
+
+    @media (max-width: $sm) {
+      font-size: 20px;
+    }
+
+    @media (max-width: $xs) {
+      font-size: 18px;
+    }
+  }
+
+  .btn-holder {
+    display: flex;
+    justify-content: center;
+    margin-top: 46px;
+
+    @media (max-width: $sm) {
+      margin-top: 35px;
+    }
+
+    @media (max-width: $xs) {
+      margin-top: 30px;
+    }
+
+    .primary-button {
+      min-width: 230px;
+      padding: 12px 31px;
+
+      @media (max-width: $xs) {
+        min-width: 0;
+        padding: 12px 25px;
+      }
+    }
+  }
+}
