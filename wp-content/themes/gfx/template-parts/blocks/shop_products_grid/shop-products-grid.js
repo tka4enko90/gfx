@@ -1,8 +1,10 @@
 (function ($) {
+    var parentSection = $('.shop-products-grid');
     var filtrationForm = $('#product-filtration-form');
     var filterTagsSelect = $('.filter-tags-select');
     var filterBubbles = $('.filter-bubbles');
     var categoriesList = $('.categories-list');
+    //var pageNumber = parentSection.find('.posts-pagination .page-numbers');
 
     if (categoriesList.length) {
         // make dropdown item white - if it has active child item
@@ -133,7 +135,7 @@
                         }
                     }
 
-                    filtrationForm.trigger('update');
+                    filtrationForm.trigger('submit');
                 }
             }
         });
@@ -147,7 +149,7 @@
                 filterTagsSelect.trigger('change.select2');
             }
 
-            filtrationForm.trigger('update');
+            filtrationForm.trigger('submit');
         });
     }
 
@@ -160,20 +162,48 @@
             e.preventDefault();
 
             $.ajax({
-                url: ajaxurl.url,
+                url: window.location.href,
                 type: 'GET',
+                headers: {
+                    'x-filter-product': true
+                },
                 data: {
                     action: 'product_form_filters',
                     form: filtrationForm.serialize()
                 },
                 success: function(data) {
-                    var ajaxContent = $('.ajax-content');
+                    var ajaxContent = parentSection.find('.ajax-content');
 
-                    if(ajaxContent.length && data.content) {
-                        ajaxContent.html(data.content);
+                    if(ajaxContent.length && data) {
+                        ajaxContent.html(data);
                     }
                 }
-            })
+            });
         });
     }
+    //
+    // if(pageNumber.length) {
+    //     pageNumber.on('click', function (e) {
+    //         e.preventDefault();
+    //
+    //         $.ajax({
+    //             url: window.location.href,
+    //             type: 'GET',
+    //             headers: {
+    //                 'x-filter-product': true
+    //             },
+    //             data: {
+    //                 action: 'product_pagination',
+    //                 form: filtrationForm.serialize()
+    //             },
+    //             success: function(data) {
+    //                 var ajaxContent = $('.ajax-content');
+    //
+    //                 if(ajaxContent.length && data) {
+    //                     ajaxContent.html(data);
+    //                 }
+    //             }
+    //         })
+    //     });
+    // }
 })(jQuery);
