@@ -24,3 +24,26 @@ function register_custom_post_types() {
     register_post_type('testimonials', $args);
 }
 add_action( 'init', 'register_custom_post_types' );
+
+function register_custom_post_taxonomies(){
+    register_taxonomy( 'filter_tag', [ 'product' ], [
+        'label'                 => '',
+        'labels'                => [
+            'name'              => 'Filter Tags',
+            'singular_name'     => 'Filter Tag',
+            'search_items'      => 'Search Filter Tag',
+            'all_items'         => 'All Filter Tags',
+            'view_item '        => 'View Filter Tag',
+            'parent_item'       => 'Parent Filter Tag',
+            'parent_item_colon' => 'Parent Filter Tag:',
+            'edit_item'         => 'Edit Filter Tag',
+            'update_item'       => 'Update Filter Tag',
+            'add_new_item'      => 'Add New Filter Tag',
+            'new_item_name'     => 'New Filter Tag Name',
+            'menu_name'         => 'Filter Tags',
+        ],
+        'public'                => true,
+        'hierarchical'          => false,
+    ] );
+}
+add_action( 'init', 'register_custom_post_taxonomies' );
