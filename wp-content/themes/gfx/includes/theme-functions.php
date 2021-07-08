@@ -78,7 +78,7 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 function cpt_archive_per_page($query)
 {
     if ($query->is_main_query() && !is_admin() && (is_post_type_archive('product') || is_tax('product_cat'))) {
-        $query->set('posts_per_page', '1');
+        $query->set('posts_per_page', '3');
     }
 }
 add_action('pre_get_posts', 'cpt_archive_per_page');

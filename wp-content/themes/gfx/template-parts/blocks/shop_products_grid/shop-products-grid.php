@@ -85,22 +85,27 @@
                         </select>
                     </div>
 
-                    <?php $products_count = wp_count_posts('product')->publish; ?>
-                    <?php if (isset($products_count)) : ?>
-                        <div class="showing-results">
-                            Showing <span class="showing-count">3</span> of <span
-                                    class="all-count"><?php echo $products_count; ?></span> results
-                        </div>
-                    <?php endif; ?>
+                    <?php $posts_per_page = 3; ?>
+                    <?php if (is_tax('product_cat') && isset($current_term_id)) :
+                        $current_category = get_term($current_term_id);
+                        $all_posts_count = $current_category->count;
+                    else :
+                        $all_posts_count = wp_count_posts('product')->publish;
+                    endif;
+
+                    if($posts_per_page > $all_posts_count) :
+                        $posts_per_page = $all_posts_count;
+                    endif;
+                    ?>
+                    <div class="showing-results">
+                        Showing <span class="showing-posts-count"><?php echo $posts_per_page; ?></span> of <span
+                                class="all-posts-count"><?php echo isset($all_posts_count) ? $all_posts_count : ''; ?></span>
+                        results
+                    </div>
                 </div>
             </div>
             <div class="section-holder">
-                <?php if(!empty($args['category'])) : ?>
-                    <?php $category = $args['category']; ?>
-                    <?php get_template_part('template-parts/blocks/shop_products_grid/shop_products-item', '', array('args' => $_GET, 'category' => $category)); ?>
-                <?php else : ?>
-                    <?php get_template_part('template-parts/blocks/shop_products_grid/shop_products-item', '', array('args' => $_GET)); ?>
-                <?php endif; ?>
+                <?php get_template_part('template-parts/blocks/shop_products_grid/shop_products-item', '', array('args' => $_GET)); ?>
 
                 <?php $product_categories = get_terms(array(
                     'taxonomy' => 'product_cat',

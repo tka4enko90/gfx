@@ -4,7 +4,8 @@
     var filterTagsSelect = $('.filter-tags-select');
     var filterBubbles = $('.filter-bubbles');
     var categoriesList = $('.categories-list');
-    //var pageNumber = parentSection.find('.posts-pagination .page-numbers');
+    var allPostsCount = filtrationForm.find('.all-posts-count');
+    var showingPostsCount = filtrationForm.find('.showing-posts-count');
 
     if (categoriesList.length) {
         // make dropdown item white - if it has active child item
@@ -153,7 +154,7 @@
         });
     }
 
-    if(filtrationForm.length) {
+    if (filtrationForm.length) {
         filtrationForm.on('change', function () {
             filtrationForm.trigger('submit');
         });
@@ -171,39 +172,34 @@
                     action: 'product_form_filters',
                     form: filtrationForm.serialize()
                 },
-                success: function(data) {
+                success: function (data) {
                     var ajaxContent = parentSection.find('.ajax-content');
 
-                    if(ajaxContent.length && data) {
+                    if (ajaxContent.length && data) {
                         ajaxContent.html(data);
+
+                        changeShowingInfo($(data));
                     }
                 }
             });
         });
     }
-    //
-    // if(pageNumber.length) {
-    //     pageNumber.on('click', function (e) {
-    //         e.preventDefault();
-    //
-    //         $.ajax({
-    //             url: window.location.href,
-    //             type: 'GET',
-    //             headers: {
-    //                 'x-filter-product': true
-    //             },
-    //             data: {
-    //                 action: 'product_pagination',
-    //                 form: filtrationForm.serialize()
-    //             },
-    //             success: function(data) {
-    //                 var ajaxContent = $('.ajax-content');
-    //
-    //                 if(ajaxContent.length && data) {
-    //                     ajaxContent.html(data);
-    //                 }
-    //             }
-    //         })
-    //     });
-    // }
+
+    $(document).ready(function () {
+        var ajaxContent = filtrationForm.find('.ajax-content');
+        if (ajaxContent.length) {
+            changeShowingInfo(ajaxContent);
+        }
+    });
+
+    // change showing posts info
+    function changeShowingInfo(block) {
+        var showing = block.data('posts-count');
+        var resultsCount = block.data('all-posts-count');
+
+        if (allPostsCount.length && showingPostsCount.length) {
+            showingPostsCount.html(showing);
+            allPostsCount.html(resultsCount);
+        }
+    }
 })(jQuery);

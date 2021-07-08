@@ -1,17 +1,23 @@
 <?php
 if (!empty($args['args'])) :
     $form = $args['args'];
+    $form_data = array();
 
+    // if data = array
     if (is_array($form)) :
-        $form_data = $form;
+        if (isset($form['action']) && isset($form['form'])) :
+            parse_str($form['form'], $form_data);
+        else :
+            $form_data = $form;
+        endif;
+    // if data = form.serialize
     else :
-        $form_data = array();
         parse_str($form, $form_data);
     endif;
 endif;
 
-if (!empty($args['category'])) :
-    $category = $args['category'];
+if (!empty(get_queried_object()->slug)) :
+    $category = get_queried_object()->slug;
 endif;
 
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -108,7 +114,7 @@ endif;
 
 $products = new WP_Query($args);
 if ($products->have_posts()) : ?>
-    <div class="col ajax-content">
+    <div class="col ajax-content" data-posts-count="<?php echo count($products->posts); ?>" data-all-posts-count="<?php echo $products->found_posts; ?>">
         <div class="products-grid">
             <?php while ($products->have_posts()) : $products->the_post(); ?>
                 <?php $product_id = get_the_ID(); ?>
@@ -120,12 +126,12 @@ if ($products->have_posts()) : ?>
                 <?php endif; ?>
             <?php endwhile; ?>
         </div>
+
         <div class="posts-pagination">
             <?php $total_pages = $products->max_num_pages;
             if ($total_pages > 1) {
                 $current_page = max(1, get_query_var('paged'));
                 echo paginate_links(array(
-                    'base' => get_pagenum_link(1) . '%_%',
                     'format' => 'page/%#%',
                     'current' => $current_page,
                     'total' => $total_pages,
@@ -149,7 +155,7 @@ if ($products->have_posts()) : ?>
         </div>
     </div>
 <?php else : ?>
-    <div class="col ajax-content">
+    <div class="col ajax-content" data-posts-count="0" data-all-posts-count="0">
         <?php _e('No products found'); ?>
     </div>
 <?php endif;
