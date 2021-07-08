@@ -8,6 +8,9 @@
     <?php if(!empty($args['image'])) : ?>
         <?php $hero_image_id = $args['image']; ?>
     <?php endif; ?>
+    <?php if(!empty($args['image_size'])) : ?>
+        <?php $hero_image_size = $args['image_size']; ?>
+    <?php endif; ?>
 
     <?php if (isset($hero_title) || isset($hero_subtitle) || isset($hero_image_id)) : ?>
         <?php wp_enqueue_style('hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero/hero.css', '', '', 'all'); ?>
@@ -29,7 +32,11 @@
                     <?php endif; ?>
                     <?php if (isset($hero_image_id)) : ?>
                         <div class="image-col">
-                            <?php echo wp_get_attachment_image($hero_image_id, 'gfx_wc_gallery_large'); ?>
+                            <?php if(isset($hero_image_size)) : ?>
+                                <?php echo wp_get_attachment_image($hero_image_id, $hero_image_size); ?>
+                            <?php else : ?>
+                                <?php echo wp_get_attachment_image($hero_image_id, 'gfx_wc_gallery_large'); ?>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>

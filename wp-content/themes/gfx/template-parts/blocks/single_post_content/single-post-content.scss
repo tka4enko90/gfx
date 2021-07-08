@@ -13,7 +13,7 @@
 
   .section-holder {
     position: relative;
-    border-bottom: 1px solid rgba(87, 100, 121, 0.502);
+    border-bottom: 1px solid rgba($text-color, 0.502);
     padding-bottom: 40px;
 
     @media (max-width: $xs) {

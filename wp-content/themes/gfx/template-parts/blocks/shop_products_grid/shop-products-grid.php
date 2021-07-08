@@ -85,21 +85,9 @@
                         </select>
                     </div>
 
-                    <?php $posts_per_page = 3; ?>
-                    <?php if (is_tax('product_cat') && isset($current_term_id)) :
-                        $current_category = get_term($current_term_id);
-                        $all_posts_count = $current_category->count;
-                    else :
-                        $all_posts_count = wp_count_posts('product')->publish;
-                    endif;
-
-                    if($posts_per_page > $all_posts_count) :
-                        $posts_per_page = $all_posts_count;
-                    endif;
-                    ?>
                     <div class="showing-results">
-                        Showing <span class="showing-posts-count"><?php echo $posts_per_page; ?></span> of <span
-                                class="all-posts-count"><?php echo isset($all_posts_count) ? $all_posts_count : ''; ?></span>
+                        Showing <span class="showing-posts-count"></span> of <span
+                                class="all-posts-count"></span>
                         results
                     </div>
                 </div>

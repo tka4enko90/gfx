@@ -94,3 +94,16 @@ function product_form_filters()
 
 add_action('wp', 'product_form_filters');
 add_action('wp', 'product_form_filters');
+
+// add payment methods page to my-account menu
+add_filter ( 'woocommerce_account_menu_items', 'add_payment_methods_link', 40 );
+function add_payment_methods_link( $menu_links ){
+    $menu_links = array_slice( $menu_links, 0, 4, true )
+        + array( 'payment-methods' => 'Payment Methods' )
+        + array_slice( $menu_links, 4, NULL, true );
+    return $menu_links;
+}
+add_action( 'init', 'add_payment_methods_endpoint' );
+function add_payment_methods_endpoint() {
+    add_rewrite_endpoint( 'payment-methods', EP_PAGES );
+}

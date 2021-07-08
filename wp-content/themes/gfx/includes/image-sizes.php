@@ -9,4 +9,5 @@
     add_image_size( 'gfx_medium', 580, 335 );
     add_image_size( 'gfx_medium_2', 471, 567 );
     add_image_size( 'gfx_wc_gallery_large', 744, 419 );
+    add_image_size( 'gfx_wc_hero_large', 769, 368 );
 }
