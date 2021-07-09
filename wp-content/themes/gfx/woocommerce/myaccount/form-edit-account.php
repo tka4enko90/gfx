@@ -32,7 +32,6 @@ do_action('woocommerce_before_edit_account_form'); ?>
                             class="required">*</span></label>
                 <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
                        name="account_first_name" id="account_first_name" autocomplete="given-name"
-                       placeholder="<?php _e('Nihaj', 'gfx'); ?>"
                        value="<?php echo esc_attr($user->first_name); ?>"/>
             </div>
 
@@ -41,7 +40,7 @@ do_action('woocommerce_before_edit_account_form'); ?>
                             class="required">*</span></label>
                 <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
                        name="account_last_name"
-                       id="account_last_name" autocomplete="family-name" placeholder="<?php _e('Choudhury', 'gfx'); ?>"
+                       id="account_last_name" autocomplete="family-name"
                        value="<?php echo esc_attr($user->last_name); ?>"/>
             </div>
 
@@ -49,7 +48,7 @@ do_action('woocommerce_before_edit_account_form'); ?>
                 <label for="account_display_name"><?php esc_html_e('Display Name', 'gfx'); ?>&nbsp;<span
                             class="required">*</span></label>
                 <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
-                       name="account_display_name" id="account_display_name" placeholder="<?php _e('NXHAJ', 'gfx'); ?>"
+                       name="account_display_name" id="account_display_name"
                        value="<?php echo esc_attr($user->display_name); ?>"/>
                 <span class="promt"><?php esc_html_e('This will be how your name will be displayed in the account section and in reviews', 'gfx'); ?></span>
             </div>
@@ -58,7 +57,7 @@ do_action('woocommerce_before_edit_account_form'); ?>
                 <label for="account_email"><?php esc_html_e('Email Address', 'gfx'); ?>&nbsp;<span
                             class="required">*</span></label>
                 <input type="email" class="woocommerce-Input woocommerce-Input--email input-text"
-                       name="account_email" placeholder="<?php _e('Choudhury', 'gfx'); ?>"
+                       name="account_email"
                        id="account_email" autocomplete="email" value="<?php echo esc_attr($user->user_email); ?>"/>
             </div>
 
