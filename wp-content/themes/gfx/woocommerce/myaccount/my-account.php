@@ -43,7 +43,7 @@ endif; ?>
              */
             do_action('woocommerce_account_navigation'); ?>
 
-            <div class="col">
+            <div class="col information-col">
                 <?php
                 /**
                  * My Account content.
