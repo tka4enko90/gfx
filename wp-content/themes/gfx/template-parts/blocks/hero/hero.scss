@@ -59,23 +59,21 @@
     }
 
     h1 {
-      margin-bottom: 40px;
-
-      @media (max-width: $md) {
-        margin-bottom: 30px;
-      }
-
-      @media (max-width: $xs) {
-        margin-bottom: 20px;
-      }
+      margin: 0;
     }
 
     .subtitle {
       color: $text-color;
       font-size: 18px;
+      margin-top: 40px;
+
+      @media (max-width: $md) {
+        margin-top: 30px;
+      }
 
       @media (max-width: $xs) {
         font-size: 16px;
+        margin-top: 20px;
       }
     }
   }
@@ -109,6 +107,22 @@
 
     @media (max-width: $xs) {
       padding: 40px 0 0;
+    }
+
+    &.no-image {
+      padding: 62px 0;
+
+      @media (max-width: $sm) {
+        padding: 50px 0;
+      }
+
+      @media (max-width: $xs) {
+        padding: 40px 0;
+      }
+
+      .text-col {
+        padding: 0;
+      }
     }
 
     .section-holder {

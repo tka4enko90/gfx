@@ -103,6 +103,8 @@ function add_payment_methods_link( $menu_links ){
         + array_slice( $menu_links, 4, NULL, true );
     return $menu_links;
 }
+
+// add payment methods endpoint
 add_action( 'init', 'add_payment_methods_endpoint' );
 function add_payment_methods_endpoint() {
     add_rewrite_endpoint( 'payment-methods', EP_PAGES );

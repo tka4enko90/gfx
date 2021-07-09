@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-  padding: 93px 0 0 0;
+  padding: 87px 0 0 0;
   margin: 0;
   font-family: $font-family-base;
   font-weight: normal;
@@ -23,11 +23,7 @@ body {
   background-image: url("../img/bg.png");
 
   @media (max-width: $sm) {
-    padding: 74px 0 0 0;
-  }
-
-  @media (max-width: $xs) {
-    padding: 66px 0 0 0;
+    padding: 75px 0 0 0;
   }
 }
 
