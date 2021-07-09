@@ -21,7 +21,7 @@
                         <?php $filter_tags = get_terms('filter_tag');
                         if (!empty($filter_tags)) : ?>
                             <div class="filter-tags-holder">
-                                <span class="placeholder"><?php _e('Filters'); ?></span>
+                                <span class="placeholder"><?php _e('Filters', 'gfx'); ?></span>
                                 <select name="filter-tags[]" class="custom-select multiple filter-tags-select">
                                     <?php foreach ($filter_tags as $filter_tag) : ?>
                                         <option value="<?php echo $filter_tag->slug; ?>"><?php echo $filter_tag->name; ?></option>
@@ -104,7 +104,7 @@
                     <div class="col categories">
                         <div class="categories-list">
 
-                            <h6><?php _e('Categories'); ?></h6>
+                            <h6><?php _e('Categories', 'gfx'); ?></h6>
                             <ul>
                                 <?php foreach ($product_categories as $category) : ?>
                                     <?php $term_id = $category->term_id; ?>

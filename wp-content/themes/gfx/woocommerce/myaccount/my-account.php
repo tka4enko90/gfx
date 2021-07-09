@@ -20,7 +20,7 @@ defined('ABSPATH') || exit; ?>
 <?php wp_enqueue_style('my_account_page_styles', get_template_directory_uri() . '/static/css/page-templates/my-account.css', '', '', 'all'); ?>
 
 <?php
-$user_name = wp_get_current_user()->user_login;
+$user_name = wp_get_current_user()->display_name;
 if (!empty($user_name)) :
     $hero_title = 'Hi, ' . $user_name;
     $my_account_hero_subtitle = get_field('my_account_hero_subtitle', 'option');
@@ -33,7 +33,7 @@ endif; ?>
 
 <section class="my-account-section">
     <div class="container">
-        <h6 class="my-account-title"><?php _e('My Account'); ?></h6>
+        <h6 class="my-account-title"><?php _e('My Account', 'gfx'); ?></h6>
         <div class="section-holder">
             <?php
             /**

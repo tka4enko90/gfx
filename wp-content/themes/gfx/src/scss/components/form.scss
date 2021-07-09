@@ -87,7 +87,7 @@ textarea {
       padding: 10px 21px;
       display: flex;
       align-items: center;
-      color: $text-color;
+      color: $white;
       line-height: 1.37;
 
       @media (max-width: $xs) {
@@ -157,11 +157,11 @@ textarea {
 }
 
 .tml-register, .tml-login {
-  .tml-label {
+  .tml-label:not([for="rememberme"]) {
     display: inline-block;
     position: relative;
 
-    &::after {
+    &::before {
       content: '*';
       position: absolute;
       top: -1px;

@@ -23,9 +23,9 @@ if (!empty($args)) :
 
                             <section class="single-product-related">
                                 <div class="container">
-                                    <h3 class="title"><?php _e('Related Products'); ?></h3>
+                                    <h3 class="title"><?php _e('Related Products', 'gfx'); ?></h3>
                                     <div class="subtitle">
-                                        <?php _e('Here are some similar products we think you might like'); ?>
+                                        <?php _e('Here are some similar products we think you might like', 'gfx'); ?>
                                     </div>
 
                                     <div class="products-holder">
@@ -73,9 +73,9 @@ if (!empty($args)) :
 
                             <section class="single-product-related">
                                 <div class="container">
-                                    <h3 class="title"><?php _e('Related Posts'); ?></h3>
+                                    <h3 class="title"><?php _e('Related Posts', 'gfx'); ?></h3>
                                     <div class="subtitle">
-                                        <?php _e('Here are some similar posts we think you might like'); ?>
+                                        <?php _e('Here are some similar posts we think you might like', 'gfx'); ?>
                                     </div>
 
                                     <div class="products-holder">

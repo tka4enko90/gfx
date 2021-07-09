@@ -36,7 +36,7 @@ $allowed_html = array(
     <?php $account_details_link = wc_get_endpoint_url('edit-account'); ?>
     <?php $logout_link = wp_logout_url(); ?>
 
-    <h3><?php _e('Dashboard'); ?></h3>
+    <h3><?php _e('Dashboard', 'gfx'); ?></h3>
     <div class="section-description">
         <?php
         /* translators: 1: Orders URL 2: Address URL 3: Account URL. */
@@ -74,7 +74,7 @@ $allowed_html = array(
                                       fill="#ff0036" data-original="#000000" style="" class=""/>
                             </g></svg>
                     </div>
-                    <?php _e('Orders'); ?>
+                    <?php _e('Orders', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>
@@ -126,7 +126,7 @@ $allowed_html = array(
                                 </g>
                             </g></svg>
                     </div>
-                    <?php _e('Downloads'); ?>
+                    <?php _e('Downloads', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>
@@ -174,7 +174,7 @@ $allowed_html = array(
                                 </g>
                             </g></svg>
                     </div>
-                    <?php _e('Addresses'); ?>
+                    <?php _e('Addresses', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>
@@ -224,7 +224,7 @@ $allowed_html = array(
                                 </g>
                             </g></svg>
                     </div>
-                    <?php _e('Payment Methods'); ?>
+                    <?php _e('Payment Methods', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>
@@ -244,7 +244,7 @@ $allowed_html = array(
                                       fill="#ff0036" data-original="#000000" style="" class=""/>
                             </g></svg>
                     </div>
-                    <?php _e('Account Details'); ?>
+                    <?php _e('Account Details', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>
@@ -264,7 +264,7 @@ $allowed_html = array(
                                 </g>
                             </g></svg>
                     </div>
-                    <?php _e('Logout'); ?>
+                    <?php _e('Logout', 'gfx'); ?>
                 </div>
             </a>
         <?php endif; ?>

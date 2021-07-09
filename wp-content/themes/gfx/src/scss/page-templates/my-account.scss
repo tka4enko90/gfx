@@ -22,6 +22,11 @@
     }
   }
 
+  .woocommerce-notices-wrapper {
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+
   .col {
     width: 100%;
   }
@@ -70,12 +75,12 @@
 
           &:after {
             right: 0;
-            background-image: linear-gradient(to right, rgba(0,0,0,0), rgba($dark-blue, 0.851));
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
           }
 
           &:before {
             left: 0;
-            background-image: linear-gradient(to left, rgba(0,0,0,0), rgba($dark-blue, 0.851));
+            background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
           }
 
           &:last-of-type {
@@ -281,6 +286,71 @@
               transition: fill $transition;
               fill: #969fad;
             }
+          }
+        }
+      }
+    }
+  }
+
+  // edit account page
+  .my-account-info-block {
+
+    form.edit-account {
+
+      h5 {
+        font-size: 22px;
+        color: $white;
+        margin: 42px 0 20px 0;
+      }
+
+      .input-wrapper {
+        margin-bottom: 30px;
+
+        @media (max-width: $xs) {
+          margin-bottom: 25px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .promt {
+          display: block;
+          color: $text-color;
+          font-size: 12px;
+          font-style: italic;
+          margin-top: 4px;
+        }
+
+        .primary-button {
+          min-width: 160px;
+          height: 35px;
+        }
+
+        label {
+          display: inline-block;
+          font-size: 16px;
+          color: $white;
+          margin-bottom: 12px;
+          line-height: 1;
+
+          span {
+            padding-left: 4px;
+            color: $text-color;
+          }
+
+          .required {
+            color: $red;
+            margin-left: -3px;
+          }
+        }
+
+        input {
+          width: 100%;
+          padding: 14px 25px;
+
+          @media (max-width: $xs) {
+            padding: 10px 15px;
           }
         }
       }

@@ -156,7 +156,7 @@ if ($products->have_posts()) : ?>
     </div>
 <?php else : ?>
     <div class="col ajax-content" data-posts-count="0" data-all-posts-count="0">
-        <?php _e('No products found'); ?>
+        <?php _e('No products found', 'gfx'); ?>
     </div>
 <?php endif;
 wp_reset_postdata(); ?>
