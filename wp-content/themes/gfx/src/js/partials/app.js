@@ -124,4 +124,101 @@
             }
         });
     }
+
+    // Downloads table pagination
+    var downloadsTable = $('.woocommerce-table--order-downloads');
+    var downloadsPagination = $('.my-account-downloads-pagination');
+
+    if (downloadsPagination.length) {
+        var downloadsPaginationButton = downloadsPagination.find('button');
+        var downloadsPaginationPageNumber = downloadsPagination.find('button.page-number');
+        var prevButton = downloadsPagination.find('button.prev');
+        var nextButton = downloadsPagination.find('button.next');
+
+        if (downloadsPaginationButton.length) {
+            downloadsPaginationButton.on('click', function () {
+                var self = $(this);
+
+                var downloads = downloadsPagination.attr('data-downloads');
+                var downloadsPerPage = downloadsPagination.attr('data-downloads-per-page');
+                var currentPage = parseInt(downloadsPagination.attr('data-downloads-current-page'));
+                var lastPage = parseInt(downloadsPagination.attr('data-downloads-last-page'));
+                var offset = 0;
+
+                prevButton.removeClass('hidden');
+                nextButton.removeClass('hidden');
+
+                // next btn
+                if (self.hasClass('prev')) {
+                    var prevPage = currentPage - 1;
+
+                    offset = prevPage * downloadsPerPage;
+                    changeActivePage(prevPage);
+                }
+                // prev btn
+                else if (self.hasClass('next')) {
+                    var nextPage = currentPage + 1
+
+                    offset = nextPage * downloadsPerPage;
+                    changeActivePage(nextPage);
+                }
+                // page number
+                else {
+                    var pageNum = parseInt(self.text());
+                    offset = pageNum * downloadsPerPage;
+
+                    downloadsPagination.attr('data-downloads-current-page', pageNum);
+
+                    downloadsPaginationButton.removeClass('current');
+                    self.addClass('current');
+                }
+
+                currentPage = parseInt(downloadsPagination.attr('data-downloads-current-page'));
+                checkPrevNextButtons(currentPage, lastPage);
+
+                $.ajax({
+                    url: ajaxurl.url,
+                    type: 'POST',
+                    data: {
+                        action: 'downloads_pagination',
+                        downloads: downloads,
+                        downloadsOffset: offset - 1,
+                        downloadsPerPage: downloadsPerPage,
+                    },
+                    success: function (data) {
+                        if (data.content && downloadsTable.length) {
+                            $(downloadsTable).html(data.content);
+                        }
+                    }
+                });
+            });
+
+            function changeActivePage(currentPage) {
+                downloadsPaginationPageNumber.removeClass('current');
+                downloadsPagination.attr('data-downloads-current-page', currentPage);
+
+                // find and set current class for page
+                downloadsPaginationPageNumber.each(function () {
+                    var self = $(this);
+                    var page = parseInt(self.text());
+
+                    if (page == currentPage) {
+                        self.addClass('current');
+                    }
+                });
+            }
+
+            function checkPrevNextButtons(currentPage, lastPage) {
+                // hide prev button
+                if (currentPage === 1) {
+                    prevButton.addClass('hidden');
+                }
+
+                // hide next button
+                if(currentPage === lastPage) {
+                    nextButton.addClass('hidden');
+                }
+            }
+        }
+    }
 })(jQuery);

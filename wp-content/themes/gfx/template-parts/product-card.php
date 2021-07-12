@@ -7,7 +7,7 @@ if (!empty($args)) :
     $product_price = $product->get_price($product_id);
     $product_image = $product->get_image('gfx_semi_medium');
 
-    if ($product_price) :
+    if (isset($product_price)) :
         $product_full_price = wc_price($product_price);
     endif;
     ?>
@@ -21,7 +21,7 @@ if (!empty($args)) :
         <?php if ($product_title) : ?>
             <h6 class="title"><?php echo $product_title; ?></h6>
         <?php endif; ?>
-        <?php if (isset($product_full_price)) : ?>
+        <?php if (!empty($product_full_price)) : ?>
             <div class="price">
                 <?php echo $product_full_price; ?>
             </div>

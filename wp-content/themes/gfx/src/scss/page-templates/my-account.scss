@@ -16,8 +16,9 @@
 
   .section-holder {
     display: flex;
+    flex-wrap: wrap;
 
-    @media (max-width: $md) {
+    @media (max-width: $lg) {
       flex-direction: column;
     }
   }
@@ -37,20 +38,27 @@
 
   .col.information-col {
     position: relative;
+    width: 70.7%;
+
+    @media (max-width: $lg) {
+      width: 100%;
+    }
   }
 
   .col.navigation {
-    max-width: 383px;
-    margin-right: 50px;
+    width: 29.3%;
+    max-width: 433px;
+    padding-right: 50px;
 
     @media (max-width: 1300px) {
-      max-width: 300px;
+      max-width: 350px;
     }
 
-    @media (max-width: $md) {
-      margin-right: 0;
+    @media (max-width: $lg) {
+      padding-right: 0;
       margin-bottom: 40px;
       max-width: 100%;
+      width: 100%;
     }
 
     .woocommerce-MyAccount-navigation {
@@ -191,6 +199,101 @@
         }
       }
     }
+
+    form.edit-account, form.edit-address {
+      h5 {
+        font-size: 22px;
+        color: $white;
+        margin: 42px 0 20px 0;
+      }
+
+      .input-wrapper, .form-row {
+        margin-bottom: 30px;
+
+        @media (max-width: $xs) {
+          margin-bottom: 25px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .promt {
+          display: block;
+          color: $text-color;
+          font-size: 12px;
+          font-style: italic;
+          margin-top: 4px;
+        }
+
+        .primary-button {
+          min-width: 160px;
+          height: 35px;
+        }
+
+        label {
+          display: inline-block;
+          font-size: 16px;
+          color: $white;
+          margin-bottom: 12px;
+          line-height: 1;
+
+          span {
+            padding-left: 4px;
+            color: $text-color;
+          }
+
+          .required {
+            content: '';
+            position: absolute;
+            font-size: 0;
+            //margin-left: -3px;
+
+            &::before {
+              content: '*';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 8px;
+              height: 8px;
+              color: $red;
+              font-size: 16px;
+            }
+          }
+
+          .optional {
+            padding-left: 0;
+          }
+        }
+
+        input {
+          width: 100%;
+          padding: 14px 25px;
+
+          @media (max-width: $xs) {
+            padding: 10px 15px;
+          }
+        }
+
+        .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+          height: 54px !important;
+
+          @media (max-width: $xs) {
+            height: 46px !important;
+          }
+
+          .select2-selection__rendered {
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+
+            @media (max-width: $xs) {
+              padding-left: 15px !important;
+              padding-right: 15px !important;
+            }
+          }
+        }
+      }
+    }
   }
 
   // dashboard page
@@ -300,106 +403,6 @@
     }
   }
 
-  // edit account page
-  .my-account-info-block {
-
-    form.edit-account, form.edit-address {
-
-      h5 {
-        font-size: 22px;
-        color: $white;
-        margin: 42px 0 20px 0;
-      }
-
-      .input-wrapper, .form-row {
-        margin-bottom: 30px;
-
-        @media (max-width: $xs) {
-          margin-bottom: 25px;
-        }
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-
-        .promt {
-          display: block;
-          color: $text-color;
-          font-size: 12px;
-          font-style: italic;
-          margin-top: 4px;
-        }
-
-        .primary-button {
-          min-width: 160px;
-          height: 35px;
-        }
-
-        label {
-          display: inline-block;
-          font-size: 16px;
-          color: $white;
-          margin-bottom: 12px;
-          line-height: 1;
-
-          span {
-            padding-left: 4px;
-            color: $text-color;
-          }
-
-          .required {
-            content: '';
-            position: absolute;
-            font-size: 0;
-            //margin-left: -3px;
-
-            &::before {
-              content: '*';
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 8px;
-              height: 8px;
-              color: $red;
-              font-size: 16px;
-            }
-          }
-
-          .optional {
-            padding-left: 0;
-          }
-        }
-
-        input {
-          width: 100%;
-          padding: 14px 25px;
-
-          @media (max-width: $xs) {
-            padding: 10px 15px;
-          }
-        }
-
-        .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
-          height: 54px !important;
-
-          @media (max-width: $xs) {
-            height: 46px !important;
-          }
-
-          .select2-selection__rendered {
-            padding-left: 25px !important;
-            padding-right: 25px !important;
-
-            @media (max-width: $xs) {
-              padding-left: 15px !important;
-              padding-right: 15px !important;
-            }
-          }
-        }
-      }
-    }
-  }
-
   // addresses page
   .my-account-edit-address-block {
     padding: 50px 50px 40px;
@@ -477,6 +480,97 @@
           padding-right: 20px;
         }
       }
+    }
+  }
+
+  // downloads section
+  .downloads-section {
+    & > a {
+      color: $red;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    .table-holder {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      border-spacing: 0;
+      border-collapse: collapse;
+      font-size: 16px;
+      min-width: 750px;
+
+      thead {
+        text-align: left;
+        font-weight: 500;
+        color: $text-color;
+
+        & > tr {
+          line-height: 1;
+
+          & > th {
+            padding-bottom: 32px;
+
+            @media (max-width: $md) {
+              padding-bottom: 20px;
+            }
+          }
+        }
+      }
+
+      tbody {
+        & > tr {
+          border-top: 1px solid $text-color;
+          border-bottom: 1px solid $text-color;
+
+          & > td {
+            height: 82px;
+
+            @media (max-width: $xs) {
+              height: 65px;
+            }
+
+            &.download-product {
+              a {
+                color: $red;
+
+                &:hover {
+                  color: $white;
+                }
+              }
+            }
+
+            &.download-file {
+              width: 1%;
+              white-space: nowrap;
+
+              & > a {
+                width: 129px;
+                margin-right: 18px;
+                text-align: center;
+                padding-left: 10px;
+                padding-right: 10px;
+
+                @media (max-width: $lg) {
+                  margin-right: 10px;
+                }
+
+                &:last-of-type {
+                  margin-right: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .my-account-downloads-pagination {
+      margin-top: 30px;
     }
   }
 }

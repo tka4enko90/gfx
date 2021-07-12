@@ -81,6 +81,7 @@ function cpt_archive_per_page($query)
         $query->set('posts_per_page', '3');
     }
 }
+
 add_action('pre_get_posts', 'cpt_archive_per_page');
 
 // product-filtration
@@ -96,16 +97,55 @@ add_action('wp', 'product_form_filters');
 add_action('wp', 'product_form_filters');
 
 // add payment methods page to my-account menu
-add_filter ( 'woocommerce_account_menu_items', 'add_payment_methods_link', 40 );
-function add_payment_methods_link( $menu_links ){
-    $menu_links = array_slice( $menu_links, 0, 4, true )
-        + array( 'payment-methods' => 'Payment Methods' )
-        + array_slice( $menu_links, 4, NULL, true );
+add_filter('woocommerce_account_menu_items', 'add_payment_methods_link', 40);
+function add_payment_methods_link($menu_links)
+{
+    $menu_links = array_slice($menu_links, 0, 4, true)
+        + array('payment-methods' => 'Payment Methods')
+        + array_slice($menu_links, 4, NULL, true);
     return $menu_links;
 }
 
 // add payment methods endpoint
-add_action( 'init', 'add_payment_methods_endpoint' );
-function add_payment_methods_endpoint() {
-    add_rewrite_endpoint( 'payment-methods', EP_PAGES );
+add_action('init', 'add_payment_methods_endpoint');
+function add_payment_methods_endpoint()
+{
+    add_rewrite_endpoint('payment-methods', EP_PAGES);
 }
+
+// downloads pagination
+function downloads_pagination()
+{
+    if (!empty($_POST['downloads'])) :
+        $download_cleaned = stripslashes(html_entity_decode($_POST['downloads']));
+        $downloads = json_decode($download_cleaned, true);
+    endif;
+
+    if (isset($_POST['downloadsOffset'])) :
+        $downloads_offset = $_POST['downloadsOffset'];
+    endif;
+
+    if (!empty($_POST['downloadsPerPage'])) :
+        $downloads_per_page = $_POST['downloadsPerPage'];
+    endif;
+
+    if (isset($downloads) && isset($downloads_offset) && isset($downloads_per_page)) :
+        ob_start();
+        get_template_part('woocommerce/order/order-downloads-table', '',
+            array(
+                'downloads' => $downloads,
+                'downloads_offset' => $downloads_offset,
+                'downloads_per_page' => $downloads_per_page,
+            ));
+        $content = ob_get_clean();
+
+        wp_send_json(array(
+            'content' => $content
+        ));
+    else :
+        wp_send_json_error();
+    endif;
+}
+
+add_action('wp_ajax_downloads_pagination', 'downloads_pagination');
+add_action('wp_ajax_nopriv_downloads_pagination', 'downloads_pagination');
