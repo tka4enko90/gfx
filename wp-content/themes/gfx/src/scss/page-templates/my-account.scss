@@ -303,7 +303,7 @@
   // edit account page
   .my-account-info-block {
 
-    form.edit-account {
+    form.edit-account, form.edit-address {
 
       h5 {
         font-size: 22px;
@@ -311,7 +311,7 @@
         margin: 42px 0 20px 0;
       }
 
-      .input-wrapper {
+      .input-wrapper, .form-row {
         margin-bottom: 30px;
 
         @media (max-width: $xs) {
@@ -348,8 +348,25 @@
           }
 
           .required {
-            color: $red;
-            margin-left: -3px;
+            content: '';
+            position: absolute;
+            font-size: 0;
+            //margin-left: -3px;
+
+            &::before {
+              content: '*';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 8px;
+              height: 8px;
+              color: $red;
+              font-size: 16px;
+            }
+          }
+
+          .optional {
+            padding-left: 0;
           }
         }
 
@@ -359,6 +376,24 @@
 
           @media (max-width: $xs) {
             padding: 10px 15px;
+          }
+        }
+
+        .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+          height: 54px !important;
+
+          @media (max-width: $xs) {
+            height: 46px !important;
+          }
+
+          .select2-selection__rendered {
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+
+            @media (max-width: $xs) {
+              padding-left: 15px !important;
+              padding-right: 15px !important;
+            }
           }
         }
       }
