@@ -1,8 +1,10 @@
 <?php
 /**
- * Order Downloads.
+ * Orders
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/order/order-downloads.php.
+ * Shows orders on the account page.
+ *
+ * This template can be overridden by copying it to yourtheme/woocommerce/myaccount/orders.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -10,38 +12,45 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see     https://docs.woocommerce.com/document/template-structure/
+ * @see https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 3.3.0
+ * @version 3.7.0
  */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-?>
-<?php if (!empty($downloads)) : ?>
-    <div class="woocommerce-order-downloads">
-        <?php $downloads_page = 1; ?>
-        <?php $downloads_per_page = 5; ?>
-        <?php $downloads_count = count($downloads); ?>
-        <?php $downloads_offset = 0; ?>
-        <?php $downloads_number_of_pages = $downloads_count / $downloads_per_page; ?>
+defined('ABSPATH') || exit;
+
+do_action('woocommerce_before_account_orders', $has_orders); ?>
+
+<div class="my-account-info-block orders-section">
+    <?php if ($has_orders) : ?>
+        <h3><?php _e('Manage Orders', 'gfx'); ?></h3>
+
+        <?php $orders = $customer_orders->orders; ?>
+        <?php $orders_per_page = 5; ?>
+        <?php $orders_offset = 0; ?>
+        <?php $orders_count = count($orders); ?>
+        <?php $orders_number_of_pages = $orders_count / $orders_per_page; ?>
 
         <div class="table-holder">
-            <?php get_template_part('woocommerce/order/order-downloads-table', '',
+            <?php get_template_part('woocommerce/order/orders-table', '',
                 array(
-                    'items' => $downloads,
-                    'offset' => $downloads_offset,
-                    'items_per_page' => $downloads_per_page,
+                    'items' => $orders,
+                    'offset' => $orders_offset,
+                    'items_per_page' => $orders_per_page,
                 )); ?>
         </div>
 
-        <?php if ($downloads_number_of_pages > 1) : ?>
-            <div class="posts-pagination my-account-downloads-pagination"
-                 data-items='<?php echo json_encode($downloads); ?>'
+        <?php $orders_jsons_arr = array(); ?>
+        <?php foreach ($orders as $order) : ?>
+            <?php $orders_jsons_arr[] = $order->__toString(); ?>
+        <?php endforeach; ?>
+
+        <?php if ($orders_number_of_pages > 1) : ?>
+            <div class="posts-pagination my-account-orders-pagination"
+                 data-items='<?php echo json_encode($orders_jsons_arr); ?>'
                  data-current-page="1"
-                 data-last-page="<?php echo ceil($downloads_number_of_pages); ?>"
-                 data-items-per-page="<?php echo $downloads_per_page; ?>">
+                 data-last-page="<?php echo ceil($orders_number_of_pages); ?>"
+                 data-items-per-page="<?php echo $orders_per_page; ?>">
 
                 <button class="prev page-numbers hidden">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -55,7 +64,7 @@ if (!defined('ABSPATH')) {
                                 </svg>
                 </button>
 
-                <?php for ($i = 0; $i < $downloads_number_of_pages; $i++) : ?>
+                <?php for ($i = 0; $i < $orders_number_of_pages; $i++) : ?>
                     <?php $page_num = $i; ?>
                     <?php ++$page_num; ?>
 
@@ -75,5 +84,15 @@ if (!defined('ABSPATH')) {
                 </button>
             </div>
         <?php endif; ?>
-    </div>
-<?php endif; ?>
+
+        <?php do_action('woocommerce_before_account_orders_pagination'); ?>
+    <?php else : ?>
+        <a class="woocommerce-Button button"
+           href="<?php echo esc_url(apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop'))); ?>">
+            <?php _e('Browse products', 'gfx'); ?>
+        </a>
+        <?php _e('No order has been made yet.', 'gfx'); ?>
+    <?php endif; ?>
+</div>
+
+<?php do_action('woocommerce_after_account_orders', $has_orders); ?>

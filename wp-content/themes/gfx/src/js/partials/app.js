@@ -125,100 +125,118 @@
         });
     }
 
-    // Downloads table pagination
-    var downloadsTable = $('.woocommerce-table--order-downloads');
-    var downloadsPagination = $('.my-account-downloads-pagination');
+    // AJAX Table pagination
+    function ajaxPagination(pagination, table, template) {
+        var paginationButton = pagination.find('button');
 
-    if (downloadsPagination.length) {
-        var downloadsPaginationButton = downloadsPagination.find('button');
-        var downloadsPaginationPageNumber = downloadsPagination.find('button.page-number');
-        var prevButton = downloadsPagination.find('button.prev');
-        var nextButton = downloadsPagination.find('button.next');
+        if (paginationButton.length) {
+            var prevButton = pagination.find('button.prev');
+            var nextButton = pagination.find('button.next');
 
-        if (downloadsPaginationButton.length) {
-            downloadsPaginationButton.on('click', function () {
+            paginationButton.on('click', function () {
                 var self = $(this);
 
-                var downloads = downloadsPagination.attr('data-downloads');
-                var downloadsPerPage = downloadsPagination.attr('data-downloads-per-page');
-                var currentPage = parseInt(downloadsPagination.attr('data-downloads-current-page'));
-                var lastPage = parseInt(downloadsPagination.attr('data-downloads-last-page'));
+                var items = pagination.attr('data-items');
+                var itemsPerPage = pagination.attr('data-items-per-page');
+                var currentPage = parseInt(pagination.attr('data-current-page'));
+                var lastPage = parseInt(pagination.attr('data-last-page'));
                 var offset = 0;
 
                 prevButton.removeClass('hidden');
                 nextButton.removeClass('hidden');
 
-                // next btn
+                // prev btn
                 if (self.hasClass('prev')) {
                     var prevPage = currentPage - 1;
 
-                    offset = prevPage * downloadsPerPage;
-                    changeActivePage(prevPage);
+                    offset = (prevPage * itemsPerPage) - itemsPerPage;
+                    changeActivePage(pagination, prevPage);
                 }
-                // prev btn
+                // next btn
                 else if (self.hasClass('next')) {
                     var nextPage = currentPage + 1
 
-                    offset = nextPage * downloadsPerPage;
-                    changeActivePage(nextPage);
+                    offset = (nextPage * itemsPerPage) - itemsPerPage;
+                    changeActivePage(pagination, nextPage);
                 }
                 // page number
                 else {
                     var pageNum = parseInt(self.text());
-                    offset = pageNum * downloadsPerPage;
+                    offset = (pageNum * itemsPerPage) - itemsPerPage;
 
-                    downloadsPagination.attr('data-downloads-current-page', pageNum);
+                    pagination.attr('data-current-page', pageNum);
 
-                    downloadsPaginationButton.removeClass('current');
+                    paginationButton.removeClass('current');
                     self.addClass('current');
                 }
 
-                currentPage = parseInt(downloadsPagination.attr('data-downloads-current-page'));
-                checkPrevNextButtons(currentPage, lastPage);
+                currentPage = parseInt(pagination.attr('data-current-page'));
+                checkPrevNextButtons(currentPage, lastPage, prevButton, nextButton);
 
                 $.ajax({
                     url: ajaxurl.url,
                     type: 'POST',
                     data: {
-                        action: 'downloads_pagination',
-                        downloads: downloads,
-                        downloadsOffset: offset - 1,
-                        downloadsPerPage: downloadsPerPage,
+                        action: 'my_account_table_ajax_pagination',
+                        items: items,
+                        offset: offset,
+                        itemsPerPage: itemsPerPage,
+                        template: template
                     },
                     success: function (data) {
-                        if (data.content && downloadsTable.length) {
-                            $(downloadsTable).html(data.content);
+                        if (data.content && table.length) {
+                            table.html(data.content);
                         }
                     }
                 });
             });
-
-            function changeActivePage(currentPage) {
-                downloadsPaginationPageNumber.removeClass('current');
-                downloadsPagination.attr('data-downloads-current-page', currentPage);
-
-                // find and set current class for page
-                downloadsPaginationPageNumber.each(function () {
-                    var self = $(this);
-                    var page = parseInt(self.text());
-
-                    if (page == currentPage) {
-                        self.addClass('current');
-                    }
-                });
-            }
-
-            function checkPrevNextButtons(currentPage, lastPage) {
-                // hide prev button
-                if (currentPage === 1) {
-                    prevButton.addClass('hidden');
-                }
-
-                // hide next button
-                if(currentPage === lastPage) {
-                    nextButton.addClass('hidden');
-                }
-            }
         }
     }
+
+    function changeActivePage(pagination, currentPage) {
+        pagination.attr('data-current-page', currentPage);
+
+        var paginationPageNumber = pagination.find('button.page-number');
+        paginationPageNumber.removeClass('current');
+
+        // find and set current class for page
+        paginationPageNumber.each(function () {
+            var self = $(this);
+            var page = parseInt(self.text());
+
+            if (page == currentPage) {
+                self.addClass('current');
+            }
+        });
+    }
+    function checkPrevNextButtons(currentPage, lastPage, prevButton, nextButton) {
+        // hide prev button
+        if (currentPage === 1) {
+            prevButton.addClass('hidden');
+        }
+
+        // hide next button
+        if(currentPage === lastPage) {
+            nextButton.addClass('hidden');
+        }
+    }
+
+    // My account downloads table pagination
+    var downloadsTable = $('.downloads-ajax-table');
+    var downloadsPagination = $('.my-account-downloads-pagination');
+    var downloadsTableTemplate = 'woocommerce/order/order-downloads-table';
+
+    if (downloadsPagination.length && downloadsTable.length && downloadsTableTemplate) {
+        ajaxPagination(downloadsPagination, downloadsTable, downloadsTableTemplate);
+    }
+
+    // My account orders table pagination
+    var ordersTable = $('.orders-ajax-table');
+    var ordersPagination = $('.my-account-orders-pagination');
+    var ordersTableTemplate = 'woocommerce/order/orders-table';
+
+    if (ordersPagination.length && ordersTable.length && ordersTableTemplate) {
+        ajaxPagination(ordersPagination, ordersTable, ordersTableTemplate);
+    }
+
 })(jQuery);

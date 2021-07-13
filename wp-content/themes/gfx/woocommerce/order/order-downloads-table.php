@@ -1,17 +1,17 @@
-<?php if (!empty($args['downloads'])) : ?>
-    <?php $downloads = $args['downloads']; ?>
+<?php if (!empty($args['items'])) : ?>
+    <?php $items = $args['items']; ?>
 <?php endif; ?>
 
-<?php if (isset($args['downloads_offset'])) : ?>
-    <?php $downloads_offset = $args['downloads_offset']; ?>
+<?php if (isset($args['offset'])) : ?>
+    <?php $offset = $args['offset']; ?>
 <?php endif; ?>
 
-<?php if (isset($args['downloads_per_page'])) : ?>
-    <?php $downloads_per_page = $args['downloads_per_page']; ?>
+<?php if (isset($args['items_per_page'])) : ?>
+    <?php $items_per_page = $args['items_per_page']; ?>
 <?php endif; ?>
 
-<?php if (isset($downloads) && isset($downloads_offset) && isset($downloads_per_page)) : ?>
-    <table class="woocommerce-table woocommerce-table--order-downloads shop_table shop_table_responsive order_details">
+<?php if (isset($items) && isset($offset) && isset($items_per_page)) : ?>
+    <table class="downloads-ajax-table woocommerce-table woocommerce-table--order-downloads shop_table shop_table_responsive order_details">
         <thead>
         <tr>
             <?php foreach (wc_get_account_downloads_columns() as $column_id => $column_name) : ?>
@@ -20,7 +20,7 @@
             <?php endforeach; ?>
         </tr>
         </thead>
-        <?php $sliced_downloads = array_slice($downloads, $downloads_offset, $downloads_per_page); ?>
+        <?php $sliced_downloads = array_slice($items, $offset, $items_per_page); ?>
         <?php foreach ($sliced_downloads as $download) : ?>
             <?php $order_id = $download['order_id']; ?>
             <?php $order = wc_get_order($order_id); ?>

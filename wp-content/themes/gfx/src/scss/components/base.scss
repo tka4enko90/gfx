@@ -149,6 +149,7 @@ iframe {
 .posts-pagination {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   .nav-links {
     display: flex;

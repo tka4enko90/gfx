@@ -36,18 +36,14 @@ do_action('woocommerce_before_edit_account_address_form'); ?>
 
                     // change p wrapper on div
                     $field = preg_replace(
-                        '#<p class="form-row (.*?)"(.*?)>(.*?)</p>#',
+                        '#<p class="(.*?)"(.*?)>(.*)</p>#',
                         '<div class="input-wrapper"$2>$3</div>',
                         $field
                     );
+
                     // remove span wrapper
                     $field = str_replace(
-                        '<span class="woocommerce-input-wrapper">',
-                        '',
-                        $field
-                    );
-                    $field = str_replace(
-                        '</span>',
+                        '<span class="woocommerce-input-wrapper">(.*)</span>',
                         '',
                         $field
                     );

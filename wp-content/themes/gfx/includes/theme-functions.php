@@ -113,29 +113,36 @@ function add_payment_methods_endpoint()
     add_rewrite_endpoint('payment-methods', EP_PAGES);
 }
 
+// my account ajax pagination
+
+
 // downloads pagination
-function downloads_pagination()
+function my_account_table_ajax_pagination()
 {
-    if (!empty($_POST['downloads'])) :
-        $download_cleaned = stripslashes(html_entity_decode($_POST['downloads']));
-        $downloads = json_decode($download_cleaned, true);
+    if (!empty($_POST['items'])) :
+        $items_cleaned = stripslashes($_POST['items']);
+        $items = json_decode($items_cleaned, true);
     endif;
 
-    if (isset($_POST['downloadsOffset'])) :
-        $downloads_offset = $_POST['downloadsOffset'];
+    if (isset($_POST['offset'])) :
+        $offset = $_POST['offset'];
     endif;
 
-    if (!empty($_POST['downloadsPerPage'])) :
-        $downloads_per_page = $_POST['downloadsPerPage'];
+    if (!empty($_POST['itemsPerPage'])) :
+        $items_per_page = $_POST['itemsPerPage'];
     endif;
 
-    if (isset($downloads) && isset($downloads_offset) && isset($downloads_per_page)) :
+    if (!empty($_POST['template'])) :
+        $template = $_POST['template'];
+    endif;
+
+    if (isset($items) && isset($offset) && isset($items_per_page) && isset($template)) :
         ob_start();
-        get_template_part('woocommerce/order/order-downloads-table', '',
+        get_template_part($template, '',
             array(
-                'downloads' => $downloads,
-                'downloads_offset' => $downloads_offset,
-                'downloads_per_page' => $downloads_per_page,
+                'items' => $items,
+                'offset' => $offset,
+                'items_per_page' => $items_per_page,
             ));
         $content = ob_get_clean();
 
@@ -146,6 +153,5 @@ function downloads_pagination()
         wp_send_json_error();
     endif;
 }
-
-add_action('wp_ajax_downloads_pagination', 'downloads_pagination');
-add_action('wp_ajax_nopriv_downloads_pagination', 'downloads_pagination');
+add_action('wp_ajax_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
+add_action('wp_ajax_nopriv_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
