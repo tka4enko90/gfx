@@ -1,7 +1,7 @@
 /* Notice */
 
 .wpclever-notice {
-    padding: 12px;
+    padding: 12px !important;
     display: flex;
     align-items: center;
 }

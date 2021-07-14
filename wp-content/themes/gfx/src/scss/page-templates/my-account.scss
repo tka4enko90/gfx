@@ -490,6 +490,20 @@
           }
         }
       }
+
+      table.woocommerce-MyAccount-paymentMethods {
+        thead {
+          & > tr {
+            & > th {
+              padding-bottom: 22px;
+
+              @media (max-width: $md) {
+                padding-bottom: 20px;
+              }
+            }
+          }
+        }
+      }
     }
 
     .my-account-downloads-pagination, .my-account-orders-pagination {
@@ -706,6 +720,7 @@
     }
   }
 
+  // order details
   .order-details-section {
     .order-details-info {
       font-size: 16px;
@@ -742,6 +757,131 @@
 
         p {
           margin: 0;
+        }
+      }
+    }
+  }
+
+  // payment methods section
+  .payment-methods-section {
+    .woocommerce-Message--info {
+      margin: 0;
+      color: $text-color;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .button-holder {
+      margin-top: 39px;
+
+      @media (max-width: $xs) {
+        margin-top: 30px;
+      }
+
+      a {
+        min-width: 190px;
+        text-align: center;
+      }
+    }
+
+    .woocommerce-MyAccount-paymentMethods {
+      .payment-method-actions {
+        a {
+          margin-right: 10px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+      }
+
+      a {
+        color: $red;
+
+        &.default {
+          color: $light-blue;
+        }
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  // add payment method section
+  .add-payment-method-section {
+    form {
+      .form-row.woocommerce-PaymentMethod {
+        display: flex;
+        color: $white;
+        font-size: 16px;
+
+        a {
+          color: $red;
+
+          &:hover {
+            color: $white;
+          }
+        }
+
+        input[type="radio"] {
+          margin: 7px 15px 0 0;
+        }
+
+        label {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+
+          img {
+            max-width: 40px;
+            margin-left: 10px;
+          }
+        }
+
+        .woocommerce-PaymentBox {
+          color: $text-color;
+
+          p {
+            margin: 0 0 15px 0;
+          }
+
+          fieldset {
+            border: 0;
+            padding: 0;
+            margin: 0;
+
+            .form-row {
+              margin-bottom: 30px;
+
+              @media (max-width: $xs) {
+                margin-bottom: 25px;
+              }
+
+              label {
+                display: inline-block;
+                font-size: 16px;
+                color: $white;
+                margin-bottom: 12px;
+                line-height: 1;
+
+                .required {
+                  color: $red;
+                }
+              }
+
+              div {
+                margin: 0;
+              }
+
+              .wc-stripe-elements-field {
+                background-color: rgba(0,0,0,0);
+                padding: 10px;
+                color: $white;
+              }
+            }
+          }
         }
       }
     }

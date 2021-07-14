@@ -4,7 +4,7 @@ Donate link: https://wpclever.net
 Tags: woocommerce, woo, wpc, product, bundle, bundles
 Requires at least: 4.0
 Tested up to: 5.7.2
-Stable tag: 5.7.4
+Stable tag: 5.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ If you love our plugins, please give us a full five-star rating so that we know 
 5. Almost done! click Save and see the result
 
 == Changelog ==
+
+= 5.7.5 =
+* Fixed: Calculate bundles stock quantity base on bundled products
 
 = 5.7.4 =
 * Fixed: Exclude unpurchasable products

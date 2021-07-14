@@ -213,7 +213,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				foreach ( $items as $item ) {
 					$_product = wc_get_product( $item['id'] );
 
-					if ( ! $_product || $_product->is_type( 'woosb' ) || ( $_product->get_stock_quantity() === null ) || ( ( $exclude_unpurchasable === 'yes' ) && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
+					if ( ! $_product || $_product->is_type( 'woosb' ) || ! $_product->get_manage_stock() || ( $_product->get_stock_quantity() === null ) || ( ( $exclude_unpurchasable === 'yes' ) && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
 						continue;
 					}
 
