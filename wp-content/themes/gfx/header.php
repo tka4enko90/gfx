@@ -22,7 +22,12 @@
     <?php wp_head() ?>
 </head>
 
-<body <?php body_class() ?>>
+<?php
+$body_class = '';
+if (sizeof( WC()->cart->get_cart() ) > 0 ) :
+    $body_class = 'not-empty-cart';
+endif; ?>
+<body <?php body_class($body_class) ?>>
 <?php wp_body_open() ?>
 
 <div class="wrapper">

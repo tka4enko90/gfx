@@ -38,8 +38,14 @@ function change_sign_up_form()
 add_action('init', 'change_login_form');
 function change_login_form()
 {
-    if (function_exists('tml_get_form_field') && $user_login = tml_get_form_field('login', 'log')) {
-        $user_login->set_label('Email Address');
+    if (function_exists('tml_get_form_field')) {
+        if ($user_login = tml_get_form_field('login', 'log')) {
+            $user_login->set_label('Email Address');
+            $user_login->add_attribute('placeholder', 'Enter your email');
+        }
+        if ($user_password = tml_get_form_field('login', 'pwd')) {
+            $user_password->add_attribute('placeholder', 'Enter your password');
+        }
     }
 }
 

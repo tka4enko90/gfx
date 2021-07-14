@@ -32,13 +32,19 @@
 
                             <div class="item">
                                 <div class="info">
-                                    <?php echo get_the_post_thumbnail($item_id, 'gfx_avatar'); ?>
-                                    <div class="holder">
+                                    <?php if(has_post_thumbnail($item_id)) : ?>
+                                        <?php echo get_the_post_thumbnail($item_id, 'gfx_avatar'); ?>
+                                    <?php endif; ?>
+                                    <div class="holder <?php if(!has_post_thumbnail($item_id)) : ?>full-width<?php endif; ?>">
                                         <div class="title">
                                             <?php echo $item->post_title; ?>
                                         </div>
                                         <?php if (isset($subheading) && $subheading['url']) : ?>
-                                            <a class="subheading" href="<?php echo $subheading['url']; ?>" target="<?php echo $subheading['target']; ?>"><?php echo $subheading['title']; ?></a>
+                                            <a class="subheading"
+                                               href="<?php echo $subheading['url']; ?>"
+                                               target="<?php echo !empty($subheading['target']) ? $subheading['target'] : '_self' ?>">
+                                                <?php echo $subheading['title']; ?>
+                                            </a>
                                         <?php endif; ?>
                                     </div>
                                 </div>

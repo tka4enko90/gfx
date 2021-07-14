@@ -10,7 +10,7 @@
     <div class="container small">
         <div class="section-holder <?php if($information_block_content_position) { echo $information_block_content_position; } ?>">
             <?php if ($information_block_title || $information_block_content) : ?>
-                <div class="content-holder">
+                <div class="content-holder <?php if (!$information_block_image_id) : ?>full-width<?php endif; ?>">
                     <?php if ($information_block_title) : ?>
                         <h3><?php echo $information_block_title; ?></h3>
                     <?php endif; ?>
@@ -20,7 +20,8 @@
                         </div>
                     <?php endif; ?>
                     <?php if ($information_block_button && $information_block_button['url']) : ?>
-                        <a href="<?php echo $information_block_button['url']; ?>" class="primary-button" target="<?php echo $information_block_button['target']; ?>">
+                        <a href="<?php echo $information_block_button['url']; ?>" class="primary-button"
+                           target="<?php echo !empty($information_block_button['target']) ? $information_block_button['target'] : '_self' ?>">
                             <?php echo $information_block_button['title']; ?>
                         </a>
                     <?php endif; ?>

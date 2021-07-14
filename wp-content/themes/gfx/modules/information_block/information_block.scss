@@ -32,6 +32,14 @@
       .content-holder {
         max-width: 563px;
 
+        @media (max-width: $md) {
+          max-width: 100%;
+        }
+
+        &.full-width {
+          max-width: 100%;
+        }
+
         .block-content {
           max-width: 100%;
         }
@@ -56,6 +64,18 @@
     width: 100%;
     max-width: 485px;
 
+    @media (max-width: $md) {
+      max-width: 100%;
+    }
+
+    &.full-width {
+      max-width: 100%;
+
+      .block-content {
+        max-width: 100%;
+      }
+    }
+
     & > h3 {
       margin-bottom: 40px;
 
@@ -73,6 +93,10 @@
       font-size: 18px;
       color: $text-color;
       line-height: 1.389;
+
+      @media (max-width: $md) {
+        max-width: 100%;
+      }
 
       @media (max-width: $xs) {
         font-size: 16px;

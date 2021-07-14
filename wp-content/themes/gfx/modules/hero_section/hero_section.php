@@ -22,7 +22,9 @@
                     <?php endif; ?>
                     <?php if ($hero_section_button && $hero_section_button['url']) : ?>
                         <a href="<?php echo $hero_section_button['url']; ?>" class="primary-button "
-                           target="<?php echo $hero_section_button['target']; ?>"><?php echo $hero_section_button['title']; ?></a>
+                           target="<?php echo !empty($hero_section_button['target']) ? $hero_section_button['target'] : '_self' ?>">
+                            <?php echo $hero_section_button['title']; ?>
+                        </a>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

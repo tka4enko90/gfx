@@ -92,7 +92,9 @@
             <?php if ($products_grid_with_pop_out_button && $products_grid_with_pop_out_button['url']) : ?>
                 <div class="btn-holder">
                     <a href="<?php echo $products_grid_with_pop_out_button['url']; ?>" class="primary-button "
-                       target="<?php echo $products_grid_with_pop_out_button['target']; ?>"><?php echo $products_grid_with_pop_out_button['title']; ?></a>
+                       target="<?php echo !empty($products_grid_with_pop_out_button['target']) ? $products_grid_with_pop_out_button['target'] : '_self' ?>">
+                        <?php echo $products_grid_with_pop_out_button['title']; ?>
+                    </a>
                 </div>
             <?php endif; ?>
         </div>

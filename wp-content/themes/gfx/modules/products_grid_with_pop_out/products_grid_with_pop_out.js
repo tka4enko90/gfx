@@ -27,11 +27,11 @@
                     if (popOutInfo.product_trailer) {
                         if (buttonsHolder.length) {
                             if($(window).width() < 576) {
-                                buttonsHolder.before('<div class="product-trailer product-trailer-video-holder"><video playsinline autoPlay="true" loop="true" muted="true">\n' +
+                                buttonsHolder.before('<div class="product-trailer product-trailer-video-holder"><video playsinline autoPlay="autoplay" loop="loop" muted="muted">\n' +
                                     '                <source src="' + popOutInfo.product_trailer.url + '" type="' + popOutInfo.product_trailer.mime_type + '">\n' +
                                     '            </video></div>');
                             } else {
-                                buttonsHolder.before('<div class="product-trailer product-trailer-video-holder"><video playsinline autoPlay="true" loop="true" muted="true">\n' +
+                                buttonsHolder.before('<div class="product-trailer product-trailer-video-holder"><video playsinline autoPlay="autoplay" loop="loop" muted="muted">\n' +
                                     '                <source src="' + popOutInfo.product_trailer.url + '" type="' + popOutInfo.product_trailer.mime_type + '">\n' +
                                     '            </video></div>');
                             }
@@ -121,7 +121,7 @@
                         previewsHolder.append('<div class="preview screen-preview">\n' +
                             '                            <div class="preview-name">Screen Preview:</div>\n' +
                             '                            <div class="video-holder">\n' +
-                            '                                <video class="pop-out-video" loop="true" muted="true" playsinline>\n' +
+                            '                                <video class="pop-out-video" loop="loop" muted="muted" playsinline>\n' +
                             '                                    <source src="' + popOutInfo.screen_preview.url + '"\n' +
                             '                                            type="' + popOutInfo.screen_preview.mime_type + '">\n' +
                             '                                </video>\n' +
@@ -162,12 +162,25 @@
         });
     }
 
+    $(document).mouseup(function (e){
+        var popOut = $('.product-pop-out .popup');
+
+        if(popOut.length && popOut.is(':visible')
+            && !popOut.is(e.target) && popOut.has(e.target).length === 0) {
+
+            var productPopOutCloseBtn = popOut.find('.product-pop-out-close-btn');
+            if(productPopOutCloseBtn.length) {
+                productPopOutCloseBtn.trigger('click');
+            }
+        }
+    });
+
     // switch video on click in product pop out
     var popOutVideoHolder = $('.previews-holder');
     if (popOutVideoHolder.length) {
         popOutVideoHolder.on('click', '.pop-out-video', function () {
             var productTrailerVideoBlock = $('.product-trailer-video-holder');
-            var videoTag = $(this).clone().prop('autoplay', true).attr('playsinline', '');
+            var videoTag = $(this).clone().prop('autoplay', 'autoplay').attr('playsinline', '');
 
             if(productTrailerVideoBlock.length && videoTag.length) {
                 productTrailerVideoBlock.find('video').remove();
