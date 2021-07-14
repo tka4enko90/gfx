@@ -36,9 +36,9 @@
                             switch ($column_id) {
                                 case 'download-product':
                                     if ($download['product_url']) {
-                                        echo '<a href="' . esc_url($download['product_url']) . '">' . esc_html($download['product_name']) . '</a>';
+                                        echo '<a href="' . esc_url($download['product_url']) . '">' . esc_html($download['download_name']) . '</a>';
                                     } else {
-                                        echo esc_html($download['product_name']);
+                                        echo esc_html($download['download_name']);
                                     }
                                     break;
                                 case 'download-file':

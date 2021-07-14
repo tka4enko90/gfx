@@ -80,20 +80,11 @@ $show_downloads = $order->has_downloadable_item() && $order->is_download_permitt
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
-
-                <tfoot>
-                <?php /* if ($order->get_customer_note()) : ?>
-                    <tr>
-                        <th><?php esc_html_e('Note:', 'woocommerce'); ?></th>
-                        <td><?php echo wp_kses_post(nl2br(wptexturize($order->get_customer_note()))); ?></td>
-                    </tr>
-                <?php endif; */ ?>
-                </tfoot>
             </table>
         </div>
 
         <?php if ($show_downloads) : ?>
-            <h3><?php _e('Downloads', 'gfx'); ?></h3>
+            <h3 class="downloads-title"><?php _e('Downloads', 'gfx'); ?></h3>
             <?php wc_get_template(
                 'order/order-downloads.php',
                 array(

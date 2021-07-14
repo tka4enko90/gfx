@@ -114,9 +114,6 @@ function add_payment_methods_endpoint()
 }
 
 // my account ajax pagination
-
-
-// downloads pagination
 function my_account_table_ajax_pagination()
 {
     if (!empty($_POST['items'])) :
