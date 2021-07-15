@@ -50,6 +50,7 @@ input[type="submit"] {
   padding: 14px 31px;
   box-shadow: 0px 0px 15px 1px rgba($red, 0);
   transition: box-shadow $transition;
+  text-align: center;
 
   @media (max-width: $xs) {
     padding: 12px 25px;
@@ -57,6 +58,18 @@ input[type="submit"] {
 
   &:hover {
     box-shadow: 0px 0px 15px 1px rgba($red, 0.5);
+  }
+
+  &.arrow-left {
+    position: relative;
+
+    svg {
+      margin-bottom: 1px;
+      width: 10px;
+      position: absolute;
+      margin-top: 3px;
+      margin-left: -20px;
+    }
   }
 
   &.small {

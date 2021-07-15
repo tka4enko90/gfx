@@ -93,58 +93,50 @@
   }
 }
 
-.woocommerce-account {
+.woocommerce-account, .woocommerce-cart {
   .hero-section {
-    padding: 0;
+    &:not(.no-image) {
+      padding: 0;
 
-    @media (max-width: $md) {
-      padding: 62px 0 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 50px 0 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 40px 0 0;
-    }
-
-    &.no-image {
-      padding: 62px 0;
-
-      @media (max-width: $sm) {
-        padding: 50px 0;
+      @media (max-width: $md) {
+        padding: 62px 0 0;
       }
 
       @media (max-width: $xs) {
-        padding: 40px 0;
+        padding: 50px 0 0;
+      }
+
+      @media (max-width: $xs) {
+        padding: 40px 0 0;
       }
 
       .text-col {
-        padding: 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        @media (max-width: $md) {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
       }
-    }
 
-    .section-holder {
-      align-items: center;
+      .section-holder {
+        align-items: center;
 
-      @media (max-width: $md) {
-        align-items: flex-start;
-      }
-    }
-
-    .text-col {
-      padding-top: 20px;
-      padding-bottom: 20px;
-
-      @media (max-width: $md) {
-        padding-top: 0;
-        padding-bottom: 0;
+        @media (max-width: $md) {
+          align-items: flex-start;
+        }
       }
     }
 
     .image-col {
       max-width: 769px;
     }
+  }
+}
+
+.woocommerce-cart .hero-section {
+  .image-col {
+    max-width: 753px;
   }
 }
