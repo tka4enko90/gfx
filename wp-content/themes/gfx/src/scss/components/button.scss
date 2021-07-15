@@ -6,6 +6,10 @@ button {
   background: none;
 }
 
+input[type="submit"] {
+  appearance: none;
+}
+
 .burger-btn {
   width: 25px;
   height: 25px;

@@ -1,11 +1,7 @@
 @import '../../../src/scss/components/vars';
 
 .single-product-need-help {
-  padding: 102px 0 105px;
-
-  @media (max-width: $md) {
-    padding: 102px 0 65px;
-  }
+  padding: 102px 0 65px;
 
   @media (max-width: $sm) {
     padding: 60px 0 40px;
@@ -63,6 +59,7 @@
     .block {
       width: 33.33%;
       padding: 0 23px;
+      margin-bottom: 40px;
 
       @media (max-width: $md) {
         width: 50%;

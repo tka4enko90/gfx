@@ -6,6 +6,7 @@
     var categoriesList = $('.categories-list');
     var allPostsCount = filtrationForm.find('.all-posts-count');
     var showingPostsCount = filtrationForm.find('.showing-posts-count');
+    var colorCheckbox = $('.colors-holder input[type="checkbox"]');
 
     if (categoriesList.length) {
         // make dropdown item white - if it has active child item
@@ -63,16 +64,45 @@
     });
 
     // add filter bubbles
-    if (filterTagsSelect.length) {
+    if (filterTagsSelect.length || colorCheckbox.length) {
         var filterBubbles = $('.filter-bubbles');
 
-        // on select value event
-        filterTagsSelect.on('select2:select', function (e) {
-            var selectedValueId = e.params.data.id;
-            var selectedValueText = e.params.data.text;
+        if (filterTagsSelect.length) {
+            // on select value event
+            filterTagsSelect.on('select2:select', function (e) {
+                var selectedValueId = e.params.data.id;
+                var selectedValueText = e.params.data.text;
 
-            if (selectedValueId.length && selectedValueText.length) {
-                var bubble = '<div class="bubble" data-id="' + selectedValueId + '">' + selectedValueText + '\n' +
+                if (selectedValueId.length && selectedValueText.length) {
+                    addBubble('filter', selectedValueText, selectedValueId);
+                }
+            });
+
+            // on unselect value event
+            filterTagsSelect.on('select2:unselect', function (e) {
+                var selectedValue = e.params.data.id;
+                removeBubble('filter', selectedValue);
+            });
+        }
+
+        if (colorCheckbox.length) {
+            colorCheckbox.on('change', function (e) {
+                var self = $(this);
+                var selectedValue = self.val();
+
+                if (self.is(':checked')) {
+                    if (selectedValue) {
+                        addBubble('color', selectedValue);
+                    }
+                } else {
+                    removeBubble('color', selectedValue);
+                }
+            });
+        }
+
+        function addBubble(type, value, dataId = '') {
+            if (type == 'filter') {
+                var bubble = '<div class="bubble" data-id="' + dataId + '"><span>' + value + '\n</span>' +
                     '                        <button class="delete-bubble">\n' +
                     '                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
                     '                                 version="1.1" width="512" height="512" x="0"\n' +
@@ -83,33 +113,50 @@
                     '                                </svg>\n' +
                     '                        </button>\n' +
                     '                    </div>';
-                var clearAllButton = '<button class="clear-all-filters secondary-button extra-small grey">\n' +
-                    '                      Clear All\n' +
-                    '                   </button>';
+            } else {
+                var bubble = '<div class="bubble" data-color="' + value + '"><span>' + value + '\n</span>' +
+                    '                        <button class="delete-bubble">\n' +
+                    '                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
+                    '                                 version="1.1" width="512" height="512" x="0"\n' +
+                    '                                 y="0" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512 512"\n' +
+                    '                                 xml:space="preserve" class="">\n' +
+                    '                                    <path d="m512.001 84.853-84.853-84.853-171.147 171.147-171.148-171.147-84.853 84.853 171.148 171.147-171.148 171.148 84.853 84.853 171.148-171.147 171.147 171.147 84.853-84.853-171.148-171.148z"\n' +
+                    '                                          fill="#ffffff" data-original="#000000" style="" class=""/>\n' +
+                    '                                </svg>\n' +
+                    '                        </button>\n' +
+                    '                    </div>';
+            }
 
-                if (filterBubbles.length) {
-                    // if no bubbles added
-                    if (!filterBubbles.has('div.bubble').length) {
-                        filterBubbles.append(bubble);
-                        filterBubbles.append(clearAllButton);
-                    } else {
-                        $(bubble).insertBefore('.clear-all-filters');
+            var clearAllButton = '<button class="clear-all-filters secondary-button extra-small grey">Clear All</button>';
+
+            if (filterBubbles.length) {
+                // if no bubbles added
+                if (!filterBubbles.has('div.bubble').length) {
+                    filterBubbles.append(bubble);
+                    filterBubbles.append(clearAllButton);
+                } else {
+                    $(bubble).insertBefore('.clear-all-filters');
+                }
+            }
+        }
+
+        function removeBubble(type, value) {
+            if (type && value) {
+                if (type == 'filter') {
+                    var unselectedBubble = 'div.bubble[data-id="' + value + '"]';
+
+                    if (filterBubbles.length && unselectedBubble.length) {
+                        filterBubbles.find(unselectedBubble).find('button.delete-bubble').trigger('click');
+                    }
+                } else {
+                    var unselectedBubble = 'div.bubble[data-color="' + value + '"]';
+
+                    if (filterBubbles.length && unselectedBubble.length) {
+                        filterBubbles.find(unselectedBubble).find('button.delete-bubble').trigger('click');
                     }
                 }
             }
-        });
-
-        // on unselect value event
-        filterTagsSelect.on('select2:unselect', function (e) {
-            var selectedValueId = e.params.data.id;
-            var unselectedBubble = 'div.bubble[data-id="' + selectedValueId + '"]';
-
-            if (selectedValueId.length && filterBubbles.length && unselectedBubble.length) {
-                if (filterBubbles.has(unselectedBubble).length) {
-                    filterBubbles.find(unselectedBubble).find('button.delete-bubble').trigger('click');
-                }
-            }
-        });
+        }
     }
 
     if (filterBubbles.length) {
@@ -118,6 +165,7 @@
             var self = $(this);
             var bubble = self.closest('.bubble');
             var bubbleId = bubble.data('id');
+            var bubbleColorName = bubble.data('color');
 
             if (bubble.length) {
                 var bubblesCount = filterBubbles.find('.bubble').length;
@@ -136,6 +184,14 @@
                         }
                     }
 
+                    if (colorCheckbox.length && bubbleColorName) {
+                        var removeOption = $('input[value="' + bubbleColorName + '"]');
+
+                        if (removeOption.length) {
+                            removeOption.prop('checked', false);
+                        }
+                    }
+
                     filtrationForm.trigger('submit');
                 }
             }
@@ -145,9 +201,15 @@
         filterBubbles.on('click', 'button.clear-all-filters', function () {
             filterBubbles.empty();
 
+            // clear selected filters
             if (filterTagsSelect.length) {
                 filterTagsSelect.find('option').prop("selected", false);
                 filterTagsSelect.trigger('change.select2');
+            }
+
+            // clear selected colors
+            if (colorCheckbox.length) {
+                colorCheckbox.prop("checked", false);
             }
 
             filtrationForm.trigger('submit');

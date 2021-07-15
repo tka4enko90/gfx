@@ -25,7 +25,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 if (isset($category)) :
     $args = array(
         'post_type' => 'product',
-        'posts_per_page' => '3', // 18
+        'posts_per_page' => '18',
         'paged' => $paged,
         'tax_query' => array(
             array(
@@ -38,7 +38,7 @@ if (isset($category)) :
 else :
     $args = array(
         'post_type' => 'product',
-        'posts_per_page' => '3', // 18
+        'posts_per_page' => '18',
         'paged' => $paged,
     );
 endif;

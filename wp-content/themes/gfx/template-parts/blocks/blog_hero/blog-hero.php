@@ -8,18 +8,20 @@
 
     <section class="blog-hero">
         <div class="container">
-            <?php if ($page_title) : ?>
-                <h1><?php echo $page_title; ?></h1>
-            <?php endif; ?>
+            <div class="section-holder">
+                <?php if ($page_title) : ?>
+                    <h1><?php echo $page_title; ?></h1>
+                <?php endif; ?>
 
-            <?php if ($blog_hero_subtitle) : ?>
-                <div class="subtitle">
-                    <?php echo $blog_hero_subtitle; ?>
+                <?php if ($blog_hero_subtitle) : ?>
+                    <div class="subtitle">
+                        <?php echo $blog_hero_subtitle; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="search-form-holder">
+                    <?php get_search_form(); ?>
                 </div>
-            <?php endif; ?>
-
-            <div class="search-form-holder">
-                <?php get_search_form(); ?>
             </div>
         </div>
     </section>

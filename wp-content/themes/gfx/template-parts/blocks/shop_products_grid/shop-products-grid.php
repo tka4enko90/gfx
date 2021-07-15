@@ -103,9 +103,17 @@
                 <?php if (!empty($product_categories)) : ?>
                     <div class="col categories">
                         <div class="categories-list">
-
                             <h6><?php _e('Categories', 'gfx'); ?></h6>
+
+                            <?php $products_count = wp_count_posts('product'); ?>
                             <ul>
+                                <?php $shop_page_url = wc_get_page_permalink('shop'); ?>
+                                <?php if ($shop_page_url) : ?>
+                                    <li>
+                                        <a href="<?php echo $shop_page_url; ?>">All products
+                                            <span><?php echo $products_count->publish; ?></span></a>
+                                    </li>
+                                <?php endif; ?>
                                 <?php foreach ($product_categories as $category) : ?>
                                     <?php $term_id = $category->term_id; ?>
                                     <?php $term_name = $category->name; ?>

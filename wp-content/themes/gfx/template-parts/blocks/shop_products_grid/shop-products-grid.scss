@@ -39,6 +39,10 @@
           @media (max-width: $md) {
             flex-wrap: wrap;
           }
+
+          @media (max-width: $xs) {
+            flex-direction: column;
+          }
         }
       }
 
@@ -115,6 +119,10 @@
         margin-top: 16px;
       }
 
+      @media (max-width: $xs) {
+        margin-left: 0;
+      }
+
       label {
         content: '';
         width: 17px;
@@ -183,6 +191,12 @@
 
         &:hover {
           background-color: #65748d;
+        }
+
+        & > span {
+          &::first-letter {
+            text-transform: uppercase;
+          }
         }
 
         .delete-bubble {
