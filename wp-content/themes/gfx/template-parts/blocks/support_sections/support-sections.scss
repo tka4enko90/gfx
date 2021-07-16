@@ -1,0 +1,182 @@
+@import '../../../src/scss/components/vars';
+
+.support-sections {
+  padding-top: 75px;
+
+  @media (max-width: $md) {
+    padding-top: 60px;
+  }
+
+  @media (max-width: $sm) {
+    padding-top: 50px;
+  }
+
+  @media (max-width: $xs) {
+    padding-top: 40px;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .line {
+    content: '';
+    margin: auto;
+    height: 1px;
+    width: 100%;
+    background-color: rgba($text-color, 0.502);
+    display: block;
+    margin-top: 30px;
+    position: relative;
+
+    @media (max-width: $md) {
+      margin-top: 60px;
+    }
+
+    @media (max-width: $sm) {
+      margin-top: 50px;
+    }
+
+    @media (max-width: $xs) {
+      margin-top: 40px;
+    }
+
+    &::after, &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      width: 500px;
+
+      @media (max-width: $md) {
+        width: 200px;
+      }
+    }
+
+    &::after {
+      right: 0;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
+    }
+
+    &::before {
+      left: 0;
+      background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
+    }
+  }
+
+  .section-holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 -25px;
+
+    @media (max-width: $md) {
+      margin: 0;
+    }
+
+    .section {
+      width: 50%;
+      padding: 0 25px;
+      margin-bottom: 50px;
+
+      @media (max-width: $md) {
+        width: 100%;
+        margin-bottom: 30px;
+        padding: 0;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+
+      @media (max-width: $sm) {
+        margin-bottom: 20px;
+      }
+
+      & > a {
+        display: flex;
+        align-items: center;
+        min-height: 147px;
+        background-color: $dark-blue;
+        border-radius: 10px;
+        padding: 40px 48px;
+
+        @media (max-width: $md) {
+          min-height: 0;
+        }
+
+        @media (max-width: $sm) {
+          padding: 30px;
+        }
+
+        @media (max-width: $xs) {
+          padding: 30px 20px;
+        }
+
+        &:hover {
+          h4 {
+            color: $red;
+          }
+        }
+      }
+
+      .icon {
+        margin-right: 53px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 95px;
+
+        @media (max-width: $md) {
+          margin-right: 30px;
+          max-width: 75px;
+        }
+
+        @media (max-width: $sm) {
+          max-width: 50px;
+          margin-right: 20px;
+        }
+
+        @media (max-width: $xs) {
+          max-width: 40px;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+
+      h4 {
+        color: $white;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1;
+        margin: 0;
+        transition: color $transition;
+
+        @media (max-width: $md) {
+          font-size: 20px;
+        }
+
+        @media (max-width: $sm) {
+          font-size: 18px;
+        }
+
+        @media (max-width: $xs) {
+          font-size: 16px;
+        }
+      }
+
+      .description {
+        color: $text-color;
+        font-size: 13px;
+        line-height: 1.308;
+        margin-top: 6px;
+
+        @media (max-width: $xs) {
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+}
