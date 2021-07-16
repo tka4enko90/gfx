@@ -23,7 +23,7 @@ defined('ABSPATH') || exit; ?>
     <?php $cart_hero_subtitle = get_field('cart_hero_subtitle', 'option'); ?>
     <?php $cart_hero_image_id = get_field('cart_hero_image', 'option'); ?>
     <?php if ($page_title || $cart_hero_subtitle || $cart_hero_image_id) : ?>
-        <?php get_template_part('template-parts/blocks/hero/hero', '', array('title' => $page_title, 'subtitle' => $cart_hero_subtitle, 'image' => $cart_hero_image_id)); ?>
+        <?php get_template_part('template-parts/blocks/hero/hero', '', array('title' => $page_title, 'subtitle' => $cart_hero_subtitle, 'image' => $cart_hero_image_id, 'image_size' => 'gfx_wc_hero_large')); ?>
     <?php endif; ?>
 
     <?php wp_enqueue_style('cart_page_styles', get_template_directory_uri() . '/static/css/page-templates/cart.css', '', '', 'all'); ?>
