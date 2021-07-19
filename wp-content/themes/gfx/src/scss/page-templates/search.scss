@@ -1,0 +1,104 @@
+@import '../components/vars';
+
+.search {
+  .search-results-section {
+    padding: 50px 0;
+
+    @media (max-width: $xs) {
+      padding: 40px 0;
+    }
+
+    .showing-text {
+      color: $text-color;
+      font-size: 14px;
+      margin-bottom: 20px;
+
+      span {
+        color: $white;
+      }
+    }
+
+    .blocks {
+      border-radius: 10px;
+      background-color: rgba($dark-blue, 0.471);
+      padding: 50px 55px;
+
+      @media (max-width: $md) {
+        padding: 40px;
+      }
+
+      @media (max-width: $sm) {
+        padding: 20px;
+      }
+
+      @media (max-width: $xs) {
+        padding: 15px;
+      }
+
+      & > a {
+        display: block;
+        margin-bottom: 23px;
+        padding: 50px 55px;
+        border-radius: 10px;
+        background-color: $dark-blue;
+
+        @media (max-width: $md) {
+          padding: 40px;
+          margin-bottom: 20px;
+        }
+
+        @media (max-width: $sm) {
+          padding: 20px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        h6 {
+          color: $white;
+          margin: 0;
+          font-size: 22px;
+
+          @media (max-width: $xs) {
+            font-size: 20px;
+          }
+        }
+
+        .excerpt {
+          font-size: 14px;
+          color: $text-color;
+          margin-top: 6px;
+        }
+      }
+    }
+
+    .bottom-text {
+      font-size: 14px;
+      color: $text-color;
+      margin-top: 50px;
+      text-align: center;
+
+      @media (max-width: $xs) {
+        margin-top: 40px;
+      }
+
+      a {
+        color: #969fad;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+
+    .empty {
+      color: $text-color;
+      font-size: 14px;
+
+      span {
+        color: $white;
+      }
+    }
+  }
+}
