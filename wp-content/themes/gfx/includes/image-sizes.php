@@ -4,6 +4,7 @@
     add_image_size( 'gfx_avatar', 80, 80 );
     add_image_size( 'gfx_small', 73, 53 );
     add_image_size( 'gfx_semi_small', 96, 126 );
+    add_image_size( 'gfx_semi_small_2', 140, 140 );
     add_image_size( 'gfx_post_grid', 338, 190 );
     add_image_size( 'gfx_semi_medium', 460, 260 );
     add_image_size( 'gfx_medium', 580, 335 );

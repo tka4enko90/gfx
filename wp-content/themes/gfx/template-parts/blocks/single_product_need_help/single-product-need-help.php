@@ -1,7 +1,14 @@
-<?php $need_help_title = get_field('need_help_title', 'option'); ?>
-<?php $need_help_description = get_field('need_help_description', 'option'); ?>
+<?php if(!empty($args) && !empty($args['page'])) : ?>
+    <?php $page_id = $args['page']; ?>
+<?php else : ?>
+    <?php $page_id = 'option'; ?>
+<?php endif; ?>
 
-<?php if ($need_help_title || $need_help_description || have_rows('need_help_links', 'option')) : ?>
+<?php $need_help_title = get_field('need_help_title', $page_id); ?>
+<?php $need_help_description = get_field('need_help_description', $page_id); ?>
+<?php $need_help_links_have_rows = have_rows('need_help_links', $page_id); ?>
+
+<?php if ($need_help_title || $need_help_description || $need_help_links_have_rows) : ?>
 
     <?php wp_enqueue_style('single_product_need_help_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_need_help/single-product-need-help.css', '', '', 'all'); ?>
 
@@ -19,9 +26,9 @@
                 <?php endif; ?>
             </div>
 
-            <?php if (have_rows('need_help_links', 'option')) : ?>
+            <?php if (have_rows('need_help_links', $page_id)) : ?>
                 <div class="blocks-holder">
-                    <?php while (have_rows('need_help_links', 'option')) : the_row(); ?>
+                    <?php while (have_rows('need_help_links', $page_id)) : the_row(); ?>
                         <?php $icon_id = get_sub_field('icon'); ?>
                         <?php $title = get_sub_field('title'); ?>
                         <?php $url = get_sub_field('url'); ?>

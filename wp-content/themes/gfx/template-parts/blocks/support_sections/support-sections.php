@@ -16,7 +16,7 @@
                         <a href="<?php echo get_term_link($section_id); ?>">
                             <?php if ($section_icon) : ?>
                                 <div class="icon">
-                                    <?php echo wp_get_attachment_image($section_icon, 'shop_thumbnail'); ?>
+                                    <?php echo wp_get_attachment_image($section_icon, 'gfx_semi_small_2'); ?>
                                 </div>
                             <?php endif; ?>
                             <div class="information">

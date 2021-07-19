@@ -3,8 +3,8 @@
     <?php wp_enqueue_style('search_page_styles', get_template_directory_uri() . '/static/css/page-templates/search.css', '', '', 'all'); ?>
 
     <main class="main">
-        <?php if (!empty($_GET) && !empty($_GET['post_type'])) : ?>
-            <?php $post_type = $_GET['post_type']; ?>
+        <?php if (!empty($_POST) && !empty($_POST['post_type'])) : ?>
+            <?php $post_type = $_POST['post_type']; ?>
 
             <?php if (!empty($post_type)) : ?>
                 <?php if ($post_type == 'post') : ?>
@@ -46,17 +46,17 @@
                             <?php get_template_part('template-parts/content-search'); ?>
                         <?php endwhile; ?>
                     </div>
+
+                    <?php $text_after_search_results = get_field('text_after_search_results', 'option'); ?>
+                    <?php if($text_after_search_results) : ?>
+                        <div class="bottom-text">
+                            <?php echo $text_after_search_results; ?>
+                        </div>
+                    <?php endif; ?>
                 <?php else : ?>
                     <div class="empty">
                         <?php _e('No results found for: ', 'gfx'); ?>
                         <span><?php echo get_search_query(); ?></span>
-                    </div>
-                <?php endif; ?>
-
-                <?php $text_after_search_results = get_field('text_after_search_results', 'option'); ?>
-                <?php if($text_after_search_results) : ?>
-                    <div class="bottom-text">
-                        <?php echo $text_after_search_results; ?>
                     </div>
                 <?php endif; ?>
             </div>

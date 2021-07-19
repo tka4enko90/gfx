@@ -221,9 +221,33 @@ iframe {
   }
 }
 
-//.blockUI.blockOverlay {
-//  background-color: rgba(0,0,0,0) !important;
-//}
+.blockUI.blockOverlay {
+  background-color: rgba($dark-blue, 0.5) !important;
+}
+
+.breadcrumbs {
+  color: $text-color-dark;
+  display: flex;
+  align-items: center;
+
+  a {
+    margin-right: 16px;
+    color: $text-color;
+
+    &:hover {
+      color: $red;
+    }
+  }
+
+  svg {
+    width: 10px;
+    margin-right: 16px;
+
+    path {
+      fill: $text-color-dark;
+    }
+  }
+}
 
 /* STYLES FOR WP CONTENT */
 .page-content {

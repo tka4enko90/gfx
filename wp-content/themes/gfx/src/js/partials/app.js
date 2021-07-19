@@ -108,10 +108,10 @@
         menu.slideToggle(200);
     });
 
-    $(window).on('orientationchange', function() {
+    $(window).on('orientationchange', function () {
         var menu = $('.header .menu-holder');
 
-        if(menu.length) {
+        if (menu.length) {
             menu.css('display', '');
         }
     });
@@ -124,7 +124,7 @@
             var productPopOutCloseBtn = $('.product-pop-out-close-btn');
             var cartLink = $('.header li.cart');
 
-            if(cartLink.length) {
+            if (cartLink.length) {
                 cartLink.addClass('not-empty');
             }
 
@@ -284,4 +284,15 @@
         ajaxPagination(ordersPagination, ordersTable, ordersTableTemplate);
     }
 
+    // check search form before send
+    var searchForm = $('#searchform');
+    if (searchForm.length) {
+        searchForm.on('submit', function (e) {
+            var searchField = searchForm.find('input[name="s"]');
+
+            if (searchField.length && !searchField.val().length) {
+                e.preventDefault();
+            }
+        });
+    }
 })(jQuery);
