@@ -55,10 +55,15 @@
           margin-bottom: 0;
         }
 
+        &:hover h6 {
+          color: $red;
+        }
+
         h6 {
           color: $white;
           margin: 0;
           font-size: 22px;
+          transition: color $transition;
 
           @media (max-width: $xs) {
             font-size: 20px;
