@@ -3,6 +3,10 @@
 .single-support-content {
   padding: 50px 0 60px;
 
+  @media (max-width: $md) {
+    padding: 50px 0;
+  }
+
   @media (max-width: $xs) {
     padding: 40px 0;
   }
@@ -110,6 +114,33 @@
         @media (max-width: $xs) {
           margin: 15px 0 0 0;
         }
+      }
+    }
+  }
+
+  .bottom-text {
+    font-size: 14px;
+    color: $text-color;
+    margin-top: 60px;
+    text-align: center;
+
+    @media (max-width: $md) {
+      margin-top: 50px;
+    }
+
+    @media (max-width: $xs) {
+      margin-top: 40px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: #969fad;
+
+      &:hover {
+        color: $white;
       }
     }
   }

@@ -62,6 +62,13 @@
                         </div>
                     <?php endif; ?>
                 </div>
+
+                <?php $text_after_search_results = get_field('text_after_search_results', 'option'); ?>
+                <?php if($text_after_search_results) : ?>
+                    <div class="bottom-text">
+                        <?php echo $text_after_search_results; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </section>
     <?php endif; ?>
