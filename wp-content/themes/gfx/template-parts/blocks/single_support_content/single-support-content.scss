@@ -1,0 +1,116 @@
+@import '../../../src/scss/components/vars';
+
+.single-support-content {
+  padding: 50px 0 60px;
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 18px;
+  }
+
+  .post-holder {
+    border-radius: 10px;
+    background-color: rgba($dark-blue, 0.471);
+    padding: 77px 55px 50px;
+
+    @media (max-width: $md) {
+      padding: 60px 40px 40px;
+    }
+
+    @media (max-width: $sm) {
+      padding: 30px 20px 20px;
+    }
+
+    @media (max-width: $xs) {
+      padding: 25px 15px 15px;
+    }
+
+    .title-holder {
+      padding: 0 55px;
+
+      @media (max-width: $md) {
+        padding: 0 30px;
+      }
+
+      @media (max-width: $sm) {
+        padding: 0;
+      }
+
+      h3 {
+        font-size: 38px;
+        margin: 0 0 5px 0;
+
+        @media (max-width: $md) {
+          font-size: 30px;
+        }
+
+        @media (max-width: $xs) {
+          font-size: 25px;
+        }
+      }
+
+      .modified-date {
+        font-size: 18px;
+        color: $text-color;
+
+        @media (max-width: $xs) {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .post-content {
+      border-radius: 10px;
+      background-color: $dark-blue;
+      padding: 50px 110px 50px 55px;
+      font-size: 18px;
+      color: $text-color;
+      margin-top: 65px;
+      line-height: 1.778;
+
+      @media (max-width: $lg) {
+        padding: 50px;
+      }
+
+      @media (max-width: $md) {
+        padding: 40px;
+        margin-top: 50px;
+      }
+
+      @media (max-width: $sm) {
+        padding: 20px;
+        margin-top: 40px;
+      }
+
+      @media (max-width: $xs) {
+        padding: 15px;
+        margin-top: 30px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      *:first-of-type {
+        margin-top: 0;
+      }
+
+      p {
+        margin: 45px 0 0 0;
+
+        @media (max-width: $md) {
+          margin: 30px 0 0 0;
+        }
+
+        @media (max-width: $sm) {
+          margin: 25px 0 0 0;
+        }
+
+        @media (max-width: $xs) {
+          margin: 15px 0 0 0;
+        }
+      }
+    }
+  }
+}

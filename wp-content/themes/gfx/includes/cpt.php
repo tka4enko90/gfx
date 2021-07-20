@@ -42,7 +42,7 @@ function register_custom_post_types() {
         'menu_icon' => 'dashicons-admin-site-alt3',
         'menu_position' => 6,
         'has_archive' => false,
-        'supports' => array( 'title', 'excerpt' )
+        'supports' => array( 'title', 'excerpt', 'editor' )
     );
     register_post_type('support', $args);
 }

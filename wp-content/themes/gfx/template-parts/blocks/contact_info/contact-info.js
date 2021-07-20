@@ -4,24 +4,31 @@
     if (section.length) {
         var element = section.find('.input-holder .element');
         if (element.length) {
-            element.on('keypress', function () {
+            element.bind('cut', function() {
                 var self = $(this);
                 var placeholder = self.parent().next('.custom-placeholder');
 
                 if (placeholder.length) {
+                    placeholder.show();
+                }
+            });
+
+            element.on('keydown keyup change', function (e) {
+                var self = $(this);
+                var placeholder = self.parent().next('.custom-placeholder');
+
+                if (placeholder.length) {
+                    placeholderCheck(self, placeholder);
+                }
+            });
+
+            function placeholderCheck(self, placeholder) {
+                if (self.val().trim() === '') {
+                    placeholder.show();
+                } else {
                     placeholder.hide();
                 }
-            });
-            element.on('change', function () {
-                var self = $(this);
-                var placeholder = self.parent().next('.custom-placeholder');
-
-                if (placeholder.length) {
-                    if (self.val().trim() === '') {
-                        placeholder.show();
-                    }
-                }
-            });
+            }
         }
     }
 
@@ -31,7 +38,7 @@
             var placeholder = form.find('.custom-placeholder');
 
             if(placeholder.length) {
-                $('.custom-placeholder').show();
+                placeholder.show();
             }
         }
     }, false );

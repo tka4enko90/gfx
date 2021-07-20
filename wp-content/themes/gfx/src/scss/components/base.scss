@@ -229,22 +229,34 @@ iframe {
   color: $text-color-dark;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  font-size: 14px;
+
+  span {
+    padding-bottom: 3px;
+  }
 
   a {
+    padding-bottom: 3px;
     margin-right: 16px;
     color: $text-color;
 
     &:hover {
       color: $red;
     }
+
+    &:last-of-type + svg path {
+      fill: $text-color-dark;
+    }
   }
 
   svg {
     width: 10px;
     margin-right: 16px;
+    padding-bottom: 3px;
 
     path {
-      fill: $text-color-dark;
+      fill: $text-color;
     }
   }
 }
