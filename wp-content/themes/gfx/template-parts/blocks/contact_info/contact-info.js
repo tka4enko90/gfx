@@ -9,7 +9,7 @@
                 var placeholder = self.parent().next('.custom-placeholder');
 
                 if (placeholder.length) {
-                    placeholder.show();
+                    placeholderCheck(self, placeholder);
                 }
             });
 

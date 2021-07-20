@@ -54,18 +54,17 @@
                                 <?php $categories = get_the_terms($product_id, 'product_cat');
                                 if (isset($categories) && !empty($categories)) : ?>
                                     <div class="category">
-                                        <?php echo $categories[0]->name;; ?>
+                                        <?php echo $categories[0]->name; ?>
                                     </div>
                                 <?php endif; ?>
 
                                 <?php if ($product_trailer_youtube || (isset($product_type) && $product_type == 'woosb')) : ?>
                                     <div class="buttons-holder">
                                         <?php if ($product_trailer_youtube) : ?>
-                                            <a href="#" class="primary-button"><?php _e('Play Trailer', 'gfx'); ?></a>
+                                            <button class="primary-button open-product-trailer-popup"><?php _e('Play Trailer', 'gfx'); ?></button>
                                         <?php endif; ?>
                                         <?php if (isset($product_type) && $product_type == 'woosb') : ?>
-                                            <a href="#"
-                                               class="secondary-button scroll-down-link"><?php _e('What’s Inside?', 'gfx'); ?></a>
+                                            <button class="secondary-button scroll-down-link"><?php _e('What’s Inside?', 'gfx'); ?></button>
                                         <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
@@ -79,6 +78,20 @@
                     </div>
                 </section>
                 <div class="scroll-here"></div>
+
+                <?php if ($product_trailer_youtube) : ?>
+                    <div class="product-trailer-popup">
+                        <div class="container">
+                            <div class="popup-holder">
+                                <button class="close-product-trailer-popup-btn">
+                                    <svg style="fill:white" id="Capa_1" enable-background="new 0 0 386.667 386.667" height="512" viewBox="0 0 386.667 386.667" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m386.667 45.564-45.564-45.564-147.77 147.769-147.769-147.769-45.564 45.564 147.769 147.769-147.769 147.77 45.564 45.564 147.769-147.769 147.769 147.769 45.564-45.564-147.768-147.77z"/></svg>
+                                </button>
+
+                                <?php echo $product_trailer_youtube; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endif;
         endif;
     endif;

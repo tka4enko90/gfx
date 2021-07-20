@@ -45,16 +45,11 @@
                 var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
 
                 if (subMenus.length) {
-                    subMenus.fadeOut(100);
-                    hasChildrenListItem.removeClass('active');
-
-                    if (!subMenu.is(':visible')) {
-                        self.addClass('active');
-                        subMenu.fadeIn(200).css('display', 'flex');
-                    }
+                    subMenu.toggle().toggleClass('visible');
                 }
             });
-        } else if ($(window).width() > 960 && $('body').hasClass('touch') && hasChildrenLink.length) {
+        }
+        else if ($(window).width() > 960 && $('body').hasClass('touch') && hasChildrenLink.length) {
             hasChildrenLink.on('click', function (e) {
                 e.preventDefault();
 
@@ -73,7 +68,8 @@
                     }
                 }
             });
-        } else {
+        }
+        else {
             hasChildrenListItem.on('click', function () {
                 var self = $(this);
 
@@ -106,14 +102,6 @@
 
         $(this).toggleClass('active');
         menu.slideToggle(200);
-    });
-
-    $(window).on('orientationchange', function () {
-        var menu = $('.header .menu-holder');
-
-        if (menu.length) {
-            menu.css('display', '');
-        }
     });
 
     // show added to cart popup

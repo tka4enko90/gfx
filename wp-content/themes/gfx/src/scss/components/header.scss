@@ -1,5 +1,5 @@
 .header {
-  padding: 21px 0;
+  //padding: 21px 0;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -79,6 +79,10 @@
     display: flex;
     align-items: center;
 
+    @media (min-width: $md) {
+      display: flex !important;
+    }
+
     & > ul {
       padding: 0;
       margin: 0;
@@ -102,10 +106,13 @@
       }
 
       & > li {
+        padding: 21px 0;
         margin-right: 30px;
         text-transform: uppercase;
 
         @media (max-width: $md) {
+          padding: 0;
+
           &.menu-item-has-children > a {
             position: relative;
 
@@ -191,7 +198,7 @@
             background-position: center;
           }
 
-          &.not-empty {
+          &.not-empty > a {
             position: relative;
 
             &::after {
@@ -253,7 +260,7 @@
               content: '';
               position: absolute;
               z-index: 3;
-              bottom: -45px;
+              bottom: -40px;
               left: 0;
               right: 0;
               margin: 0 auto;
@@ -285,6 +292,10 @@
             flex-direction: column;
             background-color: $submenu-blue-bg;
             padding: 20px 0;
+          }
+
+          &.visible {
+            display: flex !important;
           }
 
           &::after {

@@ -99,6 +99,10 @@
     flex-wrap: wrap;
     overflow: auto;
 
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: rgba($dark-blue, .7);
+    }
+
     .popup {
       width: 100%;
       max-width: 1000px;
