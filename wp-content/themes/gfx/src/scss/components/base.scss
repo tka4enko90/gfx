@@ -60,8 +60,8 @@ img {
   flex-direction: column;
 
   &.is-blurred {
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
   }
 
   .footer {
@@ -73,6 +73,10 @@ iframe {
   border: 0;
   border-radius: 0;
   outline: none;
+}
+
+.product-pop-out {
+  display: none;
 }
 
 .slick-dots {
