@@ -30,6 +30,8 @@
                     <div class="search-form-holder">
                         <?php if (isset($search_type) && $search_type == 'support') : ?>
                             <?php get_template_part('searchform-support'); ?>
+                        <?php elseif (isset($search_type) && $search_type == 'tutorial') : ?>
+                            <?php get_template_part('searchform-tutorials'); ?>
                         <?php else : ?>
                             <?php get_search_form(); ?>
                         <?php endif; ?>

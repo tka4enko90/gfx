@@ -45,6 +45,29 @@ function register_custom_post_types() {
         'supports' => array( 'title', 'excerpt', 'editor' )
     );
     register_post_type('support', $args);
+
+    $labels = array(
+        'name' => 'Tutorials',
+        'singular_name' => 'Tutorial',
+        'add_new' => 'Add tutorial',
+        'add_new_item' => 'Add tutorial',
+        'edit_item' => 'Edit tutorial',
+        'new_item' => 'New tutorial',
+        'all_items' => 'All tutorials',
+        'menu_name' => 'Tutorials'
+    );
+    $args = array(
+        'labels' => $labels,
+        'publicly_queryable' => true,
+        'exclude_from_search' => false,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'menu_icon' => 'dashicons-welcome-view-site',
+        'menu_position' => 7,
+        'has_archive' => false,
+        'supports' => array( 'title', 'thumbnail' )
+    );
+    register_post_type('tutorial', $args);
 }
 add_action( 'init', 'register_custom_post_types' );
 

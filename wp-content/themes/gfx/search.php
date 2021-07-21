@@ -3,32 +3,29 @@
     <?php wp_enqueue_style('search_page_styles', get_template_directory_uri() . '/static/css/page-templates/search.css', '', '', 'all'); ?>
 
     <main class="main">
-        <?php if (!empty($_POST) && !empty($_POST['post_type'])) : ?>
-            <?php $post_type = $_POST['post_type']; ?>
+        <?php if (!empty($_POST['post_type'])) :
+            $post_type = $_POST['post_type'];
 
-            <?php if (!empty($post_type)) : ?>
-                <?php if ($post_type == 'post') : ?>
-                    <?php $page_id = get_page_by_title('Blog')->ID; ?>
+            if (!empty($post_type)) :
+                if ($post_type == 'post') :
+                    $page_id = get_page_by_title('Blog')->ID;
+                    $page_title = __('Blog', 'gfx');
+                    $hero_subtitle = get_field('blog_hero_subtitle', $page_id);
+                elseif ($post_type == 'tutorial') :
+                    $page_id = get_page_by_title('Rescourses')->ID;
+                    $page_title = __('Tutorials', 'gfx');
+                    $hero_subtitle = get_field('resources_hero_subtitle', $page_id);
+                else :
+                    $page_id = get_page_by_title('Support')->ID;
+                    $page_title = __('Support', 'gfx');
+                    $hero_subtitle = get_field('support_hero_subtitle', $page_id);
+                endif;
 
-                    <?php $page_title = get_the_title($page_id); ?>
-                    <?php $blog_hero_subtitle = get_field('blog_hero_subtitle', $page_id); ?>
-
-                    <?php if ($page_title || $blog_hero_subtitle) : ?>
-                        <?php get_template_part('template-parts/blocks/hero_search/hero-search', '', array('title' => $page_title, 'subtitle' => $blog_hero_subtitle)); ?>
-                    <?php endif; ?>
-
-                <?php else : ?>
-                    <?php $page_id = get_page_by_title('Support')->ID; ?>
-
-                    <?php $page_title = get_the_title($page_id); ?>
-                    <?php $support_hero_subtitle = get_field('support_hero_subtitle', $page_id); ?>
-
-                    <?php if (isset($page_title) || isset($support_hero_subtitle)) : ?>
-                        <?php get_template_part('template-parts/blocks/hero_search/hero-search', '', array('title' => $page_title, 'subtitle' => $support_hero_subtitle, 'search_type' => 'support')); ?>
-                    <?php endif; ?>
-                <?php endif; ?>
-            <?php endif; ?>
-        <?php endif; ?>
+                if (isset($page_title) || isset($support_hero_subtitle)) :
+                    get_template_part('template-parts/blocks/hero_search/hero-search', '', array('title' => $page_title, 'subtitle' => $hero_subtitle, 'search_type' => $post_type));
+                endif;
+            endif;
+        endif; ?>
 
         <section class="search-results-section">
             <div class="container">

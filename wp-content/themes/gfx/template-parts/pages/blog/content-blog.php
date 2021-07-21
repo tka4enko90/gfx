@@ -9,5 +9,5 @@
 <?php endif; ?>
 
 <?php if (have_posts()) : ?>
-    <?php get_template_part('template-parts/blocks/blog_posts_grid/blog-posts-grid'); ?>
+    <?php get_template_part('template-parts/blocks/posts_grid/posts-grid'); ?>
 <?php endif; ?>
