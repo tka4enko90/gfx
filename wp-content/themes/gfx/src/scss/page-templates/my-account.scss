@@ -760,6 +760,10 @@
         }
       }
     }
+
+    .woocommerce-order-downloads td.download-file .secondary-button {
+      display: none;
+    }
   }
 
   // payment methods section

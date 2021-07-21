@@ -48,28 +48,28 @@
                     subMenu.toggle().toggleClass('visible');
                 }
             });
-        }
-        else if ($(window).width() > 960 && $('body').hasClass('touch') && hasChildrenLink.length) {
+        } else if ($(window).width() > 960 && $('body').hasClass('touch') && hasChildrenLink.length) {
             hasChildrenLink.on('click', function (e) {
-                e.preventDefault();
-
                 var self = $(this);
 
-                var subMenu = self.next('.sub-menu');
-                var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
+                if (!self.hasClass('active')) {
+                    e.preventDefault();
 
-                if (subMenus.length) {
-                    subMenus.fadeOut(100);
-                    hasChildrenLink.removeClass('active');
+                    var subMenu = self.next('.sub-menu');
+                    var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
 
-                    if (!subMenu.is(':visible')) {
-                        self.addClass('active');
-                        subMenu.fadeIn(200).css('display', 'flex');
+                    if (subMenus.length) {
+                        subMenus.fadeOut(100);
+                        hasChildrenLink.removeClass('active');
+
+                        if (!subMenu.is(':visible')) {
+                            self.addClass('active');
+                            subMenu.fadeIn(200).css('display', 'flex');
+                        }
                     }
                 }
             });
-        }
-        else {
+        } else {
             hasChildrenListItem.on('click', function () {
                 var self = $(this);
 
