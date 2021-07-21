@@ -1,12 +1,13 @@
 (function ($) {
     var body = $('body');
+    var wrapper = $('body > .wrapper');
     var header = $('.header');
     var productCardOpenPopOut = $('.product-card-open-pop-out');
 
     // open product pop out
     if (productCardOpenPopOut.length) {
         productCardOpenPopOut.on('click', function () {
-            var popOut = $(this).closest('.products-grid-with-pop-out').find('.product-pop-out');
+            var popOut = $('.product-pop-out');
             var popOutInfo = JSON.parse($(this).attr('data-product-pop-out'));
 
             var productTrailerVideoHolder = popOut.find('.product-trailer-video-holder');
@@ -139,6 +140,7 @@
                         previewsHolder.find('.screen-preview video')[0].load();
                     }
 
+                    wrapper.addClass('is-blurred');
                     popOut.fadeIn(200).css('display', 'flex');
                 }
             }
@@ -151,6 +153,7 @@
         productPopOutCloseBtn.on('click', function () {
             var popOut = $(this).closest('.product-pop-out');
             if (popOut.length) {
+                wrapper.removeClass('is-blurred');
                 popOut.fadeOut(200);
 
                 setTimeout(function () {

@@ -497,3 +497,7 @@ body.not-empty-cart .header li.cart > a {
     z-index: 3;
   }
 }
+
+body:not(.logged-in) .header li.my-account {
+  display: none;
+}

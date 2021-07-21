@@ -59,6 +59,11 @@ img {
   display: flex;
   flex-direction: column;
 
+  &.is-blurred {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+
   .footer {
     margin-top: auto;
   }
