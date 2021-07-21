@@ -64,7 +64,7 @@
 
                         if (!subMenu.is(':visible')) {
                             self.addClass('active');
-                            subMenu.fadeIn(200).css('display', 'flex');
+                            subMenu.toggle().css('display', 'flex');
                         }
                     }
                 }
@@ -89,6 +89,19 @@
             });
         }
     }
+
+    // close dropdown menu on touchscreens on click outside
+    $(document).mouseup(function (e) {
+        if($(window).width() > 960 && $('body').hasClass('touch')) {
+            var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
+
+            if (hasChildrenLink.length && subMenus.length && subMenus.is(':visible')
+                && !subMenus.is(e.target) && subMenus.has(e.target).length === 0 && !hasChildrenLink.is(e.target)) {
+                hasChildrenLink.removeClass('active');
+                subMenus.fadeOut(100);
+            }
+        }
+    });
 
     // show mobile menu on click
     $('.header .burger-btn').on('click', function () {
