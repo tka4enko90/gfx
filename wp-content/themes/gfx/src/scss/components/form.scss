@@ -1,6 +1,6 @@
 @import 'vars';
 
-input, textarea, .wc-stripe-elements-field  {
+input, textarea, .wc-stripe-elements-field {
   display: block;
   background: none;
   font-family: $helvetica-now-display;
@@ -112,42 +112,9 @@ textarea {
       }
     }
 
-    input[type="checkbox"] {
-      padding: 0;
-      margin: 0;
-      width: 13px;
-      height: 13px;
-      position: relative;
-      cursor: pointer;
-
-      &:checked::after {
-        opacity: 1;
-      }
-
-      &::after {
-        content: '';
-        opacity: 0;
-        position: absolute;
-        z-index: 2;
-        top: 3px;
-        left: 3px;
-        width: 9px;
-        height: 9px;
-        background-color: $text-color;
-        transition: opacity $transition;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        width: 13px;
-        height: 13px;
-        border: 1px solid $text-color;
-        background: $dark-blue;
-      }
+    input[type="checkbox"]::before {
+      background: $dark-blue;
+      border: 1px solid $text-color;
     }
   }
 
@@ -268,6 +235,44 @@ form {
     position: absolute !important;
     bottom: 0;
     right: 0;
+  }
+}
+
+input[type="checkbox"] {
+  padding: 0;
+  margin: 0;
+  width: 13px;
+  height: 13px;
+  position: relative;
+  cursor: pointer;
+
+  &:checked::after {
+    opacity: 1;
+  }
+
+  &::after {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    top: 3px;
+    left: 3px;
+    width: 9px;
+    height: 9px;
+    background-color: $white;
+    transition: opacity $transition;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    border: 1px solid $white;
+    background: $dark-blue;
   }
 }
 

@@ -44,7 +44,7 @@ endif; ?>
 
                     <div class="information-box">
                         <h3><?php _e('Information', 'gfx'); ?></h3>
-                        <?php if(is_user_logged_in()) : ?>
+                        <?php if (is_user_logged_in()) : ?>
                             <?php
                             $user_name = wp_get_current_user()->display_name;
                             $user_email = wp_get_current_user()->user_email;
@@ -71,19 +71,58 @@ endif; ?>
                         <?php do_action('woocommerce_checkout_before_customer_details'); ?>
 
                         <h3><?php _e('Billing Address', 'gfx'); ?></h3>
-                        <div class="subtitle">
-                            <p><?php _e('Please select your billing address:', 'gfx'); ?></p>
-                        </div>
+                        <?php if (is_user_logged_in()) : ?>
+                            <div class="subtitle">
+                                <p><?php _e('Please select your billing address:', 'gfx'); ?></p>
+                            </div>
+                        <?php endif; ?>
 
-                        <?php if ($checkout->get_checkout_fields()) : ?>
+                        <?php if (!is_user_logged_in() && $checkout->get_checkout_fields()) : ?>
                             <div id="customer_details">
                                 <?php do_action('woocommerce_checkout_billing'); ?>
                             </div>
                             <?php do_action('woocommerce_checkout_after_customer_details'); ?>
                         <?php endif; ?>
                     </div>
+
+                    <?php
+                    $available_payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
+                    if (!empty($available_payment_gateways)) : ?>
+                        <div class="payment-methods-box">
+                            <h3><?php _e('Payment', 'gfx'); ?></h3>
+                            <div class="subtitle">
+                                <p><?php _e('Please select a payment method:', 'gfx'); ?></p>
+                            </div>
+
+                            <div class="payments-box">
+                                <h6><?php _e('Payment Methods', 'gfx'); ?></h6>
+                                <?php woocommerce_checkout_payment(); ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php wc_get_template('checkout/terms.php'); ?>
+
+                    <div class="submit-holder">
+                        <button type="submit" class="primary-button">
+                            <?php _e('Complete Order', 'gfx'); ?>
+                        </button>
+                    </div>
                 </div>
                 <div class="col right-col">
+                    <?php /* if (wc_coupons_enabled()) : ?>
+                        <div class="coupon">
+                            <label for="coupon_code"><?php _e('Apply a Coupon', 'gfx'); ?></label>
+
+                            <div class="holder">
+                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php _e('Coupon code', 'gfx'); ?>"/>
+                                <button class="primary-button small blue ajax-apply-coupon-btn" value="<?php _e('Apply', 'gfx'); ?>">
+                                    <?php _e('Apply', 'gfx'); ?>
+                                </button>
+                            </div>
+                        </div>
+                    <?php endif; */ ?>
+
                     <div class="order-review-box">
                         <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
                         <h6 id="order_review_heading"><?php esc_html_e('Your Order', 'gfx'); ?></h6>

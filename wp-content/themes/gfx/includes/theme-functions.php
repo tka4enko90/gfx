@@ -152,5 +152,13 @@ add_action('wp_ajax_nopriv_my_account_table_ajax_pagination', 'my_account_table_
 
 // Checkout Page
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form' );
-
 remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
+
+//function checkout_ajax_apply_coupon() {
+//    if (!empty($_POST['coupon_code'])) :
+//        $coupon = $_POST['coupon_code'];
+//    endif;
+//    $result = WC_AJAX::apply_coupon();
+//}
+//add_action('wp_ajax_checkout_ajax_apply_coupon', 'checkout_ajax_apply_coupon');
+//add_action('wp_ajax_nopriv_checkout_ajax_apply_coupon', 'checkout_ajax_apply_coupon');

@@ -54,6 +54,8 @@
         }
 
         .billing-info-box {
+          margin-bottom: 75px;
+
           .subtitle {
             font-size: 18px;
             color: $text-color;
@@ -62,6 +64,165 @@
             @media (max-width: $xs) {
               font-size: 16px;
             }
+          }
+
+          .woocommerce-billing-fields {
+            .input-wrapper, .form-row {
+              margin-bottom: 35px;
+
+              @media (max-width: $sm) {
+                margin-bottom: 30px;
+              }
+
+              @media (max-width: $xs) {
+                margin-bottom: 25px;
+              }
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+
+              .promt {
+                display: block;
+                color: $text-color;
+                font-size: 12px;
+                font-style: italic;
+                margin-top: 4px;
+              }
+
+              label {
+                display: inline-block;
+                font-size: 16px;
+                color: $white;
+                margin-bottom: 12px;
+                line-height: 1;
+
+                span {
+                  padding-left: 4px;
+                  color: $text-color;
+                }
+
+                .required {
+                  content: '';
+                  position: absolute;
+                  font-size: 0;
+
+                  &::before {
+                    content: '*';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 8px;
+                    height: 8px;
+                    color: $red;
+                    font-size: 16px;
+                  }
+                }
+
+                .optional {
+                  padding-left: 0;
+                }
+              }
+
+              input {
+                width: 100%;
+                padding: 14px 25px;
+
+                @media (max-width: $xs) {
+                  padding: 10px 15px;
+                }
+              }
+
+              .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+                height: 54px !important;
+
+                @media (max-width: $xs) {
+                  height: 46px !important;
+                }
+
+                .select2-selection__rendered {
+                  padding-left: 25px !important;
+                  padding-right: 25px !important;
+
+                  @media (max-width: $xs) {
+                    padding-left: 15px !important;
+                    padding-right: 15px !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .payment-methods-box {
+          .payments-box {
+            border-radius: 6px;
+            background-color: rgb(6, 10, 21);
+            padding: 33px 77px 33px 33px;
+
+            h6 {
+              margin: 0 0 28px 0;
+            }
+
+            .woocommerce-checkout-payment {
+              .payment_methods {
+                .wc_payment_method {
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+
+                  .holder {
+                    width: 100%;
+
+                    label {
+                      img {
+                        max-width: 27px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .woocommerce-terms-and-conditions-wrapper {
+          margin-top: 50px;
+          font-size: 18px;
+          color: $text-color;
+
+          .woocommerce-privacy-policy-text {
+            margin-bottom: 25px;
+          }
+
+          .woocommerce-form__label-for-checkbox {
+            display: flex;
+            align-items: center;
+
+            input[type="checkbox"] {
+              margin-right: 10px;
+            }
+          }
+
+          p {
+            margin: 0;
+          }
+
+          a {
+            color: $red;
+
+            &:hover {
+              color: $white;
+            }
+          }
+        }
+
+        .submit-holder {
+          text-align: right;
+          margin-top: 29px;
+
+          button {
+            min-width: 182px;
           }
         }
       }
@@ -141,6 +302,7 @@
 
                 a {
                   color: $red;
+
                   &:hover {
                     color: $white;
                   }
