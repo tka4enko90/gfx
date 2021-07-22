@@ -140,3 +140,50 @@
     max-width: 753px;
   }
 }
+
+.woocommerce-checkout .hero-section {
+  padding: 80px 0;
+
+  @media (max-width: $md) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: $sm) {
+    padding: 50px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .text-col {
+    h1 {
+      font-size: 50px;
+
+      @media (max-width: $sm) {
+        font-size: 45px;
+      }
+
+      @media (max-width: $xs) {
+        font-size: 40px;
+      }
+    }
+
+    .subtitle {
+      font-size: 24px;
+      margin-top: 0;
+
+      @media (max-width: $md) {
+        font-size: 22px;
+      }
+
+      @media (max-width: $sm) {
+        font-size: 20px;
+      }
+
+      @media (max-width: $xs) {
+        font-size: 18px;
+      }
+    }
+  }
+}

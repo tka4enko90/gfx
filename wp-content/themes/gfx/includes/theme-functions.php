@@ -141,3 +141,8 @@ function my_account_table_ajax_pagination()
 }
 add_action('wp_ajax_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
 add_action('wp_ajax_nopriv_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
+
+// Checkout Page
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form' );
+
+remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );

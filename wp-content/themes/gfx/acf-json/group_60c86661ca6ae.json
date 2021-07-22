@@ -470,6 +470,41 @@
             "toolbar": "basic",
             "media_upload": 0,
             "delay": 1
+        },
+        {
+            "key": "field_60f92c2f563bd",
+            "label": "Checkout",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_60f92c45563bf",
+            "label": "Hero subtitle",
+            "name": "checkout_hero_subtitle",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -489,5 +524,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626692428
+    "modified": 1626942555
 }

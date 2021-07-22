@@ -1,0 +1,165 @@
+@import '../components/vars';
+
+.checkout-section {
+  padding: 125px 0 133px;
+
+  .woocommerce-checkout {
+    .form-holder {
+      display: flex;
+      justify-content: space-between;
+
+      @media (max-width: $lg) {
+        flex-direction: column;
+      }
+
+      .left-col {
+        width: 60%;
+        max-width: 823px;
+      }
+
+      .right-col {
+        margin-left: 126px;
+        width: 40%;
+        max-width: 530px;
+      }
+
+      h3 {
+        margin: 0;
+      }
+
+      .left-col {
+        .information-box {
+          margin-bottom: 70px;
+
+          .text {
+            font-size: 18px;
+            color: $text-color;
+
+            @media (max-width: $xs) {
+              font-size: 16px;
+            }
+
+            span {
+              color: $white;
+            }
+
+            a {
+              color: $red;
+
+              &:hover {
+                color: $white;
+              }
+            }
+          }
+        }
+
+        .billing-info-box {
+          .subtitle {
+            font-size: 18px;
+            color: $text-color;
+            margin-bottom: 28px;
+
+            @media (max-width: $xs) {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+
+      .right-col {
+        .order-review-box {
+          h6 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            font-weight: 500;
+            color: $white;
+          }
+
+          .woocommerce-checkout-review-order {
+            background-color: rgba($dark-blue, 0.851);
+            border-radius: 10px;
+            padding: 5px 30px;
+
+            .woocommerce-checkout-review-order-table {
+              width: 100%;
+              border-collapse: collapse;
+              border-spacing: 0;
+
+              thead {
+                font-size: 16px;
+                color: $text-color;
+                font-weight: 500;
+
+                .product-name {
+                  text-align: left;
+                }
+
+                .product-total {
+                  text-align: right;
+                }
+
+                th {
+                  padding: 16px 0;
+                }
+              }
+
+              tbody {
+                font-size: 14px;
+                font-weight: 500;
+                color: $white;
+
+                td {
+                  height: 54px;
+                  padding: 17px 0;
+                  border-top: 1px solid rgba($text-color, 0.502);
+                }
+
+                .product-total {
+                  text-align: right;
+                }
+              }
+
+              tfoot {
+                font-size: 18px;
+
+                th {
+                  height: 54px;
+                  padding: 14px 0;
+                  text-align: left;
+                  font-weight: normal;
+                }
+
+                tr {
+                  height: 54px;
+                  padding: 14px 0;
+                  text-align: right;
+
+                  strong {
+                    font-weight: normal;
+                  }
+                }
+
+                a {
+                  color: $red;
+                  &:hover {
+                    color: $white;
+                  }
+                }
+
+                .cart-subtotal {
+                  border-top: 1px solid rgba($text-color, 0.502);
+                  border-bottom: 1px solid rgba($text-color, 0.502);
+                  color: $text-color;
+                }
+
+                .order-total td {
+                  color: $red;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
