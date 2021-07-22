@@ -90,6 +90,14 @@ function cpt_archive_per_page($query)
 
 add_action('pre_get_posts', 'cpt_archive_per_page');
 
+// change search results count
+function search_results_per_page($query) {
+    if ( $query->is_search )
+        $query->query_vars['posts_per_page'] = -1;
+    return $query;
+}
+add_filter('pre_get_posts', 'search_results_per_page');
+
 // product-filtration
 function product_form_filters()
 {
