@@ -11,7 +11,7 @@ if ($post_id) :
 
     if (!empty($post_type)) :
         if (isset($tutorial_video_url)) : ?>
-            <a href="<?php echo $tutorial_video_url; ?>" class="post-card">
+            <a href="<?php echo $tutorial_video_url; ?>" class="post-card" target="_blank">
                 <?php if ($post_thumbnail) : ?>
                     <div class="thumbnail">
                         <?php echo $post_thumbnail; ?>

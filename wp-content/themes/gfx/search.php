@@ -32,9 +32,9 @@
                 <?php if (have_posts()) : ?>
                     <?php global $wp_query; ?>
                     <div class="showing-text">
-                        <?php _e('Showing'); ?>
+                        <?php _e('Showing', 'gfx'); ?>
                         <?php echo $wp_query->found_posts; ?> of <?php echo $wp_query->found_posts; ?>
-                        <?php _e('results for: '); ?>
+                        <?php _e('results for: ', 'gfx'); ?>
                         <span><?php echo get_search_query(); ?></span>
                     </div>
 

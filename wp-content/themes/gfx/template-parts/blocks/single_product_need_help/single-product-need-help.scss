@@ -56,6 +56,10 @@
       margin: 0;
     }
 
+    a.block:hover h5 {
+      color: $red;
+    }
+
     .block {
       width: 33.33%;
       padding: 0 23px;
@@ -94,12 +98,6 @@
         @media (max-width: $xs) {
           max-width: 100%;
           padding: 20px;
-        }
-      }
-
-      &:hover {
-        h5 {
-          color: $red;
         }
       }
 
