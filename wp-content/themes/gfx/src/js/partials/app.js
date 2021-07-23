@@ -296,24 +296,4 @@
             }
         });
     }
-
-    // Checkout page ajax apply coupon
-    /*var ajaxApplyCouponBtn = $('.ajax-apply-coupon-btn');
-    if(ajaxApplyCouponBtn.length) {
-        ajaxApplyCouponBtn.on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: ajaxurl.url,
-                type: 'POST',
-                data: {
-                    action: 'checkout_ajax_apply_coupon',
-                    coupon_code: $('#coupon_code').val(),
-                    security: '<?php echo wp_create_nonce("apply-coupon") ?>'
-                },
-                success: function (data) {
-                    console.log('success');
-                }
-            });
-        });
-    }*/
 })(jQuery);

@@ -91,11 +91,13 @@ function cpt_archive_per_page($query)
 add_action('pre_get_posts', 'cpt_archive_per_page');
 
 // change search results count
-function search_results_per_page($query) {
-    if ( $query->is_search )
+function search_results_per_page($query)
+{
+    if ($query->is_search)
         $query->query_vars['posts_per_page'] = -1;
     return $query;
 }
+
 add_filter('pre_get_posts', 'search_results_per_page');
 
 // product-filtration
@@ -147,18 +149,52 @@ function my_account_table_ajax_pagination()
         wp_send_json_error();
     endif;
 }
+
 add_action('wp_ajax_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
 add_action('wp_ajax_nopriv_my_account_table_ajax_pagination', 'my_account_table_ajax_pagination');
 
 // Checkout Page
-remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form' );
-remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
+remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
+remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_login_form');
+remove_action('woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20);
 
-//function checkout_ajax_apply_coupon() {
-//    if (!empty($_POST['coupon_code'])) :
-//        $coupon = $_POST['coupon_code'];
-//    endif;
-//    $result = WC_AJAX::apply_coupon();
-//}
-//add_action('wp_ajax_checkout_ajax_apply_coupon', 'checkout_ajax_apply_coupon');
-//add_action('wp_ajax_nopriv_checkout_ajax_apply_coupon', 'checkout_ajax_apply_coupon');
+// Change billing fields on my account page
+add_filter( 'woocommerce_billing_fields' , 'change_billing_fields' );
+function change_billing_fields( $fields ) {
+    unset($fields['billing_phone']);
+    $fields['billing_email']['priority'] = 21;
+    $fields['billing_email']['label'] = __('Email Address', 'gfx');
+
+    return $fields;
+}
+
+// Change billing fields on checkout page
+add_filter( 'woocommerce_checkout_fields' , 'change_checkout_fields' );
+function change_checkout_fields( $fields ) {
+    unset($fields['billing']['billing_phone']);
+    $fields['billing']['billing_state']['label'] = __('County', 'gfx');
+    $fields['billing']['billing_postcode']['label'] = __('Postcode', 'gfx');
+
+    return $fields;
+}
+
+// Change address fields
+add_filter( 'woocommerce_default_address_fields' , 'change_address_fields' );
+function change_address_fields( $fields ) {
+    unset($fields[ 'address_2' ]);
+    unset($fields['phone']);
+
+    $fields['first_name']['label'] = __('First Name', 'gfx');
+    $fields['last_name']['label'] = __('Last Name', 'gfx');
+    $fields['company']['label'] = __('Company Name', 'gfx');
+    $fields['country']['label'] = __('Country', 'gfx');
+    $fields['address_1']['label'] = __('Street Address', 'gfx');
+    $fields['address_1']['placeholder'] = '';
+    $fields['postcode']['label'] = __('Postcode', 'gfx');
+    $fields['state']['label'] = __('County', 'gfx');
+    $fields['state']['required'] = false;
+    $fields['email']['priority'] = 21;
+    $fields['email']['label'] = __('Email Address', 'gfx');
+
+    return $fields;
+}

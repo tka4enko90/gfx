@@ -3,6 +3,166 @@
 .checkout-section {
   padding: 125px 0 133px;
 
+  .before-checkout-form-holder {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+    @media (max-width: $lg) {
+      flex-direction: column;
+    }
+
+    .login-form-holder {
+      width: 60%;
+      max-width: 823px;
+      margin-right: 126px;
+
+      @media (max-width: $lg) {
+        margin-right: 0;
+        margin-bottom: 40px;
+      }
+    }
+
+    .woocommerce-form-coupon {
+      margin-left: auto;
+      width: 40%;
+      max-width: 530px;
+
+      @media (max-width: $lg) {
+        margin-left: 0;
+      }
+    }
+  }
+
+  // login form
+  .login-form-holder {
+    .woocommerce-form-login-toggle {
+      font-size: 18px;
+      color: $text-color;
+
+      @media (max-width: $xs) {
+        font-size: 16px;
+      }
+
+      a {
+        color: $red;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+
+    .woocommerce-form-login {
+      margin-top: 30px;
+
+      .input-wrapper {
+        margin-bottom: 35px;
+
+        @media (max-width: $sm) {
+          margin-bottom: 30px;
+        }
+
+        @media (max-width: $xs) {
+          margin-bottom: 25px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .submit-wrapper {
+        display: flex;
+        align-items: center;
+
+        a {
+          margin-left: 25px;
+          font-size: 16px;
+          color: $text-color;
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+
+      label {
+        display: inline-block;
+        font-size: 16px;
+        color: $white;
+        margin-bottom: 12px;
+        line-height: 1;
+
+        span {
+          padding-left: 4px;
+          color: $text-color;
+        }
+
+        .required {
+          content: '';
+          position: absolute;
+          font-size: 0;
+
+          &::before {
+            content: '*';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            color: $red;
+            font-size: 16px;
+          }
+        }
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 25px;
+
+        @media (max-width: $xs) {
+          padding: 10px 15px;
+        }
+      }
+    }
+  }
+
+  // coupon form
+  .woocommerce-form-coupon {
+    display: block !important;
+    max-width: 530px;
+
+    & > h6 {
+      margin: 0 0 16px 0;
+      color: $white;
+      font-size: 20px;
+      font-weight: 500;
+
+      @media (max-width: $md) {
+        font-size: 18px;
+      }
+    }
+
+    .holder {
+      display: flex;
+
+      .input-text {
+        padding: 10px 17px;
+        width: 100%;
+
+        @media (max-width: $xs) {
+          padding: 10px 15px;
+        }
+      }
+
+      .primary-button {
+        margin-left: 6px;
+        min-width: 82px;
+      }
+    }
+  }
+
   .woocommerce-checkout {
     .form-holder {
       display: flex;
@@ -15,10 +175,10 @@
       .left-col {
         width: 60%;
         max-width: 823px;
+        margin-right: 126px;
       }
 
       .right-col {
-        margin-left: 126px;
         width: 40%;
         max-width: 530px;
       }
@@ -28,7 +188,8 @@
       }
 
       .left-col {
-        .information-box {
+        // user info block
+        .user-information {
           margin-bottom: 70px;
 
           .text {
@@ -53,18 +214,22 @@
           }
         }
 
-        .billing-info-box {
+        .billing-information {
           margin-bottom: 75px;
 
-          .subtitle {
-            font-size: 18px;
-            color: $text-color;
-            margin-bottom: 28px;
-
-            @media (max-width: $xs) {
-              font-size: 16px;
-            }
+          & > h3 {
+            margin-bottom: 25px;
           }
+
+          //.subtitle {
+          //  font-size: 18px;
+          //  color: $text-color;
+          //  margin-bottom: 28px;
+          //
+          //  @media (max-width: $xs) {
+          //    font-size: 16px;
+          //  }
+          //}
 
           .woocommerce-billing-fields {
             .input-wrapper, .form-row {
@@ -82,12 +247,21 @@
                 margin-bottom: 0;
               }
 
-              .promt {
-                display: block;
-                color: $text-color;
-                font-size: 12px;
-                font-style: italic;
-                margin-top: 4px;
+              &#billing_city_field {
+                width: 50%;
+                float: left;
+                padding-right: 17px;
+              }
+
+              &#billing_state_field {
+                width: 50%;
+                float: right;
+                padding-left: 17px;
+              }
+
+              &#billing_postcode_field {
+                width: 50%;
+                padding-right: 17px;
               }
 
               label {
@@ -179,6 +353,10 @@
                         max-width: 27px;
                       }
                     }
+                  }
+
+                  .payment_box {
+                    //display: block !important;
                   }
                 }
               }

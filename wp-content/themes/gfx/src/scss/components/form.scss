@@ -318,7 +318,13 @@ input[type="checkbox"] {
     .select2-selection__rendered {
       font-size: 14px;
       color: $white !important;
+    }
 
+    .select2-selection__placeholder {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: $helvetica-now-display;
+      color: $text-color !important;
     }
   }
 

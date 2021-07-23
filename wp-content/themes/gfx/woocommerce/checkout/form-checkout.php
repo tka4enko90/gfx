@@ -30,60 +30,57 @@ endif; ?>
 
 <section class="checkout-section">
     <div class="container">
-        <?php do_action('woocommerce_before_checkout_form', $checkout);
-        // If checkout registration is disabled and not logged in, the user cannot checkout.
-        if (!$checkout->is_registration_enabled() && $checkout->is_registration_required() && !is_user_logged_in()) {
-            echo esc_html(apply_filters('woocommerce_checkout_must_be_logged_in_message', __('You must be logged in to checkout.', 'woocommerce')));
-            return;
-        } ?>
+        <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
+
+        <div class="before-checkout-form-holder">
+            <div class="login-form-holder">
+                <?php woocommerce_checkout_login_form(); ?>
+            </div>
+            <?php woocommerce_checkout_coupon_form(); ?>
+        </div>
 
         <form name="checkout" method="post" class="checkout woocommerce-checkout"
               action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
             <div class="form-holder">
                 <div class="col left-col">
 
-                    <div class="information-box">
-                        <h3><?php _e('Information', 'gfx'); ?></h3>
-                        <?php if (is_user_logged_in()) : ?>
+                    <!-- user information -->
+                    <?php if (is_user_logged_in()) : ?>
+                        <div class="user-information">
+                            <h3><?php _e('Information', 'gfx'); ?></h3>
+
                             <?php
                             $user_name = wp_get_current_user()->display_name;
                             $user_email = wp_get_current_user()->user_email;
                             if ($user_name || $user_email) : ?>
                                 <div class="text">
-                                    <?php _e("Welcome back, "); ?>
-                                    <?php if ($user_name) : ?>
+                                    <?php _e("Welcome back, ", 'gfx');
+                                    if ($user_name) : ?>
                                         <span><?php echo $user_name; ?></span>
-                                    <?php endif; ?>
-                                    <?php if ($user_email) : ?>
-                                        <?php echo $user_email; ?>
-                                    <?php endif; ?>
+                                    <?php endif;
+                                    if ($user_email) :
+                                        echo '(' . $user_email . ')';
+                                    endif; ?>
                                 </div>
                             <?php endif; ?>
-                        <?php else : ?>
-                            <div class="text">
-                                <?php _e('Already have an account?', 'gfx'); ?>
-                                <a href="<?php echo wp_login_url(); ?>"><?php _e('Log in for a faster checkout experience.', 'gfx'); ?></a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
 
-                    <div class="billing-info-box">
-                        <?php do_action('woocommerce_checkout_before_customer_details'); ?>
+                    <!-- Billing information -->
+                    <?php if ($checkout->get_checkout_fields()) : ?>
+                        <div class="billing-information">
+                            <?php do_action('woocommerce_checkout_before_customer_details'); ?>
 
-                        <h3><?php _e('Billing Address', 'gfx'); ?></h3>
-                        <?php if (is_user_logged_in()) : ?>
-                            <div class="subtitle">
-                                <p><?php _e('Please select your billing address:', 'gfx'); ?></p>
-                            </div>
-                        <?php endif; ?>
+                            <h3><?php _e('Billing Address', 'gfx'); ?></h3>
 
-                        <?php if (!is_user_logged_in() && $checkout->get_checkout_fields()) : ?>
                             <div id="customer_details">
                                 <?php do_action('woocommerce_checkout_billing'); ?>
                             </div>
+
                             <?php do_action('woocommerce_checkout_after_customer_details'); ?>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
+
 
                     <?php
                     $available_payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
@@ -110,19 +107,6 @@ endif; ?>
                     </div>
                 </div>
                 <div class="col right-col">
-                    <?php /* if (wc_coupons_enabled()) : ?>
-                        <div class="coupon">
-                            <label for="coupon_code"><?php _e('Apply a Coupon', 'gfx'); ?></label>
-
-                            <div class="holder">
-                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php _e('Coupon code', 'gfx'); ?>"/>
-                                <button class="primary-button small blue ajax-apply-coupon-btn" value="<?php _e('Apply', 'gfx'); ?>">
-                                    <?php _e('Apply', 'gfx'); ?>
-                                </button>
-                            </div>
-                        </div>
-                    <?php endif; */ ?>
-
                     <div class="order-review-box">
                         <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
                         <h6 id="order_review_heading"><?php esc_html_e('Your Order', 'gfx'); ?></h6>

@@ -16,19 +16,17 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-
-if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
-	return;
+if ( ! wc_coupons_enabled() ) {
+    return;
 } ?>
 
 <form class="checkout_coupon woocommerce-form-coupon" method="post">
-	<p class="form-row form-row-first">
-		<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
-	</p>
+    <h6><?php _e('Apply a Coupon', 'gfx'); ?></h6>
+    <div class="holder">
+        <input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'gfx' ); ?>" id="coupon_code" value="" />
 
-	<p class="form-row form-row-last">
-		<button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
-	</p>
-
-	<div class="clear"></div>
+        <button type="submit" class="primary-button small blue" name="apply_coupon" value="<?php _e('Apply', 'gfx'); ?>">
+            <?php _e('Apply', 'gfx'); ?>
+        </button>
+    </div>
 </form>

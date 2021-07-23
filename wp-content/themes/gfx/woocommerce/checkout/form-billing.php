@@ -29,17 +29,9 @@ defined( 'ABSPATH' ) || exit;
             $field['return'] = true;
             $field = woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 
-            // change p wrapper on div
-            $field = preg_replace(
-                '#<p class="(.*?)"(.*?)>(.*)</p>#',
-                '<div class="input-wrapper"$2>$3</div>',
-                $field
-            );
-
-            // remove span wrapper
             $field = str_replace(
-                '<span class="woocommerce-input-wrapper">(.*)</span>',
-                '',
+                '<span class="optional">(optional)</span>',
+                '<span class="optional">(Optional)</span>',
                 $field
             );
 
@@ -47,11 +39,10 @@ defined( 'ABSPATH' ) || exit;
 		}
 		?>
 	</div>
-
 	<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>
 </div>
 
-<?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
+<?php if ( !is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
 	<div class="woocommerce-account-fields">
 		<?php if ( ! $checkout->is_registration_required() ) : ?>
 
