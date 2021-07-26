@@ -208,3 +208,12 @@ function wpse_120741_wc_change_state_label_locale($locale){
 
     return $locale;
 }
+
+// change Proceed to PayPal text on submit button
+add_filter( 'gettext', 'paypal_button_text', 20, 3 );
+function paypal_button_text( $translated_text ) {
+    if( $translated_text == 'Proceed to PayPal' ) {
+        $translated_text = 'Complete Order';
+    }
+    return $translated_text;
+}
