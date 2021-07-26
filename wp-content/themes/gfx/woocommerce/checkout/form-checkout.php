@@ -101,10 +101,11 @@ endif; ?>
                     <?php wc_get_template('checkout/terms.php'); ?>
 
                     <div class="submit-holder">
-                        <button type="submit" class="primary-button">
+                        <button type="submit" class="primary-button" name="woocommerce_checkout_place_order" id="place_order">
                             <?php _e('Complete Order', 'gfx'); ?>
                         </button>
                     </div>
+                    <?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
                 </div>
                 <div class="col right-col">
                     <div class="order-review-box">

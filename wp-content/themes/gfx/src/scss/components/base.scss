@@ -270,6 +270,27 @@ iframe {
   }
 }
 
+.woocommerce-message, .woocommerce-error {
+  margin: 0 0 40px 0;
+  padding: 0;
+
+  @media (max-width: $xs) {
+    margin-bottom: 20px;
+  }
+
+  a {
+    color: $red;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
+
 /* STYLES FOR WP CONTENT */
 .page-content {
   clear: both;

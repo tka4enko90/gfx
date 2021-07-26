@@ -113,7 +113,7 @@ textarea {
     }
 
     input[type="checkbox"]::before {
-      background: $dark-blue;
+      background: $dark;
       border: 1px solid $text-color;
     }
   }
@@ -272,7 +272,47 @@ input[type="checkbox"] {
     width: 13px;
     height: 13px;
     border: 1px solid $white;
-    background: $dark-blue;
+    background: $dark;
+  }
+}
+
+input[type=radio] {
+  padding: 0;
+  margin: 0;
+  width: 19px;
+  height: 19px;
+  position: relative;
+  cursor: pointer;
+
+  &:checked::after {
+    opacity: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 17px;
+    border: 1px solid $red;
+    background: $dark;
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    left: 5px;
+    width: 9px;
+    height: 9px;
+    background-color: $red;
+    border-radius: 50%;
+    transition: opacity $transition;
   }
 }
 

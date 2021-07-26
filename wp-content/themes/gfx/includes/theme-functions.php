@@ -198,3 +198,13 @@ function change_address_fields( $fields ) {
 
     return $fields;
 }
+
+add_filter('woocommerce_get_country_locale', 'wpse_120741_wc_change_state_label_locale');
+function wpse_120741_wc_change_state_label_locale($locale){
+    $locale['US']['state']['label'] = __('County', 'gfx');
+    $locale['US']['state']['required'] = false;
+    $locale['US']['postcode']['label'] = __('Postcode', 'gfx');
+    $locale['US']['postcode']['required'] = false;
+
+    return $locale;
+}

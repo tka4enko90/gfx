@@ -49,18 +49,6 @@
       }
     }
 
-    .woocommerce-message {
-      margin-bottom: 40px;
-
-      a {
-        color: $red;
-
-        &:hover {
-          color: $white;
-        }
-      }
-    }
-
     &:not(.empty) {
       padding: 75px 0 80px;
 
