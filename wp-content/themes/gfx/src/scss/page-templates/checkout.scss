@@ -40,6 +40,10 @@
       max-width: 823px;
       margin-right: 126px;
 
+      @media (max-width: 1360px) {
+        margin-right: 60px;
+      }
+
       @media (max-width: $lg) {
         margin-right: 0;
         margin-bottom: 40px;
@@ -52,9 +56,16 @@
       margin-left: auto;
       width: 40%;
       max-width: 530px;
+      min-width: 530px;
+
+      @media (max-width: 1360px) {
+        width: 450px;
+        min-width: 450px;
+      }
 
       @media (max-width: $lg) {
         margin-left: 0;
+        min-width: 0;
         width: 100%;
         max-width: 100%;
       }
@@ -204,6 +215,10 @@
         max-width: 823px;
         margin-right: 126px;
 
+        @media (max-width: 1360px) {
+          margin-right: 60px;
+        }
+
         @media (max-width: $lg) {
           width: 100%;
           max-width: 100%;
@@ -219,10 +234,17 @@
       .right-col {
         width: 40%;
         max-width: 530px;
+        min-width: 530px;
+
+        @media (max-width: 1360px) {
+          width: 450px;
+          min-width: 450px;
+        }
 
         @media (max-width: $lg) {
           width: 100%;
           max-width: 100%;
+          min-width: 0;
         }
       }
 
