@@ -479,6 +479,11 @@
                 "param": "page_template",
                 "operator": "!=",
                 "value": "template-resources.php"
+            },
+            {
+                "param": "page",
+                "operator": "!=",
+                "value": "13"
             }
         ]
     ],
@@ -490,5 +495,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626873402
+    "modified": 1627373101
 }

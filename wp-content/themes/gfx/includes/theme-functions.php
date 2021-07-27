@@ -10,6 +10,12 @@ function add_woocommerce_support()
 
 add_action('after_setup_theme', 'add_woocommerce_support');
 
+add_filter( 'lostpassword_url', 'change_lostpassword_url', 10, 2 );
+function change_lostpassword_url( $url, $redirect ){
+    $new_url = home_url( '/lostpassword' );
+    return add_query_arg( array('redirect'=>$redirect), $new_url );
+}
+
 // change registration form
 add_action('init', 'change_sign_up_form');
 function change_sign_up_form()
