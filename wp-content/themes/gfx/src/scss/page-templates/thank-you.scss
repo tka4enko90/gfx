@@ -288,15 +288,6 @@
 
     & > h3:first-of-type {
       order: 1;
-      margin-top: 75px;
-
-      @media (max-width: $md) {
-        margin-top: 60px;
-      }
-
-      @media (max-width: $xs) {
-        margin-top: 40px;
-      }
     }
 
     & > .table-holder {
@@ -343,6 +334,18 @@
         p {
           margin: 0;
         }
+      }
+    }
+
+    .woocommerce-order-downloads {
+      margin-bottom: 75px;
+
+      @media (max-width: $md) {
+        margin-bottom: 60px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 40px;
       }
     }
 

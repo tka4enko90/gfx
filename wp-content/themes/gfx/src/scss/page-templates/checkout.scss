@@ -525,12 +525,25 @@
                         margin-bottom: 0;
                       }
 
+                      &.woocommerce-SavedPaymentMethods-new {
+                        justify-content: flex-end;
+
+                        input {
+                          display: none;
+
+                          &:checked + label {
+                            color: $red;
+                          }
+                        }
+                      }
+
                       .stripe-source-errors {
                         width: 100%;
                       }
 
                       label {
                         width: 70%;
+                        transition: color $transition;
                       }
 
                       input {
