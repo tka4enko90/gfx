@@ -74,7 +74,7 @@ $show_downloads = $order->has_downloadable_item() && $order->is_download_permitt
 
                 do_action('woocommerce_order_details_after_order_table_items', $order);
                 foreach ($order->get_order_item_totals() as $key => $total) : ?>
-                    <tr>
+                    <tr class="total">
                         <td><?php echo esc_html($total['label']); ?></td>
                         <td><?php echo ('payment_method' === $key) ? esc_html($total['value']) : wp_kses_post($total['value']); ?></td>
                     </tr>
