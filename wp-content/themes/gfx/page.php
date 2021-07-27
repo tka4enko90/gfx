@@ -5,15 +5,13 @@
  */
 get_header(); ?>
 
-<main class="main">
-    <div class="container">
+    <main class="main">
         <?php
         while (have_posts()) :
             the_post();
             the_content();
         endwhile;
         ?>
-    </div>
-</main>
+    </main>
 
 <?php get_footer(); ?>
