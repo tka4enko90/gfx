@@ -29,12 +29,21 @@
             if(iframe.length) {
                 iframe[0].src += "?autoplay=1";
             }
+
+            var scrollY = $(window).scrollTop();
+            body.addClass('opened-modal');
+            body.css('top', `-${scrollY}px`);
         });
     }
 
     var closeProductTrailerPopupBtn = $('.close-product-trailer-popup-btn');
     if(closeProductTrailerPopupBtn.length) {
         closeProductTrailerPopupBtn.on('click', function() {
+            var scrollY = body.css('top');
+            body.removeClass('opened-modal');
+            body.css('top', '');
+            window.scrollTo(0, parseInt(scrollY) * -1);
+
             var productTrailerPopup = $(this).closest('.product-trailer-popup');
             productTrailerPopup.fadeOut(200);
 

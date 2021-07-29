@@ -142,6 +142,10 @@
 
                     wrapper.addClass('is-blurred');
                     popOut.fadeIn(200).css('display', 'flex');
+
+                    var scrollY = $(window).scrollTop();
+                    body.addClass('opened-modal');
+                    body.css('top', `-${scrollY}px`);
                 }
             }
         });
@@ -154,6 +158,12 @@
             var popOut = $(this).closest('.product-pop-out');
             if (popOut.length) {
                 wrapper.removeClass('is-blurred');
+
+                var scrollY = body.css('top');
+                body.removeClass('opened-modal');
+                body.css('top', '');
+                window.scrollTo(0, parseInt(scrollY) * -1);
+
                 popOut.fadeOut(200);
 
                 setTimeout(function () {
