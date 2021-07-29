@@ -30,6 +30,7 @@
     }
 
     .gallery-col {
+      width: 100%;
       max-width: 744px;
 
       @media (max-width: $lg) {
@@ -86,6 +87,7 @@
     .info-col {
       max-width: 615px;
       padding-left: 40px;
+      width: 100%;
 
       @media (max-width: $md) {
         padding-left: 0;

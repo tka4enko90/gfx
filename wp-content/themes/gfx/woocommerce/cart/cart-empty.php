@@ -15,35 +15,38 @@
  * @version 3.5.0
  */
 defined('ABSPATH') || exit; ?>
+<div class="empty-cart-notice">
+    <?php do_action( 'woocommerce_cart_is_empty' ); ?>
+</div>
+<?php
+$page_id = get_queried_object_id();
 
-<?php $page_id = get_queried_object_id(); ?>
+if ($page_id) :
+    $page_title = get_the_title($page_id);
+    $cart_hero_subtitle = get_field('cart_hero_subtitle', 'option');
+    $cart_hero_image_id = get_field('cart_hero_image', 'option');
+    if ($page_title || $cart_hero_subtitle || $cart_hero_image_id) :
+        get_template_part('template-parts/blocks/hero/hero', '', array('title' => $page_title, 'subtitle' => $cart_hero_subtitle, 'image' => $cart_hero_image_id, 'image_size' => 'gfx_wc_hero_large'));
+    endif;
 
-<?php if ($page_id) : ?>
-    <?php $page_title = get_the_title($page_id); ?>
-    <?php $cart_hero_subtitle = get_field('cart_hero_subtitle', 'option'); ?>
-    <?php $cart_hero_image_id = get_field('cart_hero_image', 'option'); ?>
-    <?php if ($page_title || $cart_hero_subtitle || $cart_hero_image_id) : ?>
-        <?php get_template_part('template-parts/blocks/hero/hero', '', array('title' => $page_title, 'subtitle' => $cart_hero_subtitle, 'image' => $cart_hero_image_id, 'image_size' => 'gfx_wc_hero_large')); ?>
-    <?php endif; ?>
-
-    <?php wp_enqueue_style('cart_page_styles', get_template_directory_uri() . '/static/css/page-templates/cart.css', '', '', 'all'); ?>
+    wp_enqueue_style('cart_page_styles', get_template_directory_uri() . '/static/css/page-templates/cart.css', '', '', 'all'); ?>
 
     <section class="cart-section empty">
         <div class="container">
-            <?php $empty_cart_title = get_field('empty_cart_title', 'option'); ?>
-            <?php $empty_cart_description = get_field('empty_cart_description', 'option'); ?>
+            <?php $empty_cart_title = get_field('empty_cart_title', 'option');
+            $empty_cart_description = get_field('empty_cart_description', 'option');
 
-            <?php if ($empty_cart_title) : ?>
+            if ($empty_cart_title) : ?>
                 <h3><?php echo $empty_cart_title; ?></h3>
-            <?php endif; ?>
+            <?php endif;
 
-            <?php if ($empty_cart_description) : ?>
+            if ($empty_cart_description) : ?>
                 <div class="description">
                     <?php echo $empty_cart_description; ?>
                 </div>
-            <?php endif; ?>
+            <?php endif;
 
-            <?php if (wc_get_page_id('shop') > 0) : ?>
+            if (wc_get_page_id('shop') > 0) : ?>
                 <div class="return-to-shop">
                     <a class="primary-button arrow-left"
                        href="<?php echo esc_url(apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop'))); ?>">

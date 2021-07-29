@@ -319,6 +319,16 @@ input[type=radio] {
 // select2
 .select2-container--default {
 
+  &.select2-container--focus {
+    * {
+      outline: none;
+    }
+
+    .select2-selection--single, .select2-selection--multiple {
+      border-color: $white !important;
+    }
+  }
+
   .select2-selection__arrow {
     display: none !important;
   }
