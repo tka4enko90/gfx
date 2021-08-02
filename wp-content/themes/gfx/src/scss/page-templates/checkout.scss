@@ -1,5 +1,9 @@
 @import '../components/vars';
 
+.woocommerce-order-received main > .hero-section {
+  display: none;
+}
+
 .woocommerce-checkout .woocommerce-notices-wrapper {
   max-width: 1560px;
   margin: 0 auto;
