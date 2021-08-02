@@ -112,7 +112,6 @@ if (!defined('ABSPATH')) {
                 </div>
             </div>
         </form>
-
         <?php do_action('woocommerce_after_checkout_form', $checkout); ?>
     </div>
 </section>
