@@ -317,6 +317,7 @@
           .woocommerce-billing-fields {
             .input-wrapper, .form-row {
               margin-bottom: 35px;
+              width: 100%;
 
               @media (max-width: $sm) {
                 margin-bottom: 30px;
@@ -330,41 +331,11 @@
                 margin-bottom: 0;
               }
 
-              &#billing_address_1_field {
-                clear: both;
-              }
-
-              &#billing_city_field {
-                width: 50%;
-                float: left;
-                padding-right: 17px;
+              &#billing_city_field, &#billing_state_field, &#billing_postcode_field {
+                width: 48%;
 
                 @media (max-width: $sm) {
-                  padding: 0;
                   width: 100%;
-                  float: none;
-                }
-              }
-
-              &#billing_state_field {
-                width: 50%;
-                float: right;
-
-                @media (max-width: $sm) {
-                  padding: 0;
-                  width: 100%;
-                  float: none;
-                }
-              }
-
-              &#billing_postcode_field {
-                width: 50%;
-                padding-right: 17px;
-
-                @media (max-width: $sm) {
-                  padding: 0;
-                  width: 100%;
-                  float: none;
                 }
               }
 
@@ -428,6 +399,12 @@
                   }
                 }
               }
+            }
+
+            .woocommerce-billing-fields__field-wrapper {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
             }
           }
         }
