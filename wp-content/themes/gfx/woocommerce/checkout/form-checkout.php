@@ -17,16 +17,7 @@
 
 if (!defined('ABSPATH')) {
     exit;
-}
-
-wp_enqueue_style('checkout_page_styles', get_template_directory_uri() . '/static/css/page-templates/checkout.css', '', '', 'all');
-
-$hero_title = get_the_title();
-$checkout_hero_subtitle = get_field('checkout_hero_subtitle', 'option');
-
-if ($hero_title || $checkout_hero_subtitle) :
-    get_template_part('template-parts/blocks/hero/hero', '', array('title' => $hero_title, 'subtitle' => $checkout_hero_subtitle));
-endif; ?>
+} ?>
 
 <section class="checkout-section">
     <div class="container">
@@ -78,6 +69,7 @@ endif; ?>
                             </div>
 
                             <?php do_action('woocommerce_checkout_after_customer_details'); ?>
+                            <div class="clear-both"></div>
                         </div>
                     <?php endif; ?>
 

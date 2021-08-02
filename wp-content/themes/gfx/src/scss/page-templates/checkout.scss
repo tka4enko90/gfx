@@ -1,5 +1,16 @@
 @import '../components/vars';
 
+.woocommerce-checkout .woocommerce-notices-wrapper {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 20px 40px 0;
+  box-sizing: border-box;
+
+  @media (max-width: $xs) {
+    padding: 20px 20px 0;
+  }
+}
+
 .checkout-section {
   padding: 125px 0 133px;
 
@@ -21,7 +32,7 @@
 
   .before-checkout-form-holder {
     display: flex;
-    flex-wrap: wrap;
+    //flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 50px;
 
@@ -319,6 +330,10 @@
                 margin-bottom: 0;
               }
 
+              &#billing_address_1_field {
+                clear: both;
+              }
+
               &#billing_city_field {
                 width: 50%;
                 float: left;
@@ -334,7 +349,6 @@
               &#billing_state_field {
                 width: 50%;
                 float: right;
-                padding-left: 17px;
 
                 @media (max-width: $sm) {
                   padding: 0;
@@ -497,9 +511,9 @@
                     width: 100%;
 
                     label {
+                      cursor: pointer;
                       display: flex;
                       align-items: center;
-                      flex-wrap: wrap;
 
                       img {
                         max-width: 30px;
@@ -532,6 +546,10 @@
                           display: none;
 
                           &:checked + label {
+                            color: $red;
+                          }
+
+                          & + label:hover {
                             color: $red;
                           }
                         }
@@ -591,7 +609,7 @@
 
                       &:nth-child(3) {
                         width: 50%;
-                        float: right;
+                        float: left;
                         padding-left: 15px;
 
                         @media (max-width: $sm) {
