@@ -6,7 +6,7 @@ get_header(); ?>
         <?php if (have_rows('affiliate_area_modules')):
             while (have_rows('affiliate_area_modules')) : the_row();
 
-                // Hero Section
+                // Hero section
                 if (get_row_layout() == 'hero_section') :
                     $hero_section_title = get_sub_field('hero_section_title');
                     $hero_section_subtitle = get_sub_field('hero_section_subtitle');
@@ -23,7 +23,23 @@ get_header(); ?>
                                 'buttons' => $hero_section_buttons));
                     endif;
 
-                // Join Program Section
+                // How it works section
+                elseif (get_row_layout() == 'how_it_works_section') :
+                    get_template_part('template-parts/blocks/affiliate_how_it_works/affiliate-how-it-works', '', '');
+
+                // Affiliate tiers
+                elseif (get_row_layout() == 'affiliate_tiers') :
+                    get_template_part('template-parts/blocks/affiliate_tiers/affiliate-tiers', '', '');
+
+                // FAQ section
+                elseif (get_row_layout() == 'faq_section') :
+                    get_template_part('template-parts/blocks/affiliate_faq_section/affiliate-faq-section', '', '');
+
+                // Text block
+                elseif (get_row_layout() == 'affiliate_text_block') :
+                    get_template_part('template-parts/blocks/affiliate_text_block/affiliate-text-block', '', '');
+
+                // Join program section
                 elseif (get_row_layout() == 'join_section') :
                     $join_section_title = get_sub_field('join_section_title');
                     $join_section_subtitle = get_sub_field('join_section_subtitle');

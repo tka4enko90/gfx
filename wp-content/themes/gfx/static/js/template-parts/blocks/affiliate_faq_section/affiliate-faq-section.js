@@ -1,0 +1,1 @@
+!function(n){var i=n(".faq-dropdown");if(i.length){var e=i.find(".question");e.length&&e.on("click",(function(){n(this);var i=n(this).parent().find(".answer");i.length&&i.slideToggle(150)}))}}(jQuery);
