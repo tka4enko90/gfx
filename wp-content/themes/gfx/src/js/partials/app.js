@@ -296,4 +296,17 @@
             }
         });
     }
+
+    // copy button
+    var copyBtn = $('.copy-btn');
+    if(copyBtn.length) {
+        copyBtn.on('click', function () {
+            var textToCopy = $('#text-to-copy');
+
+            if(textToCopy.length) {
+                textToCopy.focus().select();
+                document.execCommand('copy');
+            }
+        });
+    }
 })(jQuery);

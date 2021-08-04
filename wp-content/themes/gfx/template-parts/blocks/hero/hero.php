@@ -28,7 +28,7 @@
                     <?php if (isset($hero_title) || isset($hero_subtitle)) : ?>
                         <div class="text-col">
                             <?php if (isset($hero_title)) :
-                                if (isset($css_class)) : ?>
+                                if (isset($css_class) && $css_class === 'join') : ?>
                                     <h3><?php echo $hero_title; ?></h3>
                                 <?php else : ?>
                                     <h1><?php echo $hero_title; ?></h1>
