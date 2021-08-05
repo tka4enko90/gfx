@@ -11,10 +11,10 @@ endif; ?>
     endif;
 
     if (isset($product_image) || isset($attachment_ids)) : ?>
-        <?php wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', '', '', 'all'); ?>
+        <?php wp_enqueue_style('slick-css', get_template_directory_uri() . '/static/css/slick.min.css', '', '', 'all'); ?>
         <?php wp_enqueue_style('single_product_product_info_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_product_info/single-product-product-info.css', '', '', 'all'); ?>
 
-        <?php wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '', true); ?>
+        <?php wp_enqueue_script('slick-js', get_template_directory_uri() . '/static/js/slick.min.js', array('jquery'), '', true); ?>
         <?php wp_enqueue_script('single_product_product_info_js', get_template_directory_uri() . '/static/js/template-parts/blocks/single_product_product_info/single-product-product-info.js', array('slick-js'), '', true); ?>
 
         <?php $read_me_page = get_field('read_me_page'); ?>

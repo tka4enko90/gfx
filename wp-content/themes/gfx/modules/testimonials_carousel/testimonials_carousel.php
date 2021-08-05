@@ -1,7 +1,7 @@
-<?php wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', '', '', 'all'); ?>
+<?php wp_enqueue_style('slick-css', get_template_directory_uri() . '/static/css/slick.min.css', '', '', 'all'); ?>
 <?php wp_enqueue_style('testimonials_carousel', get_template_directory_uri() . '/static/css/modules/testimonials_carousel/testimonials_carousel.css', '', '', 'all'); ?>
 
-<?php wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '', true); ?>
+<?php wp_enqueue_script('slick-js', get_template_directory_uri() . '/static/js/slick.min.js', array('jquery'), '', true); ?>
 <?php wp_enqueue_script('testimonials_carousel_js', get_template_directory_uri() . '/static/js/modules/testimonials_carousel/testimonials_carousel.js', array('slick-js'), '', true); ?>
 
 <?php $testimonials_carousel_title = get_sub_field('testimonials_carousel_title'); ?>

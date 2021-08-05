@@ -1,7 +1,7 @@
-<?php wp_enqueue_style('select2_css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', '', '', 'all'); ?>
+<?php wp_enqueue_style('select2_css', get_template_directory_uri() . '/static/css/select2.min.css', '', '', 'all'); ?>
 <?php wp_enqueue_style('shop_products_grid_css', get_template_directory_uri() . '/static/css/template-parts/blocks/shop_products_grid/shop-products-grid.css', '', '', 'all'); ?>
 
-<?php wp_enqueue_script('select2_js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', '', '', true); ?>
+<?php wp_enqueue_script('select2_js', get_template_directory_uri() . '/static/js/select2.min.js', '', '', true); ?>
 <?php wp_enqueue_script('shop_products_grid_js', get_template_directory_uri() . '/static/js/template-parts/blocks/shop_products_grid/shop-products-grid.js', array('select2_js'), '', true); ?>
 
 <?php if (is_tax('product_cat')) : ?>
