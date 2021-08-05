@@ -137,7 +137,7 @@
         display: none;
       }
 
-      &:nth-child(1) {
+      &:nth-of-type(1) {
         top: 34px;
         left: -30px;
         width: 73px;
@@ -149,7 +149,7 @@
         }
       }
 
-      &:nth-child(2) {
+      &:nth-of-type(2) {
         bottom: -42px;
         left: 112px;
         width: 94px;
@@ -157,7 +157,7 @@
         animation: crosses-animation 2s ease infinite;
       }
 
-      &:nth-child(3) {
+      &:nth-of-type(3) {
         right: -20px;
         top: 30px;
         width: 47px;
@@ -169,7 +169,7 @@
         }
       }
 
-      &:nth-child(4) {
+      &:nth-of-type(4) {
         right: -43px;
         bottom: 105px;
         width: 33px;
