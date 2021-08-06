@@ -4,7 +4,6 @@
 <?php $products_grid_with_pop_out_title = get_sub_field('products_grid_with_pop_out_title'); ?>
 <?php $products_grid_with_pop_out_subtitle = get_sub_field('products_grid_with_pop_out_subtitle'); ?>
 <?php $products_grid_with_pop_out_button = get_sub_field('products_grid_with_pop_out_button'); ?>
-<?php $product_pop_out_info = []; ?>
 
 <section class="products-grid-with-pop-out">
     <div class="container">
@@ -31,6 +30,7 @@
                 <div class="products-holder">
                     <?php foreach ($products as $item) :
                         $product_id = $item->ID;
+                        $product_pop_out_info = [];
                         if ($product_id) :
                             $product_pop_out_info["product_permalink"] = get_permalink($product_id);
                             $product_pop_out_info["product_title"] = get_the_title($product_id);
@@ -84,7 +84,9 @@
                                     </div>
                                 <?php endif; ?>
                             </div>
-                        <?php endif;
+                            <?php
+                            unset($product_pop_out_info);
+                        endif;
                     endforeach; ?>
                 </div>
             <?php endif; ?>
