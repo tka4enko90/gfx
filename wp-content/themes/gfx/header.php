@@ -15,6 +15,8 @@
     <meta content="telephone=no" name="format-detection"/>
     <meta name="HandheldFriendly" content="true"/>
 
+    <title><?php bloginfo('name'); ?> <?php wp_title("", true); ?></title>
+
     <!-- FAVICON -->
     <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/static/img/favicon.ico" type="image/x-icon"/>
     <!-- /FAVICON -->
