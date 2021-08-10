@@ -39,9 +39,6 @@ function disable_emojis() {
     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
     remove_filter( 'embed_head', 'print_emoji_detection_script' );
     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-
-    add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
     add_filter( 'wp_resource_hints', 'disable_emojis_remove_dns_prefetch', 10, 2 );
 }
 add_action( 'init', 'disable_emojis' );
-
