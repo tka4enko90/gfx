@@ -206,22 +206,6 @@ $affiliate_id = affwp_get_affiliate_id();
             </table>
         </div>
 
-        <?php if ($pages > 1) : ?>
-
-            <p class="affwp-pagination">
-                <?php
-                echo paginate_links(array(
-                    'current' => $page,
-                    'total' => $pages,
-                    'add_args' => array(
-                        'tab' => 'stats',
-                    ),
-                ));
-                ?>
-            </p>
-
-        <?php endif; ?>
-
         <?php
         /**
          * Fires immediately after campaign stats in the affiliate area.
