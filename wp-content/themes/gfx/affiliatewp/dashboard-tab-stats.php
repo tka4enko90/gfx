@@ -156,7 +156,7 @@ $affiliate_id = affwp_get_affiliate_id();
         <h6><?php _e('Campaigns', 'gfx'); ?></h6>
 
         <?php
-        $per_page = 10;
+        $per_page = 16;
         $page = affwp_get_current_page_number();
         $pages = absint(ceil(affiliate_wp()->campaigns->count(array('affiliate_id' => $affiliate_id)) / $per_page));
         $args = array(
@@ -180,18 +180,22 @@ $affiliate_id = affwp_get_affiliate_id();
                 </thead>
 
                 <tbody>
-                <?php if (!$campaigns) :
-                     ?>
+                <?php if ($campaigns) :
+                    foreach ($campaigns as $campaign) : ?>
                         <tr>
-                            <td data-th="<?php _e('Campaign', 'gfx'); ?>">test<?php echo !empty($campaign->campaign) ? esc_html($campaign->campaign) : __('None set', 'gfx'); ?></td>
-                            <td data-th="<?php _e('Visits', 'gfx'); ?>">test<?php echo esc_html($campaign->visits); ?></td>
-                            <td data-th="<?php _e('Unique Links', 'gfx'); ?>">teset<?php echo esc_html($campaign->unique_visits); ?></td>
-                            <td data-th="<?php _e('Converted', 'gfx'); ?>">test<?php echo esc_html($campaign->referrals); ?></td>
-                            <td data-th="<?php _e('Conversion Rate', 'gfx'); ?>">test<?php echo esc_html(affwp_format_amount($campaign->conversion_rate)); ?>
-                                %
+                            <td data-th="<?php _e('Campaign', 'gfx'); ?>">
+                                <?php echo !empty($campaign->campaign) ? esc_html($campaign->campaign) : __('None set', 'gfx'); ?></td>
+                            <td data-th="<?php _e('Visits', 'gfx'); ?>">
+                                <?php echo esc_html($campaign->visits); ?></td>
+                            <td data-th="<?php _e('Unique Links', 'gfx'); ?>">
+                                <?php echo esc_html($campaign->unique_visits); ?></td>
+                            <td data-th="<?php _e('Converted', 'gfx'); ?>">
+                                <?php echo esc_html($campaign->referrals); ?></td>
+                            <td data-th="<?php _e('Conversion Rate', 'gfx'); ?>">
+                                <?php echo esc_html(affwp_format_amount($campaign->conversion_rate)); ?> %
                             </td>
                         </tr>
-
+                    <?php endforeach; ?>
                 <?php else : ?>
                     <tr class="no-data">
                         <td class="affwp-table-no-data" data-th="<?php _e('Campaigns', 'gfx'); ?>"
