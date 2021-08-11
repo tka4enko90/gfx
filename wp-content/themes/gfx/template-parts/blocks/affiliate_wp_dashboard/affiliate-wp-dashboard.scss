@@ -572,4 +572,110 @@
       }
     }
   }
+
+  // Settings
+  #affwp-affiliate-dashboard-profile {
+    #affwp-affiliate-dashboard-profile-form {
+      & > h3 {
+        margin: 0 0 40px 0;
+
+        @media (max-width: $xs) {
+          margin: 0 0 20px 0;
+        }
+      }
+    }
+  }
+
+  #affwp-affiliate-dashboard-payouts-service, #affwp-affiliate-dashboard-profile-form {
+    .affwp-wrap {
+      margin-bottom: 30px;
+
+      @media (max-width: $xs) {
+        margin-bottom: 20px;
+      }
+
+      &.affwp-send-notifications-wrap, &.affwp-payout-service-business-owner-wrap {
+        input[type="checkbox"] {
+          margin-right: 10px;
+        }
+
+        label {
+          color: $text-color;
+          margin: 0;
+          transition: color $transition;
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+
+      &.affwp-payout-service-dob-wrap {
+        .select2 {
+          min-width: 100px;
+
+          @media (max-width: $xs) {
+            min-width: 90px;
+          }
+        }
+      }
+
+      .select2 {
+        max-width: 100% !important;
+      }
+
+      .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+        height: 52px !important;
+
+        @media (max-width: $xs) {
+          height: 46px !important;
+        }
+      }
+      .select2-container .select2-selection--single .select2-selection__rendered {
+        padding-left: 25px !important;
+
+        @media (max-width: $xs) {
+          padding-left: 15px !important;
+        }
+      }
+    }
+
+    a {
+      color: $red;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    .primary-button {
+      padding: 11px 31px;
+      min-width: 232px;
+
+      @media (max-width: $xs) {
+        padding: 11px 25px;
+        min-width: 0;
+      }
+    }
+  }
+
+  #affwp-affiliate-dashboard-payouts-service {
+    h4 {
+      font-size: 30px;
+      line-height: 1.333;
+
+      @media (max-width: $xs) {
+        font-size: 28px;
+      }
+    }
+
+    .affwp-payout-service-account-type-wrap, .affwp-payout-service-country-wrap {
+      display: flex;
+      flex-direction: column;
+
+      .select2 {
+        width: 100% !important;
+      }
+    }
+  }
 }

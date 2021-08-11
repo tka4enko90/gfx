@@ -8,13 +8,11 @@ get_header(); ?>
         if (function_exists('affwp_is_affiliate') && affwp_is_affiliate($user_id)) :
             $affiliate_dashboard_hero_title = get_field('affiliate_dashboard_hero_title', 'option');
             $affiliate_dashboard_hero_subtitle = get_field('affiliate_dashboard_hero_subtitle', 'option');
-            $affiliate_dashboard_hero_image = get_field('affiliate_dashboard_hero_image', 'option');
-            if ($affiliate_dashboard_hero_title || $affiliate_dashboard_hero_subtitle || $affiliate_dashboard_hero_image) :
+            if ($affiliate_dashboard_hero_title || $affiliate_dashboard_hero_subtitle) :
                 get_template_part('template-parts/blocks/hero/hero', '',
                     array(
                         'title' => $affiliate_dashboard_hero_title,
                         'subtitle' => $affiliate_dashboard_hero_subtitle,
-                        'image' => $affiliate_dashboard_hero_image,
                         'css_class' => 'affiliate-dashboard'));
             endif;
 

@@ -1,6 +1,7 @@
 @import 'vars';
 
-input, textarea, .wc-stripe-elements-field, .affwp-form input[type="text"] {
+input, textarea, .wc-stripe-elements-field, .affwp-form input[type="text"],
+.affwp-form input[type="email"] {
   display: block;
   background: none;
   font-family: $helvetica-now-display;
@@ -19,6 +20,15 @@ input, textarea, .wc-stripe-elements-field, .affwp-form input[type="text"] {
 
   &::placeholder {
     color: $text-color;
+  }
+}
+
+.affwp-form input[type="text"],
+.affwp-form input[type="email"] {
+  padding: 13px 25px;
+
+  @media (max-width: $xs) {
+    padding: 10px 15px;
   }
 }
 
