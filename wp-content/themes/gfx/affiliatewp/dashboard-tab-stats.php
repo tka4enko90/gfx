@@ -156,7 +156,7 @@ $affiliate_id = affwp_get_affiliate_id();
         <h6><?php _e('Campaigns', 'gfx'); ?></h6>
 
         <?php
-        $per_page = 16;
+        $per_page = -1;
         $page = affwp_get_current_page_number();
         $pages = absint(ceil(affiliate_wp()->campaigns->count(array('affiliate_id' => $affiliate_id)) / $per_page));
         $args = array(
