@@ -167,43 +167,45 @@ $affiliate_id = affwp_get_affiliate_id();
         $campaigns = affwp_get_affiliate_campaigns($affiliate_id, $args);
         ?>
 
-        <div class="table-holder">
-            <table>
-                <thead>
-                <tr>
-                    <th><?php _e('Campaign', 'gfx'); ?></th>
-                    <th><?php _e('Visits', 'gfx'); ?></th>
-                    <th><?php _e('Unique Links', 'gfx'); ?></th>
-                    <th><?php _e('Converted', 'gfx'); ?></th>
-                    <th><?php _e('Conversion Rate', 'gfx'); ?></th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <?php if ($campaigns) :
-                    foreach ($campaigns as $campaign) : ?>
-                        <tr>
-                            <td data-th="<?php _e('Campaign', 'gfx'); ?>">
-                                <?php echo !empty($campaign->campaign) ? esc_html($campaign->campaign) : __('None set', 'gfx'); ?></td>
-                            <td data-th="<?php _e('Visits', 'gfx'); ?>">
-                                <?php echo esc_html($campaign->visits); ?></td>
-                            <td data-th="<?php _e('Unique Links', 'gfx'); ?>">
-                                <?php echo esc_html($campaign->unique_visits); ?></td>
-                            <td data-th="<?php _e('Converted', 'gfx'); ?>">
-                                <?php echo esc_html($campaign->referrals); ?></td>
-                            <td data-th="<?php _e('Conversion Rate', 'gfx'); ?>">
-                                <?php echo esc_html(affwp_format_amount($campaign->conversion_rate)); ?> %
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <tr class="no-data">
-                        <td class="affwp-table-no-data" data-th="<?php _e('Campaigns', 'gfx'); ?>"
-                            colspan="5"><?php _e('You have no referrals or visits that included a campaign name.', 'gfx'); ?></td>
+        <div class="table-holder-bg">
+            <div class="table-holder">
+                <table>
+                    <thead>
+                    <tr>
+                        <th><?php _e('Campaign', 'gfx'); ?></th>
+                        <th><?php _e('Visits', 'gfx'); ?></th>
+                        <th><?php _e('Unique Links', 'gfx'); ?></th>
+                        <th><?php _e('Converted', 'gfx'); ?></th>
+                        <th><?php _e('Conversion Rate', 'gfx'); ?></th>
                     </tr>
-                <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                    <?php if ($campaigns) :
+                        foreach ($campaigns as $campaign) : ?>
+                            <tr>
+                                <td data-th="<?php _e('Campaign', 'gfx'); ?>">
+                                    <?php echo !empty($campaign->campaign) ? esc_html($campaign->campaign) : __('None set', 'gfx'); ?></td>
+                                <td data-th="<?php _e('Visits', 'gfx'); ?>">
+                                    <?php echo esc_html($campaign->visits); ?></td>
+                                <td data-th="<?php _e('Unique Links', 'gfx'); ?>">
+                                    <?php echo esc_html($campaign->unique_visits); ?></td>
+                                <td data-th="<?php _e('Converted', 'gfx'); ?>">
+                                    <?php echo esc_html($campaign->referrals); ?></td>
+                                <td data-th="<?php _e('Conversion Rate', 'gfx'); ?>">
+                                    <?php echo esc_html(affwp_format_amount($campaign->conversion_rate)); ?> %
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr class="no-data">
+                            <td class="affwp-table-no-data" data-th="<?php _e('Campaigns', 'gfx'); ?>"
+                                colspan="5"><?php _e('You have no referrals or visits that included a campaign name.', 'gfx'); ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <?php
