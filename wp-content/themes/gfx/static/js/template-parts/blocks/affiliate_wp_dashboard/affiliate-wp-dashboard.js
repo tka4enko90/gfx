@@ -1,1 +1,1 @@
-!function(e){var t=jQuery("select");t.length&&t.select2()}();
+!function(e){var t=e("select");t.length&&t.select2();var c=e(".copy-btn");c.length&&c.on("click",(function(){var t=e(this).prev(".text-to-copy");t.length&&(t.focus().select(),document.execCommand("copy"))}))}(jQuery);

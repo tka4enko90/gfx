@@ -26,7 +26,7 @@ $affiliate_id = affwp_get_affiliate_id();
                     <p>
                         <?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>
                     </p>
-                    <input type="text" id="text-to-copy"
+                    <input type="text" class="text-to-copy"
                            value="<?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>">
                     <button class="copy-btn">
                         <img src="<?php echo get_template_directory_uri(); ?>/static/img/copy.png" alt="copy icon">
@@ -58,7 +58,7 @@ $affiliate_id = affwp_get_affiliate_id();
 
                 <div class="affwp-wrap affwp-campaign-wrap">
                     <label for="affwp-campaign"><?php _e('Campaign Name (Optional)', 'gfx'); ?>
-                        <span><?php _e('Enter an optional campaign name to help track performance.'); ?></span>
+                        <span><?php _e('Enter an optional campaign name to help track performance.', 'gfx'); ?></span>
                     </label>
                     <input type="text" name="campaign" id="affwp-campaign" placeholder="Campaign 1" value=""/>
                 </div>
@@ -66,10 +66,16 @@ $affiliate_id = affwp_get_affiliate_id();
                 <div class="affwp-wrap affwp-referral-url-wrap" <?php if (!isset($_GET['url'])) {
                     echo 'style="display:none;"';
                 } ?>>
-                    <label for="affwp-referral-url"><?php _e('Referral URL', 'gfx'); ?></label>
-                    <input type="text" id="affwp-referral-url"
-                           value="<?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>"/>
-                    <div class="description"><?php _e('(now copy this referral link and share it anywhere)', 'gfx'); ?></div>
+                    <label for="affwp-referral-url"><?php _e('Referral URL', 'gfx'); ?>
+                        <span><?php _e('Copy this referral link and share it anywhere!', 'gfx'); ?></span>
+                    </label>
+                    <div class="copy-link-holder">
+                        <input type="text" id="affwp-referral-url" class="text-to-copy"
+                               value="<?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>"/>
+                        <button class="copy-btn">
+                            <?php _e('Copy Link', 'gfx'); ?>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="affwp-referral-url-submit-wrap">
