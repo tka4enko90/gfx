@@ -59,9 +59,14 @@
         padding: 24px 0;
         position: relative;
         cursor: pointer;
+        transition: color $transition;
 
         @media (max-width: $xs) {
           padding: 18px 0;
+        }
+
+        &:hover {
+          color: $red;
         }
 
         span {
