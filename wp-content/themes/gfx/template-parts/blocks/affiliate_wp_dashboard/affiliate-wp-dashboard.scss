@@ -533,6 +533,7 @@
             & > td {
               height: 82px;
               position: relative;
+              padding-right: 20px;
 
               @media (max-width: $xs) {
                 height: 65px;
@@ -572,6 +573,14 @@
               &:first-of-type:not(.affwp-table-no-data) {
                 color: $red;
                 font-weight: 500;
+
+                a {
+                  color: $red;
+
+                  &:hover {
+                    color: $white;
+                  }
+                }
               }
 
               &:first-of-type {
@@ -582,6 +591,8 @@
               }
 
               &:last-of-type {
+                padding-right: 0;
+
                 &::after, &::before {
                   right: 0;
                   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
@@ -592,6 +603,7 @@
                 &::before {
                   background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
                 }
+
                 &::after {
                   top: -1px;
                   left: auto;
@@ -638,6 +650,15 @@
                   font-weight: 500;
                 }
               }
+            }
+          }
+        }
+
+        &#affwp-affiliate-dashboard-payouts {
+          tbody > tr td {
+            &:first-of-type {
+              color: $white;
+              font-weight: 400;
             }
           }
         }
@@ -703,6 +724,7 @@
           height: 46px !important;
         }
       }
+
       .select2-container .select2-selection--single .select2-selection__rendered {
         padding-left: 25px !important;
 
@@ -877,7 +899,7 @@
           font-size: 18px;
           color: $white;
           font-weight: 500;
-          
+
           @media (max-width: $xs) {
             font-size: 16px;
             padding: 0 0 0 10px;
