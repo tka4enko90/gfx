@@ -647,7 +647,7 @@
             "min": 0,
             "max": 0,
             "layout": "block",
-            "button_label": "Add group",
+            "button_label": "Add",
             "sub_fields": [
                 {
                     "key": "field_61168be7934e3",
@@ -688,13 +688,40 @@
                     "maxlength": ""
                 },
                 {
+                    "key": "field_612f7d1298520",
+                    "label": "Images\/Colors",
+                    "name": "images_or_colors",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "Colors",
+                    "ui_off_text": "Images"
+                },
+                {
                     "key": "field_61168bf1934e5",
                     "label": "Images",
                     "name": "images",
                     "type": "repeater",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_612f7d1298520",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -733,15 +760,90 @@
                     ]
                 },
                 {
+                    "key": "field_612f7d5a98521",
+                    "label": "Colors",
+                    "name": "colors",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_612f7d1298520",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add color",
+                    "sub_fields": [
+                        {
+                            "key": "field_612f7d7a98522",
+                            "label": "Color's hex code",
+                            "name": "color_hex_code",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "35",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_612f7d9698523",
+                            "label": "Color name",
+                            "name": "color_name",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "65",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        }
+                    ]
+                },
+                {
                     "key": "field_611691fedc725",
-                    "label": "Button",
+                    "label": "Download button text",
                     "name": "button",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_612f7d1298520",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
                     "wrapper": {
-                        "width": "",
+                        "width": "60",
                         "class": "",
                         "id": ""
                     },
@@ -750,6 +852,33 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": ""
+                },
+                {
+                    "key": "field_612f7de498524",
+                    "label": "File",
+                    "name": "file_url",
+                    "type": "file",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_612f7d1298520",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": "zip"
                 }
             ]
         }
@@ -771,5 +900,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1628869145
+    "modified": 1630502608
 }

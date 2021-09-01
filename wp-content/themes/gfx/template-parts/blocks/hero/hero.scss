@@ -376,3 +376,43 @@
     }
   }
 }
+
+.page-template-template-press .hero-section {
+  padding: 102px 0;
+
+  @media (max-width: $md) {
+    padding: 62px 0;
+  }
+
+  @media (max-width: $sm) {
+    padding: 50px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .text-col {
+    max-width: 635px;
+
+    @media (max-width: $sm) {
+      max-width: 100%;
+    }
+
+    .download-button-holder {
+      margin-top: 40px;
+
+      @media (max-width: $md) {
+        margin-top: 30px;
+      }
+
+      .primary-button {
+        padding: 15px 28px;
+
+        @media (max-width: $xs) {
+          padding: 12px 25px;
+        }
+      }
+    }
+  }
+}

@@ -17,6 +17,12 @@
     if (!empty($args['buttons'])) :
         $hero_buttons = $args['buttons'];
     endif;
+    if (!empty($args['button'])) :
+        $hero_button = $args['button'];
+    endif;
+    if (!empty($args['file'])) :
+        $hero_file = $args['file'];
+    endif;
 
     if (isset($hero_title) || isset($hero_subtitle) || isset($hero_image_id)) :
         wp_enqueue_style('hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero/hero.css', '', '', 'all'); ?>
@@ -49,6 +55,12 @@
                                             <?php echo $btn['title']; ?>
                                         </a>
                                     <?php endforeach; ?>
+                                </div>
+                            <?php endif;
+                            if (!empty($hero_button) && !empty($hero_file)) : ?>
+                                <div class="download-button-holder">
+                                    <a href="<?php echo $hero_file; ?>"
+                                       class="primary-button"><?php echo $hero_button; ?></a>
                                 </div>
                             <?php endif; ?>
                         </div>

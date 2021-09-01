@@ -950,82 +950,145 @@
       }
     }
 
-    .creatives-holder {
-      .group {
-        margin-bottom: 80px;
+    .assets-group {
+      margin-bottom: 80px;
+
+      @media (max-width: $sm) {
+        margin-bottom: 60px;
+      }
+
+      @media (max-width: $xs) {
+        margin-bottom: 40px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .title-holder {
+        margin-bottom: 20px;
+
+        h3 {
+          margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+          font-size: 18px;
+          color: $text-color;
+
+          @media (max-width: $xs) {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .images-holder {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -18px;
 
         @media (max-width: $sm) {
-          margin-bottom: 60px;
+          margin: 0 -10px;
+        }
+
+        .image {
+          border: 2px solid $text-color;
+          border-radius: 6px;
+          padding: 31px 35px;
+          min-height: 136px;
+          margin: 0 18px 10px;
+          transition: border-color $transition;
+
+          &:hover {
+            border-color: $white;
+          }
+
+          @media (max-width: $sm) {
+            margin: 0 10px 10px;
+            padding: 20px 25px;
+            min-height: 0;
+          }
+
+          img {
+            display: block;
+          }
+        }
+      }
+
+      .button-holder {
+        margin-top: 23px;
+
+        @media (max-width: $xs) {
+          margin-top: 20px;
+        }
+
+        .primary-button {
+          padding: 15px 31px;
+          min-width: 181px;
+
+          @media (max-width: $xs) {
+            padding: 12px 25px;
+            min-width: 0;
+          }
+        }
+      }
+
+      .colors-holder {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -18px;
+
+        @media (max-width: $sm) {
+          margin: 0 -10px;
         }
 
         @media (max-width: $xs) {
-          margin-bottom: 40px;
+          margin: 0;
         }
 
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-
-        .title-holder {
-          margin-bottom: 20px;
-
-          h5 {
-            margin: 0 0 8px 0;
-          }
-
-          .subtitle {
-            font-size: 18px;
-            color: $text-color;
-
-            @media (max-width: $xs) {
-              font-size: 16px;
-            }
-          }
-        }
-
-        .images-holder {
+        .color {
+          width: 158px;
+          height: 136px;
+          border: 1px solid $text-color;
+          border-radius: 6px;
+          margin: 0 18px 10px;
+          padding: 15px;
           display: flex;
+          justify-content: center;
           align-items: center;
-          flex-wrap: wrap;
-          margin: 0 -17px;
+          transition: border-color $transition;
 
           @media (max-width: $sm) {
-            margin: 0 -10px;
+            margin: 0 10px 10px;
+            height: 120px;
           }
-
-          .image {
-            border: 2px solid $text-color;
-            border-radius: 6px;
-            padding: 31px 35px;
-            min-height: 134px;
-            margin: 0 17px 10px;
-
-            @media (max-width: $sm) {
-              margin: 0 10px 10px;
-              padding: 20px 25px;
-              min-height: 0;
-            }
-
-            img {
-              display: block;
-            }
-          }
-        }
-
-        .button-holder {
-          margin-top: 22px;
 
           @media (max-width: $xs) {
-            margin-top: 20px;
+            width: 100%;
+            margin: 0 0 10px;
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
           }
 
-          .primary-button {
-            padding: 15px 31px;
-            min-width: 181px;
+          &:hover {
+            border-color: $white;
+          }
 
-            @media (max-width: $xs) {
-              padding: 12px 25px;
-              min-width: 0;
+          .color-info {
+            text-align: center;
+
+            .name {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 4px;
+            }
+
+            .code {
+              font-size: 14px;
             }
           }
         }
