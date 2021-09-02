@@ -66,3 +66,58 @@
     }
   }
 }
+
+.page-template-template-support, .archive.tax-section, .single.single-support {
+  .hero-search {
+    .container {
+      background-position: 92% 0%;
+      background-size: 60%;
+
+      @media (max-width: $md) {
+        background-size: cover;
+      }
+    }
+
+    .section-holder {
+      padding: 72px 0;
+
+      @media (max-width: $sm) {
+        padding: 60px 0;
+      }
+
+      @media (max-width: $xs) {
+        padding: 40px 0;
+      }
+    }
+
+    h1 {
+      font-size: 46px;
+      line-height: 1.396;
+
+      @media (max-width: $sm) {
+        font-size: 40px;
+      }
+
+      @media (max-width: $xs) {
+        font-size: 36px;
+      }
+    }
+
+    .search-form-holder {
+      margin-top: 20px;
+    }
+  }
+}
+
+.archive.tax-section .hero-search {
+  .container {
+    background-image: url("../../../../img/support-hero-bg.png");
+    background-position: 93% 0%;
+    background-size: contain;
+
+    @media (max-width: $xs) {
+      background-position: center top;
+      background-size: cover;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 @import '../../../src/scss/components/vars';
 
 .taxonomy-section-posts {
-  padding: 50px 0;
+  padding: 50px 0 55px;
 
   @media (max-width: $xs) {
     padding: 40px 0;
@@ -11,34 +11,34 @@
     margin-bottom: 18px;
   }
 
-  .section-posts {
-    border-radius: 10px;
-    background-color: rgba($dark-blue, 0.471);
-    padding: 50px 55px;
+  .cols-holder {
+    display: flex;
 
     @media (max-width: $md) {
-      padding: 40px;
+      flex-direction: column;
     }
 
+    .left-col {
+      width: 100%;
+    }
+  }
+
+  .section-posts {
+    margin-top: 60px;
+
     @media (max-width: $sm) {
-      padding: 20px;
+      margin-top: 40px;
     }
 
     @media (max-width: $xs) {
-      padding: 15px;
+      margin-top: 30px;
     }
 
     .section-info {
       display: flex;
       align-items: center;
-      padding: 0 27px;
-
-      @media (max-width: $sm) {
-        padding: 0 15px;
-      }
 
       @media (max-width: $xs) {
-        padding: 0;
         flex-direction: column;
         align-items: flex-start;
       }
@@ -91,14 +91,14 @@
         margin-top: 40px;
       }
 
-      @media (max-width: $sm) {
-        margin-top: 20px;
+      @media (max-width: $xs) {
+        margin-top: 30px;
       }
 
       & > a {
         display: block;
         margin-bottom: 23px;
-        padding: 50px 55px;
+        padding: 49px 44px;
         border-radius: 10px;
         background-color: $dark-blue;
 
@@ -146,7 +146,7 @@
   .bottom-text {
     font-size: 14px;
     color: $text-color;
-    margin-top: 50px;
+    margin-top: 60px;
     text-align: center;
 
     @media (max-width: $xs) {

@@ -1,7 +1,7 @@
 @import '../../../src/scss/components/vars';
 
 .single-support-content {
-  padding: 50px 0 60px;
+  padding: 50px 0 72px;
 
   @media (max-width: $md) {
     padding: 50px 0;
@@ -11,101 +11,82 @@
     padding: 40px 0;
   }
 
+  .cols-holder {
+    display: flex;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+    }
+
+    .left-col {
+      width: 100%;
+      padding-left: 85px;
+
+      @media (max-width: $lg) {
+        padding-left: 0;
+      }
+    }
+
+    .sidebar {
+      max-width: 250px;
+    }
+  }
+
   .breadcrumbs {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .post-holder {
-    border-radius: 10px;
-    background-color: rgba($dark-blue, 0.471);
-    padding: 77px 55px 50px;
-
-    @media (max-width: $md) {
-      padding: 60px 40px 40px;
-    }
-
-    @media (max-width: $sm) {
-      padding: 30px 20px 20px;
-    }
-
-    @media (max-width: $xs) {
-      padding: 25px 15px 15px;
-    }
-
     .title-holder {
-      padding: 0 55px;
-
-      @media (max-width: $md) {
-        padding: 0 30px;
-      }
-
-      @media (max-width: $sm) {
-        padding: 0;
-      }
-
       h3 {
-        font-size: 38px;
+        font-size: 44px;
         margin: 0 0 5px 0;
 
-        @media (max-width: $md) {
-          font-size: 30px;
+        @media (max-width: $sm) {
+          font-size: 40px;
         }
 
         @media (max-width: $xs) {
-          font-size: 25px;
+          font-size: 35px;
         }
       }
 
       .modified-date {
-        font-size: 18px;
+        font-size: 14px;
         color: $text-color;
-
-        @media (max-width: $xs) {
-          font-size: 16px;
-        }
       }
     }
 
     .post-content {
-      border-radius: 10px;
-      background-color: $dark-blue;
-      padding: 50px 110px 50px 55px;
       font-size: 18px;
       color: $text-color;
-      margin-top: 65px;
+      margin-top: 45px;
       line-height: 1.778;
 
-      @media (max-width: $lg) {
-        padding: 50px;
-      }
-
-      @media (max-width: $md) {
-        padding: 40px;
-        margin-top: 50px;
-      }
-
       @media (max-width: $sm) {
-        padding: 20px;
         margin-top: 40px;
       }
 
       @media (max-width: $xs) {
-        padding: 15px;
         margin-top: 30px;
         font-size: 16px;
         line-height: 1.5;
       }
 
-      *:first-of-type {
-        margin-top: 0;
+      a {
+        color: $red;
+
+        &:hover {
+          color: $white;
+        }
       }
 
-      p {
-        margin: 45px 0 0 0;
+      img {
+        display: block;
+      }
 
-        @media (max-width: $md) {
-          margin: 30px 0 0 0;
-        }
+      p, img, h1, h2, h3, h4, h5, h6 {
+        margin: 30px 0 0 0;
 
         @media (max-width: $sm) {
           margin: 25px 0 0 0;
@@ -115,22 +96,17 @@
           margin: 15px 0 0 0;
         }
       }
+
+      h1, h2, h3, h4, h5, h6 {
+        color: $white;
+      }
     }
   }
 
   .bottom-text {
     font-size: 14px;
     color: $text-color;
-    margin-top: 60px;
-    text-align: center;
-
-    @media (max-width: $md) {
-      margin-top: 50px;
-    }
-
-    @media (max-width: $xs) {
-      margin-top: 40px;
-    }
+    margin-top: 30px;
 
     p {
       margin: 0;
