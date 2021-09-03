@@ -11,7 +11,7 @@
     .showing-text {
       color: $text-color;
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
 
       span {
         color: $white;
@@ -19,26 +19,10 @@
     }
 
     .blocks {
-      border-radius: 10px;
-      background-color: rgba($dark-blue, 0.471);
-      padding: 50px 55px;
-
-      @media (max-width: $md) {
-        padding: 40px;
-      }
-
-      @media (max-width: $sm) {
-        padding: 20px;
-      }
-
-      @media (max-width: $xs) {
-        padding: 15px;
-      }
-
       & > a {
         display: block;
         margin-bottom: 23px;
-        padding: 50px 55px;
+        padding: 49px 44px;
         border-radius: 10px;
         background-color: $dark-blue;
 
@@ -85,7 +69,7 @@
     .bottom-text {
       font-size: 14px;
       color: $text-color;
-      margin-top: 55px;
+      margin-top: 60px;
       text-align: center;
 
       @media (max-width: $xs) {
