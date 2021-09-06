@@ -9,8 +9,8 @@ endif;
 if ($post_id) :
     $post_thumbnail = get_the_post_thumbnail($post_id, 'gfx_post_grid');
 
-    if (!empty($post_type)) :
-        if (isset($tutorial_video_url)) : ?>
+    if (!empty($post_type) && $post_type == 'tutorial') :
+        if (!empty($tutorial_video_url)) : ?>
             <a href="<?php echo $tutorial_video_url; ?>" class="post-card" target="_blank">
                 <?php if ($post_thumbnail) : ?>
                     <div class="thumbnail">
@@ -116,6 +116,5 @@ if ($post_id) :
                 ?>
             </div>
         </a>
-    <?php
-    endif;
+    <?php endif;
 endif; ?>

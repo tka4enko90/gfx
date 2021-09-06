@@ -100,7 +100,9 @@ add_action('pre_get_posts', 'cpt_archive_per_page');
 function search_results_per_page($query)
 {
     if ($query->is_search)
-        $query->query_vars['posts_per_page'] = -1;
+        if(!empty($_GET['post_type']) && $_GET['post_type'] == 'support') {
+            $query->query_vars['posts_per_page'] = -1;
+        }
     return $query;
 }
 

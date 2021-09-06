@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <?php $support_sections = get_terms('section', array('hide_empty' => false));
+                    <?php $support_sections = get_terms('section');
                     if (!empty($support_sections)) : ?>
                         <div class="right-col sidebar">
                             <h6><?php _e('Categories', 'gfx'); ?></h6>

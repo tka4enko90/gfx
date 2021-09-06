@@ -5,28 +5,17 @@
 
   .container {
     background-image: url("../../../../img/blog-hero-bg.png");
-    background-size: contain;
-    background-position: center right;
     background-repeat: no-repeat;
+    background-position: 92% 0;
+    background-size: 60%;
 
     @media (max-width: $xs) {
       background-size: cover;
-      background-position: center left;
     }
   }
 
   .section-holder {
-    padding: 116px 0 130px;
-
-    @media (max-width: $lg) {
-      padding: 100px 0;
-      background-size: auto;
-      background-position: center left;
-    }
-
-    @media (max-width: $md) {
-      padding: 80px 0;
-    }
+    padding: 70px 0;
 
     @media (max-width: $sm) {
       padding: 60px 0;
@@ -34,6 +23,11 @@
 
     @media (max-width: $xs) {
       padding: 40px 0;
+    }
+
+    @media (max-width: $lg) {
+      background-size: auto;
+      background-position: center left;
     }
   }
 
@@ -55,14 +49,14 @@
   }
 
   .search-form-holder {
-    margin-top: 45px;
+    margin-top: 32px;
 
     @media (max-width: $sm) {
-      margin-top: 35px;
+      margin-top: 30px;
     }
 
     @media (max-width: $xs) {
-      margin-top: 30px;
+      margin-top: 20px;
     }
   }
 }
@@ -71,15 +65,6 @@
 .archive.tax-section, .single.single-support,
 .search.search-results {
   .hero-search {
-    .container {
-      background-position: 92% 0%;
-      background-size: 60%;
-
-      @media (max-width: $md) {
-        background-size: cover;
-      }
-    }
-
     .section-holder {
       padding: 72px 0;
 
