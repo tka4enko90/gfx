@@ -1,5 +1,4 @@
 <?php
-//get_template_part('template-parts/blocks/single_post_hero/single-post-hero');
 get_template_part('template-parts/blocks/single_post_content/single-post-content');
 
 $post = get_post();

@@ -13,7 +13,11 @@ if ($post_id) :
                     <div class="cols-holder">
                         <div class="left-col">
                             <div class="breadcrumbs">
-                                <a href="<?php echo get_home_url(); ?>"><?php _e('Blog', 'gfx'); ?></a>
+                                <?php
+                                $blog_page_id = get_page_by_title('Blog')->ID;
+                                $blog_page_url = get_the_permalink($blog_page_id); ?>
+
+                                <a href="<?php echo $blog_page_url; ?>"><?php _e('Blog', 'gfx'); ?></a>
 
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink"
