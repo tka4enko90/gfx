@@ -8,9 +8,9 @@
 
                 // Readme Hero Section
                 if (get_row_layout() == 'readme_hero'):
-                    get_template_part('template-parts/blocks/readme_hero/readme-hero');
-
-                // Product Information
+                    get_template_part('template-parts/blocks/readme_hero/readme-hero'); ?>
+                    <div class="scroll-here"></div>
+                <?php // Product Information
                 elseif (get_row_layout() == 'readme_product_information') :
                     get_template_part('template-parts/blocks/readme_product_information/readme-product-information');
 

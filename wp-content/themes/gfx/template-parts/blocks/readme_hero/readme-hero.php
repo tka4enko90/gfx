@@ -23,7 +23,7 @@ if ($readme_product || $subtitle || $description) {
                         </div>
                     <?php } ?>
                     <div class="buttons-holder">
-                        <a href="#product-info"
+                        <a href="#"
                            class="secondary-button scroll-down-link"><?php _e('Get Started', 'gfx'); ?></a>
 
                         <?php if ($readme_product) { ?>
