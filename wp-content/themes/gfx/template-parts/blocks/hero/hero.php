@@ -48,10 +48,12 @@
                             if (!empty($hero_buttons)) : ?>
                                 <div class="buttons-holder">
                                     <?php foreach ($hero_buttons as $key => $button) :
-                                        $btn = $button['button']; ?>
+                                        $btn = $button['button'];
+                                        $smooth_scroll_to_section = $button['smooth_scroll_to_section']; ?>
+
                                         <a href="<?php echo $btn['url']; ?>"
                                            target="<?php echo $btn['target']; ?>"
-                                           class="<?php echo $key === 0 ? 'primary-button' : 'secondary-button'; ?>">
+                                           class="<?php echo $key === 0 ? 'primary-button' : 'secondary-button'; echo $smooth_scroll_to_section ? ' scroll-to-anchor' : ''; ?>">
                                             <?php echo $btn['title']; ?>
                                         </a>
                                     <?php endforeach; ?>

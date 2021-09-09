@@ -170,6 +170,22 @@
         });
     }
 
+    var scrollToAnchor = $('.scroll-to-anchor');
+    if (scrollToAnchor.length) {
+        scrollToAnchor.on('click', function (e) {
+            e.preventDefault();
+
+            var self = $(this);
+            var href = self.attr('href');
+
+            if (href.length) {
+                var top = $(href).offset().top - 40;
+                $('body,html').animate({scrollTop: top}, 500);
+            }
+        });
+    }
+
+
     // AJAX Table pagination
     function ajaxPagination(pagination, table, template) {
         var paginationButton = pagination.find('button');

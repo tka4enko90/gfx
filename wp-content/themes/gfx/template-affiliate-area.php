@@ -53,7 +53,6 @@ get_header(); ?>
                     // Text block
                     elseif (get_row_layout() == 'affiliate_text_block') :
                         get_template_part('template-parts/blocks/affiliate_text_block/affiliate-text-block', '', '');
-
                     // Join program section
                     elseif (get_row_layout() == 'join_section') :
                         $join_section_title = get_sub_field('join_section_title');
@@ -74,6 +73,8 @@ get_header(); ?>
                     endif;
                 endwhile;
             endif;
+
+            get_template_part('template-parts/blocks/affiliate_register_form/affiliate-register-form', '', '');
         endif; ?>
     </main>
 <?php get_footer(); ?>

@@ -1,0 +1,123 @@
+@import '../../../src/scss/components/vars';
+
+.register-affiliate {
+  padding: 95px 0 85px 0;
+
+  @media (max-width: $md) {
+    padding: 80px 0;
+  }
+
+  @media (max-width: $sm) {
+    padding: 60px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  form {
+    margin: 0;
+
+    fieldset {
+      padding: 0;
+    }
+
+    h3 {
+      margin: 0 0 24px 0;
+    }
+
+    .subtitle {
+      color: $text-color;
+      margin-bottom: 25px;
+      font-size: 16px;
+
+      a {
+        color: $red;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+
+    textarea {
+      height: 179px;
+
+      @media (max-width: $xs) {
+        height: 150px;
+      }
+    }
+
+    .terms-holder {
+      margin-bottom: 33px;
+      color: $text-color;
+      font-size: 16px;
+
+      @media (max-width: $xs) {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+
+        input[type=checkbox] {
+          margin-right: 10px;
+
+          &::before {
+            border-color: $text-color;
+          }
+        }
+      }
+    }
+
+    p {
+      margin-bottom: 33px;
+
+      @media (max-width: $xs) {
+        margin-bottom: 25px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      a {
+        color: $red;
+
+        &:hover {
+          color: $white;
+        }
+      }
+
+      label {
+        margin-bottom: 13px;
+        display: inline-block;
+        font-size: 16px;
+
+        @media (max-width: $xs) {
+          margin-bottom: 8px;
+        }
+
+        &.affwp-tos {
+          margin-bottom: 0;
+        }
+
+        span {
+          color: $red;
+          position: relative;
+          top: -2px;
+          right: -2px;
+        }
+      }
+    }
+
+    .primary-button {
+      min-width: 144px;
+
+      @media (max-width: $xs) {
+        min-width: 0;
+      }
+    }
+  }
+}

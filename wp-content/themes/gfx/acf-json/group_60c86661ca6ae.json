@@ -881,6 +881,41 @@
                     "mime_types": "zip"
                 }
             ]
+        },
+        {
+            "key": "field_613a1012eb570",
+            "label": "Affiliate Register",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_613a101deb571",
+            "label": "Terms of use label text",
+            "name": "terms_of_use_label_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
         }
     ],
     "location": [
@@ -900,5 +935,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1630502608
+    "modified": 1631195218
 }
