@@ -1,0 +1,138 @@
+@import '../../../src/scss/components/vars';
+
+.readme-hero {
+  background-color: $dark-blue;
+  padding: 56px 0;
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .section-holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .info-col {
+      max-width: 675px;
+      padding-right: 60px;
+
+      @media (max-width: $md) {
+        max-width: 100%;
+        padding-right: 0;
+      }
+
+      & > h3 {
+        font-size: 38px;
+        margin: 0;
+
+        @media (max-width: $md) {
+          font-size: 35px;
+        }
+
+        @media (max-width: $sm) {
+          font-size: 33px;
+        }
+
+        @media (max-width: $xs) {
+          font-size: 28px;
+        }
+      }
+
+      .subtitle {
+        font-size: 18px;
+        color: $text-color;
+
+        @media (max-width: $xs) {
+          font-size: 16px;
+        }
+      }
+
+      .description {
+        color: #969fad;
+        font-size: 18px;
+        margin-top: 45px;
+
+        @media (max-width: $md) {
+          margin-top: 30px;
+        }
+
+        @media (max-width: $xs) {
+          font-size: 16px;
+          margin-top: 20px;
+        }
+
+        a {
+          color: $red;
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+
+      .buttons-holder {
+        margin-top: 45px;
+        display: flex;
+
+        @media (max-width: $md) {
+          margin-top: 30px;
+        }
+
+        @media (max-width: $xs) {
+          margin-top: 20px;
+        }
+
+        @media (max-width: $xs) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .secondary-button, .primary-button {
+          min-width: 152px;
+
+          @media (max-width: $xs) {
+            min-width: 0;
+          }
+        }
+
+        .secondary-button {
+          padding: 12px 25px;
+        }
+
+        .primary-button {
+          padding: 12px 25px;
+          margin-left: 16px;
+
+          @media (max-width: $xs) {
+            margin-left: 0;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    .image-col {
+      width: 100%;
+      max-width: 510px;
+
+      @media (max-width: $md) {
+        margin-top: 60px;
+      }
+
+      @media (max-width: $xs) {
+        margin-top: 40px;
+      }
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+}

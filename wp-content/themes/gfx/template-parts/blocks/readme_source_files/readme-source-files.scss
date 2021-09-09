@@ -1,0 +1,175 @@
+@import '../../../src/scss/components/vars';
+
+.readme-source-files {
+  padding: 65px 0 60px 0;
+
+  @media (max-width: $sm) {
+    padding: 50px 0;
+  }
+
+  @media (max-width: $xs) {
+    padding: 40px 0;
+  }
+
+  .cols {
+    display: flex;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+    }
+
+    .col {
+      &.support {
+        max-width: 330px;
+        margin-left: auto;
+        padding-left: 40px;
+
+        @media (max-width: $md) {
+          padding-left: 0;
+          max-width: 100%;
+          margin-left: 0;
+          margin-top: 10px;
+        }
+
+        @media (max-width: $sm) {
+          margin-top: 40px;
+        }
+
+        & > h6 {
+          margin: 0 0 15px 0;
+        }
+
+        .posts {
+          display: flex;
+          flex-direction: column;
+          font-size: 15px;
+
+          a {
+            color: $red;
+            margin-bottom: 12px;
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
+
+            &:hover {
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .title-holder {
+    h3 {
+      margin: 0;
+      font-size: 28px;
+
+      @media (max-width: $xs) {
+        font-size: 26px;
+      }
+    }
+
+    .description {
+      margin-top: 12px;
+      font-size: 18px;
+      color: $text-color;
+
+      @media (max-width: $xs) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .videos {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 35px -21px 0;
+
+    @media (max-width: $sm) {
+      margin: 35px 0 0 0;
+    }
+
+    @media (max-width: $xs) {
+      margin: 30px 0 0 0;
+    }
+
+    .video {
+      padding: 0 21px;
+      width: 50%;
+      max-width: 492px;
+      margin-bottom: 30px;
+
+      @media (max-width: $sm) {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+
+      iframe {
+        border-radius: 10px;
+        width: 100%;
+        max-width: 450px;
+        height: 253px;
+
+        @media (max-width: $sm) {
+          max-width: 100%;
+        }
+
+        @media (max-width: $xs) {
+          height: 200px;
+        }
+      }
+
+      h6 {
+        margin: 15px 0 0 0;
+
+        @media (max-width: $xs) {
+          margin: 10px 0 0 0;
+        }
+      }
+
+      a {
+        color: $red;
+        font-size: 12px;
+        transform: translateY(-4px);
+
+        @media (max-width: $xs) {
+          transform: none;
+        }
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .bottom-text {
+    text-align: center;
+    font-size: 14px;
+    color: $text-color;
+    margin-top: 20px;
+
+    @media (max-width: $sm) {
+      margin-top: 40px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: #969fad;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+}

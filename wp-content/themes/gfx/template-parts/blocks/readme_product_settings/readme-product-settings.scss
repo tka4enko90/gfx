@@ -1,0 +1,317 @@
+@import '../../../src/scss/components/vars';
+
+.readme-product-settings {
+  margin: 75px 0 0 0;
+
+  @media (max-width: $sm) {
+    margin: 60px 0 0 0;
+  }
+
+  @media (max-width: $xs) {
+    margin: 40px 0 0 0;
+  }
+
+  .section-holder {
+    background-color: $dark-blue;
+    border-radius: 10px;
+    padding: 40px 45px 40px 60px;
+
+    @media (max-width: $md) {
+      padding: 40px;
+    }
+
+    @media (max-width: $sm) {
+      padding: 30px;
+    }
+
+    @media (max-width: $xs) {
+      padding: 30px 20px;
+    }
+
+    .title {
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba($text-color, 0.502);
+      position: relative;
+      padding-left: 15px;
+
+      @media (max-width: $md) {
+        padding-left: 0;
+      }
+
+      &:after, &::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        height: 1px;
+        width: 200px;
+
+        @media (max-width: $md) {
+          width: 100px;
+        }
+
+        @media (max-width: $sm) {
+          width: 60px;
+        }
+      }
+
+      &:after {
+        right: 0;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
+      }
+
+      &:before {
+        left: 0;
+        background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 28px;
+
+        @media (max-width: $xs) {
+          font-size: 26px;
+        }
+      }
+    }
+
+    .settings {
+      padding-top: 35px;
+      padding-left: 15px;
+
+      @media (max-width: $md) {
+        padding-left: 0;
+      }
+
+      @media (max-width: $sm) {
+        padding: 25px 0 0 0;
+      }
+
+      .block {
+        margin-bottom: 63px;
+
+        @media (max-width: $sm) {
+          margin-bottom: 50px;
+        }
+
+        @media (max-width: $xs) {
+          margin-bottom: 40px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        h5 {
+          font-size: 22px;
+          margin: 0;
+        }
+
+        .content {
+          margin-top: 15px;
+          font-size: 18px;
+          color: #969fad;
+
+          @media (max-width: $xs) {
+            font-size: 16px;
+          }
+
+          strong {
+            color: $red;
+            font-weight: normal;
+          }
+
+          p {
+            margin: 0 0 10px 0;
+
+            &:last-of-type {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .editor-block {
+      padding-left: 15px;
+      margin-top: 20px;
+
+      @media (max-width: $md) {
+        padding-left: 0;
+      }
+
+      h6 {
+        margin: 0;
+      }
+
+      .tabs {
+        margin-top: 25px;
+
+        .tab-names-holder {
+          margin-bottom: 16px;
+          display: flex;
+          flex-wrap: wrap;
+          font-size: 14px;
+          text-transform: uppercase;
+          border-bottom: 1px solid #535f74;
+        }
+
+        .tab-name {
+          padding: 0 8px 14px;
+          border-bottom: 1px solid rgba(0,0,0,0);
+          cursor: pointer;
+          transition: color $transition;
+
+          &:hover {
+            color: $text-color-light;
+          }
+
+          &.active {
+            border-bottom-color: $white;
+          }
+        }
+
+        .tab-content {
+          display: none;
+
+          &.active {
+            display: block;
+          }
+
+          pre {
+            max-height: 300px;
+            margin: 0;
+            overflow-y: scroll;
+            padding-right: 2px;
+            padding-bottom: 2px;
+
+            &::-webkit-scrollbar {
+              width: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background-color: #111c30;
+              border-radius: 120px;
+              width: 3px;
+            }
+          }
+
+          code {
+            width: 100%;
+            overflow: auto;
+            margin: 0;
+          }
+
+          pre code.hljs {
+            display: block;
+            font-family: $helvetica-now-display;
+          }
+
+          code.hljs {
+            padding: 20px 22px;
+          }
+
+          code .hljs-ln-numbers {
+            font-size: 12px;
+            color: #969fad;
+            padding-right: 10px;
+          }
+
+          .hljs {
+            background: #0d1626;
+            border-radius: 10px;
+            color: $white;
+            font-size: 12px;
+          }
+
+          .hljs-comment {
+            color: $text-color;
+          }
+
+          .hljs-punctuation,
+          .hljs-tag {
+            color: $red;
+          }
+
+          .hljs-tag .hljs-name {
+            color: $red;
+          }
+
+          .hljs-tag .hljs-attr {
+            color: #fec042;
+          }
+
+          .hljs-deletion,
+          .hljs-number,
+          .hljs-quote,
+          .hljs-selector-class,
+          .hljs-selector-id,
+          .hljs-string,
+          .hljs-template-tag,
+          .hljs-type {
+            color: #adf602;
+          }
+
+          .hljs-section,
+          .hljs-title {
+            color: #800;
+            font-weight: 700;
+          }
+
+          .hljs-link,
+          .hljs-operator,
+          .hljs-regexp,
+          .hljs-selector-attr,
+          .hljs-selector-pseudo,
+          .hljs-symbol,
+          .hljs-template-variable,
+          .hljs-variable {
+            color: #bc6060;
+          }
+
+          .hljs-literal {
+            color: #78a960;
+          }
+
+          .hljs-addition,
+          .hljs-built_in,
+          .hljs-bullet,
+          .hljs-code {
+            color: #397300;
+          }
+
+          .hljs-meta {
+            color: #1f7199;
+          }
+
+          .hljs-meta .hljs-string {
+            color: #4d99bf;
+          }
+
+          .hljs-emphasis {
+            font-style: italic;
+          }
+
+          .hljs-strong {
+            font-weight: 700;
+          }
+
+          .btn-holder {
+            padding-top: 15px;
+            text-align: right;
+
+            .primary-button.small {
+              padding: 9px 19px;
+              min-width: 121px;
+            }
+
+            input {
+              position: absolute;
+              left: -1000px;
+              opacity: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

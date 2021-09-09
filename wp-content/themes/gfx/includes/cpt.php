@@ -68,6 +68,29 @@ function register_custom_post_types() {
         'supports' => array( 'title', 'thumbnail' )
     );
     register_post_type('tutorial', $args);
+
+    $labels = array(
+        'name' => 'Readme',
+        'singular_name' => 'Readme',
+        'add_new' => 'Add readme',
+        'add_new_item' => 'Add readme',
+        'edit_item' => 'Edit readme',
+        'new_item' => 'New readme',
+        'all_items' => 'All readme',
+        'menu_name' => 'Product Readme'
+    );
+    $args = array(
+        'labels' => $labels,
+        'publicly_queryable' => true,
+        'exclude_from_search' => false,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'menu_icon' => 'dashicons-book-alt',
+        'menu_position' => 8,
+        'has_archive' => true,
+        'supports' => array( 'title' )
+    );
+    register_post_type('readme', $args);
 }
 add_action( 'init', 'register_custom_post_types' );
 

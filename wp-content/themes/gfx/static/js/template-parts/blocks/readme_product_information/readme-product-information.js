@@ -1,0 +1,1 @@
+!function(o){var c=o(".colours .colour");c.length&&c.on("click",(function(){var c=o(this).prev(".text-to-copy");c.length&&(c.focus().select(),document.execCommand("copy"))}))}(jQuery);
