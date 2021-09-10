@@ -2,26 +2,10 @@
 
 .hero-section {
   background-color: rgba($dark-blue, 0.8);
-  padding: 62px 0 16px;
-
-  @media (max-width: $sm) {
-    padding: 50px 0 16px;
-  }
-
-  @media (max-width: $xs) {
-    padding: 40px 0 16px;
-  }
+  padding: 10px 0;
 
   &.no-image {
-    padding: 62px 0;
-
-    @media (max-width: $sm) {
-      padding: 50px 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 40px 0;
-    }
+    padding: 40px 0;
 
     .text-col {
       padding: 0;
@@ -33,10 +17,7 @@
   .section-holder {
     display: flex;
     justify-content: space-between;
-
-    @media (max-width: $lg) {
-      align-items: center;
-    }
+    align-items: center;
 
     @media (max-width: $md) {
       flex-direction: column;
@@ -46,12 +27,7 @@
 
   .text-col {
     max-width: 600px;
-    padding-top: 60px;
     padding-right: 40px;
-
-    @media (max-width: $lg) {
-      padding-top: 0;
-    }
 
     @media (max-width: $md) {
       margin-bottom: 40px;
@@ -61,20 +37,24 @@
 
     h1 {
       margin: 0;
+      font-size: 52px;
+
+      @media (max-width: $sm) {
+        font-size: 47px;
+      }
+
+      @media (max-width: $xs) {
+        font-size: 42px;
+      }
     }
 
     .subtitle {
       color: $text-color;
       font-size: 18px;
-      margin-top: 40px;
-
-      @media (max-width: $md) {
-        margin-top: 30px;
-      }
+      margin-top: 8px;
 
       @media (max-width: $xs) {
         font-size: 16px;
-        margin-top: 20px;
       }
     }
   }
@@ -96,40 +76,6 @@
 
 .woocommerce-account, .woocommerce-cart {
   .hero-section {
-    &:not(.no-image) {
-      padding: 0;
-
-      @media (max-width: $md) {
-        padding: 62px 0 0;
-      }
-
-      @media (max-width: $xs) {
-        padding: 50px 0 0;
-      }
-
-      @media (max-width: $xs) {
-        padding: 40px 0 0;
-      }
-
-      .text-col {
-        padding-top: 20px;
-        padding-bottom: 20px;
-
-        @media (max-width: $md) {
-          padding-top: 0;
-          padding-bottom: 0;
-        }
-      }
-
-      .section-holder {
-        align-items: center;
-
-        @media (max-width: $md) {
-          align-items: flex-start;
-        }
-      }
-    }
-
     .image-col {
       max-width: 769px;
     }
@@ -143,36 +89,9 @@
 }
 
 .woocommerce-checkout .hero-section {
-  padding: 80px 0;
-
-  @media (max-width: $md) {
-    padding: 60px 0;
-  }
-
-  @media (max-width: $sm) {
-    padding: 50px 0;
-  }
-
-  @media (max-width: $xs) {
-    padding: 40px 0;
-  }
-
   .text-col {
-    h1 {
-      font-size: 50px;
-
-      @media (max-width: $sm) {
-        font-size: 45px;
-      }
-
-      @media (max-width: $xs) {
-        font-size: 40px;
-      }
-    }
-
     .subtitle {
       font-size: 24px;
-      margin-top: 0;
 
       @media (max-width: $md) {
         font-size: 22px;
@@ -190,29 +109,11 @@
 }
 
 .page-template-template-affiliate-area .hero-section {
-  padding: 90px 0 0;
-
-  @media (max-width: $md) {
-    padding: 62px 0 16px;
-  }
-
-  @media (max-width: $sm) {
-    padding: 50px 0 16px;
-  }
-
-  @media (max-width: $xs) {
-    padding: 40px 0 16px;
-  }
-
   .text-col {
-    padding: 30px 40px 30px 0;
+    padding: 0 40px 0 0;
 
     @media (max-width: $md) {
       padding: 0;
-    }
-
-    .subtitle {
-      margin-top: 15px;
     }
 
     .buttons-holder {
@@ -249,20 +150,6 @@
   }
 
   &.no-image {
-    padding: 90px 0;
-
-    @media (max-width: $md) {
-      padding: 62px 0;
-    }
-
-    @media (max-width: $sm) {
-      padding: 50px 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 40px 0;
-    }
-
     .text-col {
       padding: 0;
     }
@@ -270,43 +157,6 @@
 
   &.join {
     background-color: rgba(0,0,0,0);
-    padding: 130px 0 0;
-
-    @media (max-width: $lg) {
-      padding: 80px 0 0;
-    }
-
-    @media (max-width: $md) {
-      padding: 62px 0 0;
-    }
-
-    @media (max-width: $sm) {
-      padding: 50px 0 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 40px 0 0;
-    }
-
-    &.no-image {
-      padding: 130px 0;
-
-      @media (max-width: $lg) {
-        padding: 80px 0;
-      }
-
-      @media (max-width: $md) {
-        padding: 62px 0;
-      }
-
-      @media (max-width: $sm) {
-        padding: 50px 0;
-      }
-
-      @media (max-width: $xs) {
-        padding: 40px 0;
-      }
-    }
 
     .text-col {
       padding-top: 0;
@@ -331,40 +181,6 @@
   }
 
   &.affiliate-dashboard {
-    padding: 0;
-
-    @media (max-width: $md) {
-      padding: 62px 0 0;
-    }
-
-    @media (max-width: $sm) {
-      padding: 50px 0 0;
-    }
-
-    @media (max-width: $xs) {
-      padding: 40px 0 0;
-    }
-
-    &.no-image {
-      padding: 90px 0;
-
-      @media (max-width: $md) {
-        padding: 62px 0;
-      }
-
-      @media (max-width: $sm) {
-        padding: 50px 0;
-      }
-
-      @media (max-width: $xs) {
-        padding: 40px 0;
-      }
-
-      .text-col {
-        padding: 0;
-      }
-    }
-
     .text-col {
       display: flex;
       flex-direction: column;
@@ -378,20 +194,6 @@
 }
 
 .page-template-template-press .hero-section {
-  padding: 102px 0;
-
-  @media (max-width: $md) {
-    padding: 62px 0;
-  }
-
-  @media (max-width: $sm) {
-    padding: 50px 0;
-  }
-
-  @media (max-width: $xs) {
-    padding: 40px 0;
-  }
-
   .text-col {
     max-width: 635px;
 

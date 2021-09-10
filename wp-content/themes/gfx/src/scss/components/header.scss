@@ -1,5 +1,4 @@
 .header {
-  //padding: 21px 0;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -245,7 +244,7 @@
           color: $semi-white;
 
           &:hover {
-            color: grey;
+            color: #3b4d6d;
           }
 
           &:active, &.active {
@@ -283,7 +282,7 @@
           right: 0;
           margin: 0 auto;
           max-width: 1404px;
-          background-color: $submenu-blue-bg;
+          //background-color: $submenu-blue-bg;
           padding: 72px 40px 82px;
           z-index: 2;
 
@@ -314,8 +313,8 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: 1000%;
-            background: $submenu-blue-bg;
+            width: 400%;
+            background: linear-gradient(90deg, #112646 0%, #0b1629 100%);
             z-index: -1;
 
             @media (max-width: $md) {
@@ -324,7 +323,7 @@
           }
 
           &::before {
-            left: -300%;
+            left: -150%;
           }
 
           & > li {
@@ -370,7 +369,7 @@
               color: $white;
 
               &:hover {
-                color: grey;
+                color: #3b4d6d;
               }
             }
           }
