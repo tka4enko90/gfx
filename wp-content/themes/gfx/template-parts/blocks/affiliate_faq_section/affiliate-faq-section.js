@@ -3,14 +3,20 @@
 
     if (faq.length) {
         var faqQuestion = faq.find('.question');
-        if (faqQuestion.length) {
+        var faqAnswer = faq.find('.answer');
+
+        if (faqQuestion.length && faqAnswer.length) {
             faqQuestion.on('click', function () {
                 var self = $(this);
-                var parentFaq = $(this).parent();
-                var answer = parentFaq.find('.answer');
+                var currentAnswer = self.parent().find('.answer');
 
-                if (answer.length) {
-                    answer.slideToggle(150);
+                if (currentAnswer.length) {
+                    if (currentAnswer.is(':visible')) {
+                        currentAnswer.slideUp(150);
+                    } else {
+                        faqAnswer.slideUp(150);
+                        currentAnswer.slideDown(150);
+                    }
                 }
             });
         }

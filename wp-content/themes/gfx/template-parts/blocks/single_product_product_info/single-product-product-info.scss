@@ -121,6 +121,19 @@
           color: $white;
         }
 
+        .cols {
+          display: flex;
+          flex-wrap: wrap;
+
+          .col {
+            flex: 1 1 50%;
+
+            @media (max-width: $sm) {
+              flex: 1 1 100%;
+            }
+          }
+        }
+
         .item {
           padding-left: 12px;
           margin-bottom: 10px;

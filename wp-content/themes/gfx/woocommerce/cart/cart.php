@@ -40,9 +40,10 @@ defined('ABSPATH') || exit; ?>
                             <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents">
                                 <thead>
                                     <tr>
-                                        <th class="product-name"><?php esc_html_e('Product', 'woocommerce'); ?></th>
+                                        <th class="product-name"><?php esc_html_e('Product', 'gfx'); ?></th>
                                         <th></th>
-                                        <th class="product-price"><?php esc_html_e('Price', 'woocommerce'); ?></th>
+                                        <th class="product-price"><?php esc_html_e('Price', 'gfx'); ?></th>
+                                        <th class="product-quantity"><?php esc_html_e( 'Quantity', 'gfx' ); ?></th>
                                         <th class="product-remove">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -69,7 +70,7 @@ defined('ABSPATH') || exit; ?>
                                             </td>
 
                                             <td class="product-name"
-                                                data-title="<?php esc_attr_e('Product', 'woocommerce'); ?>">
+                                                data-title="<?php esc_attr_e('Product', 'gfx'); ?>">
                                                 <?php
                                                 if (!$product_permalink) {
                                                     echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;');
@@ -84,15 +85,37 @@ defined('ABSPATH') || exit; ?>
 
                                                 // Backorder notification.
                                                 if ($_product->backorders_require_notification() && $_product->is_on_backorder($cart_item['quantity'])) {
-                                                    echo wp_kses_post(apply_filters('woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__('Available on backorder', 'woocommerce') . '</p>', $product_id));
+                                                    echo wp_kses_post(apply_filters('woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__('Available on backorder', 'gfx') . '</p>', $product_id));
                                                 }
                                                 ?>
                                             </td>
 
                                             <td class="product-price"
-                                                data-title="<?php esc_attr_e('Price', 'woocommerce'); ?>">
+                                                data-title="<?php esc_attr_e('Price', 'gfx'); ?>">
                                                 <?php
                                                 echo apply_filters('woocommerce_cart_item_price', WC()->cart->get_product_price($_product), $cart_item, $cart_item_key); // PHPCS: XSS ok.
+                                                ?>
+                                            </td>
+
+                                            <td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'gfx' ); ?>">
+                                                <?php
+                                                if ( $_product->is_sold_individually() ) {
+                                                    $product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key );
+                                                } else {
+                                                    $product_quantity = woocommerce_quantity_input(
+                                                        array(
+                                                            'input_name'   => "cart[{$cart_item_key}][qty]",
+                                                            'input_value'  => $cart_item['quantity'],
+                                                            'max_value'    => $_product->get_max_purchase_quantity(),
+                                                            'min_value'    => '0',
+                                                            'product_name' => $_product->get_name(),
+                                                        ),
+                                                        $_product,
+                                                        false
+                                                    );
+                                                }
+
+                                                echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
                                                 ?>
                                             </td>
 
@@ -103,7 +126,7 @@ defined('ABSPATH') || exit; ?>
                                                     sprintf(
                                                         '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s"><svg style="fill:#969fad" enable-background="new 0 0 386.667 386.667" height="512" viewBox="0 0 386.667 386.667" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m386.667 45.564-45.564-45.564-147.77 147.769-147.769-147.769-45.564 45.564 147.769 147.769-147.769 147.77 45.564 45.564 147.769-147.769 147.769 147.769 45.564-45.564-147.768-147.77z"/></svg></a>',
                                                         esc_url(wc_get_cart_remove_url($cart_item_key)),
-                                                        esc_html__('Remove this item', 'woocommerce'),
+                                                        esc_html__('Remove this item', 'gfx'),
                                                         esc_attr($product_id),
                                                         esc_attr($_product->get_sku())
                                                     ),

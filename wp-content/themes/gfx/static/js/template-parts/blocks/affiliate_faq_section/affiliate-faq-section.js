@@ -1,1 +1,1 @@
-!function(n){var i=n(".faq-dropdown");if(i.length){var e=i.find(".question");e.length&&e.on("click",(function(){n(this);var i=n(this).parent().find(".answer");i.length&&i.slideToggle(150)}))}}(jQuery);
+!function(n){var i=n(".faq-dropdown");if(i.length){var e=i.find(".question"),l=i.find(".answer");e.length&&l.length&&e.on("click",(function(){var i=n(this).parent().find(".answer");i.length&&(i.is(":visible")?i.slideUp(150):(l.slideUp(150),i.slideDown(150)))}))}}(jQuery);

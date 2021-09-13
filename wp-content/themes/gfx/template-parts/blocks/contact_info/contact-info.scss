@@ -117,15 +117,11 @@
           .custom-placeholder {
             position: absolute;
             top: 13px;
-            left: 28px;
+            left: 17px;
             color: $text-color;
             font-size: 16px;
             font-weight: 500;
             z-index: -1;
-
-            @media (max-width: $xs) {
-              left: 17px;
-            }
           }
         }
 
@@ -148,21 +144,13 @@
         input:not([type="submit"]) {
           width: 100%;
           height: 52px;
-          padding: 0 26px;
+          padding: 0 15px;
           line-height: 1.298;
-
-          @media (max-width: $xs) {
-            padding: 0 15px;
-          }
         }
 
         textarea {
           width: 100%;
-          padding: 17px 26px;
-
-          @media (max-width: $xs) {
-            padding: 15px;
-          }
+          padding: 15px;
         }
       }
     }
@@ -225,10 +213,14 @@
       .title {
         transition: color $transition;
         color: $white;
-        font-size: 19px;
+        font-size: 22px;
         font-weight: bold;
         margin-bottom: 2px;
         text-align: center;
+
+        @media (max-width: $sm) {
+          font-size: 19px;
+        }
 
         @media (max-width: $xs) {
           font-size: 17px;
@@ -237,7 +229,7 @@
 
       .description {
         color: $text-color;
-        font-size: 10px;
+        font-size: 12px;
         text-align: center;
       }
     }
@@ -276,10 +268,14 @@
 
         .title {
           transition: color $transition;
-          font-size: 19px;
+          font-size: 22px;
           color: $white;
           font-weight: bold;
           margin-bottom: 2px;
+
+          @media (max-width: $sm) {
+            font-size: 19px;
+          }
 
           @media (max-width: $xs) {
             font-size: 17px;
@@ -288,7 +284,7 @@
 
         .description {
           color: $text-color;
-          font-size: 10px;
+          font-size: 12px;
         }
       }
     }

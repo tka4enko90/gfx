@@ -41,23 +41,25 @@
     }
     if (dropDownItem.length) {
         var dropDownTitle = dropDownItem.find('.dropdown-title');
+        var dropDownDescription = dropDownItem.find('.dropdown-description');
 
         dropDownTitle.on('click', function () {
             var self = $(this),
-                dropDownDescription = self.parent().find('.dropdown-description');
+                currentDropDownDescription = self.parent().find('.dropdown-description');
 
-            if(dropDownDescription.length) {
-                self.toggleClass('opened');
-                dropDownDescription.slideToggle(200);
+            if(self.hasClass('opened')) {
+                self.removeClass('opened');
+                currentDropDownDescription.slideUp(200);
+            } else {
+                dropDownTitle.removeClass('opened');
+                dropDownDescription.slideUp(200);
+
+                if(currentDropDownDescription.length) {
+                    self.addClass('opened');
+                    currentDropDownDescription.slideDown(200);
+                }
             }
         });
     }
-
-    // var addToCartBtn = $('.single-ajax-add-to-cart-btn');
-    // if(addToCartBtn.length) {
-    //     addToCartBtn.on('click', function (e) {
-    //         e.preventDefault();
-    //     });
-    // }
 })
 (jQuery);

@@ -94,6 +94,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100%;
 
         @media (max-width: $sm) {
           padding: 30px 20px;

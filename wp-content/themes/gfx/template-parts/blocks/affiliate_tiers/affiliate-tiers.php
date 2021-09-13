@@ -53,7 +53,7 @@ if ($affiliate_tiers_title || $affiliate_tiers_subtitle || have_rows('affiliate_
                                                 $text = get_sub_field('text');
                                                 if ($text) :?>
                                                     <li>
-                                                        <span>></span>
+                                                        <span><img src="<?php echo get_template_directory_uri(); ?>/static/img/arrow-down.svg" alt="icon"></span>
                                                         <?php the_sub_field('text'); ?>
                                                     </li>
                                                 <?php endif;

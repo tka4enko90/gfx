@@ -67,23 +67,60 @@ endif; ?>
                                 </div>
                             <?php endif; ?>
 
-                            <?php if (have_rows('what’s_inside')) : ?>
+                            <?php
+                            $what_inside = get_field('what’s_inside');
+                            if (have_rows('what’s_inside')) : ?>
                                 <div class="what_inside">
                                     <h5><?php _e('What’s Inside?', 'gfx'); ?></h5>
-                                    <?php while (have_rows('what’s_inside')) : the_row(); ?>
-                                        <?php $title = get_sub_field('title'); ?>
-                                        <?php $description = get_sub_field('description'); ?>
 
-                                        <div class="item <?php if ($title && $description) : ?>dropdown-item<?php endif; ?>">
-                                            <?php if ($title) : ?>
-                                                <div class="dropdown-title"><?php echo $title; ?></div>
-                                            <?php endif; ?>
+                                    <div class="cols">
+                                        <div class="col">
+                                            <?php
+                                            $index = 1;
+                                            while (have_rows('what’s_inside')) : the_row();
+                                                if ($index <= 8) :
+                                                    $title = get_sub_field('title');
+                                                    $description = get_sub_field('description'); ?>
 
-                                            <?php if ($description) : ?>
-                                                <div class="dropdown-description"><?php echo $description; ?></div>
-                                            <?php endif; ?>
+                                                    <div class="item <?php if ($title && $description) : ?>dropdown-item<?php endif; ?>">
+                                                        <?php if ($title) : ?>
+                                                            <div class="dropdown-title"><?php echo $title; ?></div>
+                                                        <?php endif;
+
+                                                        if ($description) : ?>
+                                                            <div class="dropdown-description"><?php echo $description; ?></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php
+                                                endif;
+                                                $index++;
+                                            endwhile; ?>
                                         </div>
-                                    <?php endwhile; ?>
+
+                                        <?php if (sizeof($what_inside) > 8) { ?>
+                                            <div class="col">
+                                                <?php
+                                                $index = 1;
+                                                while (have_rows('what’s_inside')) : the_row();
+                                                    if ($index > 8) :
+                                                        $title = get_sub_field('title');
+                                                        $description = get_sub_field('description'); ?>
+
+                                                        <div class="item <?php if ($title && $description) : ?>dropdown-item<?php endif; ?>">
+                                                            <?php if ($title) : ?>
+                                                                <div class="dropdown-title"><?php echo $title; ?></div>
+                                                            <?php endif;
+
+                                                            if ($description) : ?>
+                                                                <div class="dropdown-description"><?php echo $description; ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endif;
+                                                    $index++;
+                                                endwhile; ?>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             <?php endif; ?>
 

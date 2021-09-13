@@ -59,23 +59,11 @@
       h2 {
         margin-bottom: 0;
         color: $white;
-        position: relative;
 
         img {
           cursor: pointer;
-          position: absolute;
           width: 24px;
           height: 24px;
-          top: 25px;
-          right: -39px;
-
-          @media (max-width: $sm) {
-            top: 21px;
-          }
-
-          @media (max-width: $xs) {
-            top: 18px;
-          }
         }
       }
 
@@ -165,8 +153,8 @@
 
   .video-col {
     width: 100%;
-    max-width: 700px;
-    height: 390px;
+    max-width: 620px;
+    height: 360px;
     position: relative;
     margin-left: auto;
 
@@ -210,44 +198,59 @@
     height: 100%;
   }
 
-  .close-product-trailer-popup-btn {
-    position: absolute;
-    z-index: 1;
-    top: 13px;
-    right: 0;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: rgba($white, 0.149);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover svg {
-      opacity: 0.6;
-    }
-
-    svg {
-      display: block;
-      width: 14px;
-      height: 14px;
-      opacity: 0.4;
-      transition: opacity $transition;
-    }
-  }
-
-  iframe {
+  .holder {
     width: 100%;
     max-width: 800px;
-    height: 500px;
+    position: relative;
 
-    @media (max-width: $sm) {
-      height: 400px;
+    .close-product-trailer-popup-btn {
+      position: absolute;
+      z-index: 1;
+      top: -40px;
+      right: -40px;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: rgba($white, 0.149);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media (max-width: $md) {
+        top: -30px;
+        right: -30px;
+      }
+
+      @media (max-width: $xs) {
+        top: -30px;
+        right: -10px;
+      }
+
+      &:hover svg {
+        opacity: 0.6;
+      }
+
+      svg {
+        display: block;
+        width: 14px;
+        height: 14px;
+        opacity: 0.4;
+        transition: opacity $transition;
+      }
     }
 
-    @media (max-width: $xs) {
-      height: 250px;
+    iframe {
+      width: 100%;
+      height: 500px;
+
+      @media (max-width: $sm) {
+        height: 400px;
+      }
+
+      @media (max-width: $xs) {
+        height: 250px;
+      }
     }
   }
 }

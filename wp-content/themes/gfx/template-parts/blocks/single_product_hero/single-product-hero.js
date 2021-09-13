@@ -63,5 +63,15 @@
             }, 200);
         });
     }
+
+    if(productTrailerPopup.length && closeProductTrailerPopupBtn.length) {
+        var element = $(productTrailerPopup).find('.holder');
+
+        $(document).mouseup(function (e) {
+            if (productTrailerPopup.is(':visible') && !element.is(e.target) && element.has(e.target).length === 0) {
+                closeProductTrailerPopupBtn.trigger('click');
+            }
+        });
+    }
 })
 (jQuery);

@@ -16,18 +16,18 @@
 }
 
 .checkout-section {
-  padding: 125px 0 133px;
+  padding: 40px 0 133px;
 
   @media (max-width: $lg) {
-    padding: 100px 0;
+    padding: 40px 0 100px;
   }
 
   @media (max-width: $md) {
-    padding: 80px 0;
+    padding: 40px 0 80px;
   }
 
   @media (max-width: $sm) {
-    padding: 60px 0;
+    padding: 40px 0 60px;
   }
 
   @media (max-width: $xs) {
@@ -36,7 +36,6 @@
 
   .before-checkout-form-holder {
     display: flex;
-    //flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 50px;
 
@@ -172,11 +171,7 @@
 
       input {
         width: 100%;
-        padding: 14px 25px;
-
-        @media (max-width: $xs) {
-          padding: 10px 15px;
-        }
+        padding: 14px 15px;
       }
     }
   }
@@ -217,6 +212,15 @@
   }
 
   .woocommerce-checkout {
+    .woocommerce-error {
+      color: $red;
+      margin-top: -10px;
+
+      li {
+        margin: 10px 0 0 0;
+      }
+    }
+
     .form-holder {
       display: flex;
       justify-content: space-between;
@@ -379,7 +383,7 @@
 
               input {
                 width: 100%;
-                padding: 14px 25px;
+                padding: 14px 15px;
 
                 @media (max-width: $xs) {
                   padding: 10px 15px;
@@ -394,11 +398,10 @@
                 }
 
                 .select2-selection__rendered {
-                  padding-left: 25px !important;
+                  padding-left: 15px !important;
                   padding-right: 25px !important;
 
                   @media (max-width: $xs) {
-                    padding-left: 15px !important;
                     padding-right: 15px !important;
                   }
                 }
@@ -609,6 +612,21 @@
 
                         @media (max-width: $xs) {
                           padding: 10px 15px;
+                        }
+                      }
+                    }
+
+                    .stripe-source-errors {
+                      float: left;
+                      width: 100%;
+                      margin-top: -10px;
+                      color: $red;
+
+                      ul {
+                        margin: 0;
+
+                        li {
+                          margin: 10px 0 0 0;
                         }
                       }
                     }

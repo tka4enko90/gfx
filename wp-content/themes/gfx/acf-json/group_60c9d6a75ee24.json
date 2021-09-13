@@ -290,6 +290,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_613b56b30f338",
+            "label": "Show What's Inside Button",
+            "name": "hero_show_whats_inside_button",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_60d462b285e52",
             "label": "Complete Package",
             "name": "",
@@ -628,5 +647,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624973883
+    "modified": 1631278833
 }

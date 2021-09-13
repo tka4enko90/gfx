@@ -193,8 +193,13 @@
             }
 
             span {
-              color: $red;
-              padding-right: 10px;
+              margin-right: 5px;
+
+              img {
+                width: 8px;
+                height: 12px;
+                transform: rotate(-90deg);
+              }
             }
           }
         }
