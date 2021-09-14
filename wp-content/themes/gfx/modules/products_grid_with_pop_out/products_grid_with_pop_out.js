@@ -101,41 +101,60 @@
 
                     // Insert assets preview
                     if (popOutInfo.assets_preview && previewsHolder.length) {
+                        var video = '';
+                        if (popOutInfo.assets_preview_poster) {
+                            video = '<video class="pop-out-video" poster="' + popOutInfo.assets_preview_poster + '">\n' +
+                                ' <source src="' + popOutInfo.assets_preview.url + '">\n' +
+                                '</video>';
+                        } else {
+                            video = '<video class="pop-out-video">\n' +
+                                ' <source src="' + popOutInfo.assets_preview.url + '">\n' +
+                                '</video>';
+                        }
+
                         previewsHolder.append('<div class="preview assets-preview">\n' +
                             '                            <div class="preview-name">Assets Preview:</div>\n' +
-                            '                            <div class="video-holder">\n' +
-                            '                                <video class="pop-out-video" >\n' +
-                            '                                    <source src="' + popOutInfo.assets_preview.url + '"\n' +
-                            '                                            >\n' +
-                            '                                </video>\n' +
-                            '                            </div>\n' +
+                            '                            <div class="video-holder">' + video + '</div>\n' +
                             '                        </div>');
                         previewsHolder.find('.assets-preview video')[0].load();
                     }
 
                     // Insert alert preview
                     if (popOutInfo.alert_preview && previewsHolder.length) {
+                        var video = '';
+                        if (popOutInfo.alert_preview_poster) {
+                            video = '<video class="pop-out-video" poster="' + popOutInfo.alert_preview_poster + '">\n' +
+                                ' <source src="' + popOutInfo.alert_preview.url + '">\n' +
+                                '</video>';
+                        } else {
+                            video = '<video class="pop-out-video">\n' +
+                                ' <source src="' + popOutInfo.alert_preview.url + '">\n' +
+                                '</video>';
+                        }
+
                         previewsHolder.append('<div class="preview alert-preview">\n' +
                             '                            <div class="preview-name">Alert Preview:</div>\n' +
-                            '                            <div class="video-holder">\n' +
-                            '                                <video class="pop-out-video">\n' +
-                            '                                    <source src="' + popOutInfo.alert_preview.url + '">\n' +
-                            '                                </video>\n' +
-                            '                            </div>\n' +
+                            '                            <div class="video-holder">' + video + '</div>\n' +
                             '                        </div>');
                         previewsHolder.find('.alert-preview video')[0].load();
                     }
 
                     // Insert screen preview
                     if (popOutInfo.screen_preview && previewsHolder.length) {
+                        var video = '';
+                        if (popOutInfo.screen_preview_poster) {
+                            video = '<video class="pop-out-video" poster="' + popOutInfo.screen_preview_poster + '">\n' +
+                                ' <source src="' + popOutInfo.screen_preview.url + '">\n' +
+                                '</video>';
+                        } else {
+                            video = '<video class="pop-out-video">\n' +
+                                ' <source src="' + popOutInfo.screen_preview.url + '">\n' +
+                                '</video>';
+                        }
+
                         previewsHolder.append('<div class="preview screen-preview">\n' +
                             '                            <div class="preview-name">Screen Preview:</div>\n' +
-                            '                            <div class="video-holder">\n' +
-                            '                                <video class="pop-out-video" loop="loop" muted="muted" playsinline>\n' +
-                            '                                    <source src="' + popOutInfo.screen_preview.url + '"\n' +
-                            '                                            type="' + popOutInfo.screen_preview.mime_type + '">\n' +
-                            '                                </video>\n' +
-                            '                            </div>\n' +
+                            '                            <div class="video-holder">' + video + '</div>\n' +
                             '                        </div>');
                         previewsHolder.find('.screen-preview video')[0].load();
                     }
@@ -195,8 +214,7 @@
     if (popOutVideoHolder.length) {
         popOutVideoHolder.on('click', '.pop-out-video', function () {
             var productTrailerVideoBlock = $('.product-trailer-video-holder');
-            var videoTag = $(this).clone().prop('autoplay', 'autoplay').attr('playsinline', '');
-
+            var videoTag = $(this).clone().prop('autoplay', 'autoplay').attr('playsinline', '').removeAttr('poster');
             if (productTrailerVideoBlock.length && videoTag.length) {
                 productTrailerVideoBlock.find('video').remove();
                 productTrailerVideoBlock.append(videoTag);

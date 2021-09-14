@@ -42,8 +42,14 @@
                             endif;
 
                             $product_pop_out_info["assets_preview"] = get_field('assets_preview', $product_id);
+                            $product_pop_out_info["assets_preview_poster"] = get_field('assets_preview_poster', $product_id);
+
                             $product_pop_out_info["alert_preview"] = get_field('alert_preview', $product_id);
+                            $product_pop_out_info["alert_preview_poster"] = get_field('alert_preview_poster', $product_id);
+
                             $product_pop_out_info["screen_preview"] = get_field('screen_preview', $product_id);
+                            $product_pop_out_info["screen_preview_poster"] = get_field('screen_preview_poster', $product_id);
+
                             $product_pop_out_info["compatible_with"] = get_field('compatible_with', $product_id);
 
                             $product = wc_get_product($product_id);
