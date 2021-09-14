@@ -33,13 +33,31 @@ endif; ?>
                                         <?php foreach ($attachment_ids as $attachment_id) : ?>
                                             <?php if ($attachment_id) : ?>
                                                 <div class="slide">
-                                                    <?php $gallery_image = wp_get_attachment_image($attachment_id, 'gfx_wc_gallery_large'); ?>
-                                                    <?php if ($gallery_image) : ?>
-                                                        <?php echo $gallery_image; ?>
-                                                    <?php endif; ?>
+                                                    <?php
+                                                    $gallery_image = wp_get_attachment_image($attachment_id, 'gfx_wc_gallery_large');
+
+                                                    $attach_video = get_field('attach_video', $attachment_id);
+
+                                                    if ($attach_video) {
+                                                        $file_or_iframe = get_field('file_or_iframe', $attachment_id);
+                                                        $video_file = get_field('video_file', $attachment_id);
+                                                        $video_iframe = get_field('video_iframe', $attachment_id);
+
+                                                        if ($file_or_iframe == 'file' && $video_file) {
+                                                            echo '<video controls><source src="'.$video_file['url'].'"></video>';
+                                                        }
+
+                                                        if ($file_or_iframe == 'iframe' && $video_iframe) {
+                                                            echo $video_iframe;
+                                                        }
+                                                    } else {
+                                                        if ($gallery_image) {
+                                                            echo $gallery_image;
+                                                        }
+                                                    } ?>
                                                 </div>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
+                                            <?php endif;
+                                        endforeach; ?>
                                     </div>
                                     <div class="single-product-gallery-slider-nav">
                                         <?php foreach ($attachment_ids as $attachment_id) : ?>

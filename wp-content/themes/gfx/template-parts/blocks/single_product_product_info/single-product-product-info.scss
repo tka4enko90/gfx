@@ -46,9 +46,22 @@
         .slide {
           outline: none;
 
-          img {
+          img, video, iframe {
             border-radius: 10px;
             width: 100%;
+          }
+
+          iframe {
+            min-height: 418px;
+            height: auto;
+
+            @media (max-width: $lg) {
+              min-height: 337px;
+            }
+
+            @media (max-width: $md) {
+              min-height: 210px;
+            }
           }
         }
       }
