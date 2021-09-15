@@ -103,6 +103,8 @@ endif; ?>
             <?php
             if (isset($post_type) && $post_type == 'post') :
                 $categories = get_terms('category');
+                $current_category = get_queried_object_id();
+
                 if (!empty($categories)) : ?>
                     <div class="right-col sidebar">
                         <h6><?php _e('Categories', 'gfx'); ?></h6>
@@ -116,7 +118,7 @@ endif; ?>
                         <?php foreach ($categories as $cat) :
                             $cat_id = $cat->term_id;
                             $cat_name = $cat->name; ?>
-                            <a href="<?php echo get_term_link($cat_id); ?>" <?php echo $cat_id === $current_category->term_id ? 'class="current"' : ''; ?>>
+                            <a href="<?php echo get_term_link($cat_id); ?>" <?php echo $cat_id === $current_category ? 'class="current"' : ''; ?>>
                                 <?php echo $cat_name; ?>
                             </a>
                         <?php endforeach;

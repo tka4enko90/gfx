@@ -3,6 +3,7 @@ if ($post_id) :
     $post_content = get_the_content();
     $post_image = get_the_post_thumbnail($post_id, 'gfx_wc_gallery_large');
     $categories = get_terms('category');
+    $current_post_categories = get_the_terms($post_id, 'category');
 
     if ($post_image || $post_content) :
         wp_enqueue_style('single_post_content_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_post_content/single-post-content.css', '', '', 'all'); ?>
@@ -31,8 +32,8 @@ if ($post_id) :
                                     c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"/>
                         </svg>
 
-                                <?php if (!empty($categories)) : ?>
-                                    <a href="<?php echo get_category_link($categories[0]->term_id, 'section'); ?>"><?php echo $categories[0]->name; ?></a>
+                                <?php if (!empty($current_post_categories)) : ?>
+                                    <a href="<?php echo get_category_link($current_post_categories[0]->term_id, 'section'); ?>"><?php echo $current_post_categories[0]->name; ?></a>
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                      xmlns:xlink="http://www.w3.org/1999/xlink"
                                                      x="0px" y="0px"
