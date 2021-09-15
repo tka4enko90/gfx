@@ -8,7 +8,7 @@
             $(this).slick({
                 dots: false,
                 arrows: false,
-                infinite: false,
+                infinite: true,
                 fade: true,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -23,7 +23,7 @@
                 arrows: true,
                 prevArrow: "<button class='slick-prev'></button>",
                 nextArrow: "<button class='slick-next'></button>",
-                infinite: false,
+                infinite: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 focusOnSelect: true,

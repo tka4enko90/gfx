@@ -76,7 +76,9 @@ if (!defined('ABSPATH')) {
 
                     <?php
                     $available_payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
-                    if (!empty($available_payment_gateways)) : ?>
+                    $cart_needs_payment = WC()->cart->needs_payment();
+
+                    if (!empty($available_payment_gateways) && $cart_needs_payment) : ?>
                         <div class="payment-methods-box">
                             <h3><?php _e('Payment', 'gfx'); ?></h3>
                             <div class="subtitle">

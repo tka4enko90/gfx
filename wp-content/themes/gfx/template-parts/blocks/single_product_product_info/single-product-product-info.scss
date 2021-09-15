@@ -45,10 +45,12 @@
       .single-product-gallery-slider {
         .slide {
           outline: none;
+          width: 100%;
 
           img, video, iframe {
             border-radius: 10px;
             width: 100%;
+            object-fit: cover;
           }
 
           iframe {

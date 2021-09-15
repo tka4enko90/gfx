@@ -225,3 +225,21 @@ function paypal_button_text( $translated_text ) {
     }
     return $translated_text;
 }
+
+// remove checkout fields if cart is free
+add_filter( 'woocommerce_checkout_fields' , 'remove_checkout_fields_for_free_cart' );
+function remove_checkout_fields_for_free_cart( $fields ) {
+
+    $cart_total = WC()->cart->get_cart_contents_total();
+
+    if( $cart_total == 0 ) {
+        unset($fields['billing']['billing_country']);
+        unset($fields['billing']['billing_address_1']);
+        unset($fields['billing']['billing_address_2']);
+        unset($fields['billing']['billing_postcode']);
+        unset($fields['billing']['billing_city']);
+        unset($fields['billing']['billing_state']);
+    }
+
+    return $fields;
+}
