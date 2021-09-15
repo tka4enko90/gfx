@@ -124,7 +124,7 @@ $affiliate_id = affwp_get_affiliate_id();
             <div class="block">
                 <div class="holder">
                     <div class="icon">
-                        <img src="<?php echo get_template_directory_uri(); ?>/static/img/dollar.png" alt="icon">
+                        <img src="<?php echo get_template_directory_uri(); ?>/static/img/commision.png" alt="icon">
                     </div>
                     <div class="info">
                         <div class="title">

@@ -36,7 +36,7 @@ $payouts_service_meta = affwp_get_affiliate_meta($affiliate_id, 'payouts_service
 
             <div class="affwp-wrap affwp-payment-email-wrap">
                 <label for="affwp-payment-email"><?php _e('Your Payment Email', 'gfx'); ?></label>
-                <input id="affwp-payment-email" placeholder="john@gmail.com" type="email" name="payment_email"
+                <input id="affwp-payment-email" required placeholder="john@gmail.com" type="email" name="payment_email"
                        value="<?php echo esc_attr($payment_email); ?>"/>
             </div>
 

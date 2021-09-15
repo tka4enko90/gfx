@@ -64,6 +64,15 @@
 
 #affwp-affiliate-dashboard {
 
+  .affwp-notice {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 15px 0;
+    color: $white;
+    font-size: 16px;
+  }
+
   #affwp-affiliate-dashboard-tabs {
     background: linear-gradient(to right, #0f2341, #0c182c);
     margin-bottom: 90px;
@@ -533,7 +542,7 @@
             & > td {
               height: 82px;
               position: relative;
-              padding-right: 20px;
+              padding-right: 30px;
 
               @media (max-width: $xs) {
                 height: 65px;
@@ -646,6 +655,7 @@
                 }
 
                 &:nth-of-type(2) {
+                  max-width: 80%;
                   color: $red;
                   font-weight: 500;
                 }
@@ -802,7 +812,7 @@
     }
 
     #affwp-graphs-filter {
-      margin-bottom: 35px;
+      margin-bottom: 25px;
 
       @media (max-width: $xs) {
         margin-bottom: 20px;
@@ -811,8 +821,15 @@
       .tablenav {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+
+        @media (max-width: $sm) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
 
         .select2 {
+          margin-bottom: 10px;
           width: 144px !important;
           margin-right: 12px;
           text-align: center;
@@ -827,6 +844,7 @@
           padding: 12px 19px;
           font-size: 14px;
           min-width: 83px;
+          margin-bottom: 10px;
 
           @media (max-width: $xs) {
             padding: 12px 25px;
@@ -840,6 +858,35 @@
 
         .select2-container--default .select2-selection--single .select2-selection__rendered {
           width: 100%;
+        }
+
+        #affwp-date-range-options {
+          margin-right: 15px;
+
+          .affwp-search-date {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+
+            @media (max-width: $xs) {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+
+            span {
+              margin: 0 15px 10px;
+              font-size: 14px;
+
+              @media (max-width: $xs) {
+                margin-left: 0;
+              }
+            }
+
+            input {
+              padding: 6px 10px;
+              margin-bottom: 10px;
+            }
+          }
         }
       }
     }
