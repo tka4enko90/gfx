@@ -60,6 +60,15 @@
       label {
         display: flex;
         align-items: center;
+        transition: color $transition;
+
+        &:hover {
+          color: $white;
+
+          a {
+            color: $white;
+          }
+        }
 
         input[type=checkbox] {
           margin-right: 10px;

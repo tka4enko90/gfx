@@ -96,7 +96,7 @@ if (is_user_logged_in()) {
 
         <p>
             <label for="affwp-payment-email"><?php _e('Payment Email', 'gfx'); ?><span>*</span></label>
-            <input id="affwp-payment-email" type="email" name="affwp_payment_email"
+            <input id="affwp-payment-email" required="required" type="email" name="affwp_payment_email"
                    value="<?php if (!empty($payment_email)) {
                        echo $payment_email;
                    } ?>"
