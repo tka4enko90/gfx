@@ -552,7 +552,7 @@
                                     "key": "field_613776ff31b5e",
                                     "label": "Title",
                                     "name": "title",
-                                    "type": "text",
+                                    "type": "link",
                                     "instructions": "",
                                     "required": 1,
                                     "conditional_logic": 0,
@@ -561,11 +561,7 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "default_value": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "maxlength": ""
+                                    "return_format": "array"
                                 },
                                 {
                                     "key": "field_6137776131b5f",
@@ -797,5 +793,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1631177694
+    "modified": 1631702293
 }

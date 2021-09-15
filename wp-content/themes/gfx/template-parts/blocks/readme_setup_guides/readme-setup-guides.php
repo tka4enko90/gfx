@@ -22,21 +22,20 @@ if (have_rows('blocks') || $title || $subtitle) {
                 <?php }
                 if (have_rows('blocks')) { ?>
                     <div class="blocks">
-                        <?php while (have_rows('blocks')) : the_row(); ?>
+                        <?php while (have_rows('blocks')) : the_row();
+                            $icon = get_sub_field('icon');
+                            $title = get_sub_field('title');
+                            $description = get_sub_field('description'); ?>
                             <div class="block">
-                                <div class="holder">
-                                    <?php
-                                    $icon = get_sub_field('icon');
-                                    $title = get_sub_field('title');
-                                    $description = get_sub_field('description');
-                                    if ($icon) { ?>
+                                <a class="holder" href="<?php echo $title['url']; ?>" target="<?php echo $title['target']; ?>">
+                                    <?php if ($icon) { ?>
                                         <div class="icon">
                                             <?php echo wp_get_attachment_image($icon, 'gfx_semi_small_2'); ?>
                                         </div>
                                     <?php }
                                     if ($title) { ?>
                                         <h5>
-                                            <?php echo $title; ?>
+                                            <?php echo $title['title']; ?>
                                         </h5>
                                     <?php }
                                     if ($description) { ?>
@@ -44,7 +43,7 @@ if (have_rows('blocks') || $title || $subtitle) {
                                             <?php echo $description; ?>
                                         </div>
                                     <?php } ?>
-                                </div>
+                                </a>
                             </div>
                         <?php endwhile; ?>
                     </div>

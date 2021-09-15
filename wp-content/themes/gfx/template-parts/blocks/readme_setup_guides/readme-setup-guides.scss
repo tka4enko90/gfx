@@ -107,11 +107,18 @@
           padding: 30px;
         }
 
+        &:hover {
+          h5 {
+            color: $red;
+          }
+        }
+
         .icon {
           max-width: 121px;
           height: 112px;
           display: flex;
           align-items: center;
+          justify-content: center;
           margin: 0 auto 46px;
 
           @media (max-width: $md) {
@@ -137,6 +144,8 @@
 
         h5 {
           margin: 0;
+          color: $white;
+          transition: color $transition;
         }
 
         .description {

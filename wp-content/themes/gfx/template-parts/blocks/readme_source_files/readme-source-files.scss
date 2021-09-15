@@ -19,6 +19,11 @@
     }
 
     .col {
+      &.left-col {
+        width: 100%;
+        max-width: 845px;
+      }
+
       &.support {
         max-width: 330px;
         margin-left: auto;

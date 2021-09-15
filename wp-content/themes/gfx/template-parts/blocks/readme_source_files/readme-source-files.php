@@ -11,7 +11,7 @@ if (have_rows('videos') || $title || $description || $support_title || !empty($s
     <section class="readme-source-files">
         <div class="container">
             <div class="cols">
-                <div class="col">
+                <div class="col left-col">
                     <?php if ($title || $description) { ?>
                         <div class="title-holder">
                             <?php if ($title) { ?>
