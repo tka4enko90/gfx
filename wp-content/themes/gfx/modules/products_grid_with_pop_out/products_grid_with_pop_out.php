@@ -58,7 +58,7 @@
                                 $product_sku = $product->get_sku();
                                 $product_add_to_cart_url = $product->add_to_cart_url();
 
-                                if ($product_price) :
+                                if (isset($product_price)) :
                                     $product_pop_out_info["product_price"] = wc_price($product_price);
                                 endif;
 
