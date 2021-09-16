@@ -26,9 +26,7 @@ $affiliate_id = affwp_get_affiliate_id();
                     <p>
                         <?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>
                     </p>
-                    <input type="text" class="text-to-copy"
-                           value="<?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>">
-                    <button class="copy-btn">
+                    <button class="copy-btn" data-value="<?php echo esc_url(urldecode(affwp_get_affiliate_referral_url())); ?>">
                         <img src="<?php echo get_template_directory_uri(); ?>/static/img/copy.png" alt="copy icon">
                     </button>
                 </div>

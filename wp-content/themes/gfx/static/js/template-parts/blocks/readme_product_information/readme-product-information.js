@@ -1,1 +1,1 @@
-!function(o){var c=o(".colours .colour");c.length&&c.on("click",(function(){var c=o(this).prev(".text-to-copy");c.length&&(c.focus().select(),document.execCommand("copy"))}))}(jQuery);
+!function(e){var n=e(".colours .colour");n.length&&n.on("click",(function(n){n.preventDefault(),function(n){var o=e("<input>");e("body").append(o),o.val(n).select(),document.execCommand("copy"),o.remove()}(e(this).data("value"))}))}(jQuery);

@@ -68,8 +68,7 @@ if ($title || $fonts_title || $fonts_description || have_rows('fonts') ||
                                         $hex_code = get_sub_field('hex_code');
 
                                         if ($name && $hex_code) { ?>
-                                            <input type="text" class="text-to-copy" value="<?php echo $hex_code; ?>">
-                                            <div class="colour" style="background-color: <?php echo $hex_code; ?>">
+                                            <div class="colour" style="background-color: <?php echo $hex_code; ?>" data-value="<?php echo $hex_code; ?>">
                                                 <div class="name">
                                                     <?php echo $name; ?>
                                                 </div>

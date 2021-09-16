@@ -28,14 +28,20 @@
     // copy function
     var copyBtn = $('.copy-code-btn');
     if(copyBtn.length) {
-        copyBtn.on('click', function () {
+        copyBtn.on('click', function (e) {
+            e.preventDefault();
             var self = $(this);
-            var textToCopy = self.prev();
-
-            if(textToCopy.length) {
-                textToCopy.focus().select();
-                document.execCommand('copy');
-            }
+            var text = self.data('value');
+            copyToClipboard(text);
         });
+    }
+
+    // copy to clipboard function
+    function copyToClipboard(text) {
+        var temp = $("<input>");
+        $("body").append(temp);
+        temp.val(text).select();
+        document.execCommand("copy");
+        temp.remove();
     }
 })(jQuery);

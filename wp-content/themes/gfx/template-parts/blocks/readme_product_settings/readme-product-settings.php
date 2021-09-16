@@ -58,8 +58,7 @@ if ($title || $html_code || $css_code || have_rows('settings')) {
                                 <div class="tab-content" data-type="html">
                                     <pre><code class="language-html"><?php echo esc_html($html_code); ?></code></pre>
                                     <div class="btn-holder">
-                                        <input type="text" value="<?php echo esc_html($html_code); ?>">
-                                        <button class="primary-button small copy-code-btn"><?php _e('Copy All', 'gfx'); ?></button>
+                                        <button class="primary-button small copy-code-btn" data-value="<?php echo esc_html($html_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
                                     </div>
                                 </div>
                             <?php }
@@ -67,14 +66,11 @@ if ($title || $html_code || $css_code || have_rows('settings')) {
                                 <div class="tab-content" data-type="css">
                                     <pre><code class="language-css"><?php echo esc_html($css_code); ?></code></pre>
                                     <div class="btn-holder">
-                                        <input type="text" value="<?php echo esc_html($css_code); ?>">
-                                        <button class="primary-button small copy-code-btn"><?php _e('Copy All', 'gfx'); ?></button>
+                                        <button class="primary-button small copy-code-btn" data-value="<?php echo esc_html($css_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
                                     </div>
                                 </div>
                             <?php } ?>
                         </div>
-
-
                     </div>
                 <?php } ?>
             </div>
