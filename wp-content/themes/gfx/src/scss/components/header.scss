@@ -47,6 +47,10 @@
         max-width: 56px;
         margin-right: 13px;
 
+        @media (min-width: $md) {
+          display: none;
+        }
+
         @media (max-width: $lg) {
           max-width: 50px;
           margin-right: 10px;
@@ -61,7 +65,7 @@
         display: block;
         line-height: 44px;
 
-        @media (max-width: 580px) {
+        @media (max-width: $md) {
           display: none;
         }
 
