@@ -312,4 +312,26 @@
             }
         });
     }
+
+    // Fake coupon form
+    var fakeCouponForm = $('.fake-woocommerce-form-coupon');
+    var realCouponForm = $('form.woocommerce-form-coupon');
+
+    if(fakeCouponForm.length && realCouponForm.length) {
+        var coupon = fakeCouponForm.find('input.coupon');
+        var button = fakeCouponForm.find('button.primary-button');
+
+        var realCoupon = realCouponForm.find('input[name="coupon_code"]');
+
+        if(button.length && realCoupon.length) {
+            button.on('click', function() {
+                if(coupon.length) {
+                    var value = coupon.val();
+                    realCoupon.val(value);
+                    realCoupon.trigger('submit');
+                    coupon.val('');
+                }
+            });
+        }
+    }
  })(jQuery);

@@ -37,11 +37,9 @@
   .before-checkout-form-holder {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 50px;
 
     @media (max-width: $lg) {
       flex-direction: column;
-      margin-bottom: 40px;
     }
 
     .woocommerce-message, .woocommerce-error {
@@ -60,9 +58,16 @@
 
       @media (max-width: $lg) {
         margin-right: 0;
-        margin-bottom: 40px;
         width: 100%;
         max-width: 100%;
+      }
+
+      form {
+        margin-bottom: 50px;
+
+        @media (max-width: $lg) {
+          margin-bottom: 40px;
+        }
       }
     }
 
@@ -71,6 +76,7 @@
       width: 40%;
       max-width: 530px;
       min-width: 530px;
+      display: none !important;
 
       @media (max-width: 1360px) {
         width: 450px;
@@ -264,6 +270,12 @@
           width: 100%;
           max-width: 100%;
           min-width: 0;
+        }
+
+        .woocommerce-form-coupon {
+          width: 100%;
+          margin-bottom: 40px;
+          max-width: 100%;
         }
       }
 

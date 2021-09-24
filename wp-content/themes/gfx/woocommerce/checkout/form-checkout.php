@@ -73,7 +73,6 @@ if (!defined('ABSPATH')) {
                         </div>
                     <?php endif; ?>
 
-
                     <?php
                     $available_payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
                     $cart_needs_payment = WC()->cart->needs_payment();
@@ -102,6 +101,18 @@ if (!defined('ABSPATH')) {
                     <?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
                 </div>
                 <div class="col right-col">
+
+                    <div class="woocommerce-form-coupon fake-woocommerce-form-coupon">
+                        <h6><?php _e('Apply a Coupon', 'gfx'); ?></h6>
+                        <div class="holder">
+                            <input type="text" class="input-text coupon" placeholder="<?php esc_attr_e( 'Coupon code', 'gfx' ); ?>" value="" />
+
+                            <button type="button" class="primary-button small blue" name="apply_coupon" value="<?php _e('Apply', 'gfx'); ?>">
+                                <?php _e('Apply', 'gfx'); ?>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="order-review-box">
                         <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
                         <h6 id="order_review_heading"><?php esc_html_e('Your Order', 'gfx'); ?></h6>
