@@ -94,24 +94,29 @@ if (!defined('ABSPATH')) {
                     <?php wc_get_template('checkout/terms.php'); ?>
 
                     <div class="submit-holder">
-                        <button type="submit" class="primary-button" name="woocommerce_checkout_place_order" id="place_order">
+                        <button type="submit" class="primary-button" name="woocommerce_checkout_place_order"
+                                id="place_order">
                             <?php _e('Complete Order', 'gfx'); ?>
                         </button>
                     </div>
-                    <?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
+                    <?php wp_nonce_field('woocommerce-process_checkout', 'woocommerce-process-checkout-nonce'); ?>
                 </div>
                 <div class="col right-col">
 
-                    <div class="woocommerce-form-coupon fake-woocommerce-form-coupon">
-                        <h6><?php _e('Apply a Coupon', 'gfx'); ?></h6>
-                        <div class="holder">
-                            <input type="text" class="input-text coupon" placeholder="<?php esc_attr_e( 'Coupon code', 'gfx' ); ?>" value="" />
+                    <?php if (wc_coupons_enabled()) : ?>
+                        <div class="woocommerce-form-coupon fake-woocommerce-form-coupon">
+                            <h6><?php _e('Apply a Coupon', 'gfx'); ?></h6>
+                            <div class="holder">
+                                <input type="text" class="input-text coupon"
+                                       placeholder="<?php esc_attr_e('Coupon code', 'gfx'); ?>" value=""/>
 
-                            <button type="button" class="primary-button small blue" name="apply_coupon" value="<?php _e('Apply', 'gfx'); ?>">
-                                <?php _e('Apply', 'gfx'); ?>
-                            </button>
+                                <button type="button" class="primary-button small blue" name="apply_coupon"
+                                        value="<?php _e('Apply', 'gfx'); ?>">
+                                    <?php _e('Apply', 'gfx'); ?>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
 
                     <div class="order-review-box">
                         <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
