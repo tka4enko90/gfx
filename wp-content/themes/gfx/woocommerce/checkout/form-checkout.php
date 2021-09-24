@@ -102,6 +102,15 @@ if (!defined('ABSPATH')) {
                     <?php wp_nonce_field('woocommerce-process_checkout', 'woocommerce-process-checkout-nonce'); ?>
                 </div>
                 <div class="col right-col">
+                    <div class="order-review-box">
+                        <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
+                        <h6 id="order_review_heading"><?php esc_html_e('Your Order', 'gfx'); ?></h6>
+                        <?php do_action('woocommerce_checkout_before_order_review'); ?>
+                        <div id="order_review" class="woocommerce-checkout-review-order">
+                            <?php do_action('woocommerce_checkout_order_review'); ?>
+                        </div>
+                        <?php do_action('woocommerce_checkout_after_order_review'); ?>
+                    </div>
 
                     <?php if (wc_coupons_enabled()) : ?>
                         <div class="woocommerce-form-coupon fake-woocommerce-form-coupon">
@@ -117,16 +126,6 @@ if (!defined('ABSPATH')) {
                             </div>
                         </div>
                     <?php endif; ?>
-
-                    <div class="order-review-box">
-                        <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
-                        <h6 id="order_review_heading"><?php esc_html_e('Your Order', 'gfx'); ?></h6>
-                        <?php do_action('woocommerce_checkout_before_order_review'); ?>
-                        <div id="order_review" class="woocommerce-checkout-review-order">
-                            <?php do_action('woocommerce_checkout_order_review'); ?>
-                        </div>
-                        <?php do_action('woocommerce_checkout_after_order_review'); ?>
-                    </div>
                 </div>
             </div>
         </form>
