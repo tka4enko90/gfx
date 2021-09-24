@@ -30,7 +30,7 @@ endif; ?>
 
                         $args = array(
                             'post_type' => $post_type,
-                            'posts_per_page' => '2',
+                            'posts_per_page' => '12',
                             'paged' => $paged,
                         );
 
