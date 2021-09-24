@@ -30,7 +30,7 @@ endif; ?>
 
                         $args = array(
                             'post_type' => $post_type,
-                            'posts_per_page' => '12',
+                            'posts_per_page' => '2',
                             'paged' => $paged,
                         );
 
@@ -38,10 +38,20 @@ endif; ?>
                             $args['s'] = $_GET['s'];
                         }
 
+                        if(is_tax('tutorials_category')) {
+                            $args['tax_query'] = array(
+                                array (
+                                    'taxonomy' => 'tutorials_category',
+                                    'field' => 'id',
+                                    'terms' => get_queried_object_id(),
+                                )
+                            );
+                        }
+
                         $posts = new WP_Query($args);
                         while ($posts->have_posts()) : $posts->the_post();
                             get_template_part('template-parts/blocks/posts_grid/post-card', '', array('post_type' => $post_type));
-                        endwhile;
+                        endwhile; wp_reset_postdata();
                     else :
                         while (have_posts()) : the_post();
                             get_template_part('template-parts/blocks/posts_grid/post-card');
@@ -101,34 +111,55 @@ endif; ?>
             </div>
 
             <?php
-            if (isset($post_type) && $post_type == 'post') :
-                $categories = get_terms('category');
-                $current_category = get_queried_object_id();
+            if (isset($post_type)) :
+                if ($post_type == 'post') :
+                    $taxonomy_slug = 'category';
+                    $all_posts_page_url = get_post_type_archive_link('post');
+                    $all_posts_link_title = __('All Posts', 'gfx');
+                elseif ($post_type == 'tutorial') :
+                    $taxonomy_slug = 'tutorials_category';
+                    $all_posts_page = get_page_by_title('Rescourses');
 
-                if (!empty($categories)) : ?>
-                    <div class="right-col sidebar">
-                        <h6><?php _e('Categories', 'gfx'); ?></h6>
+                    if (!empty($all_posts_page)) :
+                        $all_posts_page_url = get_permalink($all_posts_page);
+                    endif;
 
-                        <?php $blog_page_url = get_post_type_archive_link('post'); ?>
-                        <a href="<?php echo $blog_page_url; ?>"
-                            <?php echo is_home() ? 'class="current"' : ''; ?>>
-                            <?php _e('All Posts', 'gfx'); ?>
-                        </a>
+                    $all_posts_link_title = __('All Tutorials', 'gfx');
+                endif;
 
-                        <?php foreach ($categories as $cat) :
-                            $cat_id = $cat->term_id;
-                            $cat_name = $cat->name; ?>
-                            <a href="<?php echo get_term_link($cat_id); ?>" <?php echo $cat_id === $current_category ? 'class="current"' : ''; ?>>
-                                <?php echo $cat_name; ?>
-                            </a>
-                        <?php endforeach;
+                if (isset($taxonomy_slug)) :
+                    $categories = get_terms($taxonomy_slug);
+                    $current_category = get_queried_object_id();
 
-                        if (function_exists('zg_recently_viewed')): ?>
-                            <h6><?php _e('Recently Viewed Posts', 'gfx'); ?></h6>
-                            <?php zg_recently_viewed();
-                        endif; ?>
-                    </div>
-                <?php
+                    if (!empty($categories)) : ?>
+                        <div class="right-col sidebar">
+                            <h6><?php _e('Categories', 'gfx'); ?></h6>
+
+                            <?php if (!empty($all_posts_page_url) && !empty($all_posts_link_title)) :
+                                if (($post_type == 'post' && is_home()) ||
+                                    ($post_type == 'tutorial' && is_page( 'Rescourses' ))) :
+                                    $classes_list = 'current';
+                                endif; ?>
+
+                                <a href="<?php echo $all_posts_page_url; ?>" <?php echo !empty($classes_list) ? 'class="'.$classes_list.'"' : ''; ?>>
+                                    <?php echo $all_posts_link_title; ?>
+                                </a>
+                            <?php endif; ?>
+
+                            <?php foreach ($categories as $cat) :
+                                $cat_id = $cat->term_id;
+                                $cat_name = $cat->name; ?>
+                                <a href="<?php echo get_term_link($cat_id); ?>" <?php echo $cat_id === $current_category ? 'class="current"' : ''; ?>>
+                                    <?php echo $cat_name; ?>
+                                </a>
+                            <?php endforeach;
+
+                            if ($taxonomy_slug == "post" && function_exists('zg_recently_viewed')): ?>
+                                <h6><?php _e('Recently Viewed Posts', 'gfx'); ?></h6>
+                                <?php zg_recently_viewed();
+                            endif; ?>
+                        </div>
+                    <?php endif;
                 endif;
             endif; ?>
         </div>

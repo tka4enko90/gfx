@@ -134,5 +134,25 @@ function register_custom_post_taxonomies(){
         'public'                => true,
         'hierarchical'          => false,
     ] );
+
+    register_taxonomy( 'tutorials_category', [ 'tutorial' ], [
+        'label'                 => '',
+        'labels'                => [
+            'name'              => 'Category',
+            'singular_name'     => 'Category',
+            'search_items'      => 'Search Category',
+            'all_items'         => 'All Categories',
+            'view_item '        => 'View Category',
+            'parent_item'       => 'Parent Category',
+            'parent_item_colon' => 'Parent Category:',
+            'edit_item'         => 'Edit Category',
+            'update_item'       => 'Update Category',
+            'add_new_item'      => 'Add New Category',
+            'new_item_name'     => 'New Category Name',
+            'menu_name'         => 'Categories',
+        ],
+        'public'                => true,
+        'hierarchical'          => true,
+    ] );
 }
 add_action( 'init', 'register_custom_post_taxonomies' );
