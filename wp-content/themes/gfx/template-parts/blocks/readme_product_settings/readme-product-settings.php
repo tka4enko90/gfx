@@ -1,5 +1,6 @@
 <?php
 $title = get_sub_field('title');
+$show_html_css_code = get_sub_field('show_html_css_code');
 $html_css_title = get_sub_field('html_css_title');
 $html_code = get_sub_field('html_code');
 $css_code = get_sub_field('css_code');
@@ -38,12 +39,11 @@ if ($title || $html_code || $css_code || have_rows('settings')) {
                         <?php endwhile; ?>
                     </div>
                 <?php }
-                if ($html_code || $css_code) { ?>
+                if ($show_html_css_code && ($html_code || $css_code)) { ?>
                     <div class="editor-block">
-                        <h6>
-                            <?php echo $html_css_title; ?>
-                        </h6>
-
+                        <?php if ($html_css_title) { ?>
+                            <h6><?php echo $html_css_title; ?></h6>
+                        <?php } ?>
                         <div class="tabs">
                             <div class="tab-names-holder">
                                 <?php if ($html_code) { ?>
@@ -58,7 +58,8 @@ if ($title || $html_code || $css_code || have_rows('settings')) {
                                 <div class="tab-content" data-type="html">
                                     <pre><code class="language-html"><?php echo esc_html($html_code); ?></code></pre>
                                     <div class="btn-holder">
-                                        <button class="primary-button small copy-code-btn" data-value="<?php echo esc_html($html_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
+                                        <button class="primary-button small copy-code-btn"
+                                                data-value="<?php echo esc_html($html_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
                                     </div>
                                 </div>
                             <?php }
@@ -66,7 +67,8 @@ if ($title || $html_code || $css_code || have_rows('settings')) {
                                 <div class="tab-content" data-type="css">
                                     <pre><code class="language-css"><?php echo esc_html($css_code); ?></code></pre>
                                     <div class="btn-holder">
-                                        <button class="primary-button small copy-code-btn" data-value="<?php echo esc_html($css_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
+                                        <button class="primary-button small copy-code-btn"
+                                                data-value="<?php echo esc_html($css_code); ?>"><?php _e('Copy All', 'gfx'); ?></button>
                                     </div>
                                 </div>
                             <?php } ?>
