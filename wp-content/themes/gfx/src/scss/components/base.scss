@@ -373,6 +373,7 @@ img.alignright, .wp-caption.alignright {
 
 .sidebar {
   width: 100%;
+  min-width: 200px;
   max-width: 200px;
   margin-left: 100px;
   display: flex;
@@ -388,6 +389,7 @@ img.alignright, .wp-caption.alignright {
     margin: 40px 0 0 0;
     padding-top: 0;
     max-width: 100%;
+    min-width: 0;
   }
 
   h6 {
