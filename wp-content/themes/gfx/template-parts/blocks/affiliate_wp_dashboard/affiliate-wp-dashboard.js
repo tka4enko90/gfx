@@ -1,18 +1,33 @@
 (function ($) {
     // init select2
     var select = $('select');
-    if(select.length) {
+    if (select.length) {
         select.select2();
     }
 
     // copy function
     var copyBtn = $('.copy-btn');
-    if(copyBtn.length) {
+    var successCopyPopup = $('.copied-popup');
+
+    if (copyBtn.length) {
         copyBtn.on('click', function (e) {
             e.preventDefault();
             var self = $(this);
             var text = self.data('value');
             copyToClipboard(text);
+
+            if (successCopyPopup.length) {
+                var textBlock = successCopyPopup.find('.text')
+                textBlock.text('Link copied to clipboard');
+                successCopyPopup.fadeIn(150);
+
+                // close popup after 3 seconds
+                if (successCopyPopup.is(':visible')) {
+                    setTimeout(function () {
+                        successCopyPopup.fadeOut(200);
+                    }, 3000);
+                }
+            }
         });
     }
 

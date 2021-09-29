@@ -69,14 +69,14 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "60",
+                                "width": "100",
                                 "class": "",
                                 "id": ""
                             },
                             "collapsed": "",
                             "min": 0,
                             "max": 0,
-                            "layout": "table",
+                            "layout": "block",
                             "button_label": "Add button",
                             "sub_fields": [
                                 {
@@ -104,6 +104,25 @@
                                     "conditional_logic": 0,
                                     "wrapper": {
                                         "width": "30",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui": 1,
+                                    "ui_on_text": "",
+                                    "ui_off_text": ""
+                                },
+                                {
+                                    "key": "field_61546c0e697c1",
+                                    "label": "Login btn",
+                                    "name": "login_btn",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
                                         "class": "",
                                         "id": ""
                                     },
@@ -735,5 +754,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631199847
+    "modified": 1632922683
 }

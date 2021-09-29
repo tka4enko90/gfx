@@ -311,6 +311,32 @@ iframe {
   }
 }
 
+.copied-popup {
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  display: none;
+
+  .holder {
+    border-radius: 10px;
+    background: linear-gradient(to right, #0f213f 0%, #0c182c 100%);
+    padding: 20px 30px;
+
+    @media (max-width: $xs) {
+      padding: 20px;
+    }
+
+    .text {
+      color: $white;
+      font-size: 16px;
+
+      @media (max-width: $xs) {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 /* STYLES FOR WP CONTENT */
 .page-content {
   clear: both;
@@ -373,8 +399,8 @@ img.alignright, .wp-caption.alignright {
 
 .sidebar {
   width: 100%;
-  min-width: 200px;
-  max-width: 200px;
+  min-width: 250px;
+  max-width: 250px;
   margin-left: 100px;
   display: flex;
   flex-direction: column;

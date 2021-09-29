@@ -66,10 +66,8 @@
       h3 {
         color: $white;
         margin-bottom: 40px;
-        text-align: right;
 
         @media (max-width: $md) {
-          text-align: left;
           margin-bottom: 30px;
         }
 
@@ -84,11 +82,9 @@
 
         p {
           margin-bottom: 30px;
-          text-align: right;
 
           @media (max-width: $md) {
             margin-bottom: 20px;
-            text-align: left !important;
           }
 
           &:last-of-type {
@@ -100,11 +96,9 @@
       .buttons-holder {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
         margin-top: 50px;
 
         @media (max-width: $md) {
-          justify-content: flex-start;
           margin-top: 40px;
         }
 

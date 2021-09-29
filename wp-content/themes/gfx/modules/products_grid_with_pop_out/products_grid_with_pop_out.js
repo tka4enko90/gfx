@@ -88,12 +88,10 @@
                             if (index === 0) {
                                 productCompatibleWith.append('<div class="items"><div class="item">\n' +
                                     '                        <img src="' + icon + '" alt="">\n' +
-                                    '<span class="name">' + name + '</span>\n' +
                                     '                    </div></div>');
                             } else {
                                 productCompatibleWith.find('.items').append('<div class="item">\n' +
                                     '                        <img src="' + icon + '" alt="">\n' +
-                                    '<span class="name">' + name + '</span>\n' +
                                     '                    </div>');
                             }
                         });

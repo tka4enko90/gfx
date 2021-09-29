@@ -264,29 +264,9 @@
               margin-right: 0;
             }
 
-            .name {
-              display: none;
-              position: absolute;
-              left: 25px;
-              padding: 4px 0;
-              font-size: 9px;
-              color: $white;
-              border-radius: 2px;
-              background-color: rgb(26, 38, 61);
-              min-width: 112px;
-              top: 2px;
-              text-align: center;
-              z-index: 1;
-            }
-
             img {
-              cursor: pointer;
               height: auto;
               display: block;
-
-              &:hover + .name {
-                display: block;
-              }
             }
           }
         }

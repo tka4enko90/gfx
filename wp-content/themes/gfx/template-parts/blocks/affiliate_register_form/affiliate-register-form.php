@@ -3,5 +3,6 @@
 <section class="register-affiliate" id="register-affiliate">
     <div class="container">
         <?php echo do_shortcode('[affiliate_registration]'); ?>
+        <?php echo do_shortcode('[affiliate_login]'); ?>
     </div>
 </section>

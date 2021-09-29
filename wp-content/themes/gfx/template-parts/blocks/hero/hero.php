@@ -25,7 +25,8 @@
     endif;
 
     if (isset($hero_title) || isset($hero_subtitle) || isset($hero_image_id)) :
-        wp_enqueue_style('hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero/hero.css', '', '', 'all'); ?>
+        wp_enqueue_style('hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero/hero.css', '', '', 'all');
+        wp_enqueue_script('hero_js', get_template_directory_uri() . '/static/js/template-parts/blocks/hero/hero.js', '', '', true); ?>
 
         <section
                 class="hero-section <?php echo empty($hero_image_id) ? 'no-image' : ''; ?> <?php echo isset($css_class) ? $css_class : ''; ?>">
@@ -45,18 +46,25 @@
                                     <?php echo $hero_subtitle; ?>
                                 </div>
                             <?php endif;
-                            if (!empty($hero_buttons)) : ?>
+                            if (!empty($hero_buttons)) :
+                                $is_user_logged_in = is_user_logged_in(); ?>
                                 <div class="buttons-holder">
                                     <?php foreach ($hero_buttons as $key => $button) :
                                         $btn = $button['button'];
-                                        $smooth_scroll_to_section = $button['smooth_scroll_to_section']; ?>
+                                        $smooth_scroll_to_section = $button['smooth_scroll_to_section'];
+                                        $login_btn = $button['login_btn'];
 
-                                        <a href="<?php echo $btn['url']; ?>"
-                                           target="<?php echo $btn['target']; ?>"
-                                           class="<?php echo $key === 0 ? 'primary-button' : 'secondary-button'; echo $smooth_scroll_to_section ? ' scroll-to-anchor' : ''; ?>">
-                                            <?php echo $btn['title']; ?>
-                                        </a>
-                                    <?php endforeach; ?>
+                                        if ($login_btn && $is_user_logged_in) {
+                                            continue; }
+                                        else { ?>
+                                            <a href="<?php echo $btn['url']; ?>"
+                                               target="<?php echo $btn['target']; ?>"
+                                               class="<?php echo $key === 0 ? 'primary-button' : 'secondary-button';
+                                               echo $smooth_scroll_to_section ? ' scroll-to-anchor' : '';
+                                               echo ($login_btn && !$is_user_logged_in) ? ' switch-to-login-form' : ''; ?>">
+                                                <?php echo $btn['title']; ?>
+                                            </a>
+                                        <?php } endforeach; ?>
                                 </div>
                             <?php endif;
                             if (!empty($hero_button) && !empty($hero_file)) : ?>

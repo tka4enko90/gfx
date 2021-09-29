@@ -1,0 +1,1 @@
+!function(f){var i=f(".switch-to-login-form"),n=f("section#register-affiliate");i.length&&n.length&&i.on("click",(function(){var f=n.find("form#affwp-register-form"),i=n.find("form#affwp-login-form");f.length&&i.length&&(f.hide(),i.show())}))}(jQuery);

@@ -31,11 +31,6 @@
 
             <?php if ($hero_section_video && $hero_section_video['url']) : ?>
                 <div class="video-col">
-                    <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-1.png" alt="decorative image">
-                    <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-2.png" alt="decorative image">
-                    <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-3.png" alt="decorative image">
-                    <img class="element" src="<?php echo get_template_directory_uri() ?>/static/img/element-4.png" alt="decorative image">
-
                     <video autoplay="true" loop="true" muted="true">
                         <source src="<?php echo $hero_section_video['url'] ?>" type="video/mp4">
                     </video>

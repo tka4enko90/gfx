@@ -96,7 +96,7 @@ endif; ?>
                                             <?php
                                             $index = 1;
                                             while (have_rows('what’s_inside')) : the_row();
-                                                if ($index <= 8) :
+                                                if ($index <= 6) :
                                                     $title = get_sub_field('title');
                                                     $description = get_sub_field('description'); ?>
 
@@ -115,12 +115,12 @@ endif; ?>
                                             endwhile; ?>
                                         </div>
 
-                                        <?php if (sizeof($what_inside) > 8) { ?>
+                                        <?php if (sizeof($what_inside) > 6) { ?>
                                             <div class="col">
                                                 <?php
                                                 $index = 1;
                                                 while (have_rows('what’s_inside')) : the_row();
-                                                    if ($index > 8) :
+                                                    if ($index > 6) :
                                                         $title = get_sub_field('title');
                                                         $description = get_sub_field('description'); ?>
 

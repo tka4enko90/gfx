@@ -71,6 +71,15 @@
         </div>
     </div>
 </div>
+<div class="copied-popup">
+    <div class="container">
+        <div class="holder">
+            <div class="text">
+
+            </div>
+        </div>
+    </div>
+</div>
 <?php wp_footer() ?>
 </body>
 </html>
