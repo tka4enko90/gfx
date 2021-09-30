@@ -23,6 +23,16 @@ input, textarea, .wc-stripe-elements-field, .affwp-form input[type="text"],
   }
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .affwp-form input[type="text"],
 .affwp-form input[type="email"] {
   padding: 13px 15px !important;
