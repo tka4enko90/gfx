@@ -25,9 +25,9 @@
     "location": [
         [
             {
-                "param": "page",
+                "param": "page_template",
                 "operator": "==",
-                "value": "812"
+                "value": "template-privacy.php"
             }
         ]
     ],
@@ -41,5 +41,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1632928687
+    "modified": 1632991246
 }

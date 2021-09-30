@@ -173,6 +173,10 @@
                     &.product-thumbnail {
                       max-width: 230px;
 
+                      @media (max-width: $xs) {
+                        max-width: 200px;
+                      }
+
                       &::before {
                         content: '';
                         position: absolute;
@@ -191,8 +195,12 @@
                           display: block;
                           width: 100%;
                           border-radius: 10px;
-                          max-height: 175px;
+                          max-height: 129px;
                           object-fit: cover;
+
+                          @media (max-width: $xs) {
+                            max-height: 113px;
+                          }
                         }
                       }
                     }
