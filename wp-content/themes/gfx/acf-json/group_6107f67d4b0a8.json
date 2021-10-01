@@ -114,10 +114,10 @@
                                     "ui_off_text": ""
                                 },
                                 {
-                                    "key": "field_61546c0e697c1",
-                                    "label": "Login btn",
-                                    "name": "login_btn",
-                                    "type": "true_false",
+                                    "key": "field_6156cd9257663",
+                                    "label": "Register\/login button",
+                                    "name": "register_login_button",
+                                    "type": "button_group",
                                     "instructions": "",
                                     "required": 0,
                                     "conditional_logic": 0,
@@ -126,11 +126,14 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "message": "",
-                                    "default_value": 0,
-                                    "ui": 1,
-                                    "ui_on_text": "",
-                                    "ui_off_text": ""
+                                    "choices": {
+                                        "register": "Register",
+                                        "login": "Login"
+                                    },
+                                    "allow_null": 1,
+                                    "default_value": "",
+                                    "layout": "horizontal",
+                                    "return_format": "value"
                                 }
                             ]
                         },
@@ -754,5 +757,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1632922683
+    "modified": 1633078743
 }

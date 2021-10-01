@@ -35,8 +35,10 @@
       margin-bottom: 25px;
       font-size: 16px;
 
-      a {
+      span {
         color: $red;
+        cursor: pointer;
+        transition: color $transition;
 
         &:hover {
           color: $white;

@@ -9,7 +9,7 @@
 
     <?php if (!empty($current_page)) : ?>
         <section class="taxonomy-section-posts">
-            <div class="container xsmall">
+            <div class="container">
                 <div class="cols-holder">
                     <div class="left-col">
                         <div class="breadcrumbs">

@@ -58,7 +58,7 @@ if (is_user_logged_in()) {
         <h3><?php _e('Register to become an Affiliate', 'gfx'); ?></h3>
         <div class="subtitle">
             <?php _e('If you have an account with us,'); ?>
-            <a href="<?php echo wp_login_url(); ?>"><?php _e('please make sure to login first'); ?></a>
+            <span class="switch-to-login-form"><?php _e('please make sure to login first'); ?></span>
             <?php _e('and then refresh this page'); ?>
         </div>
         <?php
