@@ -19,37 +19,39 @@
                                 <div class="title <?php if (have_rows('compatible_with')) : ?>compatible-box<?php endif; ?>">
                                     <h2><?php the_title(); ?>
                                         <?php if (have_rows('compatible_with')) : ?>
-                                            <img src="<?php echo get_template_directory_uri() ?>/static/img/verified-icon.png"
-                                                 alt="verified icon">
+                                            <div class="verified-icon">
+                                                <img src="<?php echo get_template_directory_uri() ?>/static/img/verified-icon.png"
+                                                     alt="verified icon">
+
+                                                <?php if (have_rows('compatible_with')) : ?>
+                                                    <?php $hero_compatible_box_title = get_field('hero_compatible_box_title'); ?>
+                                                    <?php $hero_compatible_box_description = get_field('hero_compatible_box_description'); ?>
+
+                                                    <div class="compatible-with-box">
+                                                        <?php if ($hero_compatible_box_title) : ?>
+                                                            <div class="title">
+                                                                <?php echo $hero_compatible_box_title; ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if ($hero_compatible_box_description) : ?>
+                                                            <div class="text">
+                                                                <?php echo $hero_compatible_box_description; ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <div class="items">
+                                                            <?php while (have_rows('compatible_with')) : the_row(); ?>
+                                                                <div class="item">
+                                                                    <?php if (get_sub_field('icon')) { ?>
+                                                                        <img src="<?php the_sub_field('icon'); ?>"/>
+                                                                    <?php } ?>
+                                                                </div>
+                                                            <?php endwhile; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
                                         <?php endif; ?>
                                     </h2>
-
-                                    <?php if (have_rows('compatible_with')) : ?>
-                                        <?php $hero_compatible_box_title = get_field('hero_compatible_box_title'); ?>
-                                        <?php $hero_compatible_box_description = get_field('hero_compatible_box_description'); ?>
-
-                                        <div class="compatible-with-box">
-                                            <?php if ($hero_compatible_box_title) : ?>
-                                                <div class="title">
-                                                    <?php echo $hero_compatible_box_title; ?>
-                                                </div>
-                                            <?php endif; ?>
-                                            <?php if ($hero_compatible_box_description) : ?>
-                                                <div class="text">
-                                                    <?php echo $hero_compatible_box_description; ?>
-                                                </div>
-                                            <?php endif; ?>
-                                            <div class="items">
-                                                <?php while (have_rows('compatible_with')) : the_row(); ?>
-                                                    <div class="item">
-                                                        <?php if (get_sub_field('icon')) { ?>
-                                                            <img src="<?php the_sub_field('icon'); ?>"/>
-                                                        <?php } ?>
-                                                    </div>
-                                                <?php endwhile; ?>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
                                 <?php $categories = get_the_terms($product_id, 'product_cat');
                                 if (isset($categories) && !empty($categories)) : ?>

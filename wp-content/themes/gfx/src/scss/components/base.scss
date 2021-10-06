@@ -470,3 +470,264 @@ img.alignright, .wp-caption.alignright {
     }
   }
 }
+
+// GDPR Cookie Consent plugin
+#cookie-law-info-bar {
+  opacity: 1 !important;
+  background: linear-gradient(90deg, #060a14 0%, #19243a 100%) !important;
+  color: $white !important;
+  padding: 15px 40px 15px 25px !important;
+  box-shadow: none;
+
+  @media (max-width: 985px) {
+    padding: 15px 25px !important;
+  }
+  @media (max-width: $xs) {
+    padding: 15px 20px !important;
+  }
+
+  .cli-bar-message {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 20px;
+    padding-right: 40px;
+
+    @media (max-width: 985px) {
+      padding-right: 0;
+    }
+
+    a {
+      color: $red !important;
+
+      &:hover {
+        color: $white !important;
+      }
+    }
+  }
+
+  .cli-bar-btn_container {
+    @media (max-width: 985px) {
+      margin-top: 15px;
+    }
+
+    & > a {
+      font-size: 13px;
+      margin: 0 !important;
+      height: 31px;
+    }
+
+    .wt-cli-accept-all-btn {
+      background-color: $red !important;
+      margin-left: 13px !important;
+      padding: 8px 29px;
+      min-width: 116px;
+    }
+
+    .cli-plugin-main-button {
+      color: $white !important;
+      background-color: rgba(0, 0, 0, 0) !important;
+      max-width: 130px;
+      padding: 8px 20px;
+
+      &:hover {
+        box-shadow: 0px 0px 15px 1px rgba($white, 0.5);
+      }
+    }
+  }
+}
+
+.cli-modal-open .cli-modal {
+  overflow-y: hidden;
+}
+
+.cli-modal .cli-modal-dialog {
+  max-width: 647px;
+
+  .cli-modal-close {
+    padding: 0;
+    min-width: 0;
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 7px;
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        fill: $white;
+      }
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: $text-color;
+      transition: fill $transition
+    }
+  }
+
+  .cli-modal-content {
+    background: linear-gradient(90deg, #060a14 0%, #19243a 100%) !important;
+    border-radius: 8px;
+    padding: 36px 20px 18px;
+
+    .cli-modal-body {
+      h4 {
+        margin: 0 0 16px 0;
+        font-size: 16px;
+        line-height: 14px;
+        color: $white;
+      }
+
+      .cli-privacy-content-text {
+        color: $text-color;
+        font-size: 14px;
+        line-height: 19px;
+        font-weight: 500;
+      }
+
+      a.cli-privacy-readmore {
+        color: $red;
+        font-size: 14px;
+        line-height: 19px;
+        margin-top: 11px;
+        text-decoration: underline;
+
+        &:hover {
+          color: $white;
+        }
+      }
+
+      .cli-tab-section-container {
+        margin-top: 18px;
+        padding: 0 !important;
+
+        .cli-tab-section {
+          margin: 0 0 5px 0;
+
+          &:last-of-type {
+            margin: 0;
+          }
+
+          .cli-tab-header {
+            border-radius: 8px;
+            background-color: #070d1a;
+            font-size: 14px;
+            padding: 12px 15px;
+            min-height: 46px;
+            align-items: center;
+
+            a {
+              color: $white;
+              font-weight: 500;
+
+              &::before {
+                border-color: #4f5c70;
+              }
+            }
+
+            span.cli-necessary-caption {
+              color: #969fad;
+              font-weight: 500;
+              font-size: 12px;
+              line-height: 1;
+            }
+
+            .cli-switch input:checked + .cli-slider {
+              background-color: $red;
+
+              &::before {
+                transform: translateX(17px);
+              }
+            }
+
+            .cli-switch {
+              height: 20px;
+
+              .cli-slider {
+                width: 37px;
+                background-color: #1a263c;
+                transition: background-color $transition;
+
+                &::before {
+                  color: $white;
+                  width: 14px;
+                  height: 14px;
+                  top: 3px;
+                  transition: transform $transition;
+                }
+
+                &::after {
+                  color: #969fad;
+                  font-weight: 500;
+                  font-size: 12px;
+                  right: 45px;
+                }
+              }
+            }
+          }
+
+          .cli-tab-content {
+            border-radius: 8px;
+            background-color: #070d1a;
+            font-size: 14px;
+            padding: 12px 15px;
+
+            .wt-cli-cookie-description {
+              color: $white;
+            }
+
+            table.cookielawinfo-winter {
+              background: $blue;
+              font-family: $font-family-base;
+              font-size: 14px;
+              font-weight: 400;
+
+              thead th {
+                background-color: $blue;
+              }
+
+              tbody {
+                border: 0;
+                color: $white;
+
+                tr {
+                  background-color: $blue;
+                  transition: color $transition;
+
+                  &:hover {
+                    color: $red;
+                  }
+
+                  td {
+                    background: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .cli-tab-footer {
+      padding: 0;
+      margin-top: 17px;
+
+      .wt-cli-privacy-btn  {
+        font-size: 15px;
+        text-transform: lowercase;
+        padding: 11px 23px;
+        background-color: $red !important;
+        border-radius: 10px;
+
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

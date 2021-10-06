@@ -37,7 +37,7 @@ input[type="submit"] {
   }
 }
 
-.primary-button, .tml-button, #affwp-graphs-filter input[type="submit"] {
+.primary-button, .tml-button, #affwp-graphs-filter input[type="submit"], .wt-cli-accept-all-btn, .cli_setting_save_button {
   border: 0;
   cursor: pointer;
   border-radius: 10px;
@@ -94,7 +94,7 @@ input[type="submit"] {
   }
 }
 
-.secondary-button {
+.secondary-button, .cli_settings_button {
   cursor: pointer;
   border-radius: 10px;
   background-color: rgba(0,0,0,0);
