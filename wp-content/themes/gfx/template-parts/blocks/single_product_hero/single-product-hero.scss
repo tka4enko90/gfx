@@ -63,6 +63,7 @@
         .verified-icon {
           display: inline-block;
           position: relative;
+          padding-left: 8px;
 
           @media (max-width: $sm) {
             position: static;
