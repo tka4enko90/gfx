@@ -1,13 +1,13 @@
 @import '../../../src/scss/components/vars';
 
 .hero-search {
-  background-color: rgba($dark-blue, 0.8);
+  background-color: $dark-blue;
 
   .container {
-    background-image: url("../../../../img/blog-hero-bg.png");
+    background-image: url("../../../../img/hero-search-bg.png");
     background-repeat: no-repeat;
-    background-position: 92% 0;
-    background-size: 60%;
+    background-position: 92% 35%;
+    background-size: 45%;
 
     @media (max-width: $xs) {
       background-size: cover;
