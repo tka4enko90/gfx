@@ -4,7 +4,7 @@ if (!empty($args)) :
 
     $product_id = $product->get_id();
     $product_title = $product->get_title();
-    $product_price = $product->get_price($product_id);
+    $product_price = wc_get_price_including_tax($product);
     $product_image = $product->get_image('gfx_semi_medium');
 
     if (isset($product_price)) :

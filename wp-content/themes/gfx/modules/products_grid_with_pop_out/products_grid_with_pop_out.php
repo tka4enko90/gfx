@@ -54,7 +54,7 @@
 
                             $product = wc_get_product($product_id);
                             if (isset($product) && $product instanceof WC_Product) :
-                                $product_price = $product->get_price();
+                                $product_price = wc_get_price_including_tax($product);
                                 $product_sku = $product->get_sku();
                                 $product_add_to_cart_url = $product->add_to_cart_url();
 
