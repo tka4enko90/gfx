@@ -112,8 +112,23 @@ if (isset($form_data)) :
     endforeach;
 endif;
 
+// feature products id
+$feature_product_ids = wc_get_featured_product_ids();
 $products = new WP_Query($args);
-if ($products->have_posts()) : ?>
+
+if ($products->have_posts()) :
+
+    // show featured products first
+    if(!empty($feature_product_ids) && !array_key_exists('orderby', $args)) {
+        foreach($products->posts as $k => $post) {
+            $post_id = $post->ID;
+            if(in_array($post_id, $feature_product_ids) && $k !== 0) {
+                $temp = $post;
+                unset($products->posts[$k]);
+                array_unshift($products->posts, $temp);
+            }
+        }
+    } ?>
     <div class="col ajax-content" data-posts-count="<?php echo count($products->posts); ?>" data-all-posts-count="<?php echo $products->found_posts; ?>">
         <div class="products-grid">
             <?php while ($products->have_posts()) : $products->the_post(); ?>
