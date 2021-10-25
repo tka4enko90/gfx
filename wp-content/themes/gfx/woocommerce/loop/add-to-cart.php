@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 
 global $product;
 if (isset($product) && $product instanceof WC_Product) :
-    $product_price = $product->get_price();
+    $product_price = wc_get_price_including_tax($product);
     echo apply_filters(
         'woocommerce_loop_add_to_cart_link',
         sprintf(
