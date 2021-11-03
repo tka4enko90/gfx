@@ -85,7 +85,7 @@
     .description-text {
       margin-top: 43px;
       font-size: 14px;
-      color: $text-color-dark;
+      color: $text-color;
       line-height: 1.429;
 
       @media (max-width: $xs) {
@@ -97,7 +97,7 @@
       }
 
       a {
-        color: $text-color;
+        color: $white;
 
         &:hover {
           color: $red;
