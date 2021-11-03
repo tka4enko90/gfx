@@ -7,6 +7,9 @@
                 // Hero Section
                 if( get_row_layout() == 'hero_section' ):
                     get_template_part( 'modules/hero_section/hero_section' );
+                // Special Holidays
+                elseif( get_row_layout() == 'special_holidays' ):
+                    get_template_part( 'modules/special_holidays/special_holidays' );
                 // Products grid with pop out
                 elseif (get_row_layout() == 'products_grid_with_pop_out') :
                     get_template_part( 'modules/products_grid_with_pop_out/products_grid_with_pop_out' );

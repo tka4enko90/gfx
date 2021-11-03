@@ -36,10 +36,10 @@
                                 "id": ""
                             },
                             "default_value": "",
-                            "tabs": "visual",
-                            "toolbar": "basic",
+                            "tabs": "text",
                             "media_upload": 0,
-                            "delay": 1
+                            "toolbar": "full",
+                            "delay": 0
                         },
                         {
                             "key": "field_60c371aa97af1",
@@ -93,6 +93,189 @@
                             "min_size": "",
                             "max_size": "",
                             "mime_types": "mp4, mp3"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_61814af6ba345": {
+                    "key": "layout_61814af6ba345",
+                    "name": "special_holidays",
+                    "label": "Special Holidays",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_618235fba26ef",
+                            "label": "Background",
+                            "name": "special_holidays_background",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "url",
+                            "preview_size": "full",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": ""
+                        },
+                        {
+                            "key": "field_61814af6ba347",
+                            "label": "Title",
+                            "name": "special_holidays_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_61814af6ba346",
+                            "label": "Subtitle",
+                            "name": "special_holidays_subtitle",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "delay": 1
+                        },
+                        {
+                            "key": "field_61814af6ba348",
+                            "label": "Button",
+                            "name": "special_holidays_button",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "70",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array"
+                        },
+                        {
+                            "key": "field_618256139e727",
+                            "label": "Content Type",
+                            "name": "special_holidays_content_type",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "img": "Image",
+                                "video": "Video"
+                            },
+                            "allow_null": 0,
+                            "default_value": "img",
+                            "layout": "horizontal",
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_61814af6ba34b",
+                            "label": "Image",
+                            "name": "special_holidays_image",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_618256139e727",
+                                        "operator": "==",
+                                        "value": "img"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "id",
+                            "preview_size": "gfx_medium",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": ""
+                        },
+                        {
+                            "key": "field_6182536b9e726",
+                            "label": "Video",
+                            "name": "special_holidays_video",
+                            "type": "file",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_618256139e727",
+                                        "operator": "==",
+                                        "value": "video"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "30",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_size": "",
+                            "max_size": "",
+                            "mime_types": "mp4, mp3"
+                        },
+                        {
+                            "key": "field_61814af6ba34d",
+                            "label": "Content Button",
+                            "name": "special_holidays_content_button",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array"
                         }
                     ],
                     "min": "",
@@ -436,19 +619,29 @@
     "location": [
         [
             {
-                "param": "page_type",
+                "param": "post_type",
                 "operator": "==",
-                "value": "front_page"
+                "value": "page"
+            },
+            {
+                "param": "page",
+                "operator": "!=",
+                "value": "10"
+            },
+            {
+                "param": "page",
+                "operator": "!=",
+                "value": "18"
             }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "acftc-group-0",
+    "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1630487727
+    "modified": 1635932549
 }

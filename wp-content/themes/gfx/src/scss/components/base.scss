@@ -731,3 +731,9 @@ img.alignright, .wp-caption.alignright {
     }
   }
 }
+
+.color{
+  &--red{
+    color: $red;
+  }
+}
