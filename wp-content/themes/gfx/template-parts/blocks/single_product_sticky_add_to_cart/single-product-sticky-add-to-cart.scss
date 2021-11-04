@@ -1,0 +1,51 @@
+@import '../../../src/scss/components/vars';
+
+.single-product-sticky-add-to-cart{
+  position: fixed;
+  z-index: 9;
+  top: 87px;
+  padding: 25px 0;
+  background-color: $dark-blue;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-87px);
+  transition: all .2s ease;
+
+  &.sticky{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  @media (max-width: $sm) {
+    padding: 20px 0;
+    top: 75px;
+  }
+
+
+  .section-holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $md) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .add-to-cart-btn-holder {
+    @media (max-width: $md) {
+      margin-top: 20px;
+    }
+    .added_to_cart.wc-forward{
+      display: none !important;
+    }
+  }
+
+  &-title{
+    margin: 0;
+  }
+
+}
