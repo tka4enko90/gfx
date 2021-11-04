@@ -14,9 +14,12 @@
 ?>
 
 <section class="special-holidays">
-	<div class="special-holidays-overlay">
-		<?php echo wp_get_attachment_image( $special_holidays_background_id, 'gfx_hero_holiday' ); ?>
-	</div>
+	<?php if ( $special_holidays_background_id ) : ?>
+		<div class="special-holidays-overlay">
+			<?php echo wp_get_attachment_image( $special_holidays_background_id, 'gfx_hero_holiday' ); ?>
+		</div>
+	<?php endif; ?>
+
 	<div class="container">
 		<div class="section-holder">
 			<?php if ( $special_holidays_subtitle || $special_holidays_title ) : ?>
