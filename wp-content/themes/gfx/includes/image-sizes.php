@@ -11,5 +11,6 @@
 	add_image_size( 'gfx_medium_2', 471, 567 );
 	add_image_size( 'gfx_wc_gallery_large', 744, 419 );
 	add_image_size( 'gfx_wc_hero_large', 769, 368 );
-	add_image_size( 'gfx_hero_holiday', 1920 );
+	add_image_size( 'gfx_hero_holiday', 1920, 1080 );
+	add_image_size( 'gfx_product_banner', 1920, 90 );
 }
