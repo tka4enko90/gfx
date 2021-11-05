@@ -1,12 +1,12 @@
 (function ($) {
-	let stickyAddToCart = $( '.js_single_product_sticky_add_to_cart' ),
-		productInfo     = $( '.js_single_product_product_info' );
+	let stickyAddToCart = $( '.js-single-product-sticky-add-to-cart' ),
+		whatsInside     = $( '.js-whats-inside' );
 
-	if (stickyAddToCart.length && productInfo.length) {
+	if (stickyAddToCart.length && whatsInside.length) {
 		$( window ).scroll(
 			function() {
 				let scrollTop = $( window ).scrollTop();
-				if ( scrollTop >= productInfo.offset().top + productInfo.outerHeight() - 90) {
+				if ( scrollTop >= whatsInside.offset().top - 90) {
 					stickyAddToCart.addClass( 'sticky' )
 				} else {
 					stickyAddToCart.removeClass( 'sticky' )

@@ -10,7 +10,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 	<?php wp_enqueue_script( 'single_product_sticky_add_to_cart_js', get_template_directory_uri() . '/static/js/template-parts/blocks/single_product_sticky_add_to_cart/single-product-sticky-add-to-cart.js', array( 'jquery' ), '', true ); ?>
 
 
-	<div class="single-product-sticky-add-to-cart js_single_product_sticky_add_to_cart">
+	<div class="single-product-sticky-add-to-cart js-single-product-sticky-add-to-cart">
 		<div class="container large">
 			<div class="section-holder">
 				<h3 class="single-product-sticky-add-to-cart-title">

@@ -21,7 +21,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 
 		<?php $read_me_page = get_field( 'read_me_page' ); ?>
 		<?php if ( ! empty( $product_image ) || ! empty( $attachment_ids ) || has_excerpt() || have_rows( 'what’s_inside' ) ) : ?>
-			<section class="single-product-product-info js_single_product_product_info">
+			<section class="single-product-product-info">
 				<div class="container">
 					<div class="section-holder">
 						<?php if ( ! empty( $product_image ) || ! empty( $attachment_ids ) ) : ?>
@@ -128,7 +128,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 							$what_inside = get_field( 'what’s_inside' );
 							if ( have_rows( 'what’s_inside' ) ) :
 								?>
-								<div class="what_inside">
+								<div class="what_inside js-whats-inside">
 									<h5><?php _e( 'What’s Inside?', 'gfx' ); ?></h5>
 
 									<div class="cols">
