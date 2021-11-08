@@ -46,7 +46,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 														$video_iframe   = get_field( 'video_iframe', $attachment_id );
 
 														if ( $file_or_iframe === 'file' && $video_file ) {
-															echo '<video controls><source src="' . $video_file['url'] . '"></video>';
+															echo '<video autoplay muted loop><source src="' . $video_file['url'] . '"></video>';
 														}
 
 														if ( $file_or_iframe === 'iframe' && $video_iframe ) {
