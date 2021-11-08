@@ -85,6 +85,16 @@ input[type="submit"] {
     text-align: center;
   }
 
+  &.download {
+    padding: 12px 31px;
+    display: inline-flex;
+    align-items: center;
+
+    svg{
+      margin-right: 8px;
+    }
+  }
+
   &.blue {
     background-color: $light-blue;
 

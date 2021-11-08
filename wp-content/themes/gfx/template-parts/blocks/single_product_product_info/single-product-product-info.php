@@ -95,34 +95,8 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 							<?php endif; ?>
 
 							<?php if ( isset( $product ) && $product instanceof WC_Product ) : ?>
-								<div class="add-to-cart-btn-holder">
-									<?php
-									$args = array(
-										'quantity'   => 1,
-										'class'      => implode(
-											' ',
-											array_filter(
-												array(
-													'button',
-													'primary-button',
-													'product_type_' . $product->get_type(),
-													$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
-													$product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
-												)
-											)
-										),
-										'attributes' => array(
-											'data-product_id' => $product->get_id(),
-											'data-product_title' => $product->get_title(),
-											'data-product_sku' => $product->get_sku(),
-											'aria-label' => $product->add_to_cart_description(),
-											'rel'        => 'nofollow',
-										),
-									);
-									woocommerce_template_loop_add_to_cart( $args );
-									?>
-								</div>
-							<?php endif; ?>
+                                <?php get_template_part( 'template-parts/ui/single_product_add_to_cart_button/single-product-add-to-cart-button', '', array( 'product' => $product ) ); ?>
+                            <?php endif; ?>
 
 							<?php
 							$what_inside = get_field( 'what’s_inside' );

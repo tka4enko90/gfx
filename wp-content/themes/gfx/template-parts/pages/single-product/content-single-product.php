@@ -22,6 +22,7 @@ if ( post_password_required() ) {
 		get_template_part( 'template-parts/blocks/single_product_one_click_setup/single-product-one-click-setup' );
 		get_template_part( 'template-parts/blocks/single_product_related/single-product-related', '', array( 'product' => $product ) );
 		get_template_part( 'template-parts/blocks/single_product_need_help/single-product-need-help' );
+		get_template_part( 'template-parts/blocks/single_product_popup_thanks/single-product-popup-thanks', '', array( 'product' => $product ) );
 	endif;
 	?>
 </div>
