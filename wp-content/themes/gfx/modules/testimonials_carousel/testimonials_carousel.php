@@ -12,11 +12,11 @@
     <div class="container">
         <div class="section-holder">
             <?php if ($testimonials_carousel_title) : ?>
-                <h3><?php echo $testimonials_carousel_title; ?></h3>
+                <h3 data-aos="fade-up"><?php echo $testimonials_carousel_title; ?></h3>
             <?php endif; ?>
 
             <?php if ($testimonials_carousel_subtitle) : ?>
-                <div class="subtitle">
+                <div class="subtitle" data-aos="fade-up">
                     <?php echo $testimonials_carousel_subtitle; ?>
                 </div>
             <?php endif; ?>
@@ -30,7 +30,7 @@
                             <?php $subheading = get_field('subheading', $item_id); ?>
                             <?php $body_text = get_field('body_text', $item_id); ?>
 
-                            <div class="item">
+                            <div class="item" data-aos="zoom-in">
                                 <div class="info">
                                     <?php if(has_post_thumbnail($item_id)) : ?>
                                         <?php echo get_the_post_thumbnail($item_id, 'gfx_avatar'); ?>

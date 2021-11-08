@@ -7,3 +7,6 @@
  * Custom scripts.
  */
 //= partials/app.js
+//= plugins/aos.js
+
+AOS.init();

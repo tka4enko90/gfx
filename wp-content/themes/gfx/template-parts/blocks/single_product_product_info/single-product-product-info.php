@@ -95,8 +95,8 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 							<?php endif; ?>
 
 							<?php if ( isset( $product ) && $product instanceof WC_Product ) : ?>
-                                <?php get_template_part( 'template-parts/ui/single_product_add_to_cart_button/single-product-add-to-cart-button', '', array( 'product' => $product ) ); ?>
-                            <?php endif; ?>
+								<?php get_template_part( 'template-parts/ui/single_product_add_to_cart_button/single-product-add-to-cart-button', '', array( 'product' => $product ) ); ?>
+							<?php endif; ?>
 
 							<?php
 							$what_inside = get_field( 'what’s_inside' );

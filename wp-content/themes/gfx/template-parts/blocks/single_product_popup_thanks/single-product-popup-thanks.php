@@ -15,7 +15,7 @@ endif; ?>
 
 ?>
 
-<?php if ( $is_free && count( $downloads ) ) : ?>
+<?php if ( $is_free && count( $downloads ) && $popup_title && $popup_text ) : ?>
 	<?php wp_enqueue_style( 'single_product_popup_thanks_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_popup_thanks/single-product-popup-thanks.css', '', '', 'all' ); ?>
 	<?php wp_enqueue_script( 'single_product_popup_thanks_js', get_template_directory_uri() . '/static/js/template-parts/blocks/single_product_popup_thanks/single-product-popup-thanks.js', array( 'jquery' ), '', true ); ?>
 
