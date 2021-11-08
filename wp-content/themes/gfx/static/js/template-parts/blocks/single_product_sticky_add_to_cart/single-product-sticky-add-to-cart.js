@@ -1,0 +1,1 @@
+!function(s){let t=s(".js-single-product-sticky-add-to-cart"),o=s(".js-whats-inside");t.length&&o.length&&s(window).scroll((function(){s(window).scrollTop()>=o.offset().top-90?t.addClass("sticky"):t.removeClass("sticky")}))}(jQuery);
