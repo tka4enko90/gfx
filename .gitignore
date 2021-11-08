@@ -79,3 +79,5 @@ wp-content/mysql.sql
 .DS_Store
 ._.DS_Store
 .idea
+/wp-content/themes/gfx/vendor/
+/wp-content/themes/gfx/composer.lock
