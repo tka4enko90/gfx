@@ -237,7 +237,7 @@
             "key": "field_60d5dba2a1cd5",
             "label": "Read me page",
             "name": "read_me_page",
-            "type": "link",
+            "type": "post_object",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -246,7 +246,14 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array"
+            "post_type": [
+                "readme"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
         },
         {
             "key": "field_60d5de00ba61d",
@@ -861,5 +868,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1636128238
+    "modified": 1636450272
 }

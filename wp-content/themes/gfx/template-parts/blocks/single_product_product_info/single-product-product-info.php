@@ -176,9 +176,15 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 							<?php endif; ?>
 
 							<?php if ( ! empty( $read_me_page ) ) : ?>
-								<a class="readme-link" href="<?php echo $read_me_page['url']; ?>" target="<?php echo $read_me_page['target']; ?>"><?php echo $read_me_page['title']; ?></a>
-							<?php endif; ?>
-
+								<?php
+								$post = $read_me_page;
+								setup_postdata( $post );
+								?>
+								<a class="readme-link" href="<?php the_permalink(); ?>" target="_blank">Product ReadMe</a>
+								<?php
+								wp_reset_postdata();
+							endif;
+							?>
 
 						</div>
 					</div>
