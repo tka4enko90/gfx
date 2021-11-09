@@ -476,7 +476,7 @@ img.alignright, .wp-caption.alignright {
   opacity: 1 !important;
   background: linear-gradient(to right, #0f213f 0, #0c182c 100%) !important;
   color: $white !important;
-  padding: 35px 40px !important;
+  padding: 15px 40px 15px 25px !important;
   box-shadow: none;
   border-radius: 8px;
   bottom: 20px !important;
@@ -501,8 +501,8 @@ img.alignright, .wp-caption.alignright {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 20px;
     padding-right: 40px;
     color: #7080a3;
     max-width: 770px;
@@ -513,7 +513,6 @@ img.alignright, .wp-caption.alignright {
 
     a {
       color: $red !important;
-      font-weight: 500;
 
       &:hover {
         color: $white !important;
@@ -527,20 +526,23 @@ img.alignright, .wp-caption.alignright {
     }
 
     & > a {
-      font-size: 16px;
+      font-size: 13px;
       margin: 0 !important;
-      line-height: 46px;
-      padding: 0 40px;
+      height: 31px;
     }
 
     .wt-cli-accept-all-btn {
       background-color: $red !important;
       margin-left: 13px !important;
+      padding: 8px 29px;
+      min-width: 116px;
     }
 
     .cli-plugin-main-button {
       color: $white !important;
       background-color: rgba(0, 0, 0, 0) !important;
+      max-width: 130px;
+      padding: 8px 20px;
 
       &:hover {
         box-shadow: 0px 0px 15px 1px rgba($white, 0.5);
@@ -603,7 +605,6 @@ img.alignright, .wp-caption.alignright {
         color: $red;
         font-size: 14px;
         line-height: 19px;
-        font-weight: 500;
         margin-top: 11px;
         text-decoration: underline;
 
