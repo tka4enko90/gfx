@@ -18,14 +18,14 @@
 				$title_html = '';
 				for ( $i = 0; $i <= $length; $i++ ) {
 					$duration_value = $i + 1;
-					$title_html    .= "<span style='display: inline-block' data-aos-duration='300' data-aos='fade-up' data-aos-delay='{$duration_value}00'>{$words[ $i ]}</span> ";
+					$title_html    .= "<span style='display: inline-block' data-aos-duration='800' data-aos='fade-up' data-aos-delay='{$duration_value}00'>{$words[ $i ]}</span> ";
 				}
 				?>
 				<h3 style="overflow: hidden"><?php echo $title_html; ?></h3>
 			<?php endif; ?>
 
 			<?php if ( $testimonials_carousel_subtitle ) : ?>
-				<div class="subtitle" data-aos="fade-up">
+				<div class="subtitle" data-aos="fade-up" data-aos-duration="1500">
 					<?php echo $testimonials_carousel_subtitle; ?>
 				</div>
 			<?php endif; ?>
@@ -39,7 +39,7 @@
 							<?php $subheading = get_field( 'subheading', $item_id ); ?>
 							<?php $body_text = get_field( 'body_text', $item_id ); ?>
 
-							<div class="item" data-aos="zoom-in">
+							<div class="item" data-aos="zoom-in"  data-aos-duration='1500'>
 								<div class="info">
 									<?php if ( has_post_thumbnail( $item_id ) ) : ?>
 										<?php echo get_the_post_thumbnail( $item_id, 'gfx_avatar' ); ?>
