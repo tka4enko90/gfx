@@ -2,6 +2,7 @@
 
 .thanks-popup {
   max-width: 600px;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 50%;
@@ -10,6 +11,10 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity .2s ease, opacity .2s ease;
+
+  @media (max-width: $sm) {
+    width: calc(100% - 60px);
+  }
 
   &.show {
     opacity: 1;
@@ -35,12 +40,23 @@
     &-holder {
       display: flex;
       align-items: center;
+
+      @media (max-width: $xs) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+      }
     }
 
     &-icon {
       width: 26px;
       height: auto;
       margin-right: 10px;
+
+      @media (max-width: $xs) {
+        margin: 0 0 10px;
+      }
     }
 
     &-text {
@@ -53,6 +69,10 @@
       margin-left: auto;
       font-size: 13px;
       padding: 10px 31px;
+
+      @media (max-width: $xs) {
+        margin: 20px 0 0;
+      }
     }
   }
 
@@ -63,6 +83,10 @@
     padding: 50px 80px 55px;
     text-align: center;
     border-radius: 8px;
+
+    @media (max-width: $sm) {
+      padding: 25px 40px 35px;
+    }
 
     &-close {
       position: absolute;
@@ -123,17 +147,33 @@
 
   &-title {
     margin-bottom: 35px;
+
+    @media (max-width: $xs) {
+      margin-bottom: 20px;
+    }
   }
 
   &-text {
     font-size: 16px;
     line-height: 24px;
     color: #7080a3;
+
+    br{
+      @media (max-width: $xs) {
+        display: none;
+      }
+    }
   }
 
   &-social {
     display: flex;
     justify-content: center;
+
+    @media (max-width: $xs) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
     &-link {
       display: flex;
@@ -144,9 +184,21 @@
       font-size: 13px;
       line-height: 14px;
       color: $white;
+      justify-content: center;
+
+
+      @media (max-width: $xs) {
+        width: 100%;
+        max-width: 180px;
+      }
 
       & + & {
         margin-left: 15px;
+
+        @media (max-width: $xs) {
+          margin-left: 0;
+          margin-top: 15px;
+        }
       }
 
       &:hover & {
