@@ -1,11 +1,11 @@
 <?php
-	$background_id    = get_field( 'product_banner_background' );
-	$text             = get_field( 'product_promotional_text' );
-	$text_color       = get_field( 'product_promotional_text_color' );
-	$promo_code       = get_field( 'product_promotional_code' );
-	$promo_code_color = get_field( 'product_promo_code_color' );
-	$button_text      = get_field( 'product_promotional_button_text' );
-	$button_color     = get_field( 'product_promotional_button_color' );
+	$background_id    = get_field( 'product_banner_background', 'option' );
+	$text             = get_field( 'product_promotional_text', 'option' );
+	$text_color       = get_field( 'product_promotional_text_color', 'option' );
+	$promo_code       = get_field( 'product_promotional_code', 'option' );
+	$promo_code_color = get_field( 'product_promo_code_color', 'option' );
+	$button_text      = get_field( 'product_promotional_button_text', 'option' );
+	$button_color     = get_field( 'product_promotional_button_color', 'option' );
 ?>
 
 <?php
