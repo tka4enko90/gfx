@@ -29,22 +29,15 @@
 						</div>
 					<?php endif; ?>
 					<?php if ( $information_block_button && $information_block_button['url'] ) : ?>
-						<a href="<?php echo $information_block_button['url']; ?>"
-                           class="primary-button"
-						   target="<?php echo ! empty( $information_block_button['target'] ) ? $information_block_button['target'] : '_self'; ?>"
-                        >
+						<a href="<?php echo $information_block_button['url']; ?>" class="primary-button"
+						   target="<?php echo ! empty( $information_block_button['target'] ) ? $information_block_button['target'] : '_self'; ?>">
 							<?php echo $information_block_button['title']; ?>
 						</a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 			<?php if ( $information_block_image_id ) : ?>
-				<div class="image-holder"  data-aos-duration='1500' data-aos="fade-
-				<?php
-				if ( $information_block_content_position ) {
-					echo $information_block_content_position; }
-				?>
-				">
+				<div class="image-holder"  data-aos-duration='1500' data-aos="fade-<?php if($information_block_content_position) { echo $information_block_content_position; } ?>">
 					<?php echo wp_get_attachment_image( $information_block_image_id, 'gfx_medium' ); ?>
 				</div>
 			<?php endif; ?>
