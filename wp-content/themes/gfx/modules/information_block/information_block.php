@@ -37,7 +37,7 @@
 				</div>
 			<?php endif; ?>
 			<?php if ( $information_block_image_id ) : ?>
-				<div class="image-holder"  data-aos-duration='1500' data-aos="fade-<?php if($information_block_content_position) { echo $information_block_content_position; } ?>">
+				<div class="image-holder"  data-aos-duration='1000' data-aos="fade-<?php if($information_block_content_position) { echo $information_block_content_position; } ?>">
 					<?php echo wp_get_attachment_image( $information_block_image_id, 'gfx_medium' ); ?>
 				</div>
 			<?php endif; ?>
