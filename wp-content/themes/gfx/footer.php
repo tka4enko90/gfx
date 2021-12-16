@@ -72,11 +72,11 @@
     </div>
 </div>
 <div class="copied-popup">
-    <div class="container">
-        <div class="holder">
-            <div class="text">
+    <div class="holder">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 515.556 515.556" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path xmlns="http://www.w3.org/2000/svg" d="m0 274.226 176.549 176.886 339.007-338.672-48.67-47.997-290.337 290-128.553-128.552z" fill="#576479" data-original="#000000" style="" class=""/></g></svg>
+        <div class="text">
 
-            </div>
         </div>
     </div>
 </div>
