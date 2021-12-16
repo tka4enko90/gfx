@@ -153,7 +153,7 @@
           .colour {
             cursor: pointer;
             min-width: 92px;
-            border-radius: 6px;
+            border-radius: 4px;
             color: $white;
             text-align: center;
             font-size: 10px;
@@ -161,7 +161,6 @@
             padding: 9px;
             margin: 0 7px 7px;
             transition: opacity $transition;
-
             &:hover {
               opacity: 0.85;
             }

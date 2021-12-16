@@ -14,7 +14,7 @@ const newer = require('gulp-newer');
 /**
  * ! IMPORTANT - Change value to your local domain name.
  */
-const baseDir = 'http://localhost:8888/gfx';
+const baseDir = 'http://gfx.lvh.me';
 
 // BrowserSync initialization.
 function browsersync() {

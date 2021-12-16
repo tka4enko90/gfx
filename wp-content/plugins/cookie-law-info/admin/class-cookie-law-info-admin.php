@@ -73,7 +73,7 @@ class Cookie_Law_Info_Admin {
 		// since 1.9.5 Initialize plugin settings
 		add_action('wt_cli_initialize_plugin',array( $this, 'initialize_plugin_settings' ));
 	}
-	
+
 	/**
 	* Store default datas to the database if a first time user
 	*
@@ -88,18 +88,18 @@ class Cookie_Law_Info_Admin {
 	}
 
 	public function set_default_settings() {
-		$options = get_option(CLI_SETTINGS_FIELD); 
+		$options = get_option(CLI_SETTINGS_FIELD);
 		if( $options === false ) {
 			$default	=	Cookie_Law_Info::get_settings();
 			update_option(CLI_SETTINGS_FIELD,$default);
-		} 
+		}
 	}
 	public function set_privacy_overview_options(){
-		$options = get_option('cookielawinfo_privacy_overview_content_settings'); 
+		$options = get_option('cookielawinfo_privacy_overview_content_settings');
 		if( $options === false ) {
 			$default	=	self::get_privacy_defaults();
 			update_option('cookielawinfo_privacy_overview_content_settings',$default);
-		} 
+		}
 	}
 	public function initialize_plugin_settings(){
 		$this->set_default_settings();
@@ -155,7 +155,7 @@ class Cookie_Law_Info_Admin {
 	}
 
 	/**
-	 Registers admin modules	 
+	 Registers admin modules
 	 */
 	public function admin_modules()
 	{
@@ -166,7 +166,7 @@ class Cookie_Law_Info_Admin {
 			{
 				self::$existing_modules[]=$module; //this is for module_exits checking
 				require_once $module_file;
-			} 
+			}
 		}
 	}
 
@@ -204,7 +204,7 @@ class Cookie_Law_Info_Admin {
 			$back_up_settings_menu=array();
 			if(isset($submenu['edit.php?post_type='.CLI_POST_TYPE]) && is_array($submenu['edit.php?post_type='.CLI_POST_TYPE]))
 			{
-				foreach ($submenu['edit.php?post_type='.CLI_POST_TYPE] as $key => $value) 
+				foreach ($submenu['edit.php?post_type='.CLI_POST_TYPE] as $key => $value)
 				{
 					if($value[2]=='cookie-law-info')
 					{
@@ -226,9 +226,9 @@ class Cookie_Law_Info_Admin {
 	* @return array
 	*/
 	public static function get_privacy_defaults(){
-		
+
 		$settings = array(
-			'privacy_overview_content' 	=> 	'This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. These cookies will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may affect your browsing experience.', 
+			'privacy_overview_content' 	=> 	'This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. These cookies will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may affect your browsing experience.',
 			'privacy_overview_title' 	=> 	'Privacy Overview'
 		);
 		return $settings;
@@ -238,53 +238,53 @@ class Cookie_Law_Info_Admin {
 	* @since 1.7.7
 	*/
 	public function privacy_overview_page()
-	{	
-		if (!current_user_can('manage_options')) 
+	{
+		if (!current_user_can('manage_options'))
 		{
 		    wp_die(__('You do not have sufficient permission to perform this operation', 'cookie-law-info'));
 		}
 
-		$stored_options 	= 	get_option('cookielawinfo_privacy_overview_content_settings'); 
+		$stored_options 	= 	get_option('cookielawinfo_privacy_overview_content_settings');
 		$stored_options		= 	( isset( $stored_options ) && is_array( $stored_options ) ) ? $stored_options : array();
 		$default_settings 	= 	self::get_privacy_defaults();
-		
+
 		$privacy_title = isset($stored_options['privacy_overview_title']) ? $stored_options['privacy_overview_title'] : $default_settings['privacy_overview_title'];
 		$privacy_content = isset($stored_options['privacy_overview_content']) ? $stored_options['privacy_overview_content'] : $default_settings['privacy_overview_content'];
-		
+
 		if (isset($_POST['update_privacy_overview_content_settings_form'])) {
 
 			// Check nonce:
 			check_admin_referer('cookielawinfo-update-privacy-overview-content');
-			
+
 			$privacy_title = $stored_options['privacy_overview_title'] = sanitize_text_field( isset( $_POST['privacy_overview_title'] )  ? $_POST['privacy_overview_title'] : '' );
 			$privacy_content = $stored_options['privacy_overview_content'] = wp_kses_post( isset( $_POST['privacy_overview_content'] ) && $_POST['privacy_overview_content'] !== '' ? $_POST['privacy_overview_content'] : '' );
-			
+
 			update_option('cookielawinfo_privacy_overview_content_settings', $stored_options);
 			echo '<div class="updated"><p><strong>' . __('Settings Updated.', 'cookie-law-info') . '</strong></p></div>';
 		}
 
 		require_once plugin_dir_path( __FILE__ ).'partials/cookie-law-info-privacy_overview.php';
 	}
-	public function plugin_action_links( $links ) 
+	public function plugin_action_links( $links )
 	{
 	   $links[] = '<a href="'. get_admin_url(null,'edit.php?post_type='.CLI_POST_TYPE.'&page=cookie-law-info') .'">'.__('Settings','cookie-law-info').'</a>';
 	   $links[] = '<a href="https://www.webtoffee.com/product/gdpr-cookie-consent/" target="_blank">'.__('Support','cookie-law-info').'</a>';
 	   $links[] = '<a href="https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=free_plugin_listing&utm_medium=gdpr_basic&utm_campaign=GDPR&utm_content='.CLI_VERSION.'" target="_blank" style="color: #3db634; font-weight: 500;">'.__('Premium Upgrade','cookie-law-info').'</a>';
 	   return $links;
 	}
-	
+
 	/*
 	* admin settings page
 	*/
 	public function admin_settings_page()
 	{
 		// Lock out non-admins:
-		if (!current_user_can('manage_options')) 
+		if (!current_user_can('manage_options'))
 		{
 		    wp_die(__('You do not have sufficient permission to perform this operation', 'cookie-law-info'));
 		}
 		// Get options:
-    	$the_options =Cookie_Law_Info::get_settings();
+    	$the_options = Cookie_Law_Info::get_settings();
     	// Check if form has been set:
 	    if(isset($_POST['update_admin_settings_form']) || //normal php submit
 	    (isset($_POST['cli_settings_ajax_update']) && $_POST['cli_settings_ajax_update']=='update_admin_settings_form'))  //ajax submit
@@ -295,9 +295,9 @@ class Cookie_Law_Info_Admin {
 	        //module settings saving hook
 	        do_action('cli_module_save_settings');
 
-	        foreach($the_options as $key => $value) 
+	        foreach($the_options as $key => $value)
 	        {
-	            if(isset($_POST[$key . '_field'])) 
+	            if(isset($_POST[$key . '_field']))
 	            {
 	                // Store sanitised values only:
 	                $the_options[$key] = Cookie_Law_Info::sanitise_settings($key, $_POST[$key . '_field']);
@@ -307,26 +307,26 @@ class Cookie_Law_Info_Admin {
 			update_option(CLI_SETTINGS_FIELD, $the_options);
 			do_action('wt_cli_ajax_settings_update',$_POST);
 	        echo '<div class="updated"><p><strong>' . __('Settings Updated.', 'cookie-law-info') . '</strong></p></div>';
-	    } 
+	    }
 	    elseif (isset($_POST['delete_all_settings']) || //normal php submit
-	    (isset($_POST['cli_settings_ajax_update']) && $_POST['cli_settings_ajax_update']=='delete_all_settings'))  //ajax submit 
+	    (isset($_POST['cli_settings_ajax_update']) && $_POST['cli_settings_ajax_update']=='delete_all_settings'))  //ajax submit
 	    {
 	        // Check nonce:
 	        check_admin_referer('cookielawinfo-update-' . CLI_SETTINGS_FIELD);
 	        $this->delete_settings();
 	        //$the_options = Cookie_Law_Info::get_settings();
 	        //exit();
-	    } 
+	    }
 	    elseif (isset($_POST['revert_to_previous_settings']))  //disabled on new update
 	    {
-	        if (!$this->copy_old_settings_to_new()) 
+	        if (!$this->copy_old_settings_to_new())
 	        {
 	            echo '<h3>' . __('ERROR MIGRATING SETTINGS (ERROR: 2)', 'cookie-law-info') . '</h3>';
 	        }
 	        $the_options = Cookie_Law_Info::get_settings();
 	    }
 	    if(!empty($_SERVER[ 'HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest')
-        {	            
+        {
         	exit();
         }
 		require_once plugin_dir_path( __FILE__ ).'partials/cookie-law-info-admin_settings.php';
@@ -337,14 +337,14 @@ class Cookie_Law_Info_Admin {
 	 	- Cookie Type (e.g. session, permanent)
 	 	- Cookie Duration (e.g. 2 hours, days, years, etc)
 	 */
-	
 
-	
+
+
 
 	/** Apply column names to the custom post type table */
-	
 
-	function remove_cli_addnew_link() 
+
+	function remove_cli_addnew_link()
 	{
 	    global $submenu;
 	    if(isset($submenu) && !empty($submenu) && is_array($submenu))
@@ -352,7 +352,7 @@ class Cookie_Law_Info_Admin {
 	    	unset($submenu['edit.php?post_type='.CLI_POST_TYPE][10]);
 		}
 	}
-	
+
 
 	/** Updates latest version number of plugin */
 	public function update_to_latest_version_number() {
@@ -363,13 +363,13 @@ class Cookie_Law_Info_Admin {
 	 WARNING - this has a predictable result i.e. will delete saved settings! Once deleted,
 	 the get_admin_options() function will not find saved settings so will return default values
 	 */
-	public function delete_settings() 
+	public function delete_settings()
 	{
-		if(defined( 'CLI_ADMIN_OPTIONS_NAME' )) 
+		if(defined( 'CLI_ADMIN_OPTIONS_NAME' ))
 		{
 			delete_option( CLI_ADMIN_OPTIONS_NAME );
 		}
-		if ( defined ( 'CLI_SETTINGS_FIELD' ) ) 
+		if ( defined ( 'CLI_SETTINGS_FIELD' ) )
 		{
 			delete_option( CLI_SETTINGS_FIELD );
 		}
@@ -378,7 +378,7 @@ class Cookie_Law_Info_Admin {
 	public function copy_old_settings_to_new() {
 		$new_settings = Cookie_Law_Info::get_settings();
 		$old_settings = get_option( CLI_ADMIN_OPTIONS_NAME );
-		
+
 		if ( empty( $old_settings ) ) {
 			// Something went wrong:
 			return false;
@@ -396,7 +396,7 @@ class Cookie_Law_Info_Admin {
 			$new_settings['button_1_button_colour']	= $old_settings['colour_button_bg'];
 			$new_settings['notify_message'] 		= $old_settings['message_text'];
 			$new_settings['text'] 					= $old_settings['colour_text'];
-			
+
 			// Save new values:
 			update_option( CLI_SETTINGS_FIELD, $new_settings );
 		}
@@ -404,15 +404,15 @@ class Cookie_Law_Info_Admin {
 	}
 	/** Migrates settings from version 0.8.3 to version 0.9 */
 	public function migrate_to_new_version() {
-		
+
 		if ( $this->has_migrated() ) {
 			return false;
 		}
-		
+
 		if ( !$this->copy_old_settings_to_new() ) {
 			return false;
 		}
-		
+
 		// Register that have completed:
 		$this->update_to_latest_version_number();
 		return true;
@@ -442,16 +442,16 @@ class Cookie_Law_Info_Admin {
 
 	/**
 	 Prints a combobox based on options and selected=match value
-	 
+
 	 Parameters:
 	 	$options = array of options (suggest using helper functions)
 	 	$selected = which of those options should be selected (allows just one; is case sensitive)
-	 
+
 	 Outputs (based on array ( $key => $value ):
 	 	<option value=$value>$key</option>
 	 	<option value=$value selected="selected">$key</option>
 	 */
-	public function print_combobox_options( $options, $selected ) 
+	public function print_combobox_options( $options, $selected )
 	{
 		foreach ( $options as $option ) {
 			echo '<option value="' . $option['value'] . '"';
@@ -554,11 +554,11 @@ class Cookie_Law_Info_Admin {
 			'trebuchet'=> array(
 						'text'=>__('Trebuchet','cookie-law-info'),
 						'value'=>'Trebuchet MS, sans-serif'
-						),	
+						),
 			'verdana'=> array(
 						'text'=>__('Verdana','cookie-law-info'),
 						'value'=>'Verdana, Geneva'
-						),										
+						),
 			);
 		return $fonts;
 	}
@@ -571,7 +571,7 @@ class Cookie_Law_Info_Admin {
 	*/
 
 	public function load_plugin(){
-		
+
 		if ( is_admin() && get_option( 'wt_cli_first_time_activated_plugin' ) == 'true' ) {
 			do_action('wt_cli_initialize_plugin');
 			delete_option('wt_cli_first_time_activated_plugin');
@@ -589,5 +589,5 @@ class Cookie_Law_Info_Admin {
 			exit();
 		}
 	}
-	
+
 }

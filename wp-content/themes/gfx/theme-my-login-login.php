@@ -27,13 +27,6 @@
                             </div>
                         <?php endif; ?>
                     </div>
-
-                    <?php $register_page_image = get_field('register_page_image'); ?>
-                    <?php if ($register_page_image) : ?>
-                        <div class="image-col">
-                            <?php echo wp_get_attachment_image($register_page_image, 'gfx_medium_2'); ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
         </section>
