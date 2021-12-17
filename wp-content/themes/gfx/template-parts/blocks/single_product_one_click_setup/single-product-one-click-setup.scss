@@ -32,8 +32,8 @@
       }
 
       .video-holder {
-        border-radius: 10px;
-
+        border-radius: 5px;
+        overflow: hidden;
         iframe {
           height: 341px;
           width: 100%;
