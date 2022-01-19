@@ -40,16 +40,14 @@
       @media (max-width: $lg) {
         font-size: 30px;
       }
-
+      svg {
+        width: 210px;
+      }
       img {
         display: block;
         width: auto;
         max-width: 56px;
         margin-right: 13px;
-
-        @media (min-width: $md) {
-          display: none;
-        }
 
         @media (max-width: $lg) {
           max-width: 50px;
@@ -64,10 +62,6 @@
       span {
         display: block;
         line-height: 44px;
-
-        @media (max-width: $md) {
-          display: none;
-        }
 
         &.red {
           color: $red;

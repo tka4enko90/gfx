@@ -36,25 +36,33 @@ if (sizeof( WC()->cart->get_cart() ) > 0 ) :
 endif; ?>
 <body <?php body_class($body_class) ?>>
 <?php wp_body_open() ?>
-
 <div class="wrapper">
+
     <header class="header">
         <div class="container large">
             <div class="inner">
+
                 <?php
+                $logo_options = get_field('logo_options', 'option');
                 $header_logo = get_field('header_logo', 'option');
                 $logo_first = get_field('logo_first', 'option');
                 $logo_second = get_field('logo_second', 'option'); ?>
-
                 <?php if ($header_logo || $logo_first || $logo_second) : ?>
                     <div class="logo-holder">
                         <a href="<?php echo home_url(); ?>">
-                            <?php if ($header_logo) : ?>
-                                <?php echo wp_get_attachment_image($header_logo, 'logo'); ?>
+                            <?php
+                            if ($header_logo && $logo_options === 'image') :
+                                if (get_post_mime_type($header_logo) === 'image/svg+xml'){
+                                    echo file_get_contents(wp_get_attachment_image_url($header_logo));
+                                }else{
+                                    echo wp_get_attachment_image($header_logo, 'logo');
+                                }
+                            ?>
+                            <?php else : ?>
+                                <?php if ($logo_first) : ?><span><?php echo $logo_first; ?></span><?php endif; ?>
+                                <?php if ($logo_first) : ?><span
+                                        class="red"><?php echo $logo_second; ?></span><?php endif; ?>
                             <?php endif; ?>
-                            <?php if ($logo_first) : ?><span><?php echo $logo_first; ?></span><?php endif; ?>
-                            <?php if ($logo_first) : ?><span
-                                    class="red"><?php echo $logo_second; ?></span><?php endif; ?>
                         </a>
                     </div>
                 <?php endif; ?>
