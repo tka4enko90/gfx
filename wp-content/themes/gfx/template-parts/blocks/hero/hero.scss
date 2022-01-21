@@ -19,8 +19,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-
+    padding: 40px 0;
+    background-repeat: no-repeat;
+    background-position: right;
     @media (max-width: $md) {
       flex-direction: column;
       align-items: flex-start;

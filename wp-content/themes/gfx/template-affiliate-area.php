@@ -35,6 +35,7 @@ get_header(); ?>
                                     'subtitle' => $hero_section_subtitle,
                                     'image' => $hero_section_image,
                                     'image_size' => 'gfx_wc_hero_large',
+                                    'hero' => true,
                                     'buttons' => $hero_section_buttons));
                         endif;
 

@@ -23,6 +23,9 @@
     if (!empty($args['file'])) :
         $hero_file = $args['file'];
     endif;
+    if (!empty($args['hero'])) :
+        $hero_module = $args['hero'];
+    endif;
 
     if (isset($hero_title) || isset($hero_subtitle) || isset($hero_image_id)) :
         wp_enqueue_style('hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero/hero.css', '', '', 'all');
@@ -31,7 +34,11 @@
         <section
                 class="hero-section <?php echo empty($hero_image_id) ? 'no-image' : ''; ?> <?php echo isset($css_class) ? $css_class : ''; ?>">
             <div class="container">
-                <div class="section-holder">
+                <div class="section-holder"
+                <?php if($hero_module && $hero_image_id): ?>
+                style="background-image: url(<?php echo wp_get_attachment_image_url($hero_image_id, 'gfx_wc_gallery_large');?>);"
+                <?php endif;?>
+                >
                     <?php if (isset($hero_title) || isset($hero_subtitle)) : ?>
                         <div class="text-col">
                             <?php if (isset($hero_title)) :
@@ -76,12 +83,12 @@
                             <?php endif; ?>
                         </div>
                     <?php endif;
-                    if (isset($hero_image_id)) : ?>
+                    if (isset($hero_image_id) && !isset($hero_module)) : ?>
                         <div class="image-col">
                             <?php if (isset($hero_image_size)) :
                                 echo wp_get_attachment_image($hero_image_id, $hero_image_size);
                             else :
-                                echo wp_get_attachment_image($hero_image_id, 'gfx_wc_gallery_large');
+                                echo wp_get_attachment_image_url($hero_image_id, 'gfx_wc_gallery_large');
                             endif; ?>
                         </div>
                     <?php endif; ?>
