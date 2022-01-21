@@ -59,9 +59,10 @@
   }
 
   .content-holder {
-    width: 100%;
+    width: 50%;
 
     @media (max-width: $md) {
+      width: 100%;
       max-width: 100%;
     }
 
