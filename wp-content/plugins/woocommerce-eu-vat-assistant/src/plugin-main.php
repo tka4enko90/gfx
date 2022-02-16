@@ -18,7 +18,7 @@ use \InvalidArgumentException;
  * EU VAT Assistant plugin.
  */
 class WC_Aelia_EU_VAT_Assistant extends Aelia_Plugin {
-	public static $version = '2.0.21.210910';
+	public static $version = '2.0.27.220124';
 
 	public static $plugin_slug = Definitions::PLUGIN_SLUG;
 	public static $text_domain = Definitions::TEXT_DOMAIN;
@@ -369,40 +369,30 @@ class WC_Aelia_EU_VAT_Assistant extends Aelia_Plugin {
 	 * @since 1.10.1.191108
 	 */
 	public function show_admin_messages() {
-		// Show a warning to the administrator, about the major changes
-		// @since 2.0.5.210102
-		// TODO Remove the message when no longer needed (e.g. after the 15 February 2021)
-		if(date('Y-m-d') < '2021-02-16') {
-			Messages::admin_message(implode(' ', array(
-					__('Version 2.x of the EU VAT Assistant includes major changes, mainly related to exit of the UK from the EU (Brexit).', self::$text_domain),
-					__('As always, we aimed to maintain full backward compatibility with previous versions, but it is possible that some of the changes may affect your site.', self::$text_domain),
-					__('You can read more about this update in the public support forum:', self::$text_domain),
+		// Show a warning to the administrator, about the migration to Simba Hosting's
+		// VAT Compliance plugin, for EU/UK/Norway rules.
+		// @since x.x
+		// TODO Remove the message when no longer needed (e.g. after the 1st March 2022)
+		if(date('Y-m-d') < '2022-04-01') {
+			Messages::admin_message(wp_kses_post(implode(' ', array(
+					'<strong>',
+					__('Are you selling physical goods to customers in the EU, UK or Norway?', self::$text_domain),
+					'</strong>',
 					'<br />',
-					sprintf('- <a href="%1$s" target="_blank">%1$s</a>', 'https://wordpress.org/support/topic/brexit-update-1/'),
-					'<br />',
-					sprintf('- <a href="%1$s" target="_blank">%1$s</a>', 'https://wordpress.org/support/topic/brexit-update-2/'),
+					sprintf(
+						__('Aelia established a collaboration with Simba Hosting, authors of the <a href="%1$s"  target="_blank">WooCommerce EU/UK VAT / IVA Compliance</a>.', self::$text_domain),
+						'https://www.simbahosting.co.uk/s3/product/woocommerce-eu-vat-compliance/'
+					),
+					__('That plugin includes all the features to simplify compliance with the VAT regulations that affect the sales of physical good sold to customers in the EU, UK and Norway.', self::$text_domain),
+					__('Aelia recommends the EU/UK VAT Compliance plugin, by Simba Hosting, as an effective alternative, and replacement, to the EU VAT Assistant.', self::$text_domain),
 					'<br /><br />',
-					'<strong>' . __('Recommended steps after this update', self::$text_domain) . '</strong>',
-					'<br />',
-					__('- If you are a EU-based business, the plugin should work fine, out of the box.', self::$text_domain),
-					__('It would still be a good idea to review your settings, to make sure that everything is correct.', self::$text_domain),
-					'<br />',
-					__('- If you are a UK-based business, we would recommend to go to <code>WooCommerce > EU VAT Assistant > VAT Number Validation</code> and remove ' .
-						 'your UK VAT number from field <code>Requester VAT number for the VIES VAT validation service</code>.', self::$text_domain),
-					__('This is necessary because the EU VAT Assistant relies on the EU VIES validation service, which can no longer handle UK VAT numbers.', self::$text_domain),
-					'<br /><br />',
-					'<strong>' . __('Need to roll back to a previous version?', self::$text_domain) . '</strong>',
-					'<br />',
-					sprintf(__('If, for any reason, you wish to roll back the EU VAT Assistant to an earlier version, you can find previous releases here: <a href="%1$s" target="_blank">%1$s</a>.', self::$text_domain), 'https://wordpress.org/plugins/woocommerce-eu-vat-assistant/advanced/'),
-					__('You can find all the available versions in section <code>Previous Versions</code>.', self::$text_domain),
-					'<br /><br />',
-					sprintf(__('If you wish to share your feedback, of if you encounter any issue, please <a href="%1$s" target="_blank">post the details on the public forum</a>.', self::$text_domain), 'https://wordpress.org/support/plugin/woocommerce-eu-vat-assistant/'),
-					__('We review the forum on a regular basis, and we will get back to you as soon as possible.', self::$text_domain),
-				)),
+					__('You can find more details about this news on our site:', self::$text_domain),
+					sprintf('<a href="%1$s" target="_blank">%1$s</a>.', 'https://aelia.co/ioss-compliance-aelia-eu-vat-assistant/'),
+				))),
 				array(
 					'sender_id' => esc_html(self::$plugin_slug),
-					'level' => E_USER_WARNING,
-					'code' => Definitions::WARN_MAJOR_UPDATE,
+					'level' => E_USER_NOTICE,
+					'code' => Definitions::WARN_SOLUTION_FOR_VAT_OSS_COMPLIANCE,
 					'dismissable' => true,
 					'permissions' => 'manage_woocommerce',
 					'message_header' => __('Important', self::$text_domain),
@@ -1219,7 +1209,13 @@ class WC_Aelia_EU_VAT_Assistant extends Aelia_Plugin {
 			'Result' => $result,
 		));
 
-		$customer_vat_exemption = apply_filters('wc_aelia_eu_vat_assistant_customer_vat_exemption', $customer_vat_exemption, $this->vat_country, $this->vat_number, $this->vat_number_validated, $this->vat_validation_response);
+		// Pass the original customer country and VAT number received as arguments, instead of the properties assigned to this class.
+		// This is needed because, if the VAT number is empty, both $this->vat_number and $this->vat_country would be empty, whereas
+		// the 3rd parties that implement a filter might need to see the country anyway.
+		//
+		// @since 2.0.23.211019
+		// @link https://bitbucket.org/businessdad/woocommerce-eu-vat-assistant/issues/8
+		$customer_vat_exemption = apply_filters('wc_aelia_eu_vat_assistant_customer_vat_exemption', $customer_vat_exemption, $customer_country, $vat_number, $this->vat_number_validated, $this->vat_validation_response);
 
 		// If the customer object is set, enable the exemption. This check has been introduced because this method can
 		// now be called within contexts in which WC()->customer is not initialised, e.g. the handling of subscription

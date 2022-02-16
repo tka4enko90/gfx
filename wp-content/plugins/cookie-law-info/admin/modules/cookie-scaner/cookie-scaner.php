@@ -450,7 +450,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$notice = '<p>' . __( 'Scan your website with CookieYes, our scanning solution for high-speed, accurate cookie scanning', 'cookie-law-info' ) . '</p>';
 		$notice = '<p style="font-weight:500;">' . sprintf(
 			wp_kses(
-				__( 'Clicking “Connect & scan” will let you connect with a free <a href="%s" target="_blank">CookieYes</a> account and initiate scanning of your website for cookies. These cookies along with their description will be listed under the cookie declaration popup. By continuing, you agree to CookieYes\'s <a href="%1$s" target="_blank">Privacy Policy</a> & <a href="%2$s" target="_blank">Terms of service</a>.', 'cookie-law-info' ),
+				__( 'Clicking “Connect & scan” will let you connect with a free <a href="%s" target="_blank">CookieYes</a> account and initiate scanning of your website for cookies. These cookies along with their description will be listed under the cookie declaration popup. By continuing, you agree to CookieYes\'s <a href="%s" target="_blank">Privacy Policy</a> & <a href="%s" target="_blank">Terms of service</a>.', 'cookie-law-info' ),
 				array(
 					'a' => array(
 						'href'   => array(),

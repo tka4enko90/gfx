@@ -3,8 +3,8 @@ Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, woo, wpc, product, bundle, bundles
 Requires at least: 4.0
-Tested up to: 5.7.2
-Stable tag: 5.7.5
+Tested up to: 5.9
+Stable tag: 6.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,88 @@ If you love our plugins, please give us a full five-star rating so that we know 
 5. Almost done! click Save and see the result
 
 == Changelog ==
+
+= 6.0.5 =
+* Added: Filter hook 'woosb_get_items' to modify bundled products before showing
+
+= 6.0.4 =
+* Added: Filter hook 'woosb_item_product_info'
+
+= 6.0.3 =
+* Added: nl_NL (thanks to Matyas / matyas@studioviv.nl)
+* Fixed: Compatible with WPC Frequently Bought Together
+
+= 6.0.2 =
+* Fixed: Error when adding a bundle to the cart
+
+= 6.0.1 =
+* Fixed: Don't allow adding disabled variation to the cart
+* Fixed: Minor JS issue
+
+= 6.0.0 =
+* Fixed: Don't show variable product when choosing all product types
+
+= 5.9.9 =
+* Updated: Show all product types for searching
+
+= 5.9.8 =
+* Added: Choose product types for searching
+* Updated: Open search settings on popup
+
+= 5.9.7 =
+* Fixed: Minor JS issue
+
+= 5.9.6 =
+* Updated: Optimized the code
+
+= 5.9.5 =
+* Fixed: Remove orphaned bundled products
+* Fixed: array_combine notice
+
+= 5.9.4 =
+* Fixed: Backorders status
+* Fixed: Order again
+* Fixed: Minor JS issues
+
+= 5.9.3 =
+* Fixed: Error when ordering again
+
+= 5.9.2 =
+* Updated: Optimized the code
+
+= 5.9.1 =
+* Added: Localization tab
+* Fixed: Backorder issue
+* Fixed: Exclude unpurchasable products
+
+= 5.9.0 =
+* Fixed: Missing add-to-cart button when a bundle having zero price
+* Added: Filter hook 'woosb_use_sku' to use SKU when storing bundled products
+* Updated: Optimized the code
+
+= 5.8.3 =
+* Updated: Compatible with WPC Product Quantity
+* Fixed: PHP notice when adding a bundle to the cart
+
+= 5.8.2 =
+* Fixed: Error when creating a bundle
+
+= 5.8.1 =
+* Fixed: Minor JS issues
+* Updated: Save the product SKU if exist instead of ID
+
+= 5.8.0 =
+* Fixed: Error when adding variable product to the cart
+
+= 5.7.8 =
+* Fixed: Some minor CSS/JS issues
+
+= 5.7.7 =
+* Fixed: Default total and saved text
+
+= 5.7.6 =
+* Fixed: Alert text for min/max or invalid selection
+* Updated: Compatible with WordPress 5.8 & WooCommerce 5.5.1
 
 = 5.7.5 =
 * Fixed: Calculate bundles stock quantity base on bundled products

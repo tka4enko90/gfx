@@ -95,6 +95,7 @@ var CLI=
     	{
     		CLI_COOKIEBAR_AS_POPUP=true;
 		}
+		this.mayBeSetPreferenceCookie();
         this.addStyleAttribute();
 		this.configBar();
         this.toggleBar();
@@ -603,7 +604,7 @@ var CLI=
         }else 
         {	
 			if( CLI.js_blocking_enabled === true ) {
-            	this.bar_elm.hide( cliBlocker.runScripts );
+            	this.bar_elm.hide( 0, cliBlocker.runScripts );
 
 			} else {
 				this.bar_elm.hide();
@@ -950,6 +951,11 @@ var CLI=
 		jQuery(document).on('click','.cli_manage_current_consent,.wt-cli-manage-consent-link',function(){
 			CLI.displayHeader();
 		});
+	},
+	mayBeSetPreferenceCookie: function() {
+		if( CLI.getParameterByName('cli_bypass') === "1" ) {
+			CLI.generateConsent();
+		}
 	}
 }
 var cliBlocker = 
@@ -1014,8 +1020,6 @@ var cliBlocker =
 			{
 				CLI.hideHeader();
 			}
-			CLI.settingsModal.show();
-			jQuery('.cli-modal-backdrop').show();
 		}
 	},
 	removeCookieByCategory : function() 

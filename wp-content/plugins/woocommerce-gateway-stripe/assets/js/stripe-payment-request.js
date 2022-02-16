@@ -3,7 +3,7 @@ jQuery( function( $ ) {
 	'use strict';
 
 	var stripe = Stripe( wc_stripe_payment_request_params.stripe.key, {
-		locale: typeof wc_stripe_params !== 'undefined' ? wc_stripe_params.stripe_locale : 'auto',
+		locale: wc_stripe_payment_request_params.stripe.locale
 	} ),
 		paymentRequestType;
 
@@ -376,7 +376,14 @@ jQuery( function( $ ) {
 					if ( ! result ) {
 						return;
 					}
-					paymentRequestType = result.applePay ? 'apple_pay' : 'payment_request_api';
+					if ( result.applePay ) {
+						paymentRequestType = 'apple_pay';
+					} else if ( result.googlePay ) {
+						paymentRequestType = 'google_pay';
+					} else {
+						paymentRequestType = 'payment_request_api';
+					}
+
 					wc_stripe_payment_request.attachPaymentRequestButtonEventListeners( prButton, paymentRequest );
 					wc_stripe_payment_request.showPaymentRequestButton( prButton );
 				} );
@@ -445,7 +452,6 @@ jQuery( function( $ ) {
 				url:  wc_stripe_payment_request.getAjaxURL( 'get_selected_product_data' )
 			} );
 		},
-
 
 		/**
 		 * Creates a wrapper around a function that ensures a function can not
@@ -588,6 +594,13 @@ jQuery( function( $ ) {
 			var addToCartButton = $( '.single_add_to_cart_button' );
 
 			prButton.on( 'click', function ( evt ) {
+				// If login is required for checkout, display redirect confirmation dialog.
+				if ( wc_stripe_payment_request_params.login_confirmation ) {
+					evt.preventDefault();
+					displayLoginConfirmation( paymentRequestType );
+					return;
+				}
+
 				// First check if product can be added to cart.
 				if ( addToCartButton.is( '.disabled' ) ) {
 					evt.preventDefault(); // Prevent showing payment request modal.
@@ -666,17 +679,38 @@ jQuery( function( $ ) {
 					}
 				} );
 			}));
+
+			if ( $('.variations_form').length ) {
+				$( '.variations_form' ).on( 'found_variation.wc-variation-form', function ( evt, variation ) {
+					if ( variation.is_in_stock ) {
+						wc_stripe_payment_request.unhidePaymentRequestButton();
+					} else {
+						wc_stripe_payment_request.hidePaymentRequestButton();
+					}
+				} );
+			}
 		},
 
 		attachCartPageEventListeners: function ( prButton, paymentRequest ) {
-			if ( ( ! wc_stripe_payment_request_params.button.is_custom || ! wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) &&
-				( ! wc_stripe_payment_request_params.button.is_branded || ! wc_stripe_payment_request.isBrandedPaymentRequestButton( prButton ) ) ) {
-				return;
-			}
-
 			prButton.on( 'click', function ( evt ) {
-				evt.preventDefault();
-				paymentRequest.show();
+				// If login is required for checkout, display redirect confirmation dialog.
+				if ( wc_stripe_payment_request_params.login_confirmation ) {
+					evt.preventDefault();
+					displayLoginConfirmation( paymentRequestType );
+					return;
+				}
+
+				if (
+					wc_stripe_payment_request.isCustomPaymentRequestButton(
+						prButton
+					) ||
+					wc_stripe_payment_request.isBrandedPaymentRequestButton(
+						prButton
+					)
+				) {
+					evt.preventDefault();
+					paymentRequest.show();
+				}
 			} );
 		},
 
@@ -690,6 +724,20 @@ jQuery( function( $ ) {
 			} else if ( $( '#wc-stripe-payment-request-button' ).length ) {
 				$( '#wc-stripe-payment-request-wrapper, #wc-stripe-payment-request-button-separator' ).show();
 				prButton.mount( '#wc-stripe-payment-request-button' );
+			}
+		},
+
+		hidePaymentRequestButton: function () {
+			$( '#wc-stripe-payment-request-wrapper, #wc-stripe-payment-request-button-separator' ).hide();
+		},
+
+		unhidePaymentRequestButton: function () {
+			const stripe_wrapper = $( '#wc-stripe-payment-request-wrapper' );
+			const stripe_separator = $( '#wc-stripe-payment-request-button-separator' );
+			// If either element is hidden, ensure both show.
+			if ( stripe_wrapper.is(':hidden') || stripe_separator.is(':hidden') ) {
+				stripe_wrapper.show();
+				stripe_separator.show();
 			}
 		},
 
@@ -747,5 +795,31 @@ jQuery( function( $ ) {
 			element.css( 'background-image', 'url(' + fallback + ')' );
 		}
 		testImg.src = background;
+	}
+
+	// TODO: Replace this by `client/blocks/payment-request/login-confirmation.js`
+	// when we start using webpack to build this file.
+	function displayLoginConfirmation( paymentRequestType ) {
+		if ( ! wc_stripe_payment_request_params.login_confirmation ) {
+			return;
+		}
+
+		var message = wc_stripe_payment_request_params.login_confirmation.message;
+
+		// Replace dialog text with specific payment request type "Apple Pay" or "Google Pay".
+		if ( 'payment_request_api' !== paymentRequestType ) {
+			message = message.replace(
+				/\*\*.*?\*\*/,
+				'apple_pay' === paymentRequestType ? 'Apple Pay' : 'Google Pay'
+			);
+		}
+
+		// Remove asterisks from string.
+		message = message.replace( /\*\*/g, '' );
+
+		if ( confirm( message ) ) {
+			// Redirect to my account page.
+			window.location.href = wc_stripe_payment_request_params.login_confirmation.redirect_url;
+		}
 	}
 } );

@@ -7,37 +7,37 @@ if ( ! class_exists( 'WPCleverWoosb_Helper' ) ) {
 			if ( get_option( '_woosb_bundled_price_from', 'sale_price' ) === 'regular_price' ) {
 				if ( $product->is_type( 'variable' ) ) {
 					if ( $min_or_max === 'max' ) {
-						return $product->get_variation_regular_price( 'max' );
+						$price = $product->get_variation_regular_price( 'max' );
 					} else {
-						return $product->get_variation_regular_price( 'min' );
+						$price = $product->get_variation_regular_price( 'min' );
 					}
 				} else {
-					return $product->get_regular_price();
+					$price = $product->get_regular_price();
 				}
 			} else {
 				if ( $product->is_type( 'variable' ) ) {
 					if ( $min_or_max === 'max' ) {
-						return $product->get_variation_price( 'max' );
+						$price = $product->get_variation_price( 'max' );
 					} else {
-						return $product->get_variation_price( 'min' );
+						$price = $product->get_variation_price( 'min' );
 					}
 				} else {
-					return $product->get_price();
+					$price = $product->get_price();
 				}
 			}
+
+			return apply_filters( 'woosb_get_price', $price, $product, $min_or_max );
 		}
 
 		public static function woosb_get_price_to_display( $product, $qty = 1, $min_or_max = 'min' ) {
-			return (float) wc_get_price_to_display( $product, array(
+			return apply_filters( 'woosb_get_price_to_display', (float) wc_get_price_to_display( $product, array(
 				'price' => self::woosb_get_price( $product, $min_or_max ),
 				'qty'   => $qty
-			) );
+			) ), $product, $qty, $min_or_max );
 		}
 
 		public static function woosb_clean_ids( $ids ) {
-			$ids = preg_replace( '/[^,.\/0-9]/', '', $ids );
-
-			return $ids;
+			return apply_filters( 'woosb_clean_ids', $ids );
 		}
 
 		public static function woosb_minify_items( $items ) {
@@ -53,7 +53,6 @@ if ( ! class_exists( 'WPCleverWoosb_Helper' ) ) {
 						if ( $minify_item['id'] === $item['id'] ) {
 							$minify_items[ $key ]['qty'] += $item['qty'];
 							$has_item                    = true;
-							continue;
 						}
 					}
 
@@ -63,7 +62,19 @@ if ( ! class_exists( 'WPCleverWoosb_Helper' ) ) {
 				}
 			}
 
-			return $minify_items;
+			return apply_filters( 'woosb_minify_items', $minify_items, $items );
+		}
+
+		public static function woosb_localization( $key = '', $default = '' ) {
+			$str = '';
+
+			if ( ! empty( $key ) && ! empty( WPCleverWoosb::$localization[ $key ] ) ) {
+				$str = WPCleverWoosb::$localization[ $key ];
+			} elseif ( ! empty( $default ) ) {
+				$str = $default;
+			}
+
+			return apply_filters( 'woosb_localization_' . $key, $str );
 		}
 	}
 

@@ -31,24 +31,12 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		public function add_to_cart_text() {
 			if ( $this->is_purchasable() && $this->is_in_stock() ) {
 				if ( ! $this->has_variables() && ! $this->is_optional() ) {
-					$text = get_option( '_woosb_archive_button_add' );
-
-					if ( empty( $text ) ) {
-						$text = esc_html__( 'Add to cart', 'woo-product-bundle' );
-					}
+					$text = WPCleverWoosb_Helper::woosb_localization( 'button_add', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
 				} else {
-					$text = get_option( '_woosb_archive_button_select' );
-
-					if ( empty( $text ) ) {
-						$text = esc_html__( 'Select options', 'woo-product-bundle' );
-					}
+					$text = WPCleverWoosb_Helper::woosb_localization( 'button_select', esc_html__( 'Select options', 'woo-product-bundle' ) );
 				}
 			} else {
-				$text = get_option( '_woosb_archive_button_read' );
-
-				if ( empty( $text ) ) {
-					$text = esc_html__( 'Read more', 'woo-product-bundle' );
-				}
+				$text = WPCleverWoosb_Helper::woosb_localization( 'button_read', esc_html__( 'Read more', 'woo-product-bundle' ) );
 			}
 
 			$text = apply_filters( 'woocommerce_product_add_to_cart_text', $text, $this );
@@ -57,11 +45,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function single_add_to_cart_text() {
-			$text = get_option( '_woosb_single_button_add' );
-
-			if ( empty( $text ) ) {
-				$text = esc_html__( 'Add to cart', 'woo-product-bundle' );
-			}
+			$text = WPCleverWoosb_Helper::woosb_localization( 'button_single', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
 
 			$text = apply_filters( 'woocommerce_product_single_add_to_cart_text', $text, $this );
 
@@ -77,7 +61,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function get_sale_price( $context = 'view' ) {
-			if ( ! $this->is_fixed_price() ) {
+			if ( ( $context === 'view' ) && ! $this->is_fixed_price() ) {
 				$discount_amount     = $this->get_discount_amount();
 				$discount_percentage = $this->get_discount();
 				$discount            = $discount_amount || $discount_percentage;
@@ -93,7 +77,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 								continue;
 							}
 
-							$_price = WPCleverWoosb_Helper::woosb_get_price( $_product, 'min' ) * $item['qty'];
+							$_price = WPCleverWoosb_Helper::woosb_get_price( $_product ) * $item['qty'];
 
 							if ( $discount_percentage ) {
 								// if haven't discount_amount, apply discount percentage
@@ -115,6 +99,18 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 			}
 
 			return parent::get_sale_price( $context );
+		}
+
+		public function get_price( $context = 'view' ) {
+			if ( ( $context === 'view' ) && ( (float) $this->get_regular_price() == 0 ) ) {
+				return '0';
+			}
+
+			if ( ( $context === 'view' ) && ( (float) parent::get_price( $context ) == 0 ) ) {
+				return '0';
+			}
+
+			return parent::get_price( $context );
 		}
 
 		public function get_manage_stock( $context = 'view' ) {
@@ -269,7 +265,11 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				}
 
 				if ( $this->is_manage_stock() ) {
-					return $parent_backorders;
+					if ( $parent_backorders === 'yes' ) {
+						return $backorders;
+					} else {
+						return $parent_backorders;
+					}
 				}
 
 				return $backorders;
@@ -375,11 +375,18 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				if ( is_array( $ids_arr ) && count( $ids_arr ) > 0 ) {
 					foreach ( $ids_arr as $ids_item ) {
 						$data = explode( '/', $ids_item );
+						$pid  = rawurldecode( isset( $data[0] ) ? $data[0] : 0 );
 
-						if ( $pid = absint( isset( $data[0] ) ? $data[0] : 0 ) ) {
+						if ( ! is_numeric( $pid ) ) {
+							// sku
+							$pid = wc_get_product_id_by_sku( ltrim( $pid, 'sku-' ) );
+						}
+
+						if ( $pid ) {
 							$items[] = array(
-								'id'  => $pid,
-								'qty' => (float) ( isset( $data[1] ) ? $data[1] : 1 )
+								'id'    => apply_filters( 'woosb_item_id', $pid ),
+								'qty'   => (float) ( isset( $data[1] ) ? $data[1] : 1 ),
+								'attrs' => isset( $data[2] ) ? (array) json_decode( rawurldecode( $data[2] ) ) : array()
 							);
 						}
 					}

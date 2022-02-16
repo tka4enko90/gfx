@@ -61,10 +61,8 @@ if (!class_exists('Cookie_Law_Info_Script_Blocker')) {
         function __construct()
         {   
             add_action( 'init', array($this, 'init_scripts'), 10);
-            add_action( 'template_redirect', array($this, 'start_buffer'));
-            add_action( 'shutdown', array($this, 'end_buffer'), 999);
+            $this->init_script_blocker();
             register_activation_hook( CLI_PLUGIN_FILENAME, array($this, 'activator'));
-            
             add_action( 'activated_plugin', array($this, 'update_integration_data'));
             add_action( 'admin_menu', array( $this, 'register_settings_page' ),10 );
             add_action( 'wp_ajax_wt_cli_change_plugin_status',array($this, 'change_plugin_status'));
@@ -78,6 +76,15 @@ if (!class_exists('Cookie_Law_Info_Script_Blocker')) {
             add_action('wt_cli_after_cookie_category_migration',array( $this, 'reset_scripts_category') );
             
            
+        }
+        public function init_script_blocker() {
+            if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || is_admin() ) {
+                return;
+            }
+            if( $this->get_blocking_status() === true && $this->advanced_rendering_enabled() === true && $this->third_party_scripts() === true ) {
+                add_action( 'template_redirect', array($this, 'start_buffer'));
+                add_action( 'shutdown', array($this, 'end_buffer'), 999);
+            }
         }
         public function init_scripts() {
             $this->load_integrations();
@@ -471,9 +478,7 @@ if (!class_exists('Cookie_Law_Info_Script_Blocker')) {
 
         public function start_buffer()
         {   
-            if( $this->get_blocking_status() === true && $this->advanced_rendering_enabled() === true && $this->third_party_scripts() === true ) {
-                ob_start(array($this, "init"));
-            }
+            ob_start(array($this, "init"));
         }
         /**
          * Flush the buffer
@@ -483,10 +488,8 @@ if (!class_exists('Cookie_Law_Info_Script_Blocker')) {
 
         public function end_buffer()
         {   
-            if( $this->get_blocking_status() === true && $this->advanced_rendering_enabled() === true && $this->third_party_scripts() === true ) { 
-                if (ob_get_length()) {
-                    ob_end_flush();
-                }
+            if (ob_get_length()) {
+                ob_end_flush();
             }
         }
 

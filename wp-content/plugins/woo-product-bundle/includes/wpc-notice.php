@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 $theme = wp_get_theme();
 
-if ( 'WPCstore' == $theme ) {
+if ( ! empty( $theme['Name'] ) && ( strpos( $theme['Name'], 'WPC' ) !== false ) ) {
 	return;
 }
 
@@ -27,10 +27,6 @@ if ( ! class_exists( 'WPCleverNotice' ) ) {
 				return;
 			}
 
-			if ( class_exists( 'THNotice' ) && ! get_user_meta( $user_id, 'th_thunk_notice_ignore', true ) ) {
-				return;
-			}
-
 			if ( ! get_user_meta( $user_id, 'wpclever_wpcstore_ignore', true ) ) {
 				?>
                 <div class="wpclever-notice notice">
@@ -50,18 +46,26 @@ if ( ! class_exists( 'WPCleverNotice' ) ) {
                             higher stability, security, and harmony with WPCstore.
                         </p>
                         <ul class="wpclever-notice-ul">
-                            <li class="show-mor-message">
+                            <li>
                                 <a href="https://demo.wpclever.net/wpcstore/" target="_blank">
                                     <span class="dashicons dashicons-desktop"></span> Live Demo
                                 </a>
                             </li>
-                            <li class="free-download-message">
+                            <li>
                                 <a href="https://wordpress.org/themes/wpcstore/" target="_blank">
                                     <span class="dashicons dashicons-external"></span> Check Detail
                                 </a>
                             </li>
-                            <li class="hide-message">
-                                <a href="?wpclever_wpcstore_ignore=1" class="dashicons-dismiss-icon">
+                            <li>
+								<?php
+								if ( function_exists( 'wc_get_current_admin_url' ) ) {
+									$ignore_url = add_query_arg( 'wpclever_wpcstore_ignore', '1', wc_get_current_admin_url() );
+								} else {
+									$ignore_url = admin_url( '?wpclever_wpcstore_ignore=1' );
+								}
+								?>
+                                <a href="<?php echo esc_url( $ignore_url ); ?>"
+                                   class="dashicons-dismiss-icon">
                                     <span class="dashicons dashicons-welcome-comments"></span> Hide Message
                                 </a>
                             </li>

@@ -710,6 +710,7 @@ background: #ffffff;
     transform: scale(0);
 	overflow: hidden;
     outline: 0;
+    display: none;
 }
 .cli-modal a {
 	text-decoration: none;

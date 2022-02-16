@@ -486,10 +486,10 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 * complete with the appropriate settings controller.
 		 *
 		 * @return Aelia\WC\Aelia_Plugin
-		 * @throws Aelia\WC\NotImplementedException
+		 * @throws Aelia\WC\Exceptions\NotImplementedException
 		 */
 		public static function factory() {
-			throw new NotImplementedException();
+			throw new \Aelia\WC\Exceptions\NotImplementedException();
 		}
 
 		/**

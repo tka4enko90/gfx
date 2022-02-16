@@ -59,6 +59,7 @@
 
 .woosb-products .woosb-product .woosb-qty input {
     width: 100%;
+    min-width: 40px;
 }
 
 .woosb-products .woosb-product .woosb-price {
@@ -268,6 +269,7 @@ body.woocommerce-no-js .woosb-wrap + form.cart {
 
 .woosb-qty-input .qty {
     width: 100%;
+    min-width: 40px;
     height: 40px;
     line-height: 38px;
     margin: 0;

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 	class WPCleverWoosb {
 		protected static $_instance = null;
+		public static $localization = array();
 		protected static $_types = array(
 			'bundle',
 			'woosb',
@@ -24,6 +25,9 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function __construct() {
+			// Init
+			add_action( 'init', array( $this, 'woosb_init' ) );
+
 			// Shortcode
 			add_shortcode( 'woosb_form', array( $this, 'woosb_shortcode_form' ) );
 			add_shortcode( 'woosb_bundled', array( $this, 'woosb_shortcode_bundled' ) );
@@ -39,6 +43,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'woosb_admin_enqueue_scripts' ) );
 
 			// Backend AJAX search
+			add_action( 'wp_ajax_woosb_update_search_settings', array( $this, 'woosb_update_search_settings' ) );
 			add_action( 'wp_ajax_woosb_get_search_results', array( $this, 'woosb_get_search_results' ) );
 
 			// Add to selector
@@ -98,6 +103,9 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			add_action( 'woocommerce_process_product_meta', array( $this, 'woosb_delete_option_fields' ) );
 			add_action( 'woocommerce_process_product_meta_woosb', array( $this, 'woosb_save_option_fields' ) );
 
+			// Product price class
+			add_filter( 'woocommerce_product_price_class', array( $this, 'woosb_product_price_class' ) );
+
 			// Add to cart form & button
 			add_action( 'woocommerce_woosb_add_to_cart', array( $this, 'woosb_add_to_cart_form' ) );
 			add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'woosb_add_to_cart_button' ) );
@@ -144,9 +152,9 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 			// Item class
 			if ( get_option( '_woosb_hide_bundled', 'no' ) !== 'yes' ) {
-				add_filter( 'woocommerce_cart_item_class', array( $this, 'woosb_item_class' ), 10, 2 );
-				add_filter( 'woocommerce_mini_cart_item_class', array( $this, 'woosb_item_class' ), 10, 2 );
-				add_filter( 'woocommerce_order_item_class', array( $this, 'woosb_item_class' ), 10, 2 );
+				add_filter( 'woocommerce_cart_item_class', array( $this, 'woosb_cart_item_class' ), 10, 2 );
+				add_filter( 'woocommerce_mini_cart_item_class', array( $this, 'woosb_cart_item_class' ), 10, 2 );
+				add_filter( 'woocommerce_order_item_class', array( $this, 'woosb_cart_item_class' ), 10, 2 );
 			}
 
 			// Get item data
@@ -190,8 +198,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			// Loop add-to-cart
 			add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'woosb_loop_add_to_cart_link' ), 99, 2 );
 
-			// Use woocommerce_get_cart_contents instead of woocommerce_before_calculate_totals, prevent price error on mini-cart
-			add_filter( 'woocommerce_get_cart_contents', array( $this, 'woosb_get_cart_contents' ), 10, 1 );
+			// Before calculate totals
+			add_action( 'woocommerce_before_mini_cart_contents', array( $this, 'woosb_before_mini_cart_contents' ) );
+			add_action( 'woocommerce_before_calculate_totals', array( $this, 'woosb_before_calculate_totals' ), 10 );
+			add_filter( 'woocommerce_get_cart_contents', array( $this, 'woosb_get_cart_contents' ), 10 );
 
 			// Shipping
 			add_filter( 'woocommerce_cart_shipping_packages', array( $this, 'woosb_cart_shipping_packages' ), 99, 1 );
@@ -203,7 +213,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			// Order again
 			add_filter( 'woocommerce_order_again_cart_item_data', array(
 				$this,
-				'woosb_order_again_cart_item_data'
+				'woosb_order_again_item_data'
 			), 10, 2 );
 			add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'woosb_cart_loaded_from_session' ) );
 
@@ -225,7 +235,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 			// Search filters
 			if ( get_option( '_woosb_search_sku', 'no' ) === 'yes' ) {
-				add_filter( 'pre_get_posts', array( $this, 'woosb_search_sku' ), 99 );
+				add_action( 'pre_get_posts', array( $this, 'woosb_search_sku' ), 99 );
 			}
 
 			if ( get_option( '_woosb_search_exact', 'no' ) === 'yes' ) {
@@ -235,6 +245,16 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			if ( get_option( '_woosb_search_sentence', 'no' ) === 'yes' ) {
 				add_action( 'pre_get_posts', array( $this, 'woosb_search_sentence' ), 99 );
 			}
+
+			// WPML
+			if ( function_exists( 'wpml_loaded' ) ) {
+				add_filter( 'woosb_item_id', array( $this, 'woosb_wpml_item_id' ), 99 );
+			}
+		}
+
+		function woosb_init() {
+			// localization
+			self::$localization = (array) get_option( 'woosb_localization' );
 		}
 
 		function woosb_admin_menu() {
@@ -272,6 +292,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                            class="<?php echo $active_tab === 'settings' ? 'nav-tab nav-tab-active' : 'nav-tab'; ?>">
 							<?php esc_html_e( 'Settings', 'woo-product-bundle' ); ?>
                         </a>
+                        <a href="<?php echo admin_url( 'admin.php?page=wpclever-woosb&tab=localization' ); ?>"
+                           class="<?php echo $active_tab === 'localization' ? 'nav-tab nav-tab-active' : 'nav-tab'; ?>">
+							<?php esc_html_e( 'Localization', 'woo-product-bundle' ); ?>
+                        </a>
                         <a href="<?php echo admin_url( 'admin.php?page=wpclever-woosb&tab=compatible' ); ?>"
                            class="<?php echo $active_tab === 'compatible' ? 'nav-tab nav-tab-active' : 'nav-tab'; ?>">
 							<?php esc_html_e( 'Compatible', 'woo-product-bundle' ); ?>
@@ -284,8 +308,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                            style="color: #c9356e">
 							<?php esc_html_e( 'Premium Version', 'woo-product-bundle' ); ?>
                         </a>
-                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-kit' ) ); ?>"
-                           class="nav-tab">
+                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-kit' ) ); ?>" class="nav-tab">
 							<?php esc_html_e( 'Essential Kit', 'woo-product-bundle' ); ?>
                         </a>
                     </h2>
@@ -318,27 +341,21 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                             <option value="min_max" <?php echo( get_option( '_woosb_price_format', 'from_min' ) === 'min_max' ? 'selected' : '' ); ?>><?php esc_html_e( 'Min - max', 'woo-product-bundle' ); ?></option>
                                             <option value="normal" <?php echo( get_option( '_woosb_price_format', 'from_min' ) === 'normal' ? 'selected' : '' ); ?>><?php esc_html_e( 'Regular and sale price', 'woo-product-bundle' ); ?></option>
                                         </select>
-                                        <span class="description">
-                                                    <?php esc_html_e( 'Choose the price format for bundle on the shop page.', 'woo-product-bundle' ); ?>
-                                                </span>
+                                        <span class="description"><?php esc_html_e( 'Choose the price format for bundle on the shop page.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Calculate bundled prices', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_price_from">
-                                            <option
-                                                    value="sale_price" <?php echo( get_option( '_woosb_bundled_price_from', 'sale_price' ) === 'sale_price' ? 'selected' : '' ); ?>>
+                                            <option value="sale_price" <?php echo( get_option( '_woosb_bundled_price_from', 'sale_price' ) === 'sale_price' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'from Sale price', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="regular_price" <?php echo( get_option( '_woosb_bundled_price_from', 'sale_price' ) === 'regular_price' ? 'selected' : '' ); ?>>
+                                            <option value="regular_price" <?php echo( get_option( '_woosb_bundled_price_from', 'sale_price' ) === 'regular_price' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'from Regular price', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
-                                        <span class="description">
-											<?php esc_html_e( 'Bundled pricing methods: from Sale price (default) or Regular price.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Bundled pricing methods: from Sale price (default) or Regular price.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr class="heading">
@@ -350,52 +367,43 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Position', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_position">
-                                            <option
-                                                    value="above" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'above' ? 'selected' : '' ); ?>>
+                                            <option value="above" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'above' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Above the add to cart button', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="below" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below' ? 'selected' : '' ); ?>>
+                                            <option value="below" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Under the add to cart button', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="below_title" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_title' ? 'selected' : '' ); ?>>
+                                            <option value="below_title" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_title' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Under the title', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="below_price" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_price' ? 'selected' : '' ); ?>>
+                                            <option value="below_price" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_price' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Under the price', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="below_excerpt" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_excerpt' ? 'selected' : '' ); ?>>
+                                            <option value="below_excerpt" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'below_excerpt' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Under the excerpt', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="tab" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'tab' ? 'selected' : '' ); ?>>
+                                            <option value="tab" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'tab' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'In a new tab', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_position', 'above' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No (hide it)', 'woo-product-bundle' ); ?>
                                             </option>
-                                        </select> <span class="description">
-                                                    <?php esc_html_e( 'Choose the position to show the bundled products list.', 'woo-product-bundle' ); ?>
-                                                </span>
+                                        </select>
+                                        <span class="description"><?php esc_html_e( 'Choose the position to show the bundled products list.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Variations selector', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_variations_selector">
-                                            <option
-                                                    value="default" <?php echo( get_option( '_woosb_variations_selector', 'default' ) === 'default' ? 'selected' : '' ); ?>>
+                                            <option value="default" <?php echo( get_option( '_woosb_variations_selector', 'default' ) === 'default' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Default', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="wpc_radio" <?php echo( get_option( '_woosb_variations_selector', 'default' ) === 'wpc_radio' ? 'selected' : '' ); ?>>
+                                            <option value="woovr" <?php echo( get_option( '_woosb_variations_selector', 'default' ) === 'wpc_radio' || get_option( '_woosb_variations_selector', 'default' ) === 'woovr' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Use WPC Variations Radio Buttons', 'woo-product-bundle' ); ?>
                                             </option>
-                                        </select> <span class="description">If you choose "Use WPC Variations Radio Buttons", please install <a
+                                        </select>
+                                        <span class="description">If you choose "Use WPC Variations Radio Buttons", please install <a
                                                     href="<?php echo esc_url( admin_url( 'plugin-install.php?tab=plugin-information&plugin=wpc-variations-radio-buttons&TB_iframe=true&width=800&height=550' ) ); ?>"
                                                     class="thickbox"
                                                     title="Install WPC Variations Radio Buttons">WPC Variations Radio Buttons</a> to make it work.</span>
@@ -405,12 +413,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Show thumbnail', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_thumb">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_bundled_thumb', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_bundled_thumb', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_thumb', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_thumb', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -420,12 +426,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Show quantity', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_qty">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_bundled_qty', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_bundled_qty', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_qty', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_qty', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -435,12 +439,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Show short description', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_description">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_bundled_description', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_bundled_description', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_description', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_description', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -450,16 +452,13 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Show price', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_price">
-                                            <option
-                                                    value="price" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'price' ? 'selected' : '' ); ?>>
+                                            <option value="price" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'price' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Price', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="subtotal" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'subtotal' ? 'selected' : '' ); ?>>
+                                            <option value="subtotal" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'subtotal' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Subtotal', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_price', 'price' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -469,39 +468,34 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Show plus/minus button', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_plus_minus">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_plus_minus', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_plus_minus', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_plus_minus', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_plus_minus', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
-                                        </select> <span
-                                                class="description"><?php esc_html_e( 'Show the plus/minus button for the quantity input.', 'woo-product-bundle' ); ?></span>
+                                        </select>
+                                        <span class="description"><?php esc_html_e( 'Show the plus/minus button for the quantity input.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Link to individual product', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundled_link">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, open in the same tab', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="yes_blank" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'selected' : '' ); ?>>
+                                            <option value="yes_blank" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, open in the new tab', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="yes_popup" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'selected' : '' ); ?>>
+                                            <option value="yes_popup" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, open quick view popup', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundled_link', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
-                                        </select> <span class="description">If you choose "Open quick view popup", please install <a
+                                        </select>
+                                        <span class="description">If you choose "Open quick view popup", please install <a
                                                     href="<?php echo esc_url( admin_url( 'plugin-install.php?tab=plugin-information&plugin=woo-smart-quick-view&TB_iframe=true&width=800&height=550' ) ); ?>"
                                                     class="thickbox" title="Install WPC Smart Quick View">WPC Smart Quick View</a> to make it work.</span>
                                     </td>
@@ -510,60 +504,34 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Change image', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_change_image">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_change_image', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_change_image', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_change_image', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_change_image', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
-                                        <span class="description">
-											<?php esc_html_e( 'Change the main product image when choosing the variation of bundled products.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Change the main product image when choosing the variation of bundled products.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Change price', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_change_price">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="yes_custom" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'yes_custom' ? 'selected' : '' ); ?>>
+                                            <option value="yes_custom" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'yes_custom' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, custom selector', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_change_price', 'yes' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
                                         <input type="text" name="_woosb_change_price_custom"
                                                value="<?php echo get_option( '_woosb_change_price_custom', '.summary > .price' ); ?>"
                                                placeholder=".summary > .price"/>
-                                        <span class="description">
-											<?php esc_html_e( 'Change the main product price when choosing the variation of bundled products. It uses JavaScript to change product price so it is very dependent on theme’s HTML. If it cannot find and update the product price, please contact us and we can help you find the right selector or adjust the JS file.', 'woo-product-bundle' ); ?>
-										</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Total text', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <input type="text" name="_woosb_bundle_price_text"
-                                               value="<?php echo get_option( '_woosb_bundle_price_text', esc_html__( 'Bundle price:', 'woo-product-bundle' ) ); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Saved text', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <input type="text" name="_woosb_bundle_saved_text"
-                                               value="<?php echo get_option( '_woosb_bundle_saved_text', esc_html__( '(saved [d])', 'woo-product-bundle' ) ); ?>"/>
-                                        <span class="description">
-											<?php esc_html_e( 'Use [d] to show the saved percentage or amount.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Change the main product price when choosing the variation of bundled products. It uses JavaScript to change product price so it is very dependent on theme’s HTML. If it cannot find and update the product price, please contact us and we can help you find the right selector or adjust the JS file.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr class="heading">
@@ -578,25 +546,20 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Position', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_bundles_position">
-                                            <option
-                                                    value="above" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'above' ? 'selected' : '' ); ?>>
+                                            <option value="above" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'above' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Above the add to cart button', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="below" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'below' ? 'selected' : '' ); ?>>
+                                            <option value="below" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'below' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Under the add to cart button', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="tab" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'tab' ? 'selected' : '' ); ?>>
+                                            <option value="tab" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'tab' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'In a new tab', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_bundles_position', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No (hide it)', 'woo-product-bundle' ); ?>
                                             </option>
-                                        </select> <span class="description">
-                                                    <?php esc_html_e( 'Choose the position to show the bundles list.', 'woo-product-bundle' ); ?>
-                                                </span>
+                                        </select>
+                                        <span class="description"><?php esc_html_e( 'Choose the position to show the bundles list.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -604,8 +567,8 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 										<?php esc_html_e( 'Above text', 'woo-product-bundle' ); ?>
                                     </th>
                                     <td>
-                                                <textarea name="_woosb_bundles_before_text"
-                                                          class="large-text"><?php echo stripslashes( get_option( '_woosb_bundles_before_text' ) ); ?></textarea>
+                                        <textarea name="_woosb_bundles_before_text"
+                                                  class="large-text"><?php echo stripslashes( get_option( '_woosb_bundles_before_text' ) ); ?></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -613,53 +576,8 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 										<?php esc_html_e( 'Under text', 'woo-product-bundle' ); ?>
                                     </th>
                                     <td>
-                                                <textarea name="_woosb_bundles_after_text"
-                                                          class="large-text"><?php echo stripslashes( get_option( '_woosb_bundles_after_text' ) ); ?></textarea>
-                                    </td>
-                                </tr>
-                                <tr class="heading">
-                                    <th>
-										<?php esc_html_e( '"Add to Cart" button labels', 'woo-product-bundle' ); ?>
-                                    </th>
-                                    <td>
-										<?php esc_html_e( 'Leave blank if you want to use the default text and can be translated.', 'woo-product-bundle' ); ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Archive/shop page', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <div style="margin-bottom: 5px">
-                                            <input type="text" name="_woosb_archive_button_add"
-                                                   value="<?php echo get_option( '_woosb_archive_button_add' ); ?>"
-                                                   placeholder="<?php esc_html_e( 'Add to cart', 'woo-product-bundle' ); ?>"/>
-                                            <span class="description">
-											<?php esc_html_e( 'For purchasable bundle.', 'woo-product-bundle' ); ?>
-										</span>
-                                        </div>
-                                        <div style="margin-bottom: 5px">
-                                            <input type="text" name="_woosb_archive_button_select"
-                                                   value="<?php echo get_option( '_woosb_archive_button_select' ); ?>"
-                                                   placeholder="<?php esc_html_e( 'Select options', 'woo-product-bundle' ); ?>"/>
-                                            <span class="description">
-											<?php esc_html_e( 'For purchasable bundle and has variable product(s).', 'woo-product-bundle' ); ?>
-										</span>
-                                        </div>
-                                        <div>
-                                            <input type="text" name="_woosb_archive_button_read"
-                                                   value="<?php echo get_option( '_woosb_archive_button_read' ); ?>"
-                                                   placeholder="<?php esc_html_e( 'Read more', 'woo-product-bundle' ); ?>"/>
-                                            <span class="description">
-											<?php esc_html_e( 'For un-purchasable bundle.', 'woo-product-bundle' ); ?>
-										</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Single product page', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <input type="text" name="_woosb_single_button_add"
-                                               value="<?php echo get_option( '_woosb_single_button_add' ); ?>"
-                                               placeholder="<?php esc_html_e( 'Add to cart', 'woo-product-bundle' ); ?>"/>
+                                        <textarea name="_woosb_bundles_after_text"
+                                                  class="large-text"><?php echo stripslashes( get_option( '_woosb_bundles_after_text' ) ); ?></textarea>
                                     </td>
                                 </tr>
                                 <tr class="heading">
@@ -671,60 +589,47 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Coupon restrictions', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_coupon_restrictions">
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="bundles" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'bundles' ? 'selected' : '' ); ?>>
+                                            <option value="bundles" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'bundles' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Exclude bundles', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="bundled" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'bundled' ? 'selected' : '' ); ?>>
+                                            <option value="bundled" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'bundled' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Exclude bundled products', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="both" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'both' ? 'selected' : '' ); ?>>
+                                            <option value="both" <?php echo( get_option( '_woosb_coupon_restrictions', 'no' ) === 'both' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Exclude both bundles and bundled products', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
-                                        <span class="description">
-											<?php esc_html_e( 'Choose products you want to exclude from coupons.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Choose products you want to exclude from coupons.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Exclude un-purchasable products', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_exclude_unpurchasable">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
-                                        <span class="description">
-											<?php esc_html_e( 'Make the bundle still purchasable when one of the bundled products is un-purchasable. These bundled products are excluded from the orders.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Make the bundle still purchasable when one of the bundled products is un-purchasable. These bundled products are excluded from the orders.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e( 'Cart contents count', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_cart_contents_count">
-                                            <option
-                                                    value="bundle" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'bundle' ? 'selected' : '' ); ?>>
+                                            <option value="bundle" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'bundle' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Bundles only', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="bundled_products" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'bundled_products' ? 'selected' : '' ); ?>>
+                                            <option value="bundled_products" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'bundled_products' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Bundled products only', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="both" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'both' ? 'selected' : '' ); ?>>
+                                            <option value="both" <?php echo( get_option( '_woosb_cart_contents_count', 'bundle' ) === 'both' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Both bundles and bundled products', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -734,12 +639,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Hide bundle name before bundled products', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_hide_bundle_name">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_hide_bundle_name', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_hide_bundle_name', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_hide_bundle_name', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_hide_bundle_name', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -749,16 +652,13 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Hide bundled products on cart & checkout page', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_hide_bundled">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, just show the main product', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="yes_text" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'yes_text' ? 'selected' : '' ); ?>>
+                                            <option value="yes_text" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'yes_text' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes, but show bundled product names under the main product', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_hide_bundled', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
@@ -768,18 +668,14 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                     <th><?php esc_html_e( 'Hide bundled products on mini-cart', 'woo-product-bundle' ); ?></th>
                                     <td>
                                         <select name="_woosb_hide_bundled_mini_cart">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_hide_bundled_mini_cart', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+                                            <option value="yes" <?php echo( get_option( '_woosb_hide_bundled_mini_cart', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
                                             </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_hide_bundled_mini_cart', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+                                            <option value="no" <?php echo( get_option( '_woosb_hide_bundled_mini_cart', 'no' ) === 'no' ? 'selected' : '' ); ?>>
 												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
                                             </option>
                                         </select>
-                                        <span class="description">
-											<?php esc_html_e( 'Hide bundled products, just show the main product on mini-cart.', 'woo-product-bundle' ); ?>
-										</span>
+                                        <span class="description"><?php esc_html_e( 'Hide bundled products, just show the main product on mini-cart.', 'woo-product-bundle' ); ?></span>
                                     </td>
                                 </tr>
                                 <tr class="heading">
@@ -787,100 +683,127 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 										<?php esc_html_e( 'Search', 'woo-product-bundle' ); ?>
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Search limit', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <input name="_woosb_search_limit" type="number" min="1"
-                                               max="500"
-                                               value="<?php echo get_option( '_woosb_search_limit', 10 ); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Search by SKU', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <select name="_woosb_search_sku">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_search_sku', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
-                                            </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_search_sku', 'no' ) === 'no' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Search by ID', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <select name="_woosb_search_id">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_search_id', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
-                                            </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_search_id', 'no' ) === 'no' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
-                                            </option>
-                                        </select> <span
-                                                class="description"><?php esc_html_e( 'Search by ID when only entered the numeric.', 'woo-product-bundle' ); ?></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Search exact', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <select name="_woosb_search_exact">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_search_exact', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
-                                            </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_search_exact', 'no' ) === 'no' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
-                                            </option>
-                                        </select> <span
-                                                class="description"><?php esc_html_e( 'Match whole product title or content?', 'woo-product-bundle' ); ?></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Search sentence', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <select name="_woosb_search_sentence">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_search_sentence', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
-                                            </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_search_sentence', 'no' ) === 'no' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
-                                            </option>
-                                        </select> <span
-                                                class="description"><?php esc_html_e( 'Do a phrase search?', 'woo-product-bundle' ); ?></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><?php esc_html_e( 'Accept same products', 'woo-product-bundle' ); ?></th>
-                                    <td>
-                                        <select name="_woosb_search_same">
-                                            <option
-                                                    value="yes" <?php echo( get_option( '_woosb_search_same', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
-                                            </option>
-                                            <option
-                                                    value="no" <?php echo( get_option( '_woosb_search_same', 'no' ) === 'no' ? 'selected' : '' ); ?>>
-												<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
-                                            </option>
-                                        </select> <span
-                                                class="description"><?php esc_html_e( 'If yes, a product can be added many times.', 'woo-product-bundle' ); ?></span>
-                                    </td>
-                                </tr>
+								<?php self::woosb_search_settings(); ?>
                                 <tr class="submit">
                                     <th colspan="2">
                                         <input type="submit" name="submit" class="button button-primary"
                                                value="<?php esc_html_e( 'Update Options', 'woo-product-bundle' ); ?>"/>
                                         <input type="hidden" name="action" value="update"/>
                                         <input type="hidden" name="page_options"
-                                               value="_woosb_price_format,_woosb_bundled_price_from,_woosb_bundled_position,_woosb_variations_selector,_woosb_bundled_thumb,_woosb_bundled_qty,_woosb_bundled_description,_woosb_bundled_price,_woosb_plus_minus,_woosb_bundled_link,_woosb_change_image,_woosb_change_price,_woosb_change_price_custom,_woosb_coupon_restrictions,_woosb_exclude_unpurchasable,_woosb_cart_contents_count,_woosb_hide_bundle_name,_woosb_hide_bundled,_woosb_hide_bundled_mini_cart,_woosb_bundle_price_text,_woosb_bundle_saved_text,_woosb_bundles_position,_woosb_bundles_before_text,_woosb_bundles_after_text,_woosb_archive_button_add,_woosb_archive_button_select,_woosb_archive_button_read,_woosb_single_button_add,_woosb_search_limit,_woosb_search_sku,_woosb_search_id,_woosb_search_exact,_woosb_search_sentence,_woosb_search_same"/>
+                                               value="_woosb_price_format,_woosb_bundled_price_from,_woosb_bundled_position,_woosb_variations_selector,_woosb_bundled_thumb,_woosb_bundled_qty,_woosb_bundled_description,_woosb_bundled_price,_woosb_plus_minus,_woosb_bundled_link,_woosb_change_image,_woosb_change_price,_woosb_change_price_custom,_woosb_coupon_restrictions,_woosb_exclude_unpurchasable,_woosb_cart_contents_count,_woosb_hide_bundle_name,_woosb_hide_bundled,_woosb_hide_bundled_mini_cart,_woosb_bundles_position,_woosb_bundles_before_text,_woosb_bundles_after_text,_woosb_search_limit,_woosb_search_sku,_woosb_search_id,_woosb_search_exact,_woosb_search_sentence,_woosb_search_same,_woosb_search_types"/>
+                                    </th>
+                                </tr>
+                            </table>
+                        </form>
+					<?php } elseif ( $active_tab === 'localization' ) { ?>
+                        <form method="post" action="options.php">
+							<?php wp_nonce_field( 'update-options' ) ?>
+                            <table class="form-table">
+                                <tr class="heading">
+                                    <th scope="row"><?php esc_html_e( 'General', 'woo-product-bundle' ); ?></th>
+                                    <td>
+										<?php esc_html_e( 'Leave blank to use the default text and its equivalent translation in multiple languages.', 'woo-product-bundle' ); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Total text', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[total]" class="regular-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'total' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Bundle price:', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Saved text', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[saved]" class="regular-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'saved' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( '(saved [d])', 'woo-product-bundle' ); ?>"/>
+                                        <span class="description"><?php esc_html_e( 'Use [d] to show the saved percentage or amount.', 'woo-product-bundle' ); ?></span>
+                                    </td>
+                                </tr>
+                                <tr class="heading">
+                                    <th colspan="2">
+										<?php esc_html_e( '"Add to cart" button labels', 'woo-product-bundle' ); ?>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Shop/archive page', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <div style="margin-bottom: 5px">
+                                            <input type="text" class="regular-text"
+                                                   name="woosb_localization[button_add]"
+                                                   value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'button_add' ) ); ?>"
+                                                   placeholder="<?php esc_attr_e( 'Add to cart', 'woo-product-bundle' ); ?>"/>
+                                            <span class="description"><?php esc_html_e( 'For purchasable bundle.', 'woo-product-bundle' ); ?></span>
+                                        </div>
+                                        <div style="margin-bottom: 5px">
+                                            <input type="text" class="regular-text"
+                                                   name="woosb_localization[button_select]"
+                                                   value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'button_select' ) ); ?>"
+                                                   placeholder="<?php esc_attr_e( 'Select options', 'woo-product-bundle' ); ?>"/>
+                                            <span class="description"><?php esc_html_e( 'For purchasable bundle and has variable product(s).', 'woo-product-bundle' ); ?></span>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="regular-text"
+                                                   name="woosb_localization[button_read]"
+                                                   value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'button_read' ) ); ?>"
+                                                   placeholder="<?php esc_attr_e( 'Read more', 'woo-product-bundle' ); ?>"/>
+                                            <span class="description"><?php esc_html_e( 'For un-purchasable bundle.', 'woo-product-bundle' ); ?></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Single product page', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[button_single]" class="regular-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'button_single' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Add to cart', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr class="heading">
+                                    <th colspan="2">
+										<?php esc_html_e( 'Alert', 'woo-product-bundle' ); ?>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Require selection', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_selection]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'alert_selection' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Please select a purchasable variation for [name] before adding this bundle to the cart.', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Enforce a selection', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_empty]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'alert_empty' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Please choose at least one product before adding this bundle to the cart.', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Minimum required', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_min]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'alert_min' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Please choose at least a total quantity of [min] products before adding this bundle to the cart.', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Maximum reached', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_max]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_localization( 'alert_max' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'Sorry, you can only choose at max a total quantity of [max] products before adding this bundle to the cart.', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr class="submit">
+                                    <th colspan="2">
+                                        <input type="submit" name="submit" class="button button-primary"
+                                               value="<?php esc_attr_e( 'Update Options', 'woo-product-bundle' ); ?>"/>
+                                        <input type="hidden" name="action" value="update"/>
+                                        <input type="hidden" name="page_options" value="woosb_localization"/>
                                     </th>
                                 </tr>
                             </table>
@@ -956,8 +879,8 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                         <div class="wpclever_settings_page_content_text">
                             <p>
                                 Get the Premium Version just $29! <a
-                                        href="https://wpclever.net/downloads/woocommerce-product-bundle?utm_source=pro&utm_medium=woosb&utm_campaign=wporg"
-                                        target="_blank">https://wpclever.net/downloads/woocommerce-product-bundle</a>
+                                        href="https://wpclever.net/downloads/product-bundles?utm_source=pro&utm_medium=woosb&utm_campaign=wporg"
+                                        target="_blank">https://wpclever.net/downloads/product-bundles</a>
                             </p>
                             <p><strong>Extra features for Premium Version:</strong></p>
                             <ul style="margin-bottom: 0">
@@ -972,45 +895,159 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			<?php
 		}
 
+		function woosb_search_settings() {
+			?>
+            <tr>
+                <th><?php esc_html_e( 'Search limit', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <input name="_woosb_search_limit" type="number" min="1"
+                           max="500"
+                           value="<?php echo get_option( '_woosb_search_limit', 10 ); ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Search by SKU', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <select name="_woosb_search_sku">
+                        <option
+                                value="yes" <?php echo( get_option( '_woosb_search_sku', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
+                        </option>
+                        <option
+                                value="no" <?php echo( get_option( '_woosb_search_sku', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Search by ID', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <select name="_woosb_search_id">
+                        <option
+                                value="yes" <?php echo( get_option( '_woosb_search_id', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
+                        </option>
+                        <option
+                                value="no" <?php echo( get_option( '_woosb_search_id', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
+                        </option>
+                    </select>
+                    <span class="description"><?php esc_html_e( 'Search by ID when entering the numeric only.', 'woo-product-bundle' ); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Search exact', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <select name="_woosb_search_exact">
+                        <option
+                                value="yes" <?php echo( get_option( '_woosb_search_exact', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
+                        </option>
+                        <option
+                                value="no" <?php echo( get_option( '_woosb_search_exact', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
+                        </option>
+                    </select>
+                    <span class="description"><?php esc_html_e( 'Match whole product title or content?', 'woo-product-bundle' ); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Search sentence', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <select name="_woosb_search_sentence">
+                        <option
+                                value="yes" <?php echo( get_option( '_woosb_search_sentence', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
+                        </option>
+                        <option
+                                value="no" <?php echo( get_option( '_woosb_search_sentence', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
+                        </option>
+                    </select>
+                    <span class="description"><?php esc_html_e( 'Do a phrase search?', 'woo-product-bundle' ); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Accept same products', 'woo-product-bundle' ); ?></th>
+                <td>
+                    <select name="_woosb_search_same">
+                        <option
+                                value="yes" <?php echo( get_option( '_woosb_search_same', 'no' ) === 'yes' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'Yes', 'woo-product-bundle' ); ?>
+                        </option>
+                        <option
+                                value="no" <?php echo( get_option( '_woosb_search_same', 'no' ) === 'no' ? 'selected' : '' ); ?>>
+							<?php esc_html_e( 'No', 'woo-product-bundle' ); ?>
+                        </option>
+                    </select>
+                    <span class="description"><?php esc_html_e( 'If yes, a product can be added many times.', 'woo-product-bundle' ); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><?php esc_html_e( 'Product types', 'woo-product-bundle' ); ?></th>
+                <td>
+					<?php
+					$search_types  = get_option( '_woosb_search_types', array( 'all' ) );
+					$product_types = wc_get_product_types();
+					$product_types = array_merge( array( 'all' => esc_html__( 'All', 'woo-product-bundle' ) ), $product_types );
+
+					$key_pos = array_search( 'variable', array_keys( $product_types ) );
+
+					if ( $key_pos !== false ) {
+						$key_pos ++;
+						$second_array  = array_splice( $product_types, $key_pos );
+						$product_types = array_merge( $product_types, array( 'variation' => esc_html__( ' → Variation', 'woo-product-bundle' ) ), $second_array );
+					}
+
+					echo '<select name="_woosb_search_types[]" multiple style="width: 200px; height: 150px;">';
+
+					foreach ( $product_types as $key => $name ) {
+						echo '<option value="' . esc_attr( $key ) . '" ' . ( in_array( $key, $search_types, true ) ? 'selected' : '' ) . '>' . esc_html( $name ) . '</option>';
+					}
+
+					echo '</select>';
+					?>
+                </td>
+            </tr>
+			<?php
+		}
+
 		function woosb_wp_enqueue_scripts() {
-			wp_enqueue_style( 'woosb-frontend', WOOSB_URI . 'assets/css/frontend.css' );
+			wp_enqueue_style( 'woosb-frontend', WOOSB_URI . 'assets/css/frontend.css', array(), WOOSB_VERSION );
 			wp_enqueue_script( 'woosb-frontend', WOOSB_URI . 'assets/js/frontend.js', array( 'jquery' ), WOOSB_VERSION, true );
 
-			$saved_text = trim( get_option( '_woosb_bundle_saved_text', esc_html__( '(saved [d])', 'woo-product-bundle' ) ) );
-
-			if ( empty( $saved_text ) ) {
-				$saved_text = esc_html__( '(saved [d])', 'woo-product-bundle' );
-			}
-
 			wp_localize_script( 'woosb-frontend', 'woosb_vars', array(
-					'version'                  => WOOSB_VERSION,
-					'alert_selection'          => esc_html__( 'Please select some product options for [name] before adding this bundle to the cart.', 'woo-product-bundle' ),
-					'alert_empty'              => esc_html__( 'Please choose at least one product before adding this bundle to the cart.', 'woo-product-bundle' ),
-					'alert_min'                => esc_html__( 'Please choose at least [min] in the whole products before adding this bundle to the cart.', 'woo-product-bundle' ),
-					'alert_max'                => esc_html__( 'Please choose maximum [max] in the whole products before adding this bundle to the cart.', 'woo-product-bundle' ),
-					'price_text'               => get_option( '_woosb_bundle_price_text', '' ),
-					'saved_text'               => $saved_text,
-					'container_selector'       => apply_filters( 'woosb_container_selector', '' ),
+					'price_decimals'           => wc_get_price_decimals(),
+					'price_format'             => get_woocommerce_price_format(),
+					'price_thousand_separator' => wc_get_price_thousand_separator(),
+					'price_decimal_separator'  => wc_get_price_decimal_separator(),
+					'currency_symbol'          => get_woocommerce_currency_symbol(),
 					'change_image'             => get_option( '_woosb_change_image', 'yes' ),
 					'bundled_price'            => get_option( '_woosb_bundled_price', 'price' ),
 					'bundled_price_from'       => get_option( '_woosb_bundled_price_from', 'sale_price' ),
 					'change_price'             => get_option( '_woosb_change_price', 'yes' ),
 					'price_selector'           => get_option( '_woosb_change_price_custom', '' ),
-					'price_format'             => get_woocommerce_price_format(),
-					'price_decimals'           => wc_get_price_decimals(),
-					'price_thousand_separator' => wc_get_price_thousand_separator(),
-					'price_decimal_separator'  => wc_get_price_decimal_separator(),
-					'currency_symbol'          => get_woocommerce_currency_symbol()
+					'saved_text'               => WPCleverWoosb_Helper::woosb_localization( 'saved', esc_html__( '(saved [d])', 'woo-product-bundle' ) ),
+					'price_text'               => WPCleverWoosb_Helper::woosb_localization( 'total', esc_html__( 'Bundle price:', 'woo-product-bundle' ) ),
+					'alert_selection'          => WPCleverWoosb_Helper::woosb_localization( 'alert_selection', esc_html__( 'Please select a purchasable variation for [name] before adding this bundle to the cart.', 'woo-product-bundle' ) ),
+					'alert_empty'              => WPCleverWoosb_Helper::woosb_localization( 'alert_empty', esc_html__( 'Please choose at least one product before adding this bundle to the cart.', 'woo-product-bundle' ) ),
+					'alert_min'                => WPCleverWoosb_Helper::woosb_localization( 'alert_min', esc_html__( 'Please choose at least a total quantity of [min] products before adding this bundle to the cart.', 'woo-product-bundle' ) ),
+					'alert_max'                => WPCleverWoosb_Helper::woosb_localization( 'alert_max', esc_html__( 'Sorry, you can only choose at max a total quantity of [max] products before adding this bundle to the cart.', 'woo-product-bundle' ) )
 				)
 			);
 		}
 
 		function woosb_admin_enqueue_scripts() {
 			wp_enqueue_style( 'hint', WOOSB_URI . 'assets/css/hint.css' );
-			wp_enqueue_style( 'woosb-backend', WOOSB_URI . 'assets/css/backend.css' );
-			wp_enqueue_script( 'dragarrange', WOOSB_URI . 'assets/js/drag-arrange.js', array( 'jquery' ), WOOSB_VERSION, true );
-			wp_enqueue_script( 'woosb-backend', WOOSB_URI . 'assets/js/backend.js', array( 'jquery' ), WOOSB_VERSION, true );
+			wp_enqueue_style( 'woosb-backend', WOOSB_URI . 'assets/css/backend.css', array(), WOOSB_VERSION );
+			wp_enqueue_script( 'woosb-backend', WOOSB_URI . 'assets/js/backend.js', array(
+				'jquery',
+				'jquery-ui-dialog',
+				'jquery-ui-sortable'
+			), WOOSB_VERSION, true );
 			wp_localize_script( 'woosb-backend', 'woosb_vars', array(
+					'use_sku'                  => apply_filters( 'woosb_use_sku', false ),
 					'price_decimals'           => wc_get_price_decimals(),
 					'price_thousand_separator' => wc_get_price_thousand_separator(),
 					'price_decimal_separator'  => wc_get_price_decimal_separator()
@@ -1019,9 +1056,9 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_action_links( $links, $file ) {
-			$settings_link    = '<a href="' . admin_url( 'admin.php?page=wpclever-woosb&tab=settings' ) . '">' . esc_html__( 'Settings', 'woo-product-bundle' ) . '</a>';
+			$settings         = '<a href="' . admin_url( 'admin.php?page=wpclever-woosb&tab=settings' ) . '">' . esc_html__( 'Settings', 'woo-product-bundle' ) . '</a>';
 			$links['premium'] = '<a href="' . admin_url( 'admin.php?page=wpclever-woosb&tab=premium' ) . '">' . esc_html__( 'Premium Version', 'woo-product-bundle' ) . '</a>';
-			array_unshift( $links, $settings_link );
+			array_unshift( $links, $settings );
 
 			return (array) $links;
 		}
@@ -1030,7 +1067,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			if ( plugin_basename( WOOSB_DIR . '/' . basename( WOOSB_FILE ) ) === $file ) {
 				$row_meta = array(
 					'docs'    => '<a href="' . esc_url( WOOSB_DOCS ) . '" target="_blank">' . esc_html__( 'Docs', 'woo-product-bundle' ) . '</a>',
-					'support' => '<a href="' . esc_url( WOOSB_SUPPORT ) . '" target="_blank">' . esc_html__( 'Support', 'woo-product-bundle' ) . '</a>',
+					'support' => '<a href="' . esc_url( WOOSB_DISCUSSION ) . '" target="_blank">' . esc_html__( 'Community support', 'woo-product-bundle' ) . '</a>',
 				);
 
 				return array_merge( $links, $row_meta );
@@ -1044,9 +1081,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			$cart_count = get_option( '_woosb_cart_contents_count', 'bundle' );
 
 			if ( $cart_count !== 'both' ) {
-				$cart_contents = WC()->cart->cart_contents;
-
-				foreach ( $cart_contents as $cart_item_key => $cart_item ) {
+				foreach ( WC()->cart->get_cart() as $cart_item ) {
 					if ( ( $cart_count === 'bundled_products' ) && ! empty( $cart_item['woosb_ids'] ) ) {
 						$count -= $cart_item['quantity'];
 					}
@@ -1091,25 +1126,35 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_cart_item_name( $name, $cart_item ) {
-			if ( isset( $cart_item['woosb_parent_id'] ) && ! empty( $cart_item['woosb_parent_id'] ) && ( get_option( '_woosb_hide_bundle_name', 'no' ) === 'no' ) ) {
+			if ( ! empty( $cart_item['woosb_parent_id'] ) && ( get_option( '_woosb_hide_bundle_name', 'no' ) === 'no' ) ) {
+				$parent_id = apply_filters( 'woosb_item_id', $cart_item['woosb_parent_id'] );
+
 				if ( ( strpos( $name, '</a>' ) !== false ) && ( get_option( '_woosb_bundled_link', 'yes' ) !== 'no' ) ) {
-					return '<a href="' . get_permalink( $cart_item['woosb_parent_id'] ) . '">' . get_the_title( $cart_item['woosb_parent_id'] ) . '</a> &rarr; ' . $name;
+					return '<a href="' . get_permalink( $parent_id ) . '">' . get_the_title( $parent_id ) . '</a> &rarr; ' . $name;
 				}
 
-				return get_the_title( $cart_item['woosb_parent_id'] ) . ' &rarr; ' . strip_tags( $name );
+				return get_the_title( $parent_id ) . ' &rarr; ' . strip_tags( $name );
 			}
 
 			return $name;
 		}
 
 		function woosb_cart_item_removed( $cart_item_key, $cart ) {
+			$new_keys = [];
+
+			foreach ( $cart->cart_contents as $cart_key => $cart_item ) {
+				if ( ! empty( $cart_item['woosb_key'] ) ) {
+					$new_keys[ $cart_key ] = $cart_item['woosb_key'];
+				}
+			}
+
 			if ( isset( $cart->removed_cart_contents[ $cart_item_key ]['woosb_keys'] ) ) {
 				$keys = $cart->removed_cart_contents[ $cart_item_key ]['woosb_keys'];
 
 				foreach ( $keys as $key ) {
 					$cart->remove_cart_item( $key );
 
-					if ( ( $new_key = array_search( $key, array_column( $cart->cart_contents, 'woosb_key', 'key' ) ) ) !== false ) {
+					if ( $new_key = array_search( $key, $new_keys ) ) {
 						$cart->remove_cart_item( $new_key );
 					}
 				}
@@ -1127,11 +1172,14 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_add_to_cart_validation( $passed, $product_id ) {
+			if ( isset( $_REQUEST['order_again'] ) ) {
+				return $passed;
+			}
+
 			$_product = wc_get_product( $product_id );
 
 			if ( $_product && $_product->is_type( 'woosb' ) ) {
 				if ( isset( $_REQUEST['woosb_ids'] ) ) {
-					//isset( $_REQUEST['woosb_ids'] ) && ( $_product->is_optional() || $_product->has_variables() )
 					$ids = WPCleverWoosb_Helper::woosb_clean_ids( $_REQUEST['woosb_ids'] );
 					$_product->build_items( $ids );
 				}
@@ -1244,12 +1292,16 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_add_to_cart_items( $items, $cart_item_key, $product_id, $quantity ) {
+			if ( apply_filters( 'woosb_exclude_bundled', false ) ) {
+				return;
+			}
+
 			$items = WPCleverWoosb_Helper::woosb_minify_items( $items );
 
 			$fixed_price           = WC()->cart->cart_contents[ $cart_item_key ]['data']->is_fixed_price();
 			$discount_amount       = WC()->cart->cart_contents[ $cart_item_key ]['data']->get_discount_amount();
 			$discount_percentage   = WC()->cart->cart_contents[ $cart_item_key ]['data']->get_discount();
-			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' );
+			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes';
 
 			// save current key associated with woosb_parent_key
 			WC()->cart->cart_contents[ $cart_item_key ]['woosb_key']             = $cart_item_key;
@@ -1259,28 +1311,37 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 			if ( is_array( $items ) && ( count( $items ) > 0 ) ) {
 				foreach ( $items as $item ) {
-					$_id      = $item['id'];
-					$_qty     = $item['qty'];
+					$_id        = $item['id'];
+					$_qty       = $item['qty'];
+					$_variation = $item['attrs'];
+
 					$_product = wc_get_product( $item['id'] );
 
 					if ( ! $_product || ( $_qty <= 0 ) || in_array( $_product->get_type(), self::$_types, true ) ) {
 						continue;
 					}
 
+					if ( ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) && $exclude_unpurchasable ) {
+						// exclude unpurchasable
+						continue;
+					}
+
 					$_variation_id = 0;
-					$_variation    = array();
-					$_price        = WPCleverWoosb_Helper::woosb_get_price( $_product, 'min' );
+					$_price        = (float) WPCleverWoosb_Helper::woosb_get_price( $_product );
 
 					if ( $_product instanceof WC_Product_Variation ) {
 						// ensure we don't add a variation to the cart directly by variation ID
 						$_variation_id = $_id;
 						$_id           = $_product->get_parent_id();
-						$_variation    = $_product->get_variation_attributes();
+
+						if ( empty( $_variation ) ) {
+							$_variation = $_product->get_variation_attributes();
+						}
 					}
 
 					if ( ! $fixed_price && $discount_percentage ) {
 						$_price *= (float) ( 100 - $discount_percentage ) / 100;
-						//$_price = round( $_price, wc_get_price_decimals() );
+						$_price = apply_filters( 'woosb_item_price_add_to_cart', $_price, $item );
 					}
 
 					// add to cart
@@ -1297,7 +1358,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					$_key = WC()->cart->add_to_cart( $_id, $_qty * $quantity, $_variation_id, $_variation, $_data );
 
 					if ( empty( $_key ) ) {
-						if ( $exclude_unpurchasable !== 'yes' ) {
+						if ( ! $exclude_unpurchasable ) {
 							// can't add the bundled product
 							if ( isset( WC()->cart->cart_contents[ $cart_item_key ]['woosb_keys'] ) ) {
 								$keys = WC()->cart->cart_contents[ $cart_item_key ]['woosb_keys'];
@@ -1326,11 +1387,11 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_get_cart_item_from_session( $cart_item, $session_values ) {
-			if ( isset( $session_values['woosb_ids'] ) && ! empty( $session_values['woosb_ids'] ) ) {
+			if ( ! empty( $session_values['woosb_ids'] ) ) {
 				$cart_item['woosb_ids'] = $session_values['woosb_ids'];
 			}
 
-			if ( isset( $session_values['woosb_parent_id'] ) ) {
+			if ( ! empty( $session_values['woosb_parent_id'] ) ) {
 				$cart_item['woosb_parent_id']  = $session_values['woosb_parent_id'];
 				$cart_item['woosb_parent_key'] = $session_values['woosb_parent_key'];
 				$cart_item['woosb_qty']        = $session_values['woosb_qty'];
@@ -1339,36 +1400,24 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			return $cart_item;
 		}
 
-		function woosb_get_cart_contents( $cart_contents ) {
-			foreach ( $cart_contents as $cart_item_key => $cart_item ) {
+		function woosb_before_mini_cart_contents() {
+			WC()->cart->calculate_totals();
+		}
+
+		function woosb_before_calculate_totals( $cart_object ) {
+			if ( ! defined( 'DOING_AJAX' ) && is_admin() ) {
+				// This is necessary for WC 3.0+
+				return;
+			}
+
+			foreach ( $cart_object->cart_contents as $cart_item_key => $cart_item ) {
 				// bundled products
-				if ( ! empty( $cart_item['woosb_parent_id'] ) ) {
-					// remove orphaned bundled products
-					if ( isset( $cart_item['woosb_parent_key'] ) && ! empty( $cart_item['woosb_parent_key'] ) ) {
-						$parent_key = $cart_item['woosb_parent_key'];
-
-						if ( ! isset( $cart_contents[ $parent_key ] ) && ! ( $cart_item['data'] instanceof WC_Product_Subscription ) && ! ( $cart_item['data'] instanceof WC_Product_Subscription_Variation ) ) {
-							unset( $cart_contents[ $cart_item_key ] );
-							continue;
-						}
-					}
-
+				if ( ! empty( $cart_item['woosb_parent_key'] ) ) {
 					// set price
 					if ( isset( $cart_item['woosb_fixed_price'] ) && $cart_item['woosb_fixed_price'] ) {
 						$cart_item['data']->set_price( 0 );
 					} elseif ( isset( $cart_item['woosb_price'], $cart_item['woosb_discount_amount'], $cart_item['woosb_discount'] ) && ( $cart_item['woosb_discount_amount'] || $cart_item['woosb_discount'] ) ) {
 						$cart_item['data']->set_price( $cart_item['woosb_price'] );
-					}
-
-					// sync quantity
-					if ( ! empty( $cart_item['woosb_parent_key'] ) && ! empty( $cart_item['woosb_qty'] ) ) {
-						$parent_key = $cart_item['woosb_parent_key'];
-
-						if ( isset( $cart_contents[ $parent_key ] ) ) {
-							$cart_contents[ $cart_item_key ]['quantity'] = $cart_item['woosb_qty'] * $cart_contents[ $parent_key ]['quantity'];
-						} elseif ( ( $parent_new_key = array_search( $parent_key, array_column( $cart_contents, 'woosb_key', 'key' ) ) ) !== false ) {
-							$cart_contents[ $cart_item_key ]['quantity'] = $cart_item['woosb_qty'] * $cart_contents[ $parent_new_key ]['quantity'];
-						}
 					}
 				}
 
@@ -1385,10 +1434,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 						$bundle_price = 0;
 
 						foreach ( $cart_item['woosb_keys'] as $key ) {
-							if ( isset( $cart_contents[ $key ] ) ) {
-								$bundle_price += wc_get_price_to_display( $cart_contents[ $key ]['data'], array(
-									'qty'   => $cart_contents[ $key ]['woosb_qty'],
-									'price' => $cart_contents[ $key ]['woosb_price']
+							if ( isset( $cart_object->cart_contents[ $key ], $cart_object->cart_contents[ $key ]['data'] ) ) {
+								$bundle_price += wc_get_price_to_display( $cart_object->cart_contents[ $key ]['data'], array(
+									'qty'   => $cart_object->cart_contents[ $key ]['woosb_qty'],
+									'price' => $cart_object->cart_contents[ $key ]['woosb_price']
 								) );
 							}
 						}
@@ -1398,11 +1447,47 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 						}
 
 						if ( $cart_item['quantity'] > 0 ) {
-							$cart_contents[ $cart_item_key ]['woosb_price'] = round( $bundle_price, wc_get_price_decimals() );
+							WC()->cart->cart_contents[ $cart_item_key ]['woosb_price'] = round( $bundle_price, wc_get_price_decimals() );
 						}
 					}
 				}
 			}
+		}
+
+		function woosb_get_cart_contents( $cart_contents ) {
+			$new_keys = [];
+
+			foreach ( $cart_contents as $cart_item_key => $cart_item ) {
+				if ( ! empty( $cart_item['woosb_key'] ) ) {
+					$new_keys[ $cart_item_key ] = $cart_item['woosb_key'];
+				}
+			}
+
+			foreach ( $cart_contents as $cart_item_key => $cart_item ) {
+				if ( ! empty( $cart_item['woosb_parent_key'] ) ) {
+					$parent_key     = $cart_item['woosb_parent_key'];
+					$parent_new_key = array_search( $parent_key, $new_keys );
+
+					// remove orphaned bundled products
+					if ( ! $parent_new_key || ! isset( $cart_contents[ $parent_new_key ] ) ) {
+						unset( $cart_contents[ $cart_item_key ] );
+						continue;
+					}
+
+					if ( ( $parent_new_key === $parent_key ) && isset( $cart_contents[ $parent_key ]['woosb_keys'] ) && ! in_array( $cart_item_key, $cart_contents[ $parent_key ]['woosb_keys'] ) ) {
+						unset( $cart_contents[ $cart_item_key ] );
+						continue;
+					}
+
+					// sync quantity
+					if ( ! empty( $cart_item['woosb_qty'] ) && isset( $cart_contents[ $parent_new_key ] ) ) {
+						WC()->cart->cart_contents[ $cart_item_key ]['quantity'] = $cart_item['woosb_qty'] * $cart_contents[ $parent_new_key ]['quantity'];
+					}
+				}
+			}
+
+			// run this filter once
+			remove_filter( 'woocommerce_get_cart_contents', array( $this, 'woosb_get_cart_contents' ) );
 
 			return $cart_contents;
 		}
@@ -1457,7 +1542,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			return $visible;
 		}
 
-		function woosb_item_class( $class, $cart_item ) {
+		function woosb_cart_item_class( $class, $cart_item ) {
 			if ( isset( $cart_item['woosb_parent_id'] ) ) {
 				$class .= ' woosb-cart-item woosb-cart-child woosb-item-child';
 			} elseif ( isset( $cart_item['woosb_ids'] ) ) {
@@ -1619,7 +1704,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			if ( isset( WC()->cart->cart_contents[ $cart_item_key ]['woosb_parent_key'] ) ) {
 				$parent_key = WC()->cart->cart_contents[ $cart_item_key ]['woosb_parent_key'];
 
-				if ( isset( WC()->cart->cart_contents[ $parent_key ] ) || array_search( $parent_key, array_column( WC()->cart->cart_contents, 'woosb_key' ) ) !== false ) {
+				if ( isset( WC()->cart->cart_contents[ $parent_key ] ) || array_search( $parent_key, array_column( WC()->cart->cart_contents, 'woosb_key', 'key' ) ) ) {
 					return '';
 				}
 			}
@@ -1636,9 +1721,22 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			return $quantity;
 		}
 
+		function woosb_update_search_settings() {
+			update_option( '_woosb_search_limit', (int) sanitize_text_field( $_POST['limit'] ) );
+			update_option( '_woosb_search_sku', sanitize_text_field( $_POST['sku'] ) );
+			update_option( '_woosb_search_id', sanitize_text_field( $_POST['id'] ) );
+			update_option( '_woosb_search_exact', sanitize_text_field( $_POST['exact'] ) );
+			update_option( '_woosb_search_sentence', sanitize_text_field( $_POST['sentence'] ) );
+			update_option( '_woosb_search_same', sanitize_text_field( $_POST['same'] ) );
+			update_option( '_woosb_search_types', (array) $_POST['types'] );
+
+			die();
+		}
+
 		function woosb_get_search_results() {
 			$keyword   = sanitize_text_field( $_POST['keyword'] );
 			$added_ids = explode( ',', WPCleverWoosb_Helper::woosb_clean_ids( $_POST['ids'] ) );
+			$types     = get_option( '_woosb_search_types', array( 'all' ) );
 
 			if ( ( get_option( '_woosb_search_id', 'no' ) === 'yes' ) && is_numeric( $keyword ) ) {
 				// search by id
@@ -1654,6 +1752,22 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					's'              => $keyword,
 					'posts_per_page' => get_option( '_woosb_search_limit', 10 )
 				);
+
+				if ( ! empty( $types ) && ! in_array( 'all', $types, true ) ) {
+					$product_types = $types;
+
+					if ( in_array( 'variation', $types, true ) ) {
+						$product_types[] = 'variable';
+					}
+
+					$query_args['tax_query'] = array(
+						array(
+							'taxonomy' => 'product_type',
+							'field'    => 'slug',
+							'terms'    => $product_types,
+						),
+					);
+				}
 
 				if ( get_option( '_woosb_search_same', 'no' ) !== 'yes' ) {
 					$exclude_ids = array();
@@ -1682,7 +1796,21 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 						continue;
 					}
 
-					$this->woosb_product_data_li( $_product, 1, true );
+					if ( ! $_product->is_type( 'variable' ) || in_array( 'variable', $types, true ) || in_array( 'all', $types, true ) ) {
+						$this->woosb_product_data_li( $_product, 1, true );
+					}
+
+					if ( $_product->is_type( 'variable' ) && ( empty( $types ) || in_array( 'all', $types, true ) || in_array( 'variation', $types, true ) ) ) {
+						// show all children
+						$children = $_product->get_children();
+
+						if ( is_array( $children ) && count( $children ) > 0 ) {
+							foreach ( $children as $child ) {
+								$child_product = wc_get_product( $child );
+								$this->woosb_product_data_li( $child_product, 1, true );
+							}
+						}
+					}
 				}
 
 				echo '</ul>';
@@ -1705,19 +1833,20 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					return;
 				}
 
-				unset( $query->query['s'], $query->query_vars['s'] );
-				$query->query['post__in'] = array();
+				$posts = array();
 
 				foreach ( $ids as $id ) {
 					$post = get_post( $id );
 
 					if ( $post->post_type === 'product_variation' ) {
-						$query->query['post__in'][]      = $post->post_parent;
-						$query->query_vars['post__in'][] = $post->post_parent;
+						$posts[] = $post->post_parent;
 					} else {
-						$query->query_vars['post__in'][] = $post->ID;
+						$posts[] = $post->ID;
 					}
 				}
+
+				unset( $query->query['s'], $query->query_vars['s'] );
+				$query->set( 'post__in', $posts );
 			}
 		}
 
@@ -1818,11 +1947,25 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			}
 			?>
             <div id='woosb_settings' class='panel woocommerce_options_panel woosb_table'>
+                <div id="woosb_search_settings" style="display: none"
+                     data-title="<?php esc_html_e( 'Search settings', 'woo-product-bundle' ); ?>">
+                    <table>
+						<?php self::woosb_search_settings(); ?>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <button id="woosb_search_settings_update" class="button button-primary">
+									<?php esc_html_e( 'Update Options', 'woo-product-bundle' ); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <table>
                     <tr>
                         <th><?php esc_html_e( 'Search', 'woo-product-bundle' ); ?> (<a
                                     href="<?php echo admin_url( 'admin.php?page=wpclever-woosb&tab=settings#search' ); ?>"
-                                    target="_blank"><?php esc_html_e( 'settings', 'woo-product-bundle' ); ?></a>)
+                                    id="woosb_search_settings_btn"><?php esc_html_e( 'settings', 'woo-product-bundle' ); ?></a>)
                         </th>
                         <td>
                             <div class="w100">
@@ -1830,7 +1973,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                       id="woosb_loading"
                                       style="display: none;"><?php esc_html_e( 'searching...', 'woo-product-bundle' ); ?></span>
                                 <input type="search" id="woosb_keyword"
-                                       placeholder="<?php esc_html_e( 'Type any keyword to search', 'woo-product-bundle' ); ?>"/>
+                                       placeholder="<?php esc_attr_e( 'Type any keyword to search', 'woo-product-bundle' ); ?>"/>
                                 <div id="woosb_results" class="woosb_results" style="display: none;"></div>
                             </div>
                         </td>
@@ -1877,7 +2020,8 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                         <td>
                             <input id="woosb_disable_auto_price" name="woosb_disable_auto_price"
                                    type="checkbox" <?php echo( get_post_meta( $post_id, 'woosb_disable_auto_price', true ) === 'on' ? 'checked' : '' ); ?>/>
-                            <label for="woosb_disable_auto_price"><?php esc_html_e( 'Disable auto calculate price.', 'woo-product-bundle' ); ?></label> <?php echo sprintf( esc_html__( 'If checked, %s click here to set price %s by manually.', 'woo-product-bundle' ), '<a id="woosb_set_regular_price">', '</a>' ); ?>
+                            <label for="woosb_disable_auto_price"><?php esc_html_e( 'Disable auto calculate price.', 'woo-product-bundle' ); ?></label>
+                            <label><?php echo sprintf( esc_html__( 'If checked, %s click here to set price %s by manually.', 'woo-product-bundle' ), '<a id="woosb_set_regular_price">', '</a>' ); ?></label>
                         </td>
                     </tr>
                     <tr class="woosb_tr_space woosb_tr_show_if_auto_price">
@@ -1986,6 +2130,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 		function woosb_product_data_li( $product, $qty = 1, $search = false ) {
 			$product_id    = $product->get_id();
+			$product_sku   = $product->get_sku();
 			$product_class = ! $product->is_in_stock() ? 'out-of-stock' : '';
 
 			if ( in_array( $product->get_type(), self::$_types, true ) ) {
@@ -2017,12 +2162,15 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			$product_name = apply_filters( 'woosb_item_product_name', $product->get_name(), $product );
 
 			if ( $product->is_type( 'variation' ) ) {
-				$_product_edit_link = get_edit_post_link( $product->get_parent_id() );
+				$edit_link = get_edit_post_link( $product->get_parent_id() );
 			} else {
-				$_product_edit_link = get_edit_post_link( $product_id );
+				$edit_link = get_edit_post_link( $product_id );
 			}
 
-			echo '<li class="' . esc_attr( trim( $product_class ) ) . '" data-id="' . esc_attr( $product_id ) . '" data-price="' . esc_attr( $price ) . '" data-price-max="' . esc_attr( $price_max ) . '"><span class="move"></span><span class="qty hint--right" aria-label="' . esc_html__( 'Default quantity', 'woo-product-bundle' ) . '">' . $qty_input . '</span> <span class="data">' . ( $product->get_status() === 'private' ? '<span class="info">private</span> ' : '' ) . '<span class="name">' . strip_tags( $product_name ) . '</span> <span class="info">' . $product->get_price_html() . '</span> ' . ( $product->is_sold_individually() ? '<span class="info">' . esc_html__( 'sold individually', 'woo-product-bundle' ) . '</span> ' : '' ) . '</span> <span class="type"><a href="' . $_product_edit_link . '" target="_blank">' . $product->get_type() . '<br/>#' . $product_id . '</a></span> ' . $remove_btn . '</li>';
+			// product type & id
+			$product_info = apply_filters( 'woosb_item_product_info', $product->get_type() . '<br/>#' . $product_id, $product );
+
+			echo '<li class="' . esc_attr( trim( $product_class ) ) . '" data-sku="' . esc_attr( $product_sku ) . '" data-id="' . esc_attr( $product_id ) . '" data-price="' . esc_attr( $price ) . '" data-price-max="' . esc_attr( $price_max ) . '"><span class="move"></span><span class="qty hint--right" aria-label="' . esc_html__( 'Default quantity', 'woo-product-bundle' ) . '">' . $qty_input . '</span> <span class="data">' . ( $product->get_status() === 'private' ? '<span class="info">private</span> ' : '' ) . '<span class="name">' . strip_tags( $product_name ) . '</span> <span class="info">' . $product->get_price_html() . '</span> ' . ( $product->is_sold_individually() ? '<span class="info">' . esc_html__( 'sold individually', 'woo-product-bundle' ) . '</span> ' : '' ) . '</span> <span class="type"><a href="' . $edit_link . '" target="_blank">' . $product_info . '</a></span> ' . $remove_btn . '</li>';
 		}
 
 		function woosb_delete_option_fields( $post_id ) {
@@ -2032,7 +2180,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_save_option_fields( $post_id ) {
-			if ( isset( $_POST['woosb_ids'] ) && ! empty( $_POST['woosb_ids'] ) ) {
+			if ( ! empty( $_POST['woosb_ids'] ) ) {
 				update_post_meta( $post_id, 'woosb_ids', WPCleverWoosb_Helper::woosb_clean_ids( $_POST['woosb_ids'] ) );
 			}
 
@@ -2111,6 +2259,16 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			}
 		}
 
+		function woosb_product_price_class( $class ) {
+			global $product;
+
+			if ( $product && $product->is_type( 'woosb' ) ) {
+				$class .= ' woosb-price-' . $product->get_id();
+			}
+
+			return $class;
+		}
+
 		function woosb_add_to_cart_form() {
 			global $product;
 
@@ -2137,7 +2295,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			global $product;
 
 			if ( $product->is_type( 'woosb' ) && ( $ids = $product->get_ids() ) ) {
-				echo '<input name="woosb_ids" class="woosb_ids woosb-ids" type="hidden" value="' . esc_attr( $ids ) . '"/>';
+				echo '<input name="woosb_ids" class="woosb-ids woosb-ids-' . esc_attr( $product->get_id() ) . '" type="hidden" value="' . esc_attr( $ids ) . '"/>';
 			}
 		}
 
@@ -2294,7 +2452,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 								if ( $discount_percentage ) {
 									// if haven't discount_amount, apply discount percentage
-									$price_sale += round( $_price * ( 100 - $discount_percentage ) / 100, wc_get_price_decimals() );
+									$price_sale += apply_filters( 'woosb_item_price_add_to_cart', $_price * ( 100 - $discount_percentage ) / 100, $item );
 								}
 							}
 						}
@@ -2315,15 +2473,15 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			return $price;
 		}
 
-		function woosb_order_again_cart_item_data( $data, $cart_item ) {
-			if ( isset( $cart_item['woosb_ids'] ) ) {
+		function woosb_order_again_item_data( $data, $item ) {
+			if ( $woosb_ids = $item->get_meta( '_woosb_ids' ) ) {
 				$data['woosb_order_again'] = 'yes';
-				$data['woosb_ids']         = $cart_item['woosb_ids'];
+				$data['woosb_ids']         = $woosb_ids;
 			}
 
-			if ( isset( $cart_item['woosb_parent_id'] ) ) {
+			if ( $woosb_parent_id = $item->get_meta( '_woosb_parent_id' ) ) {
 				$data['woosb_order_again'] = 'yes';
-				$data['woosb_parent_id']   = $cart_item['woosb_parent_id'];
+				$data['woosb_parent_id']   = $woosb_parent_id;
 			}
 
 			return $data;
@@ -2331,11 +2489,16 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 		function woosb_cart_loaded_from_session() {
 			foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item ) {
+				// remove bundled products first
 				if ( isset( $cart_item['woosb_order_again'], $cart_item['woosb_parent_id'] ) ) {
 					WC()->cart->remove_cart_item( $cart_item_key );
 				}
+			}
 
+			foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item ) {
+				// add bundled products again
 				if ( isset( $cart_item['woosb_order_again'], $cart_item['woosb_ids'] ) ) {
+					unset( WC()->cart->cart_contents[ $cart_item_key ]['woosb_order_again'] );
 					$cart_item['data']->build_items( $cart_item['woosb_ids'] );
 					$items = $cart_item['data']->get_items();
 					$this->woosb_add_to_cart_items( $items, $cart_item_key, $cart_item['product_id'], $cart_item['quantity'] );
@@ -2359,6 +2522,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 				return false;
 			}
 
+			if ( isset( $cart_item['woosb_parent_id'] ) && ( $parent = wc_get_product( $cart_item['woosb_parent_id'] ) ) ) {
+				return $coupon->is_valid_for_product( $parent );
+			}
+
 			return $valid;
 		}
 
@@ -2375,12 +2542,12 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			$fixed_price         = $product->is_fixed_price();
 			$discount_amount     = $product->get_discount_amount();
 			$discount_percentage = $product->get_discount();
-			$count               = 1;
+			$order               = 1;
 
-			if ( $items = $product->get_items() ) {
+			if ( $items = apply_filters( 'woosb_get_items', $product->get_items() ) ) {
 				do_action( 'woosb_before_wrap', $product );
 
-				echo '<div class="woosb-wrap woosb-wrap-' . esc_attr( $product_id ) . ' woosb-bundled" data-id="' . esc_attr( $product_id ) . '">';
+				echo '<div class="woosb-wrap woosb-bundled" data-id="' . esc_attr( $product_id ) . '">';
 
 				if ( $before_text = apply_filters( 'woosb_before_text', get_post_meta( $product_id, 'woosb_before_text', true ), $product_id ) ) {
 					echo '<div class="woosb-before-text woosb-text">' . do_shortcode( stripslashes( $before_text ) ) . '</div>';
@@ -2389,6 +2556,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 				do_action( 'woosb_before_table', $product );
 				?>
                 <div class="woosb-products"
+                     data-product-sku="<?php echo esc_attr( $product->get_sku() ); ?>"
                      data-discount-amount="<?php echo esc_attr( $discount_amount ); ?>"
                      data-discount="<?php echo esc_attr( $discount_percentage ); ?>"
                      data-fixed-price="<?php echo esc_attr( $fixed_price ? 'yes' : 'no' ); ?>"
@@ -2435,24 +2603,24 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 						$item_class = 'woosb-product';
 
-						if ( ( ! $_product->is_in_stock() || ! $_product->has_enough_stock( $_qty ) ) && ( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes' ) ) {
+						if ( ( ! $_product->is_in_stock() || ! $_product->has_enough_stock( $_qty ) || ! $_product->is_purchasable() ) && ( get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes' ) ) {
 							$_qty       = 0;
 							$item_class .= ' woosb-product-unpurchasable';
 						}
 						?>
-                        <div class="<?php echo esc_attr( $item_class ); ?>"
+                        <div class="<?php echo esc_attr( apply_filters( 'woosb_item_class', $item_class, $_product, $product, $order ) ); ?>"
                              data-name="<?php echo esc_attr( $_product->get_name() ); ?>"
                              data-id="<?php echo esc_attr( $_product->is_type( 'variable' ) ? 0 : $item['id'] ); ?>"
-                             data-price="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_get_price_to_display( $_product, 1, 'min' ) ); ?>"
+                             data-price="<?php echo esc_attr( WPCleverWoosb_Helper::woosb_get_price_to_display( $_product ) ); ?>"
                              data-price-suffix="<?php echo esc_attr( htmlentities( $_product->get_price_suffix() ) ); ?>"
-                             data-qty="<?php echo esc_attr( $_qty ); ?>" data-order="<?php echo esc_attr( $count ); ?>">
+                             data-qty="<?php echo esc_attr( $_qty ); ?>" data-order="<?php echo esc_attr( $order ); ?>">
 							<?php
-							do_action( 'woosb_before_item', $_product, $product, $count );
+							do_action( 'woosb_before_item', $_product, $product, $order );
 
 							if ( get_option( '_woosb_bundled_thumb', 'yes' ) !== 'no' ) { ?>
                                 <div class="woosb-thumb">
 									<?php if ( $_product->is_visible() && ( get_option( '_woosb_bundled_link', 'yes' ) !== 'no' ) ) {
-										echo '<a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-btn no-ajaxy" data-id="' . $item['id'] . '"' : '' ) . ' href="' . esc_url( $_product->get_permalink() ) . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>';
+										echo '<a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-link no-ajaxy" data-id="' . $item['id'] . '" data-context="woosb"' : '' ) . ' href="' . esc_url( $_product->get_permalink() ) . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>';
 									} ?>
                                     <div class="woosb-thumb-ori">
 										<?php echo apply_filters( 'woosb_item_thumbnail', $_product->get_image(), $_product ); ?>
@@ -2478,10 +2646,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 								$_product_name = apply_filters( 'woosb_item_product_name', $_product->get_name(), $_product );
 
 								if ( $_product->is_visible() && ( get_option( '_woosb_bundled_link', 'yes' ) !== 'no' ) ) {
-									$_name .= '<a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-btn no-ajaxy" data-id="' . $item['id'] . '"' : '' ) . ' href="' . esc_url( $_product->get_permalink() ) . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>';
+									$_name .= '<a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-link no-ajaxy" data-id="' . $item['id'] . '" data-context="woosb"' : '' ) . ' href="' . esc_url( $_product->get_permalink() ) . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>';
 								}
 
-								if ( $_product->is_in_stock() && $_product->has_enough_stock( $_qty ) ) {
+								if ( $_product->is_in_stock() && $_product->has_enough_stock( $_qty ) && $_product->is_purchasable() ) {
 									$_name .= $_product_name;
 								} else {
 									$_name .= '<s>' . $_product_name . '</s>';
@@ -2491,7 +2659,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 									$_name .= '</a>';
 								}
 
-								echo apply_filters( 'woosb_item_name', $_name, $_product, $product, $count );
+								echo apply_filters( 'woosb_item_name', $_name, $_product, $product, $order );
 								echo '</div>';
 
 								do_action( 'woosb_after_item_name', $_product );
@@ -2513,7 +2681,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 									$_max = 1;
 								}
 
-								if ( $_product->is_in_stock() ) {
+								if ( $_product->is_in_stock() && $_product->is_purchasable() ) {
 									echo '<div class="woosb-qty' . ( get_option( '_woosb_plus_minus', 'no' ) === 'yes' ? ' woosb-qty-plus-minus' : '' ) . '">';
 
 									if ( get_option( '_woosb_plus_minus', 'no' ) === 'yes' ) {
@@ -2524,7 +2692,13 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 									woocommerce_quantity_input( array(
 										'input_value' => $_qty,
 										'min_value'   => $_min,
-										'max_value'   => $_max
+										'max_value'   => $_max,
+										'woosb_qty'   => array(
+											'input_value' => $_qty,
+											'min_value'   => $_min,
+											'max_value'   => $_max
+										),
+										'input_name'  => 'woosb_qty_' . $order // compatible with WPC Product Quantity
 									), $_product );
 
 									if ( get_option( '_woosb_plus_minus', 'no' ) === 'yes' ) {
@@ -2535,8 +2709,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 									echo '</div>';
 								} else { ?>
                                     <div class="woosb-qty">
-                                        <input type="number" class="input-text qty text" value="0"
-                                               disabled/>
+                                        <input type="number" class="input-text qty text" value="0" disabled/>
                                     </div>
 								<?php }
 							}
@@ -2551,6 +2724,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 										if ( ! $product->is_fixed_price() && ( $discount_percentage = $product->get_discount() ) ) {
 											$_new_price     = true;
 											$_product_price = $_get_price * ( 100 - $discount_percentage ) / 100;
+											$_product_price = apply_filters( 'woosb_item_price_add_to_cart', $_product_price, $item );
 										} else {
 											$_new_price     = false;
 											$_product_price = $_get_price;
@@ -2595,11 +2769,11 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                 </div>
 							<?php }
 
-							do_action( 'woosb_after_item', $_product, $product, $count );
+							do_action( 'woosb_after_item', $_product, $product, $order );
 							?>
                         </div>
 						<?php
-						$count ++;
+						$order ++;
 					}
 					?>
 
@@ -2633,8 +2807,23 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			}
 
 			$product_id = $product->get_id();
+			$bundles    = $this->woosb_get_bundles( $product_id ) ?: array();
 
-			if ( $bundles = $this->woosb_get_bundles( $product_id ) ) {
+			if ( $product->is_type( 'variable' ) ) {
+				$children = $product->get_children();
+
+				if ( is_array( $children ) && count( $children ) > 0 ) {
+					foreach ( $children as $child ) {
+						if ( $child_bundles = $this->woosb_get_bundles( $child ) ) {
+							foreach ( $child_bundles as $child_bundle ) {
+								$bundles[] = $child_bundle;
+							}
+						}
+					}
+				}
+			}
+
+			if ( ! empty( $bundles ) ) {
 				echo '<div class="woosb-bundles">';
 
 				if ( $before_text = apply_filters( 'woosb_bundles_before_text', get_option( '_woosb_bundles_before_text' ) ) ) {
@@ -2644,10 +2833,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 				do_action( 'woosb_before_bundles', $product );
 				echo '<div class="woosb-products">';
 
-				foreach ( $bundles as $bundle ) {
+				foreach ( array_unique( $bundles ) as $bundle ) {
 					echo '<div class="woosb-product">';
 					echo '<div class="woosb-thumb">' . $bundle->get_image() . '</div>';
-					echo '<div class="woosb-title"><a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-btn no-ajaxy" data-id="' . $bundle->get_id() . '"' : '' ) . ' href="' . $bundle->get_permalink() . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>' . $bundle->get_name() . '</a></div>';
+					echo '<div class="woosb-title"><a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-link no-ajaxy" data-id="' . $bundle->get_id() . '" data-context="woosb"' : '' ) . ' href="' . $bundle->get_permalink() . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>' . $bundle->get_name() . '</a></div>';
 					echo '<div class="woosb-price">' . $bundle->get_price_html() . '</div>';
 					echo '</div><!-- /woosb-product -->';
 				}
@@ -2673,7 +2862,13 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 				if ( is_array( $items ) && count( $items ) > 0 ) {
 					foreach ( $items as $item ) {
 						$_arr = explode( '/', $item );
-						$_id  = absint( isset( $_arr[0] ) ? $_arr[0] : 0 );
+						$_id  = rawurldecode( isset( $_arr[0] ) ? $_arr[0] : 0 );
+
+						if ( ! is_numeric( $_id ) ) {
+							// sku
+							$_id = wc_get_product_id_by_sku( ltrim( $_id, 'sku-' ) );
+						}
+
 						$_qty = (float) ( isset( $_arr[1] ) ? $_arr[1] : 1 );
 
 						$bundled[] = array(
@@ -2688,9 +2883,17 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		function woosb_get_bundles( $product_id, $per_page = 500, $offset = 0 ) {
-			$bundles        = array();
-			$product_id_str = $product_id . '/';
-			$query_args     = array(
+			$bundles = array();
+			$id_str  = $product_id . '/';
+			$sku     = get_post_meta( $product_id, '_sku', true );
+
+			if ( ! empty( $sku ) ) {
+				$sku_str = $sku . '/';
+			} else {
+				$sku_str = 'woosb/';
+			}
+
+			$query_args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'publish',
 				'posts_per_page' => $per_page,
@@ -2704,14 +2907,20 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					)
 				),
 				'meta_query'     => array(
+					'relation' => 'OR',
 					array(
 						'key'     => 'woosb_ids',
-						'value'   => $product_id_str,
+						'value'   => $id_str,
+						'compare' => 'LIKE',
+					),
+					array(
+						'key'     => 'woosb_ids',
+						'value'   => $sku_str,
 						'compare' => 'LIKE',
 					)
 				)
 			);
-			$query          = new WP_Query( $query_args );
+			$query      = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
 				while ( $query->have_posts() ) {
@@ -2734,28 +2943,22 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 		function woosb_shortcode_form() {
 			ob_start();
 			$this->woosb_add_to_cart_form();
-			$form = ob_get_contents();
-			ob_end_clean();
 
-			return $form;
+			return ob_get_clean();
 		}
 
 		function woosb_shortcode_bundled() {
 			ob_start();
 			$this->woosb_show_bundled();
-			$bundled = ob_get_contents();
-			ob_end_clean();
 
-			return $bundled;
+			return ob_get_clean();
 		}
 
 		function woosb_shortcode_bundles() {
 			ob_start();
 			$this->woosb_show_bundles();
-			$bundles = ob_get_contents();
-			ob_end_clean();
 
-			return $bundles;
+			return ob_get_clean();
 		}
 
 		function woosb_display_post_states( $states, $post ) {
@@ -2859,6 +3062,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					apply_filters( 'woocommerce_email_attachments', array(), 'low_stock', $product, null )
 				);
 			}
+		}
+
+		function woosb_wpml_item_id( $id ) {
+			return apply_filters( 'wpml_object_id', $id, 'product', true );
 		}
 	}
 }

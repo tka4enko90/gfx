@@ -2,7 +2,7 @@
 Contributors: daigo75
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LVSZCS2SABN7Y
 Requires at least: 5.0
-Tested up to: 5.8.9
+Tested up to: 5.9.9
 Tags: woocommerce, eu vat, vat compliance, iva, moss, vat rates, eu tax, hmrc, digital vat, tax, woocommerce taxes, aelia
 License: GPLv3
 
@@ -65,24 +65,29 @@ We cannot, however, give any legal guarantee that the features provided by this 
 
 == Frequently Asked Questions ==
 
-= Does the EU VAT Assistant include features to comply with the IOSS regulations that apply to physical products? =
+= Does the EU VAT Assistant include features to comply with the EU VAT OSS regulations that apply to physical products? =
 
-We originally developed the EU VAT Assistant to help with the VAT MOSS regulations that apply to **digital** products from the 1st of January 2015 (VAT MOSS regulations). The EU VAT Assistant can be used, to a certain extent, even after the 1st of July. However, please keep in mind that it's designed primarily for digital products, and doesn't implement features specific to physical goods, or to the element of shipping. It's already possible, with some custom filters, to cover some the rules applicable to the shipping of goods, such as the VAT exemption over 150 EUR (or 135 GBP, for the UK). The following post on the public forum refers to that topic: https://wordpress.org/support/topic/one-stop-shops-oss-ioss-from-1st-of-july-2021/.
+In short, no. We originally developed the EU VAT Assistant to help with the VAT MOSS regulations that apply to **digital** products from the 1st of January 2015 (VAT MOSS regulations). The EU VAT Assistant can be used, to a certain extent, even after the 1st of July. It's possible, with some custom filters, to cover some the rules applicable to the shipping of goods, such as the VAT exemption over 150 EUR (or 135 GBP, for the UK). However, please keep in mind that it's designed primarily for digital products, and doesn't implement features specific to physical goods, such as handling the aspects of shipping.
+
+= What is Aelia's recommended solution for compliance with rules introduced by the VAT OSS regime, Brexit and Norway's VOEC? =
+
+Over the course of 2021 we have been working on a new plugin to handle the new VAT regulations, to replace the EU VAT Assistant. After carefuly consideration, we came to the conclusion that the product we have been developing could not be competitive, in a market where several of these solutions already exist. Due to that, we opted not to release our own premium VAT compliance product, and collaborate with the authors of existing plugins instead.
+
+Towards the end of 2021, Aelia established a collaboration with David Anderson, founder of Simba Hosting and author of the popular Updraft Plus backup plugin, and of [the WooCommerce EU/UK VAT / IVA Compliance plugin](https://wordpress.org/plugins/woocommerce-eu-vat-compliance/). If you're looking for a comprehensive plugin to help you complying with the new regulations, we recommend to try that plugin.
+
+We chose to endorse the David's solution, instead of releasing our own, because we have been working together and exchanging information for years and we know that it's a reliable product.
+
+We are also organising to offer an optional migration service, to convert the data stored by the Aelia EU VAT Assistant into the formate used by the WooCommerce EU/UK VAT / IVA Compliance plugin. This will be an optional, paid service, which we will provide on request.
+
+You can read more about the collaboration between Aelia and Simba Hosting in the following article: [VAT OSS Compliance – From Aelia EU VAT Assistant to Simba Hosting's WooCommerce EU/UK VAT/IVA Compliance](https://aelia.co/ioss-compliance-aelia-eu-vat-assistant/).
 
 = What are the development plans for the EU VAT Assistant? =
 
-We plan to maintain the EU VAT Assistant, and provide bug fixes for it, at least until the 31 December 2021. After that date, our focus will shift to our new solution, called Aelia VAT Assistant for WooCommerce, which will replace this plugin.
-
-= What is the "Aelia VAT Assistant for WooCommerce"? =
-
-The increasing complexity of VAT regulations, as well as the changes brought by events like Brexit, will require the implementation of new features. This will involve a significant investment from our side, which the EU VAT Assistant, as a 100% free plugin, could not cover. Due to that, we decided to release a new plugin, which we called "Aelia VAT Assistant for WooCommerce". The new plugin will replace the EU VAT Assistant altogether, while maintaining backward compatibility with it.
-The upgrade to the new solution will simply involve installing the Aelia VAT Assistant and removing the WooCommerce EU VAT Assistant afterwards. All the settings and configurations will be preserved.
-
-**Our business model will also change**. The Aelia VAT Assistant be available for purchase from our site, and it will include support for UK VAT numbers, as well as features to handle aspects such as Brexit and the new VAT OSS regime. It will also be automatically covered by our support service, streamlining our communication with our customers.
+We plan to maintain the EU VAT Assistant, in its current form, at least until the 30 June 2022. We will keep testing it with newer versions of WooCommerce and provided bug fixed, but we won't implement new features.
 
 = What features are included in the EU VAT Assistant? =
 
-The EU VAT Assistant includes all the features to handle the VAT MOSS regulations for EU countries (see notes about UK Brexit, applicable from the 1st of January 2021). It's based on the same framework we use for our other premium products, such as the [WooCommerce Currency Switcher](https://aelia.co/shop/currency-switcher-woocommerce/), [Prices by Country](https://aelia.co/shop/prices-by-country-woocommerce/), [Tax Display by Country](https://aelia.co/shop/tax-display-by-country-for-woocommerce/), and it follows the same quality standards. All the included features are fully functional, without restrictions or time limitations.
+The EU VAT Assistant includes all the features to handle the VAT MOSS regulations for EU countries (see notes about UK Brexit, applicable from the 1st of January 2021). It's based on the same framework we use for our other premium products, such as the [Aelia Currency Switcher for Woocommerce](https://aelia.co/shop/currency-switcher-woocommerce/), [Prices by Country for WooCommerce](https://aelia.co/shop/prices-by-country-woocommerce/), [Aelia Tax Display by Country for WooCommerce](https://aelia.co/shop/tax-display-by-country-for-woocommerce/), and it follows the same quality standards. All the included features are fully functional, without restrictions or time limitations.
 
 = Can the EU VAT Assistant validate EU VAT numbers? =
 
@@ -94,17 +99,15 @@ Our solution relies on the official VIES service to validate EU VAT numbers. The
 
 = Does the EU VAT Assistant validate UK VAT numbers? =
 
-The EU VAT Assistant will be able to validate UK VAT numbers up until the 31st of December 2020. From the 1st of January 2021, the VIES service will no longer handle UK VAT numbers, which will have to be handled through a different service.
-
-The handling of UK VAT numbers will be part of the new plugin, called Aelia VAT Assistant, that will replace the EU VAT Assistant. [Please refer to the support forum](https://wordpress.org/support/plugin/woocommerce-eu-vat-assistant/) for more information.
+The EU VAT Assistant could validate UK VAT numbers up until the 31st of December 2020. From the 1st of January 2021, the VIES service no handles UK VAT numbers, which must be validated through a different service, provided by the UK Revenue Office (HMRC). [We wrote an addon for the EU VAT Assistant to cover that aspect](https://aelia.co/ioss-compliance-aelia-eu-vat-assistant/#brexit), but we have since shifted our focus on other endeavours (see FAQs above).
 
 = Will the EU VAT Assistant include features dedicated to UK merchants? =
 
-The EU VAT Assistant features aim to simplify compliance with the VAT MOSS regulations that apply to EU merchants. Out of the box, the plugin which should cover most of the needs of UK merchants as well. Any feature that applies to UK merchants will be implemented as part of the Aelia VAT Assistant, a premium plugin that will replace the EU VAT Assistant. When ready, the Aelia VAT Assistant will become available [from our website](https://aelia.co/).
+The EU VAT Assistant features aim to simplify compliance with the VAT MOSS regulations that apply to EU merchants. Out of the box, the plugin which should cover most of the needs of UK merchants as well (with the exclusion of the validation of UK VAT number). If you're looking for a comprehensive solution that covers that aspect, we recommend [the WooCommerce EU/UK VAT / IVA Compliance plugin](https://wordpress.org/plugins/woocommerce-eu-vat-compliance/), developed by David Anderson.
 
 = Can the EU VAT Assistant show the correct VAT rate as soon as a visitor lands on the site? =
 
-Such feature is provided by our [Tax Display by Country plugin](https://aelia.co/shop/tax-display-by-country-for-woocommerce/), which was released at the beginning of 2014. If you like the EU VAT Assistant, we invite you to purchase the Tax Display by Country as well, and enjoy the powerful features of a comprehensive tax compliance solution, at a small price.
+Such feature is provided by our [Tax Display by Country plugin](https://aelia.co/shop/tax-display-by-country-for-woocommerce/). If you like the EU VAT Assistant, we invite you to purchase the Tax Display by Country as well, and enjoy the powerful features of a comprehensive tax compliance solution, at a small price.
 
 = I would like to show the same prices to all customers, regardless of the applicable VAT =
 Our [Tax Display by Country plugin](https://aelia.co/shop/tax-display-by-country-for-woocommerce/) includes such feature as well, using it is as simple as ticking a box.
@@ -151,6 +154,25 @@ For more information about installation and management of plugins, please refer 
 This is a major update, which includes several important changes aimed at making the EU VAT Assistant more flexible and easier to extend (e.g. to cover the new rules post-Brexit). We aimed at maintaining backward compatibility as much as possible, but **we strongly advise to take a full backup of your site before installing this update and test it on a staging site first**. Should you encounter any issues, you can [download a previous version from the WordPress repository](https://wordpress.org/plugins/woocommerce-eu-vat-assistant/advanced/).
 
 == Changelog ==
+
+= 2.0.27.220124 =
+* Updated supported WooCommerce versions.
+
+= 2.0.26.220104 =
+* Updated supported WooCommerce versions.
+* Updated supported WordPress versions.
+
+= 2.0.25.211210 =
+* Updated supported WooCommerce versions.
+
+= 2.0.24.211102 =
+* Updated supported WooCommerce versions.
+
+= 2.0.23.211019 =
+* Tweak - Modified filter `wc_aelia_eu_vat_assistant_customer_vat_exemption`, so that it always receives customer's country and VAT number, even if one of the two values is empty.
+
+= 2.0.22.211007 =
+* Updated supported WooCommerce versions.
 
 = 2.0.21.210910 =
 * Fix - Fixed check against the validation response returned by the VIES service.

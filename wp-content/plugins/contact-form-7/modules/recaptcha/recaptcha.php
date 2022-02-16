@@ -1,13 +1,9 @@
 <?php
 
-add_action( 'wpcf7_init', 'wpcf7_recaptcha_register_service', 10, 0 );
+add_action( 'wpcf7_init', 'wpcf7_recaptcha_register_service', 15, 0 );
 
 function wpcf7_recaptcha_register_service() {
 	$integration = WPCF7_Integration::get_instance();
-
-	$integration->add_category( 'captcha',
-		__( 'CAPTCHA', 'contact-form-7' )
-	);
 
 	$integration->add_service( 'recaptcha',
 		WPCF7_RECAPTCHA::get_instance()
@@ -23,12 +19,18 @@ function wpcf7_recaptcha_enqueue_scripts() {
 		return;
 	}
 
+	$url = 'https://www.google.com/recaptcha/api.js';
+
+	if ( apply_filters( 'wpcf7_use_recaptcha_net', false ) ) {
+		$url = 'https://www.recaptcha.net/recaptcha/api.js';
+	}
+
 	wp_enqueue_script( 'google-recaptcha',
 		add_query_arg(
 			array(
 				'render' => $service->get_sitekey(),
 			),
-			'https://www.google.com/recaptcha/api.js'
+			$url
 		),
 		array(),
 		'3.0',
@@ -235,7 +237,7 @@ class WPCF7_RECAPTCHA extends WPCF7_Service {
 	}
 
 	public function get_categories() {
-		return array( 'captcha' );
+		return array( 'spam_protection' );
 	}
 
 	public function icon() {

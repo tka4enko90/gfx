@@ -10,7 +10,7 @@
 Plugin Name: Theme My Login
 Plugin URI: https://thememylogin.com
 Description: Creates an alternate login, registration and password recovery experience within your theme.
-Version: 7.1.3
+Version: 7.1.4
 Author: Theme My Login
 Author URI: https://thememylogin.com
 License: GPLv2
@@ -24,7 +24,7 @@ Network: true
  *
  * @since 7.0
  */
-define( 'THEME_MY_LOGIN_VERSION', '7.1.3' );
+define( 'THEME_MY_LOGIN_VERSION', '7.1.4' );
 
 /**
  * Stores the path to TML.
@@ -66,7 +66,6 @@ require THEME_MY_LOGIN_PATH . 'includes/class-theme-my-login-widget.php';
 require THEME_MY_LOGIN_PATH . 'includes/actions.php';
 require THEME_MY_LOGIN_PATH . 'includes/forms.php';
 require THEME_MY_LOGIN_PATH . 'includes/extensions.php';
-require THEME_MY_LOGIN_PATH . 'includes/compat.php';
 require THEME_MY_LOGIN_PATH . 'includes/functions.php';
 require THEME_MY_LOGIN_PATH . 'includes/options.php';
 require THEME_MY_LOGIN_PATH . 'includes/shortcodes.php';

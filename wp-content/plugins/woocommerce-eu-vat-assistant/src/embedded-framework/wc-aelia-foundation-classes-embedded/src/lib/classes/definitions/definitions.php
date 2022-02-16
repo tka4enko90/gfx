@@ -47,7 +47,10 @@ class Definitions {
 	// Error codes
 	const OK = 0;
 	const RES_OK = 0;
+
 	const ERR_COULD_NOT_UPDATE_GEOIP_DATABASE = 1100;
+	// @since 2.1.19.211020
+	const ERR_NOT_IMPLEMENTED = 1101;
 
 	const ERR_PRODUCT_LICENSE_NOT_SET = 2100;
 	// @since 1.9.10.171201

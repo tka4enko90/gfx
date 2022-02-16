@@ -54,6 +54,8 @@ class Definitions {
 	const ERR_COULD_NOT_VALIDATE_VAT_NUMBER = 5002;
 	// @since 2.0.5.210102
 	const WARN_MAJOR_UPDATE = 6002;
+	// @since x.x
+	const WARN_SOLUTION_FOR_VAT_OSS_COMPLIANCE = 22003;
 
 	const YES = 'yes';
 	const NO = 'no';

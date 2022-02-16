@@ -213,3 +213,24 @@
 .aelia .fs-secure-notice {
 	position: static;
 }
+
+/*** Note about the migration of licences to Freemius ***/
+/* @since 2.1.18.211005 */
+#aelia-premium-plugin-updater-description .migrate_licence_to_freemius_note {
+	background-color: white;
+	padding: 0 10px;
+	border: 2px dashed maroon;
+}
+
+#aelia-premium-plugin-updater-description .migrate_licence_to_freemius_note p {
+	margin-bottom: 10px;
+}
+
+/*
+// Fix for Freemius contact form
+// @since 2.1.20.211024
+// @link https://bitbucket.org/businessdad/wc-aelia-foundation-classes/issues/2/settings-page-the-freemius-contact-form
+*/
+.freemius_contact_form .fs-full-size-wrapper {
+	margin: 0;
+}

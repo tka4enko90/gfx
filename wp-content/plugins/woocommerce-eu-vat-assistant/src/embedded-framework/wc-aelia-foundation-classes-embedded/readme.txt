@@ -5,7 +5,7 @@ Tags: woocommerce, utility, framework, aelia
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 5.0
-Tested up to: 5.8.9
+Tested up to: 5.9.9
 
 Adds a set of classes that can simplify the development of other plugins for WooCommerce.
 
@@ -72,6 +72,35 @@ For more information about installation and management of plugins, please refer 
 This is a major update, which introduces several important changes. **The required PHP version is now 7.0 or newer**. Please make sure that your server is configured correctly, before installing this update.
 
 == Changelog ==
+
+= 2.2.3.220124 =
+* Updated supported WooCommerce versions.
+
+= 2.2.2.220104 =
+* Updated supported WooCommerce versions.
+
+= 2.2.1.211208 =
+* Updated supported WooCommerce versions.
+* Updated supported WordPress versions.
+
+= 2.2.0.211117 =
+* Feature - Added new class `Aelia\WC\Exceptions\NotInitializedException`.
+
+= 2.1.21.211102 =
+* Updated supported WooCommerce versions.
+
+= 2.1.20.211024 =
+* Fix - The Freemius support form embedded in the settings pages no longer covers the "Save" buttons at the bottom of the page.
+
+= 2.1.19.211020 =
+* Tweak - Refactored class `NotImplementedException` to use a default message and error code.
+
+= 2.1.18.211006 =
+* UI - Added note on the legacy Aelia Licenses page, to help customers to migrate their licences to Freemius.
+
+= 2.1.17.211005 =
+* Updated supported WooCommerce versions.
+* Updated Composer bundle.
 
 = 2.1.16.210906 =
 * Updated supported WooCommerce versions.

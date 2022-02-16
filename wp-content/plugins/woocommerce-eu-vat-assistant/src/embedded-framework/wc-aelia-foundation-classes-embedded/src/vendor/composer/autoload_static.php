@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5036f5eb393bb026d456ae95f7244166
+class ComposerStaticInit3f069bb3005d418a46b773e50788d131
 {
     public static $files = array (
         '49a1299791c25c6fd83542c6fedacddd' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p11.php',
@@ -90,6 +90,8 @@ class ComposerStaticInit5036f5eb393bb026d456ae95f7244166
         'Aelia\\WC\\Definitions' => __DIR__ . '/../..' . '/lib/classes/definitions/definitions.php',
         'Aelia\\WC\\Exceptions\\Invalid_Shortcode_Argument_Exception' => __DIR__ . '/../..' . '/lib/classes/exceptions/exception.invalid-shortcode-argument.php',
         'Aelia\\WC\\Exceptions\\Invalid_Shortcode_Exception' => __DIR__ . '/../..' . '/lib/classes/exceptions/exception.invalid-shortcode.php',
+        'Aelia\\WC\\Exceptions\\NotImplementedException' => __DIR__ . '/../..' . '/lib/classes/base/exceptions/exception.not-implemented-exception.php',
+        'Aelia\\WC\\Exceptions\\NotInitializedException' => __DIR__ . '/../..' . '/lib/classes/base/exceptions/exception.not-initialized-exception.php',
         'Aelia\\WC\\ExchangeRatesModel' => __DIR__ . '/../..' . '/lib/classes/currency/aelia-wc-exchangeratesmodel.php',
         'Aelia\\WC\\Free_Plugin_Dev_Version_Updater' => __DIR__ . '/../..' . '/lib/classes/updater/free-plugin-dev-version-updater.php',
         'Aelia\\WC\\Free_Plugin_Updater' => __DIR__ . '/../..' . '/lib/classes/updater/free-plugin-updater.php',
@@ -105,7 +107,6 @@ class ComposerStaticInit5036f5eb393bb026d456ae95f7244166
         'Aelia\\WC\\Message' => __DIR__ . '/../..' . '/lib/classes/base/messages/message.php',
         'Aelia\\WC\\Messages' => __DIR__ . '/../..' . '/lib/classes/base/messages/messages.php',
         'Aelia\\WC\\Model' => __DIR__ . '/../..' . '/lib/classes/base/model/model.php',
-        'Aelia\\WC\\NotImplementedException' => __DIR__ . '/../..' . '/lib/classes/base/exceptions/aelia-exceptions.php',
         'Aelia\\WC\\Order' => __DIR__ . '/../..' . '/lib/classes/base/orders/order.php',
         'Aelia\\WC\\Premium_Plugin_Updater' => __DIR__ . '/../..' . '/lib/classes/updater/premium-plugin-updater.php',
         'Aelia\\WC\\Semaphore' => __DIR__ . '/../..' . '/lib/classes/base/semaphore/semaphore.php',
@@ -296,10 +297,10 @@ class ComposerStaticInit5036f5eb393bb026d456ae95f7244166
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5036f5eb393bb026d456ae95f7244166::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5036f5eb393bb026d456ae95f7244166::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5036f5eb393bb026d456ae95f7244166::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5036f5eb393bb026d456ae95f7244166::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3f069bb3005d418a46b773e50788d131::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3f069bb3005d418a46b773e50788d131::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit3f069bb3005d418a46b773e50788d131::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3f069bb3005d418a46b773e50788d131::$classMap;
 
         }, null, ClassLoader::class);
     }

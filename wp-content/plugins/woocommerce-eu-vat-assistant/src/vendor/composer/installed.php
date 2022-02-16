@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2b8b4c65fd24f4783d3f6e5f239dfb09d9eac680',
+        'reference' => 'c0133e0ac5173047a513af5d450b0ef69d39f43e',
         'name' => '__root__',
         'dev' => false,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2b8b4c65fd24f4783d3f6e5f239dfb09d9eac680',
+            'reference' => 'c0133e0ac5173047a513af5d450b0ef69d39f43e',
             'dev_requirement' => false,
         ),
         'econea/nusoap' => array(

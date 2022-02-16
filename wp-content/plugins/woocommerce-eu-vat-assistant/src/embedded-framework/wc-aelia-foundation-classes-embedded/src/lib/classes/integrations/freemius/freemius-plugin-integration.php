@@ -34,6 +34,7 @@ class Freemius_Plugin_Integration {
 	 * @return void
 	 */
 	public static function init(): void	{
+		// Register the shortcodes related to the interaction with Freemius
 		self::init_shortcodes();
 
 		add_action('init', array(__CLASS__, 'init_freemius_plugin_manager'));
