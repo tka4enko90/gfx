@@ -3,11 +3,9 @@
 .information-block {
   background-color: rgba($dark-blue, 0.8);
   padding: 100px 0;
-
   @media (max-width: $sm) {
     padding: 60px 0;
   }
-
   @media (max-width: $xs) {
     padding: 40px 0;
   }
@@ -61,10 +59,10 @@
   }
 
   .content-holder {
-    width: 100%;
-    max-width: 485px;
+    width: 50%;
 
     @media (max-width: $md) {
+      width: 100%;
       max-width: 100%;
     }
 
