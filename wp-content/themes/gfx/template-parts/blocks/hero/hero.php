@@ -80,7 +80,7 @@
                             <?php endif; ?>
                         </div>
                     <?php endif;
-                    if (isset($hero_image_id) && !isset($hero_module)) : ?>
+                    if (isset($hero_image_id)) : ?>
                         <div class="image-col">
                             <?php if (isset($hero_image_size)) :
                                 echo wp_get_attachment_image($hero_image_id, $hero_image_size);
