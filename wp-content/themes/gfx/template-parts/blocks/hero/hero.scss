@@ -17,6 +17,28 @@
   .container {
     position: relative;
   }
+  .overlay {
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: right;
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    @media (max-width: $lg) {
+      background-position: center center;
+      left: 0;
+      right: 0;
+      &:after {
+        content: '';
+        background-color: rgba($dark-blue, .8);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+      }
+    }
+  }
   .section-holder {
     display: flex;
     justify-content: space-between;
@@ -26,28 +48,7 @@
     background-position: right;
     position: relative;
     z-index: 1;
-    .overlay {
-      background-repeat: no-repeat;
-      height: 100%;
-      background-position: right;
-      position: absolute;
-      width: 100%;
-      z-index: 0;
-      @media (max-width: $lg) {
-        background-position: center center;
-        left: 0;
-        right: 0;
-        &:after {
-          content: '';
-          background-color: rgba($dark-blue, .8);
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          top: 0;
-        }
-      }
-    }
+
     @media (max-width: $md) {
       flex-direction: column;
       align-items: flex-start;

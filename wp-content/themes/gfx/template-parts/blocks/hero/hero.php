@@ -34,11 +34,13 @@
         <section
                 class="hero-section <?php echo empty($hero_image_id) ? 'no-image' : ''; ?> <?php echo isset($css_class) ? $css_class : ''; ?>">
             <div class="container">
+				<?php if(isset($hero_image_size) && $hero_image_id): ?>
+                <div class="overlay"
+                    style="background-image: url(<?php echo wp_get_attachment_image_url($hero_image_id, $hero_image_size);?>);">
+                </div>
+				<?php endif;?>
                 <div class="section-holder">
-                    <div class="overlay"  <?php if(isset($hero_image_size) && $hero_image_id): ?>
-                        style="background-image: url(<?php echo wp_get_attachment_image_url($hero_image_id, $hero_image_size);?>);"
-					<?php endif;?>>
-                    </div>
+
                     <?php if (isset($hero_title) || isset($hero_subtitle)) : ?>
                         <div class="text-col">
                             <?php if (isset($hero_title)) :
