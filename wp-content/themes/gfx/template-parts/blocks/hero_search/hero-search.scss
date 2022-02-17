@@ -2,21 +2,40 @@
 
 .hero-search {
   background-color: $dark-blue;
-
-  .container {
-    background-image: url("../../../../img/hero-search-bg.png");
+  .overlay {
     background-repeat: no-repeat;
-    background-position: 92% 35%;
-    background-size: 85%;
-
+    height: 100%;
+    background-position: right;
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    @media (max-width: $lg) {
+      background-position: center center;
+      left: 0;
+      right: 0;
+      &:after {
+        content: '';
+        background-color: rgba($dark-blue, .8);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+      }
+    }
+  }
+  .container {
+    position: relative;
+    z-index: 1;
     @media (max-width: $xs) {
       background-size: cover;
     }
   }
 
   .section-holder {
-    padding: 40px 0;
-
+    position: relative;
+    z-index: 1;
+    padding: 60px 0;
     @media (max-width: $lg) {
       background-size: auto;
       background-position: center left;

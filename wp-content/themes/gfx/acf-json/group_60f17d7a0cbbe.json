@@ -38,6 +38,30 @@
             "maxlength": ""
         },
         {
+            "key": "field_620e1c5fd67a4",
+            "label": "Hero bg",
+            "name": "hero_bg",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_60f5a00eefe9f",
             "label": "Need Help?",
             "name": "",
@@ -94,5 +118,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626710135
+    "show_in_rest": 0,
+    "modified": 1645091957
 }

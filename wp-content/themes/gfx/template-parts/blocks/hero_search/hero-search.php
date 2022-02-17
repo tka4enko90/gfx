@@ -11,11 +11,22 @@
         <?php $search_type = $args['search_type']; ?>
     <?php endif; ?>
 
+    <?php if (!empty($args['image'])) : ?>
+        <?php $image = $args['image']; ?>
+    <?php endif; ?>
+
+    <?php if (!empty($args['image_size'])) : ?>
+        <?php $image_size = $args['image_size']; ?>
+    <?php endif; ?>
+
     <?php if (isset($hero_title) || isset($hero_subtitle)) : ?>
         <?php wp_enqueue_style('blog_hero_css', get_template_directory_uri() . '/static/css/template-parts/blocks/hero_search/hero-search.css', '', '', 'all'); ?>
 
         <section class="hero-search">
             <div class="container">
+                <?php if (isset($image_size) && isset($image['ID'])): ?>
+                <div class="overlay" style="background-image: url( <?php echo wp_get_attachment_image_url($image["ID"], $image_size)?>);"></div>
+                <?php endif; ?>
                 <div class="section-holder">
                     <?php if (isset($hero_title)) : ?>
                         <h1><?php echo $hero_title; ?></h1>
