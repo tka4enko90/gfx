@@ -12,15 +12,15 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 	endif;
 
 	if ( isset( $product_image ) || isset( $attachment_ids ) ) :
-		?>
-		<?php wp_enqueue_style( 'slick-css', get_template_directory_uri() . '/static/css/slick.min.css', '', '', 'all' ); ?>
-		<?php wp_enqueue_style( 'single_product_product_info_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_product_info/single-product-product-info.css', '', '', 'all' ); ?>
+		 wp_enqueue_style( 'slick-css', get_template_directory_uri() . '/static/css/slick.min.css', '', '', 'all' );
+		 wp_enqueue_style( 'single_product_product_info_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_product_product_info/single-product-product-info.css', '', '', 'all' );
 
-		<?php wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/static/js/slick.min.js', array( 'jquery' ), '', true ); ?>
-		<?php wp_enqueue_script( 'single_product_product_info_js', get_template_directory_uri() . '/static/js/template-parts/blocks/single_product_product_info/single-product-product-info.js', array( 'slick-js' ), '', true ); ?>
+		 wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/static/js/slick.min.js', array( 'jquery' ), '', true );
+		 wp_enqueue_script( 'single_product_product_info_js', get_template_directory_uri() . '/static/js/template-parts/blocks/single_product_product_info/single-product-product-info.js', array( 'slick-js' ), '', true );
 
-		<?php $read_me_page = get_field( 'read_me_page' ); ?>
-		<?php if ( ! empty( $product_image ) || ! empty( $attachment_ids ) || has_excerpt() || have_rows( 'what’s_inside' ) ) : ?>
+		 $read_me_page = get_field( 'read_me_page' );
+
+		if ( ! empty( $product_image ) || ! empty( $attachment_ids ) || has_excerpt() || have_rows( 'what’s_inside' ) ) : ?>
 			<section class="single-product-product-info">
 				<div class="container">
 					<div class="section-holder">
@@ -80,7 +80,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 							</div>
 						<?php endif; ?>
 
-						<div class="info-col 
+						<div class="info-col
 						<?php
 						if ( empty( $product_image ) && empty( $attachment_ids ) ) :
 							?>
@@ -116,7 +116,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 													$description = get_sub_field( 'description' );
 													?>
 
-													<div class="item 
+													<div class="item
 													<?php
 													if ( $title && $description ) :
 														?>
@@ -149,7 +149,7 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 														$description = get_sub_field( 'description' );
 														?>
 
-														<div class="item 
+														<div class="item
 														<?php
 														if ( $title && $description ) :
 															?>
@@ -174,7 +174,6 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 									</div>
 								</div>
 							<?php endif; ?>
-
 							<?php if ( ! empty( $read_me_page ) ) : ?>
 								<?php
 								$post = $read_me_page;

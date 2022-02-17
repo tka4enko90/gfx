@@ -250,7 +250,7 @@
                 "readme"
             ],
             "taxonomy": "",
-            "allow_null": 0,
+            "allow_null": 1,
             "multiple": 0,
             "return_format": "object",
             "ui": 1
@@ -405,7 +405,9 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": ""
+            "default_value": "",
+            "enable_opacity": false,
+            "return_format": "string"
         },
         {
             "key": "field_6183f4f381ffe",
@@ -420,7 +422,9 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": ""
+            "default_value": "",
+            "enable_opacity": false,
+            "return_format": "string"
         },
         {
             "key": "field_6183de5277d04",
@@ -454,7 +458,9 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": ""
+            "default_value": "",
+            "enable_opacity": false,
+            "return_format": "string"
         },
         {
             "key": "field_60db2154c3d3a",
@@ -868,5 +874,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1636450272
+    "show_in_rest": 0,
+    "modified": 1645090440
 }
