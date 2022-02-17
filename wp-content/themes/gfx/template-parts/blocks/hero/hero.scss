@@ -14,7 +14,9 @@
       max-width: 100%;
     }
   }
-
+  .container {
+    position: relative;
+  }
   .section-holder {
     display: flex;
     justify-content: space-between;
@@ -22,6 +24,30 @@
     padding: 40px 0;
     background-repeat: no-repeat;
     background-position: right;
+    position: relative;
+    z-index: 1;
+    .overlay {
+      background-repeat: no-repeat;
+      height: 100%;
+      background-position: right;
+      position: absolute;
+      width: 100%;
+      z-index: 0;
+      @media (max-width: $lg) {
+        background-position: center center;
+        left: 0;
+        right: 0;
+        &:after {
+          content: '';
+          background-color: rgba($dark-blue, .8);
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+        }
+      }
+    }
     @media (max-width: $md) {
       flex-direction: column;
       align-items: flex-start;
@@ -29,6 +55,7 @@
   }
 
   .text-col {
+    z-index: 1;
     max-width: 600px;
     padding-right: 40px;
 
