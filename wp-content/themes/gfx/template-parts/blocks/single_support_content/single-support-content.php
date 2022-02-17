@@ -102,10 +102,6 @@
                                     <?php }
                                 endforeach;
                             endif; ?>
-
-                            <a href="<?php echo get_term_link($sections[0]->term_id, 'section'); ?>">
-                                <?php _e('View All', 'gfx'); ?> >
-                            </a>
                         </div>
                     <?php endif; ?>
                 </div>
