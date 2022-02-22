@@ -4,11 +4,11 @@
     clear: both;
 }
 
-.woosb-wrap .woosb-text, .woosb-wrap .woosb-products {
+.woosb-wrap .woosb-text, .woosb-wrap .woosb-products, .woosb-bundles .woosb-text, .woosb-bundles .woosb-products {
     margin: 0 0 15px 0;
 }
 
-.woosb-wrap .woosb-text {
+.woosb-wrap .woosb-text, .woosb-bundles .woosb-text {
     white-space: pre-line;
 }
 

@@ -2649,7 +2649,7 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 									$_name .= '<a ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_popup' ? 'class="woosq-link no-ajaxy" data-id="' . $item['id'] . '" data-context="woosb"' : '' ) . ' href="' . esc_url( $_product->get_permalink() ) . '" ' . ( get_option( '_woosb_bundled_link', 'yes' ) === 'yes_blank' ? 'target="_blank"' : '' ) . '>';
 								}
 
-								if ( $_product->is_in_stock() && $_product->has_enough_stock( $_qty ) && $_product->is_purchasable() ) {
+								if ( $_product->is_in_stock() && $_product->has_enough_stock( $_qty ) ) {
 									$_name .= $_product_name;
 								} else {
 									$_name .= '<s>' . $_product_name . '</s>';

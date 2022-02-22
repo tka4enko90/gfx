@@ -175,7 +175,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 						$_qty = $_max;
 					}
 
-					if ( ! $_product->is_purchasable() || ( $_product->get_stock_status( $context ) === 'outofstock' ) || ( ! $_product->has_enough_stock( $_qty ) ) ) {
+					if ( ( $_product->get_stock_status( $context ) === 'outofstock' ) || ( ! $_product->has_enough_stock( $_qty ) ) ) {
 						return 'outofstock';
 					}
 
