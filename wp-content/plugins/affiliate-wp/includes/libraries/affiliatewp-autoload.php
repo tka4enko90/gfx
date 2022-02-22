@@ -29,6 +29,10 @@
 
 $autoload = array(
 	// Classes.
+	'AffWP\Core\Registration\Form_Container',
+	'AffWP\Core\Registration\Form_Field_Container',
+	'AffWP\Core\License\License_Data',
+	'AffWP\Components\Wizard\Bootstrap',
 );
 
 spl_autoload_register( function( $filename ) use ( $autoload ) {

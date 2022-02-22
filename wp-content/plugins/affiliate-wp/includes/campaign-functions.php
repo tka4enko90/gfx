@@ -83,5 +83,5 @@ function affwp_get_affiliate_campaign( $affiliate_id, $campaign ) {
  * @return string The campaign hash.
  */
 function affwp_get_campaign_hash( $affiliate_id, $campaign ) {
-	return affwp_get_hash( array( 'affiliate_id' => $affiliate_id, 'campaign' => $campaign ) );
+	return affwp_get_hash( array( 'affiliate_id' => (int) $affiliate_id, 'campaign' => (string) $campaign ) );
 }

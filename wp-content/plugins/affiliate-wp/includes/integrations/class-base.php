@@ -355,17 +355,20 @@ abstract class Affiliate_WP_Base {
 	 * Retrieves coupons of a given type for the current integration.
 	 *
 	 * @since 2.6
+	 * @since 2.9 Added `$unlocked_only` parameter.
 	 *
-	 * @param string               $type         Coupon type.
-	 * @param int|\AffWP\Affiliate $affiliate    Optional. Affiliate ID or object to retrieve coupons for.
-	 *                                           Default null (ignored).
-	 * @param bool                 $details_only Optional. Whether to retrieve the coupon details only (for display).
-	 *                                           Default true. If false, the full coupon objects will be retrieved.
-	 * @return array|\AffWP\Affiliate\Coupon[]|WP_Post[] An array of arrays of coupon details if `$details_only` is
-	 *                                                   true or an array of coupon or post objects if false, depending
-	 *                                                   on whether dynamic or manual coupons, otherwise an empty array.
+	 * @param string               $type          Coupon type.
+	 * @param int|\AffWP\Affiliate $affiliate     Optional. Affiliate ID or object to retrieve coupons for.
+	 *                                            Default null (ignored).
+	 * @param bool                 $details_only  Optional. Whether to retrieve the coupon details only (for display).
+	 *                                            Default true. If false, the full coupon objects will be retrieved.
+	 * @param bool                 $unlocked_only Optional. Whether to retrieve only unlocked dynamic coupons if supported.
+	 *                                            Default false (retrieve all dynamic coupons).
+	 * @return array|\AffWP\Affiliate\Coupon[]|\WP_Post[] An array of arrays of coupon details if `$details_only` is
+	 *                                                    true or an array of coupon or post objects if false, depending
+	 *                                                    on whether dynamic or manual coupons, otherwise an empty array.
 	 */
-	public function get_coupons_of_type( $type, $affiliate = null, $details_only = true ) {
+	public function get_coupons_of_type( $type, $affiliate = null, $details_only = true, $unlocked_only = false ) {
 		return array();
 	}
 
@@ -566,13 +569,13 @@ abstract class Affiliate_WP_Base {
 		 */
 		if ( ! (bool) apply_filters( 'affwp_integration_create_referral', true, array( 'affiliate_id' => $this->affiliate_id, 'amount' => $amount, 'reference' => $reference, 'description' => $description, 'products' => $products, 'data' => $data ) ) ) {
 
-			affiliate_wp()->utils->log( 'Referral not created because integration is disabled via filter' );
+			$this->log( 'Referral not created because integration is disabled via filter' );
 
 			return false; // Allow extensions to prevent referrals from being created
 		}
 
 		if ( ! affiliate_wp()->tracking->is_valid_affiliate( $this->affiliate_id ) ) {
-			affiliate_wp()->utils->log( sprintf( 'Pending referral not created. Affiliate ID %d is either referring themselves, or their status is not set to active.', $this->affiliate_id ) );
+			$this->log( sprintf( 'Pending referral not created. Affiliate ID %d is either referring themselves, or their status is not set to active.', $this->affiliate_id ) );
 
 			return false; // Referral is invalid
 		}
@@ -581,14 +584,14 @@ abstract class Affiliate_WP_Base {
 
 		if ( ! is_wp_error( $referral ) ) {
 
-			affiliate_wp()->utils->log( sprintf( 'Referral for Reference %s already created', $reference ) );
+			$this->log( sprintf( 'Referral for Reference %s already created', $reference ) );
 
 			return false; // Referral already created for this reference
 		}
 
 		if ( empty( $amount ) && affiliate_wp()->settings->get( 'ignore_zero_referrals' ) ) {
 
-			affiliate_wp()->utils->log( 'Referral not created due to 0.00 amount.' );
+			$this->log( 'Referral not created due to 0.00 amount.' );
 
 			return false; // Ignore a zero amount referral
 		}
@@ -603,7 +606,7 @@ abstract class Affiliate_WP_Base {
 			: $visit_id;
 
 		if ( false !== $visit_id && ! affwp_validate_visit_id( $visit_id ) ) {
-			affiliate_wp()->utils->log( sprintf( 'Referral not created due to invalid visit ID value, %d.', $visit_id ) );
+			$this->log( sprintf( 'Referral not created due to invalid visit ID value, %d.', $visit_id ) );
 
 			return false; // Ignore a referral with an invalid visit ID
 		}
@@ -627,7 +630,7 @@ abstract class Affiliate_WP_Base {
 			$args['customer']['ip'] = '';
 		}
 
-		affiliate_wp()->utils->log( 'Arguments being sent to DB:', $args );
+		$this->log( 'Arguments being sent to DB:', $args );
 
 		/**
 		 * Filters the arguments used to insert a pending referral.
@@ -652,13 +655,208 @@ abstract class Affiliate_WP_Base {
 		$referral_id = affiliate_wp()->referrals->add( $args );
 
 		if ( $referral_id ) {
-			affiliate_wp()->utils->log( sprintf( 'Pending Referral #%d created successfully.', $referral_id ) );
+			$this->log( sprintf( 'Pending Referral #%d created successfully.', $referral_id ) );
 		} else {
-			affiliate_wp()->utils->log( 'Pending referral could not be created due to an error.' );
+			$this->log( 'Pending referral could not be created due to an error.' );
 		}
 
 		return $referral_id;
 
+	}
+
+	/**
+	 * Inserts a draft referral.
+	 *
+	 * @since 2.8
+	 *
+	 * @param string $affiliate_id       The affiliate ID to award this referral.
+	 * @param array  $data        {
+	 *     Optional. Any custom data that can be passed to and stored with the referral. Default empty.
+	 *
+	 *     @type string $reference          The reference column for the referral per the current context.
+	 *     @type string $description        A plaintext description of the referral. Default
+	 *     @type int    $visit_id           Visit ID.
+	 *     @type bool   $is_coupon_referral Set to true if this referral came from a coupon instead of a visit.
+	 * }
+	 * @return bool|int Returns the referral ID on success, false on failure.
+	 */
+	public function insert_draft_referral( $affiliate_id, $data = array() ) {
+		// get affiliate ID.
+		$reference          = isset( $data['reference'] ) ? $data['reference'] : '';
+		$this->affiliate_id = ! empty( $affiliate_id ) ? $affiliate_id : $this->get_affiliate_id( $reference, $this->context );
+
+		// Check if reference already exists.
+		$referral_by_reference = affwp_get_referral_by( 'reference', $reference, $this->context );
+
+		// get visit ID.
+		$visit_id           = isset( $data['visit_id'] ) ? $data['visit_id'] : false;
+		$is_coupon_referral = isset( $data['is_coupon_referral'] ) ? $data['is_coupon_referral'] : false;
+		if ( true === $is_coupon_referral ) {
+			$visit_id = false;
+		} elseif ( false === $visit_id ) {
+			$visit_id = affiliate_wp()->tracking->get_visit_id();
+		}
+
+		// create draft referral.
+		$args = array(
+			'status'       => 'draft',
+			'reference'    => $reference,
+			'description'  => ! empty( $data['description'] ) ? $data['description'] : '',
+			'campaign'     => affiliate_wp()->tracking->get_campaign(),
+			'affiliate_id' => $this->affiliate_id,
+			'visit_id'     => $visit_id,
+			'type'         => $this->referral_type,
+			'context'      => $this->context,
+			'customer'     => $this->get_customer( $reference ),
+		);
+
+		// customer IP.
+		if ( affiliate_wp()->settings->get( 'disable_ip_logging' ) ) {
+			$args['customer']['ip'] = '';
+		}
+
+		// Log referrals->add() args.
+		affiliate_wp()->utils->log( 'Arguments sent to the DB when creating the draft referral:', $args );
+
+		$referral_id = affiliate_wp()->referrals->add( $args );
+
+		if ( $referral_id ) {
+			affiliate_wp()->utils->log( sprintf( 'Draft Referral #%d created successfully.', $referral_id ) );
+		} else {
+			affiliate_wp()->utils->log( 'Draft referral could not be created due to an error.' );
+			return false;
+		}
+
+		// Check if valid affiliate.
+		if ( ! affiliate_wp()->tracking->is_valid_affiliate( $this->affiliate_id ) ) {
+			affiliate_wp()->utils->log( sprintf( 'Draft referral could not be converted to pending. Affiliate ID %d is either referring themselves, or their status is not set to active.', $this->affiliate_id ) );
+			$this->mark_referral_failed( $referral_id );
+
+			return false; // Referral is invalid.
+		}
+
+		// Check if reference already existed.
+		if ( ! is_wp_error( $referral_by_reference ) ) {
+			affiliate_wp()->utils->log( sprintf( 'Referral for Reference %s already created', $reference ) );
+			$this->mark_referral_failed( $referral_id );
+
+			return false; // Referral already created for this reference.
+		}
+
+		// Check if valid visit id.
+		if ( false === $is_coupon_referral && false !== $visit_id && ! affwp_validate_visit_id( $visit_id ) ) {
+			affiliate_wp()->utils->log( sprintf( 'Draft referral could not be converted to pending due to invalid visit ID value, %d.', $visit_id ) );
+			$this->mark_referral_failed( $referral_id );
+
+			return false; // Ignore a referral with an invalid visit ID.
+		}
+
+		return $referral_id;
+	}
+
+	/**
+	 * Marks a referral failed.
+	 *
+	 * @since 2.8
+	 * @since 2.8.1 Refactored to transition referrals to the 'failed' status instead of 'rejected'.
+	 *
+	 * @param int $referral_id The referral ID.
+	 * @return bool Whether the referral was marked failed.
+	 */
+	public function mark_referral_failed( $referral_id ) {
+		$referral = affwp_get_referral( $referral_id );
+		$failed   = $this->fail_referral( $referral );
+
+		if ( $failed ) {
+			affiliate_wp()->utils->log( sprintf( 'Referral #%d marked as failed.', $referral_id ) );
+		}
+
+		return $failed;
+	}
+
+	/**
+	 * Hydrates a draft referral.
+	 *
+	 * Completes a referral with the missing data.
+	 *
+	 * @since 2.8
+	 *
+	 * @param string $referral_id The affiliate ID to award this referral.
+	 * @param array  $data        {
+	 *     Optional. Any custom data that can be passed to and stored with the referral. Default empty.
+	 * }
+	 * @return bool|int Returns the referral ID on success, false on failure.
+	 */
+	public function hydrate_referral( $referral_id, $data ) {
+		// get referral current data.
+		$referral = affwp_get_referral( $referral_id );
+
+		$amount      = isset( $data['amount'] ) ? $data['amount'] : $referral->amount;
+		$reference   = isset( $data['reference'] ) ? $data['reference'] : $referral->reference;
+		$description = isset( $data['description'] ) ? $data['description'] : $referral->description;
+		$products    = isset( $data['products'] ) ? $data['products'] : $referral->products;
+		$visit_id    = isset( $data['visit_id'] ) ? $data['visit_id'] : $referral->visit_id;
+
+		$data['custom'] = isset( $data['custom'] ) ? maybe_serialize( $data['custom'] ) : $referral->custom;
+
+		$referral_args = array(
+			'affiliate_id' => $this->affiliate_id,
+			'amount'       => $amount,
+			'reference'    => $reference,
+			'description'  => $description,
+			'products'     => $products,
+			'data'         => $data
+		);
+
+		/**
+		 * Filters whether to allow referrals to be hydrated for the current integration.
+		 *
+		 * @since 1.0
+		 * @since 2.8 Moved the affwp_integration_create_referral hook from insert_pending_referral
+		 *            function to here so that it's still possible to bypass the referral "creation".
+		 *
+		 * @param bool  $allow         Whether to allow referrals to be created.
+		 * @param array $referral_args Many of the arguments for generating the referral.
+		 */
+		if ( ! (bool) apply_filters( 'affwp_integration_create_referral', true, $referral_args ) ) {
+
+			affiliate_wp()->utils->log( 'Referral not hydrated because integration is disabled via filter.' );
+
+			$this->mark_referral_failed( $referral_id );
+
+			return false; // Allow extensions to prevent referrals from being created.
+		}
+
+		/**
+		 * Filters the arguments used to hydrate the referral.
+		 *
+		 * @since 1.0
+		 * @since 2.8 Moved the affwp_insert_pending_referral hook from insert_pending_referral
+		 *            function to here so that it's still possible to filter the referral arguments.
+		 *
+		 * @param array  $data         Arguments sent to update_referral() to update a draft referral to pending.
+		 * @param float  $amount       Calculated referral amount.
+		 * @param string $reference    Referral reference (usually the order or entry number).
+		 * @param string $description  Referral description.
+		 * @param int    $affiliate_id Affiliate ID.
+		 * @param int    $visit_id     Visit ID.
+		 * @param array  $data         Data originally sent to insert the referral.
+		 * @param string $context      Context for creating the referral (typically the integration slug).
+		 */
+		$data = apply_filters( 'affwp_insert_pending_referral', $data, $amount, $reference, $description, $this->affiliate_id, $visit_id, $data, $this->context );
+
+		// Log referrals->update_referral() args.
+		affiliate_wp()->utils->log( 'Arguments sent to the DB during referral hydration:', $data );
+
+		$success = affiliate_wp()->referrals->update_referral( $referral_id, $data );
+
+		if ( $success ) {
+			affiliate_wp()->utils->log( sprintf( 'Referral #%d hydrated successfully.', $referral_id ) );
+		} else {
+			affiliate_wp()->utils->log( 'Referral could not be hydrated due to an error.' );
+		}
+
+		return $success;
 	}
 
 	/**
@@ -673,7 +871,7 @@ abstract class Affiliate_WP_Base {
 
 		if ( empty( $reference_or_referral ) ) {
 
-			affiliate_wp()->utils->log( 'Empty $reference_or_referral parameter given during complete_referral()' );
+			$this->log( 'Empty $reference_or_referral parameter given during complete_referral()' );
 
 			return false;
 		}
@@ -684,7 +882,7 @@ abstract class Affiliate_WP_Base {
 
 			if ( empty( $referral ) ) {
 
-				affiliate_wp()->utils->log( 'Referral could not be retrieved during complete_referral(). Value given: ' . print_r( $reference_or_referral, true ) );
+				$this->log( 'Referral could not be retrieved during complete_referral(). Value given: ' . print_r( $reference_or_referral, true ) );
 
 				return false;
 			}
@@ -695,12 +893,20 @@ abstract class Affiliate_WP_Base {
 
 			if ( is_wp_error( $referral ) ) {
 				// Bail: This is a non-referral sale.
-				affiliate_wp()->utils->log( 'Referral could not be retrieved by reference during complete_referral(). Reference value given: ' . print_r( $reference_or_referral, true ) );
+				$this->log( 'Referral could not be retrieved by reference during complete_referral(). Reference value given: ' . print_r( $reference_or_referral, true ) );
 				return false;
 			}
 		}
 
-		affiliate_wp()->utils->log( 'Referral retrieved successfully during complete_referral()' );
+		$this->log( 'Referral retrieved successfully during complete_referral()' );
+
+		// Check if referral has failed.
+		$has_failed = affwp_get_referral_meta( $referral->referral_id, 'referral_has_failed', true );
+		if ( $has_failed ) {
+			affiliate_wp()->utils->log( 'Referral not marked as complete because it has failed before.' );
+			// This referral has failed.
+			return false;
+		}
 
 		if ( is_object( $referral ) && $referral->status != 'pending' && $referral->status != 'rejected' ) {
 			// This referral has already been completed, or paid
@@ -718,7 +924,7 @@ abstract class Affiliate_WP_Base {
 		 */
 		if ( ! apply_filters( 'affwp_auto_complete_referral', true, $referral ) ) {
 
-			affiliate_wp()->utils->log( 'Referral not marked as complete because of affwp_auto_complete_referral filter' );
+			$this->log( 'Referral not marked as complete because of affwp_auto_complete_referral filter' );
 
 			return false;
 		}
@@ -736,12 +942,12 @@ abstract class Affiliate_WP_Base {
 			 */
 			do_action( 'affwp_complete_referral', $referral->referral_id, $referral, $referral->reference );
 
-			affiliate_wp()->utils->log( sprintf( 'Referral #%d set to Unpaid successfully', $referral->referral_id ) );
+			$this->log( sprintf( 'Referral #%d set to Unpaid successfully', $referral->referral_id ) );
 
 			return true;
 		}
 
-		affiliate_wp()->utils->log( sprintf( 'Referral #%d failed to be set to Unpaid', $referral->referral_id ) );
+		$this->log( sprintf( 'Referral #%d failed to be set to Unpaid', $referral->referral_id ) );
 
 		return false;
 
@@ -763,7 +969,7 @@ abstract class Affiliate_WP_Base {
 
 		if ( empty( $reference_or_referral ) ) {
 
-			affiliate_wp()->utils->log( 'Empty $reference_or_referral parameter given during complete_referral()' );
+			$this->log( 'Empty $reference_or_referral parameter given during reject_referral()' );
 
 			return false;
 		}
@@ -780,37 +986,94 @@ abstract class Affiliate_WP_Base {
 
 		if ( empty( $referral ) || is_wp_error( $referral ) ) {
 
-			affiliate_wp()->utils->log( 'Referral could not be retrieved during reject_referral(). Value given: ' . print_r( $reference_or_referral, true ) );
+			$this->log( 'Referral could not be retrieved during reject_referral(). Value given: ' . print_r( $reference_or_referral, true ) );
 
 			return false;
 		}
 
-		affiliate_wp()->utils->log( 'Referral retrieved successfully during reject_referral()' );
+		$this->log( 'Referral retrieved successfully during reject_referral()' );
 
 		if ( is_object( $referral ) && 'paid' === $referral->status ) {
 			// This referral has already been paid so it cannot be rejected
-			affiliate_wp()->utils->log( sprintf( 'Referral #%d not Rejected because it is already paid', $referral->referral_id ) );
+			$this->log( sprintf( 'Referral #%d not Rejected because it is already paid', $referral->referral_id ) );
 			return false;
 		}
 
 		if ( is_object( $referral ) && 'pending' === $referral->status && false === $reject_pending ) {
 			// This referral is pending so it cannot be rejected
-			affiliate_wp()->utils->log( sprintf( 'Referral #%d not Rejected because it is pending', $referral->referral_id ) );
+			$this->log( sprintf( 'Referral #%d not Rejected because it is pending', $referral->referral_id ) );
 			return false;
 		}
 
 		if ( affwp_set_referral_status( $referral->referral_id, 'rejected' ) ) {
 
-			affiliate_wp()->utils->log( sprintf( 'Referral #%d set to Rejected successfully', $referral->referral_id ) );
+			$this->log( sprintf( 'Referral #%d set to Rejected successfully', $referral->referral_id ) );
 
 			return true;
 
 		}
 
-		affiliate_wp()->utils->log( sprintf( 'Referral #%d failed to be set to Rejected', $referral->referral_id ) );
+		$this->log( sprintf( 'Referral #%d failed to be set to Rejected', $referral->referral_id ) );
 
 		return false;
 
+	}
+
+	/**
+	 * Fails a referral.
+	 *
+	 * Used when a draft referral has disqualifying factors preventing it from becoming pending.
+	 *
+	 * @since 2.8.1
+	 *
+	 * @param string|\AffWP\Referral $reference_or_referral Referral object or reference value.
+	 * @return bool Whether the referral was successfully rejected.
+	 */
+	public function fail_referral( $reference_or_referral ) {
+
+		if ( empty( $reference_or_referral ) ) {
+
+			$this->log( 'Empty $reference_or_referral parameter given during fail_referral()' );
+
+			return false;
+		}
+
+		if( is_object( $reference_or_referral ) ) {
+
+			$referral = affwp_get_referral( $reference_or_referral );
+
+		} else {
+
+			$referral = affwp_get_referral_by( 'reference', $reference_or_referral, $this->context );
+
+		}
+
+		if ( empty( $referral ) || is_wp_error( $referral ) ) {
+
+			$this->log( 'Referral could not be retrieved during fail_referral(). Value given: ' . print_r( $reference_or_referral, true ) );
+
+			return false;
+		}
+
+		$this->log( 'Referral retrieved successfully during fail_referral()' );
+
+		if ( is_object( $referral ) && 'draft' !== $referral->status ) {
+			// This referral must be a draft to fail.
+			$this->log( sprintf( 'Referral #%d not failed because it is not a draft.', $referral->referral_id ) );
+			return false;
+		}
+
+		if ( affwp_set_referral_status( $referral->referral_id, 'failed' ) ) {
+
+			$this->log( sprintf( 'Referral #%d set to Failed successfully', $referral->referral_id ) );
+
+			return true;
+
+		}
+
+		$this->log( sprintf( 'Referral #%d could not be set to Failed', $referral->referral_id ) );
+
+		return false;
 	}
 
 	/**
@@ -1075,6 +1338,11 @@ abstract class Affiliate_WP_Base {
 	 *                             Default empty array.
 	 */
 	public function log( $message, $data = array() ) {
+
+		// Add context to integration logs.
+		if ( ! empty( $this->context ) ) {
+			$message = "{$this->context}: {$message}";
+		}
 
 		affiliate_wp()->utils->log( $message, $data );
 

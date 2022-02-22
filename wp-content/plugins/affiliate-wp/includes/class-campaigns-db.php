@@ -110,7 +110,7 @@ class Affiliate_WP_Campaigns_DB extends Affiliate_WP_DB {
 			return false;
 		}
 
-		return $this->update_affiliate_campaign( $visit->affiliate_id, $visit->campaign, $visit->referral_id > 0 );
+		return $this->update_affiliate_campaign( $visit->affiliate_id, $visit->campaign );
 	}
 
 	/**
@@ -260,6 +260,11 @@ class Affiliate_WP_Campaigns_DB extends Affiliate_WP_DB {
 	 */
 	public function update( $row_id, $data = array(), $where = '', $type = '' ) {
 		$campaign = affwp_get_campaign( $row_id );
+
+		// Don't allow the conversion rate to be set directly.
+		if ( isset( $data['conversion_rate'] ) ) {
+			unset( $data['conversion_rate'] );
+		}
 
 		// Maybe calculate Conversion Rate
 		if ( isset( $data['visits'] ) || isset( $data['referrals'] ) ) {
@@ -563,10 +568,12 @@ class Affiliate_WP_Campaigns_DB extends Affiliate_WP_DB {
 
 			} else {
 
+				$campaign = esc_sql( $args['campaign'] );
+
 				if ( empty( $args['campaign'] ) ) {
 					$where .= "`campaign` {$campaign_compare} '' ";
 				} else {
-					$where .= "`campaign` {$campaign_compare} '{$args['campaign']}' ";
+					$where .= "`campaign` {$campaign_compare} '{$campaign}' ";
 				}
 			}
 

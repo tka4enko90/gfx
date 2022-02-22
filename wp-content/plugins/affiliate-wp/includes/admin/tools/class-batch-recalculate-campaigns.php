@@ -186,6 +186,7 @@ class Batch_Recalculate_Campaigns extends Utils\Batch_Process implements Batch\W
 		// Set the upgrade complete if all affiliate campaigns were calculated.
 		if ( 0 === $this->affiliate_id ) {
 			affwp_set_upgrade_complete( 'upgrade_v27_calculate_campaigns' );
+			affwp_set_upgrade_complete( 'upgrade_v274_calculate_campaigns' );
 		}
 
 		// Clean up.

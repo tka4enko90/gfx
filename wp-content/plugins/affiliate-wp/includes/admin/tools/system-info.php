@@ -75,6 +75,7 @@ function affwp_tools_system_info_report() {
 	$return .= 'Currency:                         ' . ( $settings->get( 'currency' ) ? $settings->get( 'currency' ) . "\n" : "Default\n" );
 	$return .= 'Currency Position:                ' . ( $settings->get( 'currency_position' ) ? $settings->get( 'currency_position' ) . "\n" : "Default\n" );
 	$return .= 'Cookie Expiration:                ' . ( $settings->get( 'cookie_exp' ) ? $settings->get( 'cookie_exp' ) . " day(s)\n" : "Default\n" );
+	$return .= 'Cookie Compat Mode Enabled:       ' . ( affiliate_wp()->tracking->cookie_compat_mode ? 'Yes' : 'No' ) . "\n";
 	$return .= 'Network-wide DB Tables:           ' . ( defined( 'AFFILIATE_WP_NETWORK_WIDE' ) ? AFFILIATE_WP_NETWORK_WIDE ? 'Enabled' : 'Disabled' : 'Not set' ) . "\n";
 
 	// Environment.
@@ -109,6 +110,7 @@ function affwp_tools_system_info_report() {
 	$return .= "\n" . '-- AffiliateWP Object Counts' . "\n\n";
 	$return .= 'Affiliates:                       ' . affwp_format_amount( affiliate_wp()->affiliates->count(), false ) . "\n";
 	$return .= 'Campaigns:                        ' . affwp_format_amount( affiliate_wp()->campaigns->count(), false ) . "\n";
+	$return .= 'Coupons:                          ' . affwp_format_amount( affiliate_wp()->affiliates->coupons->count(), false ) . "\n";
 	$return .= 'Creatives:                        ' . affwp_format_amount( affiliate_wp()->creatives->count(), false ) . "\n";
 	$return .= 'Customers:                        ' . affwp_format_amount( affiliate_wp()->customers->count(), false ) . "\n";
 	$return .= 'Payouts:                          ' . affwp_format_amount( affiliate_wp()->affiliates->payouts->count(), false ) . "\n";

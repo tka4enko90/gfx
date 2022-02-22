@@ -1,32 +1,16 @@
 <?php
 /**
- * Plugin Name: AffiliateWP
- * Plugin URI: https://affiliatewp.com
- * Description: Affiliate Plugin for WordPress
- * Author: Sandhills Development, LLC
- * Author URI: https://sandhillsdev.com
- * Version: 2.7
- * Text Domain: affiliate-wp
- * Domain Path: languages
- * GitHub Plugin URI: affiliatewp/affiliatewp
+ * Main Plugin Bootstrap
  *
- * AffiliateWP is distributed under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * any later version.
- *
- * AffiliateWP is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with AffiliateWP. If not, see <http://www.gnu.org/licenses/>.
- *
- * @package AffiliateWP
- * @category Core
- * @author Pippin Williamson
- * @version 2.7
+ * @package     AffiliateWP
+ * @subpackage  Core
+ * @copyright   Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright   Copyright (c) 2021, Awesome Motive Inc
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+use AffWP\Components\Wizard;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -57,7 +41,7 @@ final class Affiliate_WP {
 	 * @since  1.0
 	 * @var    string
 	 */
-	private $version = '2.7.3';
+	private $version = '2.9.1';
 
 	/**
 	 * Main plugin file.
@@ -265,6 +249,14 @@ final class Affiliate_WP {
 	public $utils;
 
 	/**
+	 * The editor class instance variable.
+	 *
+	 * @since 2.8
+	 * @var   Affiliate_WP_Editor
+	 */
+	public $editor;
+
+	/**
 	 * Main Affiliate_WP Instance
 	 *
 	 * Insures that only one instance of Affiliate_WP exists in memory at any one
@@ -382,7 +374,7 @@ final class Affiliate_WP {
 
 		// Make sure PAYOUTS_SERVICE_URL is defined.
 		if ( ! defined( 'PAYOUTS_SERVICE_URL' ) ) {
-			define( 'PAYOUTS_SERVICE_URL', 'https://payouts.sandhillsdev.com' );
+			define( 'PAYOUTS_SERVICE_URL', 'https://payouts.sandhillsplugins.com/' );
 		}
 
 		// Make sure PAYOUTS_SERVICE_DOCS_URL is defined.
@@ -425,6 +417,7 @@ final class Affiliate_WP {
 		require_once AFFILIATEWP_PLUGIN_DIR . 'includes/class-sales-db.php';
 		require_once AFFILIATEWP_PLUGIN_DIR . 'includes/class-capabilities.php';
 		require_once AFFILIATEWP_PLUGIN_DIR . 'includes/class-utilities.php';
+		require_once AFFILIATEWP_PLUGIN_DIR . 'includes/class-editor.php';
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
@@ -580,6 +573,10 @@ final class Affiliate_WP {
 		self::$instance->rewrites       = new Affiliate_WP_Rewrites;
 		self::$instance->capabilities   = new Affiliate_WP_Capabilities;
 		self::$instance->utils          = new Affiliate_WP_Utilities;
+		self::$instance->editor         = new Affiliate_WP_Editor;
+
+		// Onboarding wizard.
+		new Wizard\Bootstrap();
 
 		self::$instance->updater();
 	}

@@ -291,8 +291,13 @@ $disabled = disabled( (bool) $payout, true, false );
 				</th>
 
 				<td>
-					<?php $labels = affwp_get_referral_statuses(); ?>
+					<?php $labels = affwp_get_referral_statuses( true ); ?>
 					<select name="status" id="status" <?php echo $disabled; ?>>
+						<?php if ( 'draft' === $referral->status ) : ?>
+							<option value="draft"<?php selected( 'draft', $referral->status ); ?>><?php echo esc_html( $labels['draft'] ); ?></option>
+						<?php elseif ( 'failed' === $referral->status ) : ?>
+							<option value="failed"<?php selected( 'failed', $referral->status ); ?>><?php echo esc_html( $labels['failed'] ); ?></option>
+						<?php endif; ?>
 						<option value="unpaid"<?php selected( 'unpaid', $referral->status ); ?>><?php echo esc_html( $labels['unpaid'] ); ?></option>
 						<?php if ( current_user_can( 'manage_payouts' ) ) : ?>
 							<option value="paid"<?php selected( 'paid', $referral->status ); ?>><?php echo esc_html( $labels['paid'] ); ?></option>

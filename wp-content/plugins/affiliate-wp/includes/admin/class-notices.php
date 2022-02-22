@@ -111,6 +111,7 @@ class Affiliate_WP_Admin_Notices {
 		$this->settings_notices();
 		$this->environment_notices();
 		$this->upgrade_notices();
+		$this->development_notices();
 	}
 
 	/**
@@ -152,6 +153,10 @@ class Affiliate_WP_Admin_Notices {
 			$output .= self::show_notice( 'requirements_php_70', false );
 		}
 
+		if ( affwp_is_admin_page() && false !== strpos( AFFILIATEWP_VERSION, '-' ) ) {
+			$output .= self::show_notice( 'development_version', false );
+		}
+
 		$integrations = affiliate_wp()->integrations->get_enabled_integrations();
 
 		if ( empty( $integrations ) && ! get_user_meta( get_current_user_id(), '_affwp_no_integrations_dismissed', true ) ) {
@@ -180,6 +185,18 @@ class Affiliate_WP_Admin_Notices {
 
 		if ( false === affwp_has_upgrade_completed( 'upgrade_v27_calculate_campaigns' ) ) {
 			$output .= self::show_notice( 'upgrade_v27_calculate_campaigns', false );
+		}
+
+		if ( false === affwp_has_upgrade_completed( 'upgrade_v274_calculate_campaigns' ) ) {
+			$output .= self::show_notice( 'upgrade_v274_calculate_campaigns', false );
+		}
+
+		if ( affwp_get_current_migrated_user_meta_fields() !== affwp_get_pending_migrated_user_meta_fields() ) {
+			$output .= self::show_notice( 'migrate_affiliate_user_meta', false );
+		}
+
+		if ( false === affwp_has_upgrade_completed( 'upgrade_v281_convert_failed_referrals' ) ) {
+			$output .= self::show_notice( 'upgrade_v281_convert_failed_referrals', false );
 		}
 
 		// Payouts Service.
@@ -539,8 +556,8 @@ class Affiliate_WP_Admin_Notices {
 		$message = '<p><strong>' . __( 'Effortlessly pay your affiliates', 'affiliate-wp' ) . '</strong></p>';
 
 		$message .= sprintf(
-			__( 'With the Payouts Service provided by AffiliateWP, you can easily pay affiliates in 31 countries using any debit or credit card. Learn more at <a href="%s" target="_blank">payouts.sandhillsdev.com</a>.', 'affiliate-wp' ),
-			'https://payouts.sandhillsdev.com'
+			__( 'With the Payouts Service provided by AffiliateWP, you can easily pay affiliates in 31 countries using any debit or credit card. Learn more at <a href="%s" target="_blank">payouts.sandhillsplugins.com</a>.', 'affiliate-wp' ),
+			PAYOUTS_SERVICE_URL
 		);
 
 		$added = $this->add_notice( 'payouts_service', array(
@@ -558,7 +575,7 @@ class Affiliate_WP_Admin_Notices {
 	 */
 	private function referral_notices() {
 		$this->add_notice( 'referral_added', array(
-			'message' => __( 'Referral added successfully', 'affiliate-wp' ),
+			'message' => __( 'Referral added successfully.', 'affiliate-wp' ),
 		) );
 
 		$this->add_notice( 'referral_add_failed', array(
@@ -568,24 +585,29 @@ class Affiliate_WP_Admin_Notices {
 
 		$this->add_notice( 'referral_add_invalid_affiliate', array(
 			'class'   => 'error',
-			'message' => __( 'Referral not created because affiliate is invalid', 'affiliate-wp' ),
+			'message' => __( 'Referral not created because the affiliate is invalid, please try again.', 'affiliate-wp' ),
 		) );
 
+		$this->add_notice( 'referral_invalid_amount', array(
+            'class'   => 'error',
+            'message' => __( 'Referral amount cannot be negative, please try again.', 'affiliate-wp' ),
+        ) );
+
 		$this->add_notice( 'referral_updated', array(
-			'message' => __( 'Referral updated successfully', 'affiliate-wp' ),
+			'message' => __( 'Referral updated successfully.', 'affiliate-wp' ),
 		) );
 
 		$this->add_notice( 'referral_update_failed', array(
-			'message' => __( 'Referral update failed, please try again', 'affiliate-wp' ),
+			'message' => __( 'Referral update failed, please try again.', 'affiliate-wp' ),
 		) );
 
 		$this->add_notice( 'referral_deleted', array(
-			'message' => __( 'Referral deleted successfully', 'affiliate-wp' ),
+			'message' => __( 'Referral deleted successfully.', 'affiliate-wp' ),
 		) );
 
 		$this->add_notice( 'referral_delete_failed', array(
 			'class'   => 'error',
-			'message' => __( 'Referral deletion failed, please try again', 'affiliate-wp' ),
+			'message' => __( 'Referral deletion failed, please try again.', 'affiliate-wp' ),
 		) );
 	}
 
@@ -733,6 +755,97 @@ class Affiliate_WP_Admin_Notices {
 			)
 		);
 
+		$this->add_notice( 'upgrade_v274_calculate_campaigns',
+			array(
+				'class' => 'notice notice-info is-dismissible',
+				'message' => function() {
+					$notice = __( 'Your database tables need to be upgraded following the AffiliateWP v2.7.4 update. Depending on the size of your database, this upgrade could take some time.', 'affiliate-wp' );
+					$nonce  = wp_create_nonce( 'recalculate-campaigns_step_nonce' );
+
+					ob_start();
+					// Enqueue admin JS for the batch processor.
+					affwp_enqueue_admin_js();
+					?>
+					<p><?php echo $notice; ?></p>
+					<form method="post" class="affwp-batch-form" data-dismiss-when-complete="true" data-batch_id="recalculate-campaigns" data-nonce="<?php echo esc_attr( $nonce ); ?>">
+						<p>
+							<?php submit_button( __( 'Upgrade Database Tables', 'affiliate-wp' ), 'secondary', 'recalculate-campaigns', false ); ?>
+						</p>
+					</form>
+					<?php
+					return ob_get_clean();
+				},
+			)
+		);
+
+		$this->add_notice( 'migrate_affiliate_user_meta',
+			array(
+				'class' => 'notice notice-info is-dismissible',
+				'message' => function() {
+					$notice = __( 'Your database tables need to be upgraded following the AffiliateWP v2.8 update. Depending on the size of your database, this upgrade could take some time.', 'affiliate-wp' );
+					$nonce  = wp_create_nonce( 'migrate-affiliate-user-meta_step_nonce' );
+
+					ob_start();
+					// Enqueue admin JS for the batch processor.
+					affwp_enqueue_admin_js();
+					?>
+					<p><?php echo $notice; ?></p>
+					<form method="post" class="affwp-batch-form" data-dismiss-when-complete="true" data-batch_id="migrate-affiliate-user-meta" data-nonce="<?php echo esc_attr( $nonce ); ?>">
+						<p>
+							<?php submit_button( __( 'Upgrade Database Tables', 'affiliate-wp' ), 'secondary', 'migrate-affiliate-user-meta_step_nonce', false ); ?>
+						</p>
+					</form>
+					<?php
+					return ob_get_clean();
+				},
+			)
+		);
+
+		$this->add_notice( 'upgrade_v281_convert_failed_referrals',
+			array(
+				'class' => 'notice notice-info is-dismissible',
+				'message' => function() {
+					$notice = __( 'Your database tables need to be upgraded following the AffiliateWP v2.8.1 update. Depending on the size of your database, this upgrade could take some time.', 'affiliate-wp' );
+					$nonce  = wp_create_nonce( 'upgrade-convert-failed-referrals_step_nonce' );
+
+					ob_start();
+					// Enqueue admin JS for the batch processor.
+					affwp_enqueue_admin_js();
+					?>
+					<p><?php echo $notice; ?></p>
+					<form method="post" class="affwp-batch-form" data-dismiss-when-complete="true" data-batch_id="upgrade-convert-failed-referrals" data-nonce="<?php echo esc_attr( $nonce ); ?>">
+						<p>
+							<?php submit_button( __( 'Upgrade Database Tables', 'affiliate-wp' ), 'secondary', 'upgrade-convert-failed-referrals', false ); ?>
+						</p>
+					</form>
+					<?php
+					return ob_get_clean();
+				},
+			)
+		);
+
+
+	}
+
+	/**
+	 * Registers development-related notices.
+	 *
+	 * @since 2.8
+	 */
+	public function development_notices() {
+		$this->add_notice( 'development_version', array(
+			'class' => 'error',
+			'message' => function() {
+				$message  = sprintf( __( '<strong>Important:</strong> You have installed or updated to AffiliateWP <code>v%s</code>, a pre-release development version.', 'affiliate-wp' ),
+					AFFILIATEWP_VERSION
+				) . '<br />';
+				$message .= sprintf( __( 'Development versions can sometimes be unstable and should <em>never</em> be tested on a live site. If you feel you may have installed this version of AffiliateWP in error, you can get a copy of the latest stable version from your <a href="%s" target="_blank">account page</a>.', 'affiliate-wp' ),
+					'https://affiliatewp.com/account/?utm_campaign=admin&utm_source=development_version&utm_medium=error'
+				);
+
+				return $message;
+			},
+		) );
 	}
 
 	/**

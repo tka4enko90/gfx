@@ -201,6 +201,18 @@ class Affiliate_WP_Upgrades {
 			$this->v27_upgrade();
 		}
 
+		if ( version_compare( $this->version, '2.7.4', '<' ) ) {
+			$this->v274_upgrade();
+		}
+
+		if ( version_compare( $this->version, '2.8', '<' ) ) {
+			$this->v28_upgrade();
+		}
+
+		if ( version_compare( $this->version, '2.9', '<' ) ) {
+			$this->v29_upgrade();
+		}
+
 		// Inconsistency between current and saved version.
 		if ( version_compare( $this->version, AFFILIATEWP_VERSION, '<>' ) ) {
 			$this->upgraded = true;
@@ -278,6 +290,30 @@ class Affiliate_WP_Upgrades {
 			'compare' => '<',
 		) );
 
+		$this->add_routine( 'upgrade_v274_calculate_campaigns', array(
+			'version' => '2.7.4',
+			'compare' => '<',
+		) );
+
+		$this->add_routine( 'migrate_affiliate_user_meta', array(
+			'version'       => '2.8',
+			'compare'       => '<',
+			'batch_process' => array(
+				'id'    => 'migrate-affiliate-user-meta',
+				'class' => 'AffWP\Utils\Batch_Process\Batch_Migrate_Affiliate_User_Meta',
+				'file'  => AFFILIATEWP_PLUGIN_DIR . 'includes/admin/tools/class-batch-migrate-affwp-user-meta.php',
+			),
+		) );
+
+		$this->add_routine( 'upgrade_v281_convert_failed_referrals', array(
+			'version'       => '2.8.1',
+			'compare'       => '<',
+			'batch_process' => array(
+				'id'    => 'upgrade-convert-failed-referrals',
+				'class' => 'AffWP\Utils\Batch_Process\Batch_Upgrade_Convert_Failed_Referrals',
+				'file'  => AFFILIATEWP_PLUGIN_DIR . 'includes/admin/tools/upgrades/class-batch-upgrade-convert-failed-referrals.php',
+			),
+		) );
 	}
 
 	/**
@@ -787,7 +823,7 @@ class Affiliate_WP_Upgrades {
 	 * @since  2.2
 	 */
 	private function v22_upgrade() {
-		
+
 		global $wpdb;
 
 		// Add type column to referrals database.
@@ -1046,6 +1082,86 @@ class Affiliate_WP_Upgrades {
 	}
 
 	/**
+	 * Performs database upgrades for 2.7.4
+	 *
+	 * @since 2.7.4
+	 */
+	private function v274_upgrade() {
+		$upload_dir = wp_upload_dir( null, false );
+		$base_dir   = isset( $upload_dir['basedir'] ) ? $upload_dir['basedir'] : ABSPATH;
+
+		$old_file = trailingslashit( $base_dir ) . 'affwp-debug.log';
+
+		if ( file_exists( $old_file ) && is_writeable( $old_file ) && is_writeable( $base_dir ) ) {
+			$hash     = affwp_get_hash( $upload_dir, AUTH_SALT );
+			$new_file = trailingslashit( $base_dir ) . sprintf( 'affwp-debug-log__%s.log', $hash );
+			@rename( $old_file, $new_file );
+		}
+
+		$this->upgraded = true;
+	}
+
+	/**
+	 * Performs database upgrades for 2.8.
+	 *
+	 * @since 2.8
+	 */
+	private function v28_upgrade() {
+		global $wpdb;
+
+		$table_name = affiliate_wp()->affiliates->coupons->table_name;
+
+		// Update the length of the coupon_code column to 191 characters.
+		affiliate_wp()->affiliates->coupons->create_table();
+
+		affiliate_wp()->utils->log( 'Upgrade: The coupons table has been updated to support lengthier coupon codes and types.' );
+
+		// Set default coupon format and hyphen delimeter.
+		$coupons_settings = array(
+		    'coupon_format'           => '{coupon_code}',
+		    'coupon_hyphen_delimiter' => 1,
+		);
+
+		affiliate_wp()->settings->set( $coupons_settings, $save = true );
+
+		$this->upgraded = true;
+	}
+
+	/**
+	 * Performs database upgrades for 2.9.
+	 *
+	 * @since 2.9
+	 */
+	private function v29_upgrade() {
+		global $wpdb;
+
+		$table_name = affiliate_wp()->affiliates->coupons->table_name;
+
+		// Add the 'locked' column.
+		affiliate_wp()->affiliates->coupons->create_table();
+
+		affiliate_wp()->utils->log( 'Upgrade: The locked column has been added to the coupons table.' );
+
+		// Update type field of existing coupons.
+		$old_type = '';
+		$new_type = 'dynamic';
+
+		$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE $table_name SET type = %s where type = %s;",
+					$new_type,
+					$old_type
+				)
+			);
+
+		affiliate_wp()->utils->log( 'Upgrade: All dynamic coupons now have a "dynamic" type in the coupons table.' );
+
+		wp_cache_set( 'last_changed', microtime(), 'coupons' );
+
+		$this->upgraded = true;
+	}
+
+	/**
 	 * Retrieves the site IDs array.
 	 *
 	 * Most commonly used for db schema changes in networks (but also works for single site).
@@ -1080,7 +1196,7 @@ class Affiliate_WP_Upgrades {
 			if( is_multisite() ) {
 
 				switch_to_blog( $site_id );
-				
+
 			}
 
 			if ( ! in_array( $plugin, get_option( 'active_plugins', array() ) ) ) {

@@ -1139,17 +1139,34 @@ function affwp_has_upgrade_completed( $upgrade_action ) {
 	$completed_upgrades = affwp_get_completed_upgrades();
 
 	$has_completed = in_array( $upgrade_action, $completed_upgrades, true );
-
 	// (Maybe) force an upgrade action to show.
-	if ( ! empty( $_REQUEST['affwp_force_notice'] ) ) {
-		$foced_upgrade_action = sanitize_key( $_REQUEST['affwp_force_notice'] );
-
-		if ( $foced_upgrade_action === $upgrade_action ) {
-			$has_completed = false;
-		}
+	if ( true === affwp_is_upgrade_forced( $upgrade_action ) ) {
+		$has_completed = false;
 	}
 
 	return $has_completed;
+}
+
+/**
+ * Returns true if the specified upgrade action is being forced.
+ *
+ * @since 2.8
+ *
+ * @param string $upgrade_action The upgrade action to check.
+ *
+ * @return bool True if forced, otherwise false.
+ */
+function affwp_is_upgrade_forced( $upgrade_action ) {
+	$is_forced = false;
+	if ( isset( $_REQUEST['affwp_force_notice'] ) ) {
+		$forced_upgrade_action = sanitize_key( $_REQUEST['affwp_force_notice'] );
+
+		if ( $forced_upgrade_action === $upgrade_action ) {
+			$is_forced = true;
+		}
+	}
+
+	return $is_forced;
 }
 
 /**
@@ -1426,9 +1443,11 @@ function affwp_get_payouts_service_country_list() {
 		'BR' => __( 'Brazil', 'affiliate-wp' ),
 		'BG' => __( 'Bulgaria', 'affiliate-wp' ),
 		'CR' => __( 'Costa Rica', 'affiliate-wp' ),
+		'HR' => __( 'Croatia', 'affiliate-wp' ),
 		'CY' => __( 'Cyprus', 'affiliate-wp' ),
 		'CZ' => __( 'Czech Republic', 'affiliate-wp' ),
 		'DK' => __( 'Denmark', 'affiliate-wp' ),
+		'EG' => __( 'Egypt', 'affiliate-wp' ),
 		'EE' => __( 'Estonia', 'affiliate-wp' ),
 		'FI' => __( 'Finland', 'affiliate-wp' ),
 		'FR' => __( 'France', 'affiliate-wp' ),
@@ -1436,8 +1455,10 @@ function affwp_get_payouts_service_country_list() {
 		'GR' => __( 'Greece', 'affiliate-wp' ),
 		'HK' => __( 'Hong Kong', 'affiliate-wp' ),
 		'HU' => __( 'Hungary', 'affiliate-wp' ),
+		'IS' => __( 'Iceland', 'affiliate-wp' ),
 		'IN' => __( 'India', 'affiliate-wp' ),
 		'ID' => __( 'Indonesia', 'affiliate-wp' ),
+		'IL' => __( 'Israel', 'affiliate-wp' ),
 		'JP' => __( 'Japan', 'affiliate-wp' ),
 		'IE' => __( 'Ireland', 'affiliate-wp' ),
 		'IT' => __( 'Italy', 'affiliate-wp' ),
@@ -1450,6 +1471,7 @@ function affwp_get_payouts_service_country_list() {
 		'NL' => __( 'Netherlands', 'affiliate-wp' ),
 		'NZ' => __( 'New Zealand', 'affiliate-wp' ),
 		'NO' => __( 'Norway', 'affiliate-wp' ),
+		'PE' => __( 'Peru', 'affiliate-wp' ),
 		'PL' => __( 'Poland', 'affiliate-wp' ),
 		'PT' => __( 'Portugal', 'affiliate-wp' ),
 		'RO' => __( 'Romania', 'affiliate-wp' ),
@@ -1460,6 +1482,7 @@ function affwp_get_payouts_service_country_list() {
 		'SE' => __( 'Sweden', 'affiliate-wp' ),
 		'CH' => __( 'Switzerland', 'affiliate-wp' ),
 		'TH' => __( 'Thailand', 'affiliate-wp' ),
+		'UY' => __( 'Uruguay', 'affiliate-wp' ),
 	);
 
 	return $countries;
@@ -1720,3 +1743,15 @@ function affwp_normalize_array( array $array, $args = array() ) {
 	return $array;
 }
 
+/**
+ * Strips common AffiliateWP prefixes from a given string.
+ *
+ * @since 2.8
+ *
+ * @param string $prefixed_string The prefixed string to remove.
+ *
+ * @return array|string|string[]|null The unprefixed string.
+ */
+function affwp_remove_prefix( $prefixed_string ) {
+	return preg_replace( "/^(affwp|affiliate_wp|affiliate-wp|affiliatewp)[-_]/i", '', $prefixed_string );
+}
