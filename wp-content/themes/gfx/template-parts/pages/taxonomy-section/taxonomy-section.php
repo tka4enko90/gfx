@@ -1,12 +1,29 @@
-<?php $support_page_id = get_page_by_title('Support')->ID; ?>
+<?php
+$support_page_id = get_page_by_title( 'Support' )->ID;
+if ( $support_page_id ) :
+	$support_page_title = __( 'Support', 'gfx' );
+	$term               = get_queried_object();
+	if ( $term instanceof WP_Term ) {
+		$image = get_field( 'section_hero_image', 'term_' . $term->term_id );
+	}
+	$support_hero_subtitle = get_field( 'support_hero_subtitle', $support_page_id );
+	$args                  = array(
+		'title'       => $support_page_title,
+		'subtitle'    => $support_hero_subtitle,
+		'search_type' => 'support',
+	);
+	if ( ! empty( $image ) && $image['ID'] ) {
+		$args['image']      = $image;
+		$args['image_size'] = 'gfx_wc_hero_large';
+	}
 
-<?php if ($support_page_id) : ?>
-    <?php $support_page_title = __('Support', 'gfx'); ?>
-    <?php $support_hero_subtitle = get_field('support_hero_subtitle', $support_page_id); ?>
+	if ( isset( $page_title ) || isset( $support_hero_subtitle ) ) :
+		get_template_part(
+			'template-parts/blocks/hero_search/hero-search',
+			'',
+			$args
+		);
+	endif;
 
-    <?php if (isset($page_title) || isset($support_hero_subtitle)) : ?>
-        <?php get_template_part('template-parts/blocks/hero_search/hero-search', '', array('title' => $support_page_title, 'subtitle' => $support_hero_subtitle, 'search_type' => 'support')); ?>
-    <?php endif; ?>
-
-    <?php get_template_part('template-parts/blocks/taxonomy_section_posts/taxonomy-section-posts', '', array('support_page_id' => $support_page_id)); ?>
-<?php endif; ?>
+	get_template_part( 'template-parts/blocks/taxonomy_section_posts/taxonomy-section-posts', '', array( 'support_page_id' => $support_page_id ) );
+endif;
