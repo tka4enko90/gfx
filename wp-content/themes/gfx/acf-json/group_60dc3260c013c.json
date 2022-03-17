@@ -19,6 +19,30 @@
             "endpoint": 0
         },
         {
+            "key": "field_6233029118153",
+            "label": "Blog hero image",
+            "name": "blog_hero_image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_60dc327c38036",
             "label": "Subtitle",
             "name": "blog_hero_subtitle",
@@ -55,5 +79,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626337239
+    "show_in_rest": 0,
+    "modified": 1647510181
 }

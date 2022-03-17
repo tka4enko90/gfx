@@ -9,7 +9,9 @@
     position: absolute;
     width: 100%;
     z-index: 0;
+    right: 20px;
     @media (max-width: $lg) {
+      right: 0;
       background-position: center center;
       left: 0;
       right: 0;
