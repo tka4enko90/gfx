@@ -11,6 +11,7 @@
 <section class="shop-products-grid">
     <div class="container">
         <form action="" id="product-filtration-form" method="GET">
+            <input type="hidden" name="page">
             <div class="filters-holder">
                 <div class="col filters">
                     <div>
