@@ -1,13 +1,13 @@
 (function ($) {
-	var parentSection     = $( '.shop-products-grid' );
-	var filtrationForm    = $( '#product-filtration-form' );
-	var filterTagsSelect  = $( '.filter-tags-select' );
-	var filterBubbles     = $( '.filter-bubbles' );
-	var categoriesList    = $( '.categories-list' );
-	var allPostsCount     = filtrationForm.find( '.all-posts-count' );
-	var showingPostsCount = filtrationForm.find( '.showing-posts-count' );
-	var colorCheckbox     = $( '.colors-holder input[type="checkbox"]' );
-
+	var parentSection     = $( '.shop-products-grid' ),
+		filtrationForm    = $( '#product-filtration-form' ),
+		filterTagsSelect  = $( '.filter-tags-select' ),
+		filterBubbles     = $( '.filter-bubbles' ),
+		categoriesList    = $( '.categories-list' ),
+		allPostsCount     = filtrationForm.find( '.all-posts-count' ),
+		showingPostsCount = filtrationForm.find( '.showing-posts-count' ),
+		colorCheckbox     = $( '.colors-holder input[type="checkbox"]' ),
+		input_page        = $( 'input[name = "page"]' );
 	if (categoriesList.length) {
 		// make dropdown item white - if it has active child item
 		$( document ).on(
@@ -217,7 +217,7 @@
 								removeOption.prop( 'checked', false );
 							}
 						}
-
+						input_page.val( 1 );
 						filtrationForm.trigger( 'submit' );
 					}
 				}
@@ -241,7 +241,7 @@
 				if (colorCheckbox.length) {
 					colorCheckbox.prop( "checked", false );
 				}
-
+				input_page.val( 1 );
 				filtrationForm.trigger( 'submit' );
 			}
 		);
@@ -251,6 +251,7 @@
 		filtrationForm.on(
 			'change',
 			function () {
+				input_page.val( 1 );
 				filtrationForm.trigger( 'submit' );
 			}
 		);
@@ -290,9 +291,13 @@
 		'.page-numbers',
 		function (e) {
 			e.preventDefault();
-			var page_number = $( e.currentTarget ).text();
-			$( 'input[name = "page"]' ).val( page_number );
+			var page         = $( e.currentTarget ).attr( 'href' ),
+				divOffset    = filtrationForm.position().top,
+				url          = new URL( page ),
+				searchParams = new URLSearchParams( url.search );
+			input_page.val( searchParams.get( 'page' ) );
 			filtrationForm.trigger( 'submit' );
+			$( "html, body" ).animate( { scrollTop: divOffset }, "slow" );
 		}
 	);
 	$( document ).ready(

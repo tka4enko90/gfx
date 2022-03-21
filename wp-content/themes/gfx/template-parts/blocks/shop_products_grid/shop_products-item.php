@@ -158,7 +158,7 @@ if ( $products->have_posts() ) :
 				$current_page = max( 1, $paged );
 				echo paginate_links(
 					array(
-						'format'    => 'page/%#%',
+						'format'    => '?page=%#%',
 						'current'   => $current_page,
 						'total'     => $total_pages,
 						'mid_size'  => 1,
