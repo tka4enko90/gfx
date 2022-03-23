@@ -4,7 +4,7 @@ Donate link: https://wpclever.net
 Tags: woocommerce, woo, wpc, product, bundle, bundles
 Requires at least: 4.0
 Tested up to: 5.9
-Stable tag: 6.0.6
+Stable tag: 6.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,16 @@ If you love our plugins, please give us a full five-star rating so that we know 
 5. Almost done! click Save and see the result
 
 == Changelog ==
+
+= 6.0.9 =
+* Fixed: Minor CSS/JS issue
+
+= 6.0.8 =
+* Updated: Optimized the code
+
+= 6.0.7 =
+* Updated: Optimized the code
+* Added: Localization option for "Choose an attribute" text
 
 = 6.0.6 =
 * Fixed: Bundled product is unpurchasable in some cases
