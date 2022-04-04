@@ -1,4 +1,4 @@
-<?php /* Template Name: Resources Page */; ?>
+<?php /* Template Name: Tutorials Page */; ?>
 <?php get_header(); ?>
     <main class="main">
         <?php $page_id = get_queried_object_id(); ?>
