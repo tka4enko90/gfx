@@ -1,0 +1,13 @@
+@import '../../../src/scss/components/vars';
+
+.featured-post {
+  .section-holder {
+    display: flex;
+    .image-column {
+      flex-basis: 50%;
+    }
+    .content-column {
+      flex-basis: 50%;
+    }
+  }
+}
