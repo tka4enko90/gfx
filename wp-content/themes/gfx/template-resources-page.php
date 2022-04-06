@@ -24,10 +24,7 @@ $page_settings = array(
         'section_subtitle' => get_field('products_section_subtitle'),
         'button_text'      => get_field('products_button_text'),
         'button_url'       => get_field('products_button_url'),
-        'query_args'       => array(
-            'post_type' => 'tutorial',
-            'posts_per_page' => '12'
-        )
+        'products'         => get_field('products')
     ),
     'affiliates_section' => array(
         'section_title' => get_field('affiliates_section_title'),

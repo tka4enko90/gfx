@@ -23,7 +23,7 @@ if (!empty($args)) :
                                 } ?>
                                 <?php if(!empty($resource['image'])) { ?>
                                     <div class="icon">
-                                        <img src="<?php echo $resource['image']; ?>" alt="Test">
+                                        <?php echo wp_get_attachment_image( $resource['image'], 'full' ); ?>
                                     </div>
                                     <?php
                                 } ?>

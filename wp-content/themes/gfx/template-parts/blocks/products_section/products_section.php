@@ -7,8 +7,8 @@ if (!empty($args)) :
     if (!empty($args['section_subtitle'])) :
         $products_section_settings['section_subtitle'] = $args['section_subtitle'];
     endif;
-    if (!empty($args['query_args'])) :
-        $products_section_settings['query_args'] = $args['query_args'];
+    if (!empty($args['products'])) :
+        $products_section_settings['products'] = $args['products'];
     endif;
     if (!empty($args['custom_description'])) :
         $products_section_settings['custom_description'] = $args['custom_description'];
@@ -20,32 +20,41 @@ if (!empty($args)) :
         $products_section_settings['button_url'] = $args['button_url'];
     endif;
 
-    if( !empty($products_section_settings['query_args']) ) {
-    wp_enqueue_style('products_section_css', get_template_directory_uri() . '/static/css/template-parts/blocks/products_section/products_section.css', '', '', 'all');
-    wp_enqueue_script('hero_js', get_template_directory_uri() . '/static/js/template-parts/blocks/products_section/products_section.js', '', '', true);
+    if( !empty($products_section_settings['products']) ) {
+        wp_enqueue_style('slick-css', get_template_directory_uri() . '/static/css/slick.min.css', '', '', 'all');
+        wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/static/js/slick.min.js', array( 'jquery' ), '', true );
+
+        wp_enqueue_style('products_section_css', get_template_directory_uri() . '/static/css/template-parts/blocks/products_section/products_section.css', '', '', 'all');
+        wp_enqueue_script('products_section_js', get_template_directory_uri() . '/static/js/template-parts/blocks/products_section/products_section.js', '', '', true);
     ?>
-        <section class="items-carousel-section">
-            <div class="container">
-                <?php if( ! empty( $products_section_settings['section_title'] ) ) {
-                    echo '<h2 class="section-heading">' . $products_section_settings['section_title'] . '</h2>';
-                } ?>
-                <?php if( ! empty( $products_section_settings['section_subtitle'] ) ) {
-                    echo '<p class="section-subheading">' . $products_section_settings['section_subtitle'] . '</p>';
-                } ?>
-                <div class="carousel items-carousel">
+        <section class="products-carousel-section">
+            <div class="container small">
+                <?php if (!empty($products_section_settings['section_title'])) {
+                    $words = explode(' ', $products_section_settings['section_title']);
+                    $length = count($words);
+                    $title_html = '';
+                    for ($i = 0; $i < $length; $i++) {
+                        $duration_value = $i + 1;
+                        $title_html .= "<span style='display: inline-block' data-aos-duration='500' data-aos='fade-up' data-aos-delay='{$duration_value}00'>{$words[ $i ]}</span> ";
+                    }
+                    ?>
+                    <h2 class="section-heading" style="overflow: hidden"><?php echo $title_html; ?></h2>
                     <?php
-                    if( !empty($products_section_settings['query_args'])) {
-                        $posts = new WP_Query($products_section_settings['query_args']);
-                        while ($posts->have_posts()) : $posts->the_post();
-                            get_template_part('template-parts/blocks/posts_grid/post-card', '', array('post_type' => $products_section_settings['query_args']['post_type']));
-                        endwhile; wp_reset_postdata();
+                } ?>
+                <?php if (!empty($products_section_settings['section_subtitle'])) {
+                    echo '<p class="section-subheading"  data-aos="fade-up" data-aos-duration="1000">' . $products_section_settings['section_subtitle'] . '</p>';
+                } ?>
+                <div class="carousel products-carousel">
+                    <?php
+                    foreach ($products_section_settings['products'] as $product_fields) {
+                        ?><div class="item" data-aos="zoom-in" data-aos-duration='1000'><?php
+                            get_template_part('template-parts/product-card', '', array('product' => wc_get_product($product_fields['product_id'])))
+                        ?></div><?php
                     }
                     ?>
                 </div>
                 <a href="#" class="primary-button">View More</a>
             </div>
-            <?php  ?>
-            <?php  ?>
         </section>
         <?php
     }

@@ -1,13 +1,54 @@
 @import '../../../src/scss/components/vars';
 
 .featured-post {
+  padding: 88px 0;
+
   .section-holder {
     display: flex;
+    justify-content: start;
     .image-column {
-      flex-basis: 50%;
+      flex-basis: 47%;
     }
     .content-column {
-      flex-basis: 50%;
+      flex-basis: 43%;
+      padding-top: 26px;
     }
   }
+
+  .section-heading {
+    text-transform: uppercase;
+    letter-spacing: -.7px;
+  }
+  .post-date {
+    color: $red;
+  }
+  .post-title {
+    line-height: 1.1;
+    margin-bottom: 1px;
+    letter-spacing: 1.7px;
+  }
+  .post-excerpt {
+    line-height: 1.56;
+    letter-spacing: .7px;
+    margin-bottom: 42px;
+  }
+  .primary-button {
+    padding: 16px 42px;
+    font-size: 18px;
+    letter-spacing: .7px;
+  }
+}
+
+//Layout Styles
+.test-page {
+  /*display: none;*/
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -36px;
+  opacity: .8;
+  pointer-events: none;
+}
+section {
+  background-color: green;
 }

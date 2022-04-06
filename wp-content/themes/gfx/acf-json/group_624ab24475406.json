@@ -182,6 +182,25 @@
             "key": "field_624acb89b6a17",
             "label": "Custom Post Description",
             "name": "custom_post_description",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_624adc728ed67",
+            "label": "Custom Post Date",
+            "name": "custom_post_date",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -196,23 +215,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_624adc728ed67",
-            "label": "Custom Post Date",
-            "name": "custom_post_date",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "d\/m\/Y",
-            "return_format": "d\/m\/Y",
-            "first_day": 1
         },
         {
             "key": "field_624ac99db6a11",
@@ -319,7 +321,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array",
+                    "return_format": "id",
                     "preview_size": "full",
                     "library": "all",
                     "min_width": "",
@@ -424,7 +426,7 @@
                 {
                     "key": "field_624c3b70ff922",
                     "label": "Product",
-                    "name": "product",
+                    "name": "product_id",
                     "type": "post_object",
                     "instructions": "",
                     "required": 0,
@@ -435,12 +437,12 @@
                         "id": ""
                     },
                     "post_type": [
-                        "tutorial"
+                        "product"
                     ],
                     "taxonomy": "",
                     "allow_null": 0,
                     "multiple": 0,
-                    "return_format": "object",
+                    "return_format": "id",
                     "ui": 1
                 }
             ]
@@ -612,5 +614,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1649179194
+    "modified": 1649263410
 }

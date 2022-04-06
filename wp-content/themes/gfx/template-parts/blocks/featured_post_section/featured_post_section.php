@@ -26,7 +26,7 @@ if (!empty($args)) :
     <section class="featured-post">
         <div class="container">
             <div class="section-holder">
-                <div class="image-column">
+                <div class="image-column aos-init aos-animate" data-aos-duration="1000" data-aos="fade-right">
                     <?php if( ! empty($featured_post_section_settings['custom_image'] ) ) {
                         echo wp_get_attachment_image( $featured_post_section_settings['custom_image'], 'full' );
                     } else {
@@ -48,7 +48,7 @@ if (!empty($args)) :
                             <?php
                         } ?></span>
                     <h2 class="post-title"><?php if( ! empty( $featured_post_section_settings['custom_title'] ) ) {
-                            echo $featured_post_section_settings['custom_date'];
+                            echo $featured_post_section_settings['custom_title'];
                         } else {
                             echo get_the_title( $featured_post_section_settings['post_id'] );
                         } ?></h2>

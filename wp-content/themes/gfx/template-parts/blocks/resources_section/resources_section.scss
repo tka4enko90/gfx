@@ -1,66 +1,28 @@
 @import '../../../src/scss/components/vars';
 
-.support-sections {
-  padding-top: 78px;
+.support-sections.resources  {
+  padding: 30px 0 47px;
 
   @media (max-width: $md) {
-    padding-top: 60px;
+    //padding-top: 60px;
   }
 
   @media (max-width: $sm) {
-    padding-top: 50px;
+    //padding-top: 50px;
   }
 
   @media (max-width: $xs) {
-    padding-top: 40px;
+    //padding-top: 40px;
   }
 
   .container {
     position: relative;
   }
 
-  .line {
-    content: '';
-    margin: 30px auto 0;
-    height: 1px;
-    width: 100%;
-    background-color: rgba($text-color, 0.502);
-    display: block;
-    position: relative;
-
-    @media (max-width: $md) {
-      margin-top: 60px;
-    }
-
-    @media (max-width: $sm) {
-      margin-top: 50px;
-    }
-
-    @media (max-width: $xs) {
-      margin-top: 40px;
-    }
-
-    &::after, &::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      height: 1px;
-      width: 500px;
-
-      @media (max-width: $md) {
-        width: 200px;
-      }
-    }
-
-    &::after {
-      right: 0;
-      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
-    }
-
-    &::before {
-      left: 0;
-      background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba($dark-blue, 0.851));
-    }
+  .section-heading {
+    font-size: 30px;
+    letter-spacing: .7px;
+    margin-bottom: 26px;
   }
 
   .section-holder {
@@ -74,12 +36,12 @@
     }
 
     .section {
-      width: 50%;
+      flex-basis: 50%;
       padding: 0 25px;
       margin-bottom: 50px;
 
       @media (max-width: $md) {
-        width: 100%;
+        flex-basis: 100%;
         margin-bottom: 30px;
         padding: 0;
 
