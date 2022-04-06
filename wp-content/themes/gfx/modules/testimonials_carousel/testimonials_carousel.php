@@ -16,7 +16,7 @@
 				$words      = explode( ' ', $testimonials_carousel_title );
 				$length     = count( $words );
 				$title_html = '';
-				for ( $i = 0; $i <= $length; $i++ ) {
+				for ( $i = 0; $i < $length; $i++ ) {
 					$duration_value = $i + 1;
 					$title_html    .= "<span style='display: inline-block' data-aos-duration='500' data-aos='fade-up' data-aos-delay='{$duration_value}00'>{$words[ $i ]}</span> ";
 				}
