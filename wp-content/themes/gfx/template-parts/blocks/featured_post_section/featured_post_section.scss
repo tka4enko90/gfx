@@ -6,12 +6,27 @@
   .section-holder {
     display: flex;
     justify-content: start;
+    @media (max-width: $lg) {
+      flex-wrap: wrap;
+    }
     .image-column {
       flex-basis: 47%;
+      @media (max-width: $md) {
+        flex-basis: 100%;
+      }
     }
     .content-column {
       flex-basis: 43%;
       padding-top: 26px;
+      @media (max-width: $lg) {
+        flex-basis: 50%;
+      }
+      @media (min-width: $md) and (max-width: 1300px) {
+        padding-left: 30px;
+      }
+      @media (max-width: $md) {
+        flex-basis: 100%;
+      }
     }
   }
 
