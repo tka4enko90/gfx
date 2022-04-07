@@ -22,6 +22,7 @@ $page_settings = array(
     'products_section' => array(
         'section_title'    => get_field('products_section_title'),
         'section_subtitle' => get_field('products_section_subtitle'),
+        'decoration_element_text' => get_field('products_decoration_element_text'),
         'button_text'      => get_field('products_button_text'),
         'button_url'       => get_field('products_button_url'),
         'products'         => get_field('products')
