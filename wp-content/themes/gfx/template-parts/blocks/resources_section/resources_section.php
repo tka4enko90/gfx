@@ -1,22 +1,15 @@
-<?php $resources_section_settings = array();
+<?php
 if (!empty($args)) :
-    if (!empty($args['section_title'])) :
-        $resources_section_settings['section_title'] = $args['section_title'];
-    endif;
-    if (!empty($args['resources'])) :
-        $resources_section_settings['resources'] = $args['resources'];
-    endif;
-
-    if( ! empty( $resources_section_settings['resources'] ) ) {
+    if( ! empty( $args['resources'] ) ) {
         wp_enqueue_style('resources_section_css', get_template_directory_uri() . '/static/css/template-parts/blocks/resources_section/resources_section.css', '', '', 'all');
         ?>
         <section class="resources support-sections">
             <div class="container">
-                <?php if( ! empty( $resources_section_settings['section_title'] ) ) {
-                    echo '<h2 class="section-heading">' . $resources_section_settings['section_title'] . '</h2>';
+                <?php if( ! empty( $args['section_title'] ) ) {
+                    echo '<h2 class="section-heading">' . $args['section_title'] . '</h2>';
                 } ?>
                 <div class="section-holder">
-                    <?php foreach ($resources_section_settings['resources'] as $resource) { ?>
+                    <?php foreach ($args['resources'] as $resource) { ?>
                         <div class="section">
                             <?php if(!empty($resource['link'])) { ?>
                             <a href="<?php echo $resource['link'];?>"><?php
