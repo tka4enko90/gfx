@@ -1,0 +1,51 @@
+@import '../../../src/scss/components/vars';
+.landing-head-section {
+  text-align: center;
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+  @media (max-width: $sm) {
+    .container {
+      max-width: 100%;
+    }
+  }
+  .page-title {
+    max-width: 100%;
+    margin: 0 auto 34px;
+    @media (min-width: $xs) {
+      width: 500px;
+    }
+    @media (min-width: $lg) {
+      font-size: 86px;
+      width: 700px;
+    }
+  }
+  .page-subtitle {
+    color: $text-color;
+    margin-bottom: 12px;
+    letter-spacing: .7px;
+  }
+  .buttons-wrap {
+    .primary-button, .discord-button {
+      padding: 16px 38px;
+      font-size: 18px;
+      letter-spacing: .7px;
+    }
+    .primary-button {
+      margin: 0 9px 18px;
+    }
+    .discord-button {
+      position: relative;
+      background-color: #5865f2;
+      padding-left: 62px;
+      padding-right: 24px;
+      &:hover {
+        box-shadow: 0 0 15px 1px #5865f280;
+      }
+      svg {
+        position: absolute;
+        left: 28px;
+      }
+    }
+  }
+}
