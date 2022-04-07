@@ -17,7 +17,7 @@
 
   .section-heading {
     text-transform: uppercase;
-    letter-spacing: -.7px;
+    /*letter-spacing: -.7px;*/
   }
   .post-date {
     color: $red;
@@ -26,11 +26,13 @@
     line-height: 1.1;
     margin-bottom: 1px;
     letter-spacing: 1.7px;
+    color: #f4f5fa;
   }
   .post-excerpt {
     line-height: 1.56;
     letter-spacing: .7px;
     margin-bottom: 42px;
+    color: $text-color;
   }
   .primary-button {
     padding: 16px 42px;
@@ -50,5 +52,5 @@
   pointer-events: none;
 }
 section {
-  background-color: green;
+  //background-color: green;
 }

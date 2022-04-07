@@ -24,9 +24,17 @@
   }
   p {
     letter-spacing: .7px;
+    color: $text-color;
   }
   .buttons-wrap {
     padding: 28px 0;
+    .primary-button {
+      padding: 14px 46px;
+      margin-right: 16px;
+    }
+    .secondary-button {
+      padding: 14px 56px;
+    }
   }
 
 }

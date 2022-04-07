@@ -53,7 +53,9 @@ if (!empty($args)) :
                     }
                     ?>
                 </div>
-                <a href="#" class="primary-button">View More</a>
+                <?php if (!empty($products_section_settings['button_url'])) {
+                    echo '<a href="' . $products_section_settings['button_url'] . '" class="primary-button">View More</a>';
+                } ?>
             </div>
         </section>
         <?php

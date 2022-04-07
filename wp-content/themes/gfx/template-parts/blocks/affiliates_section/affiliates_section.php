@@ -34,7 +34,7 @@ if (!empty($args)) :
                             echo '<a class="primary-button" href="' . $affiliates_section_settings['login_button_url'] . '">Register</a>';
                         } ?>
                         <?php if (!empty($affiliates_section_settings['registration_button_url'])) {
-                            echo '<a class="primary-button" href="' . $affiliates_section_settings['registration_button_url'] . '">Login</a>';
+                            echo '<a class="secondary-button" href="' . $affiliates_section_settings['registration_button_url'] . '">Login</a>';
                         } ?>
                     </div>
                 </div>
