@@ -1,4 +1,4 @@
-<?php /* Template Name: Resources Page */; ?>
+<?php /* Template Name: New Resources Page */; ?>
 <?php
 $page_settings = array(
     'hero' => array(
