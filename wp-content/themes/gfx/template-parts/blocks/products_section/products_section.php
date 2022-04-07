@@ -24,6 +24,9 @@ if (!empty($args)) :
                 <?php if (!empty($args['section_subtitle'])) {
                     echo '<p class="section-subheading"  data-aos="fade-up" data-aos-duration="1000">' . $args['section_subtitle'] . '</p>';
                 } ?>
+                <?php if (!empty($args['decoration_element_text'])) {
+                    echo '<span class="decoration-element">' . $args['decoration_element_text'] . '</span>';
+                } ?>
                 <div class="carousel products-carousel">
                     <?php
                     foreach ($args['products'] as $product_fields) {
@@ -33,8 +36,8 @@ if (!empty($args)) :
                     }
                     ?>
                 </div>
-                <?php if (!empty($args['button_url'])) {
-                    echo '<a href="' . $args['button_url'] . '" class="primary-button">View More</a>';
+                <?php if (!empty($args['button_url']) && !empty($args['button_text'])) {
+                    echo '<a href="' . $args['button_url'] . '" class="primary-button"> ' . $args['button_text'] . '</a>';
                 } ?>
             </div>
         </section>

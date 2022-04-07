@@ -11,17 +11,36 @@
     text-align: center;
     margin: 0;
   }
+  .decoration-element {
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    letter-spacing: -.5px;
+    &:after {
+      content: '';
+      width: 0;
+      height: 0;
+      position: relative;
+      top: 16px;
+      left: 8px;
+      border-style: solid;
+      border-width: 6px 6px 0 6px;
+      border-color: $red transparent transparent transparent;
+
+    }
+  }
   .section-subheading {
     width: 584px;
-    letter-spacing: .4px;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 75px;
+    letter-spacing: .4px;
     text-align: center;
     color: $text-color;
   }
 
   .products-carousel {
-    margin: 60px -16px 24px;
+    margin: 0 -16px 24px;
     /*margin-top: 114px;*/
     .item {
       padding: 0 16px;
