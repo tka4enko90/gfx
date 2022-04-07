@@ -18,7 +18,7 @@
     .content-column {
       flex-basis: 43%;
       padding-top: 26px;
-      @media (max-width: $lg) {
+      @media (max-width: 1500px) {
         flex-basis: 50%;
       }
       @media (min-width: $md) and (max-width: 1300px) {
