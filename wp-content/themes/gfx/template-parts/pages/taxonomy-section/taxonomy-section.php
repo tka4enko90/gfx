@@ -1,5 +1,8 @@
 <?php
-$support_page_id = get_page_by_title( 'Support' )->ID;
+$support_page_id = get_field('support_page_id', 'option');
+if(empty($support_page_id)) {
+    $support_page_id = get_page_by_title( __('Support', 'gfx') )->ID;
+}
 if ( $support_page_id ) :
 	$support_page_title = __( 'Support', 'gfx' );
 	$term               = get_queried_object();

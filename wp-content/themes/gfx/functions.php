@@ -51,3 +51,35 @@ if ( ! function_exists( 'disable_emojis_remove_dns_prefetch' ) ) {
 		return $urls;
 	}
 }
+
+
+add_filter( 'display_post_states', 'gfx_add_post_state', 10, 2 );
+
+function gfx_add_post_state( $post_states, $post ) {
+    $pages = array(
+        'tutorials' => array(
+            'id' => get_field('tutorials_archive_page_id', 'option'),
+            'status' => __('GFX Tutorials Page', 'gfx')
+        ),
+        'support' => array(
+            'id' => get_field('support_page_id', 'option'),
+            'status' => __('GFX Support Page', 'gfx')
+        ),
+        'login' => array(
+            'id' => get_field('login_page_id', 'option'),
+            'status' => __('GFX Login Page', 'gfx')
+        ),
+        'registration' => array(
+            'id' => get_field('registration_page_id', 'option'),
+            'status' => __('GFX Registration Page', 'gfx')
+        )
+    );
+
+    foreach ($pages as $page) {
+        if(!empty($page['id']) && $page['id'] === $post->ID) {
+            $post_states[] = $page['status'];
+        }
+    }
+
+    return $post_states;
+}

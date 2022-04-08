@@ -12,11 +12,17 @@
                     $page_title = __('Blog', 'gfx');
                     $hero_subtitle = get_field('blog_hero_subtitle', $page_id);
                 elseif ($post_type == 'tutorial') :
-                    $page_id = get_page_by_title('Rescourses')->ID;
+                    $page_id = get_field('tutorials_archive_page_id', 'option');
+                    if(empty($page_id)) { // Deprecated
+                        $page_id = get_page_by_title( __( 'Tutorials', 'gfx' ) );
+                    }
                     $page_title = __('Tutorials', 'gfx');
                     $hero_subtitle = get_field('resources_hero_subtitle', $page_id);
                 else :
-                    $page_id = get_page_by_title('Support')->ID;
+                    $page_id = get_field('support_page_id', 'option');
+                    if(empty($page_id)) {
+                        $page_id = get_page_by_title(__('Support', 'gfx'))->ID;
+                    }
                     $page_title = __('Support', 'gfx');
                     $hero_subtitle = get_field('support_hero_subtitle', $page_id);
                 endif;
