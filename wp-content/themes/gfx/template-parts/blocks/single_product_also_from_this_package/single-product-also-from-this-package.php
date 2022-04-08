@@ -11,7 +11,7 @@
                 <?php $also_from_this_package_description = get_field('also_from_this_package_description', 'option'); ?>
 
                 <section class="single-product-also-from-this-package">
-                    <div class="container small">
+                    <div class="container container-small">
                         <div class="section-holder">
                             <?php if ($also_from_this_package_title || $also_from_this_package_description) : ?>
                                 <div class="title-holder">

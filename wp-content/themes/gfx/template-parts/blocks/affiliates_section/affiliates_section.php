@@ -3,7 +3,7 @@ if (!empty($args)) :
     wp_enqueue_style('affiliates_section_css', get_template_directory_uri() . '/static/css/template-parts/blocks/affiliates_section/affiliates_section.css', '', '', 'all');
     ?>
     <section class="affiliates-section">
-        <div class="container small">
+        <div class="container container-small">
             <div class="section-holder">
                 <div class="content-column">
                     <?php if (!empty($args['section_title'])) {

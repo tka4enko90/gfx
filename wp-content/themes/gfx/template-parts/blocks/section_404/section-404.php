@@ -6,7 +6,7 @@ $page_subtitle_404 = get_field('page_subtitle_404', 'option');
 ?>
 
 <section class="section-404">
-    <div class="container small">
+    <div class="container container-small">
         <div class="section-holder">
             <h1>404</h1>
             <?php if ($page_title_404) : ?>

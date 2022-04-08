@@ -8,7 +8,7 @@ if (!empty($args)) :
         wp_enqueue_script('products_section_js', get_template_directory_uri() . '/static/js/template-parts/blocks/products_section/products_section.js', '', '', true);
     ?>
         <section class="products-carousel-section">
-            <div class="container small">
+            <div class="container container-small">
                 <?php if (!empty($args['section_title'])) {
                     $words = explode(' ', $args['section_title']);
                     $length = count($words);
