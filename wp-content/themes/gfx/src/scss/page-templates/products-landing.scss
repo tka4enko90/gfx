@@ -1,0 +1,24 @@
+@import '../components/vars';
+body .wrapper {
+  min-height: auto;
+}
+main {
+  height: calc(100vh - 86px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @media (max-width: $sm) {
+    height: calc(100vh - 75px);
+  }
+
+  .products-carousel-section {
+    background-color: transparent;
+    //padding-bottom: 175px;
+    padding-bottom: 2vh;
+    padding-top: 34px;
+  }
+
+}
+footer {
+ display: none;
+}

@@ -1,0 +1,1 @@
+!function(o){o(document).on("ready",(function(){var s=o(".products-carousel");s.length&&s.each((function(){o(this).slick({dots:!0,arrows:!1,infinite:!1,slidesToShow:4,slidesToScroll:4,responsive:[{breakpoint:1140,settings:{slidesToShow:2,slidesToScroll:2}}]})}))}))}(jQuery);

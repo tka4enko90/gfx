@@ -9,13 +9,13 @@ if ( $post_id ) :
 		wp_enqueue_style( 'single_post_content_css', get_template_directory_uri() . '/static/css/template-parts/blocks/single_post_content/single-post-content.css', '', '', 'all' ); ?>
 
 		<section class="single-post-content">
-			<div class="container">
+			<div class="container container-small">
 				<div class="section-holder">
 					<div class="cols-holder">
 						<div class="left-col">
 							<div class="breadcrumbs">
 								<?php
-								$blog_page_id  = get_page_by_title( 'Blog' )->ID;
+								$blog_page_id  = get_option( 'page_for_posts' );
 								$blog_page_url = get_the_permalink( $blog_page_id );
 								?>
 

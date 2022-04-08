@@ -1,0 +1,53 @@
+@import '../../../src/scss/components/vars';
+
+.affiliates-section {
+  padding: 50px 0;
+  .section-holder {
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: $sm) {
+      flex-wrap: wrap;
+    }
+    .image-column {
+      flex-basis: 42%;
+      @media (max-width: $sm) {
+        flex-basis: 100%;
+        order: -1;
+      }
+    }
+    .content-column {
+      flex-basis: 46%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @media (max-width: $sm) {
+        flex-basis: 100%;
+      }
+    }
+  }
+
+  .section-heading {
+    font-size: 30px;
+    letter-spacing: .7px;
+    margin: 0;
+  }
+  p {
+    letter-spacing: .7px;
+    color: $text-color;
+  }
+  .buttons-wrap {
+    padding: 28px 0;
+    display: flex;
+    justify-content: flex-start;
+
+    .primary-button {
+      padding: 14px 46px;
+      margin-right: 16px;
+    }
+    .secondary-button {
+      padding: 14px 56px;
+    }
+  }
+
+}

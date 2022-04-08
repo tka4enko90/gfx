@@ -7,7 +7,7 @@
 <?php $information_block_content_position = get_sub_field( 'information_block_content_position' ); ?>
 
 <section class="information-block">
-	<div class="container small">
+	<div class="container container-small">
 		<div class="section-holder 
 		<?php
 		if ( $information_block_content_position ) {

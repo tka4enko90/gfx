@@ -3,11 +3,14 @@ if ( $page_id ) :
 	$search_type = '';
 	$page        = get_queried_object();
 	if ( is_category() ) {
-		$blog_page_id       = get_page_by_title( 'Blog' );
+		$blog_page_id       = get_option( 'page_for_posts' );
 		$page_title         = __( 'Blog', 'gfx' );
 		$blog_hero_subtitle = get_field( 'blog_hero_subtitle', $blog_page_id );
 	} elseif ( is_tax( 'tutorials_category' ) ) {
-		$blog_page_id       = get_page_by_title( 'Rescourses' );
+		$blog_page_id       = get_field('tutorials_archive_page_id', 'option');
+		if( empty( $blog_page_id ) ) { // Deprecated
+            $blog_page_id = get_page_by_title( __( 'Tutorials', 'gfx' ) );
+        }
 		$page_title         = __( 'Tutorials', 'gfx' );
 		$blog_hero_subtitle = get_field( 'resources_hero_subtitle', $blog_page_id );
 		$search_type        = 'tutorial';

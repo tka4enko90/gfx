@@ -1,0 +1,65 @@
+@import '../../../src/scss/components/vars';
+
+.products-carousel-section {
+  padding-top: 88px;
+  padding-bottom: 96px;
+  background-color: $dark-blue;
+
+  .section-heading {
+    font-size: 30px;
+    letter-spacing: .7px;
+    text-align: center;
+    margin: 0;
+  }
+  .decoration-element {
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    letter-spacing: -.5px;
+    &:after {
+      content: '';
+      width: 0;
+      height: 0;
+      position: relative;
+      top: 16px;
+      left: 8px;
+      border-style: solid;
+      border-width: 6px 6px 0 6px;
+      border-color: $red transparent transparent transparent;
+
+    }
+  }
+  .section-subheading {
+    width: 584px;
+    max-width: 100%;
+    margin: 0 auto 75px;
+    letter-spacing: .4px;
+    text-align: center;
+    color: $text-color;
+  }
+
+  .products-carousel {
+    margin: 0 -16px 24px;
+    .item {
+      padding: 0 16px;
+      .title {
+        font-size: 13.43px;
+        padding-top: 10px;
+        letter-spacing: .4px;
+      }
+      .price {
+        display: none;
+      }
+    }
+    .slick-dots {
+      margin-top: 18px;
+    }
+  }
+
+  .primary-button {
+    display: block;
+    margin: 0 auto;
+    max-width: 142px;
+  }
+}

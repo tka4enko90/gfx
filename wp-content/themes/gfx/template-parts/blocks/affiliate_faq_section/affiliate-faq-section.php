@@ -7,7 +7,7 @@ if ($faq_section_title || $faq_section_subtitle || have_rows('faq_section_faqs')
     wp_enqueue_script('affiliate_faq_section_js', get_template_directory_uri() . '/static/js/template-parts/blocks/affiliate_faq_section/affiliate-faq-section.js', '', '', true); ?>
 
     <section class="affiliate-faq-section">
-        <div class="container small">
+        <div class="container container-small">
             <?php if ($faq_section_title || $faq_section_subtitle) : ?>
                 <div class="titles-holder">
                     <?php if ($faq_section_title) : ?>

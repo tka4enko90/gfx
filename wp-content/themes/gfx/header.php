@@ -39,7 +39,7 @@ endif; ?>
 <div class="wrapper">
 
     <header class="header">
-        <div class="container large">
+        <div class="container container-large">
             <div class="inner">
 
                 <?php

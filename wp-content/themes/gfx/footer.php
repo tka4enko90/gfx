@@ -7,7 +7,7 @@
 
 <footer class="footer">
     <div class="main-block">
-        <div class="container large">
+        <div class="container container-large">
             <div class="inner">
                 <?php
                 $logo_first = get_field('logo_first', 'option');
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="copyrights-block">
-        <div class="container large">
+        <div class="container container-large">
             <?php $footer_copyright_text = get_field('footer_copyright_text', 'option');
             if ($footer_copyright_text) : ?>
                 <div class="copyright-text">

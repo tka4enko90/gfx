@@ -1,4 +1,7 @@
-<?php $support_page_id = get_page_by_title( 'Support' )->ID; ?>
+<?php $support_page_id = get_field('support_page_id', 'option');
+if(empty($support_page_id)) {
+	$support_page_id = get_page_by_title( __('Support', 'gfx') )->ID;
+} ?>
 <?php if ( $support_page_id ) : ?>
 	<?php
 		$support_page_title    = __( 'Support', 'gfx' );
