@@ -5,8 +5,8 @@ if (!empty($args)) :
         ?>
         <section class="resources support-sections">
             <div class="container">
-                <?php if( ! empty( $args['section_title'] ) ) {
-                    echo '<h2 class="section-heading">' . $args['section_title'] . '</h2>';
+                <?php if( ! empty( $args['section_title'] ) ) { ?>
+                    <h2 class="section-heading"><?php echo $args['section_title']; ?></h2><?php
                 } ?>
                 <div class="section-holder">
                     <?php foreach ($args['resources'] as $resource) { ?>
@@ -21,9 +21,9 @@ if (!empty($args)) :
                                     <?php
                                 } ?>
                                 <div class="information">
-                                    <?php if(!empty($resource['heading'])) { echo '<h4>' . $resource['heading'] . '</h4>'; } ?>
-                                    <?php if(!empty($resource['description'])) {
-                                        echo '<div class="description"><span>' . $resource['description'] . '</span></div>';
+                                    <?php if(!empty($resource['heading'])) { ?><h4><?php echo $resource['heading']; ?></h4><?php } ?>
+                                    <?php if(!empty($resource['description'])) { ?>
+                                        <div class="description"><span><?php echo $resource['description']; ?></span></div><?php
                                     } ?>
                                 </div>
                                 <?php if(!empty($resource['link'])) { ?>
@@ -34,7 +34,6 @@ if (!empty($args)) :
                     }
                     ?>
                 </div>
-                <span class="line"></span>
             </div>
         </section>
         <?php

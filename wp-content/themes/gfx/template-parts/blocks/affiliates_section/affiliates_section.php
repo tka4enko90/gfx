@@ -6,18 +6,18 @@ if (!empty($args)) :
         <div class="container container-small">
             <div class="section-holder">
                 <div class="content-column">
-                    <?php if (!empty($args['section_title'])) {
-                        echo '<h2 class="section-heading">' . $args['section_title'] . '</h2>';
+                    <?php if (!empty($args['section_title'])) { ?>
+                        <h2 class="section-heading"><?php echo $args['section_title'];?></h2><?php
                     } ?>
-                    <?php if (!empty($args['section_text'])) {
-                        echo '<p>' . $args['section_text'] . '</p>';
+                    <?php if (!empty($args['section_text'])) { ?>
+                        <p><?php echo $args['section_text'];?></p><?php
                     } ?>
                     <div class="buttons-wrap">
-                        <?php if (!empty($args['login_button_url'])) {
-                            echo '<a class="primary-button" href="' . $args['login_button_url'] . '">Register</a>';
+                        <?php if (!empty($args['login_button_url'])) { ?>
+                            <a class="primary-button" href="<?php echo $args['login_button_url']; ?>"><?php echo __( 'Register', 'gfx' ); ?></a><?php
                         } ?>
-                        <?php if (!empty($args['registration_button_url'])) {
-                            echo '<a class="secondary-button" href="' . $args['registration_button_url'] . '">Login</a>';
+                        <?php if (!empty($args['registration_button_url'])) { ?>
+                            <a class="secondary-button" href="<?php echo $args['registration_button_url']; ?>"><?php echo __( 'Login', 'gfx' ); ?></a><?php
                         } ?>
                     </div>
                 </div>

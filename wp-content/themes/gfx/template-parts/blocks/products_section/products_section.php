@@ -21,11 +21,11 @@ if (!empty($args)) :
                     <h2 class="section-heading" style="overflow: hidden"><?php echo $title_html; ?></h2>
                     <?php
                 } ?>
-                <?php if (!empty($args['section_subtitle'])) {
-                    echo '<p class="section-subheading"  data-aos="fade-up" data-aos-duration="1000">' . $args['section_subtitle'] . '</p>';
+                <?php if (!empty($args['section_subtitle'])) { ?>
+                    <p class="section-subheading"  data-aos="fade-up" data-aos-duration="1000"><?php echo $args['section_subtitle']; ?></p><?php
                 } ?>
-                <?php if (!empty($args['decoration_element_text'])) {
-                    echo '<span class="decoration-element">' . $args['decoration_element_text'] . '</span>';
+                <?php if (!empty($args['decoration_element_text'])) { ?>
+                    <span class="decoration-element"><?php echo $args['decoration_element_text']; ?></span><?php
                 } ?>
                 <div class="carousel products-carousel">
                     <?php
@@ -36,8 +36,8 @@ if (!empty($args)) :
                     }
                     ?>
                 </div>
-                <?php if (!empty($args['button_url']) && !empty($args['button_text'])) {
-                    echo '<a href="' . $args['button_url'] . '" class="primary-button"> ' . $args['button_text'] . '</a>';
+                <?php if (!empty($args['button_url']) && !empty($args['button_text'])) { ?>
+                    <a href="<?php echo $args['button_url']; ?>" class="primary-button"><?php echo $args['button_text']; ?></a><?php
                 } ?>
             </div>
         </section>
