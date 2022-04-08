@@ -15,7 +15,7 @@ if ( $post_id ) :
 						<div class="left-col">
 							<div class="breadcrumbs">
 								<?php
-								$blog_page_id  = get_page_by_title( 'Blog' )->ID;
+								$blog_page_id  = get_option( 'page_for_posts' );
 								$blog_page_url = get_the_permalink( $blog_page_id );
 								?>
 

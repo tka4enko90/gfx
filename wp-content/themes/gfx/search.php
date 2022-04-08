@@ -8,7 +8,7 @@
 
             if (!empty($post_type)) :
                 if ($post_type == 'post') :
-                    $page_id = get_page_by_title('Blog')->ID;
+                    $page_id = get_option( 'page_for_posts' );
                     $page_title = __('Blog', 'gfx');
                     $hero_subtitle = get_field('blog_hero_subtitle', $page_id);
                 elseif ($post_type == 'tutorial') :

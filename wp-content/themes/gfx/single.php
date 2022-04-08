@@ -2,7 +2,7 @@
 
 	<main class="main">
 		<?php
-		$blog_page_id       = get_page_by_title( 'Blog' )->ID;
+		$blog_page_id       = get_option( 'page_for_posts' );
 		$page_title         = __( 'Blog', 'gfx' );
 		$blog_hero_subtitle = get_field( 'blog_hero_subtitle', $blog_page_id );
 		$single_hero_image  = get_field( 'single_hero_image' );
