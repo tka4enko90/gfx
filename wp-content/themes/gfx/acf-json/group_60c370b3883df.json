@@ -619,9 +619,9 @@
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "page_type",
                 "operator": "==",
-                "value": "default"
+                "value": "front_page"
             }
         ]
     ],
@@ -634,5 +634,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1649431187
+    "modified": 1649431516
 }
