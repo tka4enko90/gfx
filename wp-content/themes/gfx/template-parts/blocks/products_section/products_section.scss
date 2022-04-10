@@ -10,6 +10,9 @@
     letter-spacing: .7px;
     text-align: center;
     margin: 0;
+    @media (max-width: $xs) {
+      font-size: 28px;
+    }
   }
   .decoration-element {
     display: inline-block;
@@ -37,6 +40,10 @@
     letter-spacing: .4px;
     text-align: center;
     color: $text-color;
+    @media (max-width: $xs) {
+      font-size: 16px;
+      margin-bottom: 54px;
+    }
   }
 
   .products-carousel {
