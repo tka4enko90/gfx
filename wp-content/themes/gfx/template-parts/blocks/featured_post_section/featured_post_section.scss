@@ -2,7 +2,9 @@
 
 .featured-post {
   padding: 88px 0;
-
+  @media (max-width: $sm) {
+    padding: 40px 0;
+  }
   .section-holder {
     display: flex;
     justify-content: start;
@@ -49,6 +51,7 @@
     letter-spacing: 1.7px;
     @media (max-width: $xs) {
       font-size: 28px;
+      margin-bottom: 20px;
     }
   }
   .post-excerpt {
@@ -58,6 +61,7 @@
     color: $text-color;
     @media (max-width: $xs) {
       font-size: 16px;
+      margin-bottom: 20px;
     }
   }
   .primary-button {
