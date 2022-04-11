@@ -465,6 +465,20 @@
     }
   }
 
+  #mobile-login-menu {
+    display: none;
+  }
+  @media (max-width: 490px) {
+    #mobile-login-menu {
+      display: block;
+    }
+    .login-menu-holder {
+      .menu {
+        display: none;
+      }
+    }
+  }
+
   .burger-btn {
     display: none;
 
@@ -495,6 +509,16 @@ body.not-empty-cart .header li.cart > a {
   }
 }
 
+body.logged-in .header {
+  @media (min-width: 365px) {
+    .login-menu-holder .menu {
+      display: flex;
+    }
+    #mobile-login-menu {
+      display: none;
+    }
+  }
+}
 body:not(.logged-in) .header li.my-account {
   display: none;
 }

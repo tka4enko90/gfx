@@ -70,6 +70,7 @@ endif; ?>
                 <?php if (has_nav_menu('header_menu')) : ?>
                     <div class="menu-holder">
                         <?php wp_nav_menu(['theme_location' => 'header_menu', 'container' => '']); ?>
+                        <?php wp_nav_menu(['theme_location' => 'login_menu', 'container' => '', 'menu_id' => 'mobile-login-menu']); ?>
                     </div>
                 <?php endif; ?>
 
