@@ -4,7 +4,9 @@
   padding-top: 88px;
   padding-bottom: 96px;
   background-color: $dark-blue;
-
+  @media (max-width: $sm) {
+    padding: 44px 0 48px;
+  }
   .section-heading {
     font-size: 30px;
     letter-spacing: .7px;
@@ -41,7 +43,7 @@
     color: $text-color;
     @media (max-width: $xs) {
       font-size: 16px;
-      margin-bottom: 54px;
+      margin-bottom: 40px;
     }
   }
 
