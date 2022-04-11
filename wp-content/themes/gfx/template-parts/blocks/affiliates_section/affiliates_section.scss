@@ -31,6 +31,9 @@
     font-size: 30px;
     letter-spacing: .7px;
     margin: 0;
+    @media (max-width: $xs) {
+      font-size: 28px;
+    }
   }
   p {
     letter-spacing: .7px;
