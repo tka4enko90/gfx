@@ -33,24 +33,39 @@
   .section-heading {
     text-transform: uppercase;
     color: #f4f5fa;
+    @media (max-width: $xs) {
+      font-size: 21px;
+    }
   }
   .post-date {
     color: $red;
+    @media (max-width: $xs) {
+      font-size: 16px;
+    }
   }
   .post-title {
     line-height: 1.1;
     margin-bottom: 1px;
     letter-spacing: 1.7px;
+    @media (max-width: $xs) {
+      font-size: 28px;
+    }
   }
   .post-excerpt {
     line-height: 1.56;
     letter-spacing: .7px;
     margin-bottom: 42px;
     color: $text-color;
+    @media (max-width: $xs) {
+      font-size: 16px;
+    }
   }
   .primary-button {
     padding: 16px 42px;
     font-size: 18px;
     letter-spacing: .7px;
+    @media (max-width: $xs) {
+      font-size: 16px;
+    }
   }
 }
