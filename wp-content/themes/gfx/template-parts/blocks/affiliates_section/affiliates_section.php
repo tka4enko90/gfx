@@ -13,11 +13,22 @@ if (!empty($args)) :
                         <p><?php echo $args['section_text'];?></p><?php
                     } ?>
                     <div class="buttons-wrap">
-                        <?php if (!empty($args['login_button_url'])) { ?>
-                            <a class="primary-button" href="<?php echo $args['login_button_url']; ?>"><?php echo __( 'Register', 'gfx' ); ?></a><?php
+                        <?php $buttons_url_options = array( // Get Url from options
+                                'login' => get_field('login_page_id', 'option'),
+                                'registration' => get_field('registration_page_id', 'option'),
+                        );
+                        if(!empty($args['registration_button_url'])) { // Custom URL
+                            $buttons_url_options['registration'] = $args['registration_button_url'];
+                        }
+                        if(!empty($args['login_button_url'])) { // Custom URL
+                            $buttons_url_options['login'] = $args['login_button_url'];
+                        }
+                        ?>
+                        <?php if (!empty($buttons_url_options['registration'])) { ?>
+                            <a class="primary-button" href="<?php echo $buttons_url_options['registration']; ?>"><?php echo __( 'Register', 'gfx' ); ?></a><?php
                         } ?>
-                        <?php if (!empty($args['registration_button_url'])) { ?>
-                            <a class="secondary-button" href="<?php echo $args['registration_button_url']; ?>"><?php echo __( 'Login', 'gfx' ); ?></a><?php
+                        <?php if (!empty($buttons_url_options['login'])) { ?>
+                            <a class="secondary-button" href="<?php echo $buttons_url_options['login']; ?>"><?php echo __( 'Login', 'gfx' ); ?></a><?php
                         } ?>
                     </div>
                 </div>
