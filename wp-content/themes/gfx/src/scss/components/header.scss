@@ -471,10 +471,19 @@
   @media (max-width: 490px) {
     #mobile-login-menu {
       display: block;
+      padding-top: 0;
+      li.cart {
+        display: none;
+      }
     }
     .login-menu-holder {
       .menu {
-        display: none;
+        li {
+          display: none;
+          &.cart {
+            display: flex;
+          }
+        }
       }
     }
   }
@@ -513,6 +522,9 @@ body.logged-in .header {
   @media (min-width: 365px) {
     .login-menu-holder .menu {
       display: flex;
+      li {
+        display: flex;
+      }
     }
     #mobile-login-menu {
       display: none;
