@@ -64,14 +64,6 @@ function gfx_add_post_state( $post_states, $post ) {
         'support' => array(
             'id' => get_field('support_page_id', 'option'),
             'status' => __('GFX Support Page', 'gfx')
-        ),
-        'login' => array(
-            'id' => get_field('login_page_id', 'option'),
-            'status' => __('GFX Login Page', 'gfx')
-        ),
-        'registration' => array(
-            'id' => get_field('registration_page_id', 'option'),
-            'status' => __('GFX Registration Page', 'gfx')
         )
     );
 

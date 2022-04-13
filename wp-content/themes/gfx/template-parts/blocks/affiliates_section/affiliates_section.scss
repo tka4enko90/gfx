@@ -2,6 +2,10 @@
 
 .affiliates-section {
   padding: 50px 0;
+  @media (max-width: $sm) {
+    padding: 40px 0;
+  }
+
   .section-holder {
     display: flex;
     justify-content: space-between;
@@ -31,15 +35,24 @@
     font-size: 30px;
     letter-spacing: .7px;
     margin: 0;
+    @media (max-width: $xs) {
+      font-size: 28px;
+    }
   }
   p {
     letter-spacing: .7px;
     color: $text-color;
+    @media (max-width: $xs) {
+      font-size: 16px;
+    }
   }
   .buttons-wrap {
     padding: 28px 0;
     display: flex;
     justify-content: flex-start;
+    @media (max-width: $xs) {
+      padding: 4px 0;
+    }
 
     .primary-button {
       padding: 14px 46px;
