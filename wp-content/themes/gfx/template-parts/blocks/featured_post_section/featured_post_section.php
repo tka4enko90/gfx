@@ -36,7 +36,7 @@ if (!empty($args)) :
                             <p class="post-excerpt">
                                 <?php echo !empty($args['custom_description']) ? $args['custom_description'] : get_the_excerpt($args['post_id']); ?>
                             </p>
-                            <a href="<?php echo get_post_permalink($args['post_id']); ?>" class="primary-button"><?php echo __('Read Post', 'gfx'); ?></a>
+                            <a href="<?php echo get_post_permalink($args['post_id']); ?>" class="primary-button large"><?php echo __('Read Post', 'gfx'); ?></a>
                         </div>
                     </div>
                 </div>

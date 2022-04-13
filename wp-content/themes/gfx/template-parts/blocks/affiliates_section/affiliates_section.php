@@ -14,10 +14,10 @@ if (!empty($args)) :
                     } ?>
                     <div class="buttons-wrap">
                         <?php if (!empty($args['registration_button_url'])) { ?>
-                            <a class="primary-button" href="<?php echo $args['registration_button_url']; ?>"><?php echo __( 'Register', 'gfx' ); ?></a><?php
+                            <a class="primary-button large" href="<?php echo $args['registration_button_url']; ?>"><?php echo __( 'Register', 'gfx' ); ?></a><?php
                         } ?>
                         <?php if (!empty($args['login_button_url'])) { ?>
-                            <a class="secondary-button" href="<?php echo $args['login_button_url']; ?>"><?php echo __( 'Login', 'gfx' ); ?></a><?php
+                            <a class="secondary-button large" href="<?php echo $args['login_button_url']; ?>"><?php echo __( 'Login', 'gfx' ); ?></a><?php
                         } ?>
                     </div>
                 </div>
