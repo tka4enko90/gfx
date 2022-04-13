@@ -14,6 +14,14 @@
       @media (max-width: $md) {
         flex-basis: 100%;
       }
+      @media (min-width: 1301px) {
+        padding-right: 4%;
+      }
+      @media (min-width: 1560px) {
+        padding-right: 9.4%;;
+      }
+
+
     }
     .content-column {
       flex-basis: 43%;
