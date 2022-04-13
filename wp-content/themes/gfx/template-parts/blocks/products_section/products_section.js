@@ -6,9 +6,13 @@
                 $(this).slick({
                     dots: true,
                     arrows: false,
-                    infinite: false,
+                    infinite: true,
+                    autoplay: true,
+                    autoplaySpeed: 5000,
+                    speed: 1000,
                     slidesToShow: 4,
                     slidesToScroll: 4,
+
                     responsive: [
                         {
                             breakpoint: 1140,
