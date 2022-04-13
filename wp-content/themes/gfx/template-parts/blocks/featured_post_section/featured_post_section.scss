@@ -16,24 +16,21 @@
       @media (max-width: $md) {
         flex-basis: 100%;
       }
-      @media (min-width: 1301px) {
-        padding-right: 4%;
+      @media (min-width: $md) {
+        padding-right: 30px;
       }
-      @media (min-width: 1560px) {
-        padding-right: 9.4%;;
+      .image-wrap {
+        max-width: 556px;
       }
     }
     .content-column {
-      flex-basis: 43%;
+      flex-basis: 50%;
       padding-top: 26px;
-      @media (max-width: 1500px) {
-        flex-basis: 50%;
-      }
-      @media (min-width: $md) and (max-width: 1300px) {
-        padding-left: 30px;
-      }
       @media (max-width: $md) {
         flex-basis: 100%;
+      }
+      .content-wrap {
+        max-width: 630px;
       }
     }
   }
