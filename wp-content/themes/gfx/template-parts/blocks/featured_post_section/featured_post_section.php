@@ -9,7 +9,7 @@ if (!empty($args)) :
                     <div class="image-column aos-init aos-animate" data-aos-duration="1000" data-aos="fade-right">
                         <div class="image-wrap">
                             <?php
-                            $post_thumb = !empty($args['custom_image']) ?  wp_get_attachment_image($args['custom_image'], 'full') : get_the_post_thumbnail($args['post_id']);
+                            $post_thumb = !empty($args['custom_image']) ?  wp_get_attachment_image($args['custom_image'], 'gfx_featured_post_section') : get_the_post_thumbnail($args['post_id']);
                             if (!empty($post_thumb)) {
                                 echo $post_thumb;
                             }

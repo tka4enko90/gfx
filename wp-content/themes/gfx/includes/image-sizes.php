@@ -8,6 +8,8 @@
 	add_image_size( 'gfx_post_grid', 338, 190 );
 	add_image_size( 'gfx_semi_medium', 460, 260 );
 	add_image_size( 'gfx_medium', 580, 335 );
+    add_image_size( 'gfx_affiliate_section', 527, 303 );
+    add_image_size( 'gfx_featured_post_section', 556, 370 );
 	add_image_size( 'gfx_medium_2', 471, 567 );
 	add_image_size( 'gfx_wc_gallery_large', 744, 419 );
 	add_image_size( 'gfx_wc_hero_large', 769, 368 );

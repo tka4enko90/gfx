@@ -23,7 +23,7 @@ if (!empty($args)) :
                 </div>
                 <div class="image-column aos-init aos-animate" data-aos-duration="1000" data-aos="fade-left">
                     <?php if (!empty($args['section_image'])) {
-                        echo wp_get_attachment_image($args['section_image'], 'full');
+                        echo wp_get_attachment_image($args['section_image'], 'gfx_affiliate_section');
                     } ?>
                 </div>
             </div>
