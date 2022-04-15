@@ -16,18 +16,21 @@
       @media (max-width: $md) {
         flex-basis: 100%;
       }
+      @media (min-width: $md) {
+        padding-right: 30px;
+      }
+      .image-wrap {
+        max-width: 556px;
+      }
     }
     .content-column {
-      flex-basis: 43%;
+      flex-basis: 50%;
       padding-top: 26px;
-      @media (max-width: 1500px) {
-        flex-basis: 50%;
-      }
-      @media (min-width: $md) and (max-width: 1300px) {
-        padding-left: 30px;
-      }
       @media (max-width: $md) {
         flex-basis: 100%;
+      }
+      .content-wrap {
+        max-width: 630px;
       }
     }
   }
@@ -39,37 +42,35 @@
       font-size: 21px;
     }
   }
-  .post-date {
-    color: $red;
-    @media (max-width: $xs) {
-      font-size: 16px;
+  .post {
+    &-date {
+      color: $red;
+      @media (max-width: $xs) {
+        font-size: 16px;
+      }
+    }
+    &-title {
+      line-height: 1.1;
+      margin-bottom: 1px;
+      letter-spacing: 1.7px;
+      @media (max-width: $xs) {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+    }
+    &-excerpt {
+      line-height: 1.56;
+      letter-spacing: .7px;
+      margin-bottom: 42px;
+      color: $text-color;
+      @media (max-width: $xs) {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
     }
   }
-  .post-title {
-    line-height: 1.1;
-    margin-bottom: 1px;
-    letter-spacing: 1.7px;
-    @media (max-width: $xs) {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-  }
-  .post-excerpt {
-    line-height: 1.56;
-    letter-spacing: .7px;
-    margin-bottom: 42px;
-    color: $text-color;
-    @media (max-width: $xs) {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-  }
+
   .primary-button {
-    padding: 16px 42px;
-    font-size: 18px;
-    letter-spacing: .7px;
-    @media (max-width: $xs) {
-      font-size: 16px;
-    }
+
   }
 }

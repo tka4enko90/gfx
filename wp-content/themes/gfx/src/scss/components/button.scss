@@ -1,3 +1,14 @@
+@import 'vars';
+
+@mixin large-button-style {
+  padding: 16px 42px;
+  font-size: 18px;
+  letter-spacing: .7px;
+  @media (max-width: $xs) {
+    font-size: 16px;
+  }
+}
+
 button {
   padding: 0;
   outline: none;
@@ -72,6 +83,9 @@ input[type="submit"] {
     }
   }
 
+  &.large {
+    @include large-button-style;
+  }
   &.small {
     padding: 11px 19px;
     font-size: 14px;
@@ -137,6 +151,10 @@ input[type="submit"] {
       margin-top: 3px;
       margin-left: -20px;
     }
+  }
+
+  &.large {
+    @include large-button-style;
   }
 
   &.small {

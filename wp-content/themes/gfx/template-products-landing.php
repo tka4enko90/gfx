@@ -9,7 +9,8 @@ $page_settings = array(
          'discord_url' => get_field('discord_url')
         ),
     'products_section' => array(
-        'products'         => get_field('products')
+        'decoration_element_text' => get_field('products_decoration_element_text'),
+        'products'                => get_field('products')
     ),
 ); ?>
 <?php wp_enqueue_style('products_landing', get_template_directory_uri() . '/static/css/page-templates/products-landing.css', '', '', 'all'); ?>

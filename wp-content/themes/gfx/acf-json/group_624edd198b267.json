@@ -124,6 +124,25 @@
             "endpoint": 0
         },
         {
+            "key": "field_6256b79b35c94",
+            "label": "Decoration Element Text",
+            "name": "products_decoration_element_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Latest Downloads",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_624ede36cb3db",
             "label": "Products",
             "name": "products",
@@ -185,5 +204,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1649351757
+    "modified": 1649850503
 }
