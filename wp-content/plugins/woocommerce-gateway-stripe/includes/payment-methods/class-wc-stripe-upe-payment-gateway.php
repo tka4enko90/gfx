@@ -26,9 +26,12 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 		WC_Stripe_UPE_Payment_Method_Sepa::class,
 		WC_Stripe_UPE_Payment_Method_P24::class,
 		WC_Stripe_UPE_Payment_Method_Sofort::class,
+		WC_Stripe_UPE_Payment_Method_Link::class,
 	];
 
 	const UPE_APPEARANCE_TRANSIENT = 'wc_stripe_upe_appearance';
+
+	const WC_BLOCKS_UPE_APPEARANCE_TRANSIENT = 'wc_stripe_wc_blocks_upe_appearance';
 
 	/**
 	 * Stripe intents that are treated as successfully created.
@@ -259,6 +262,9 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 
 		wp_enqueue_script( 'wc-stripe-upe-classic' );
 		wp_enqueue_style( 'wc-stripe-upe-classic' );
+
+		wp_register_style( 'stripelink_styles', plugins_url( 'assets/css/stripe-link.css', WC_STRIPE_MAIN_FILE ), [], WC_STRIPE_VERSION );
+		wp_enqueue_style( 'stripelink_styles' );
 	}
 
 	/**
@@ -276,15 +282,6 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 			'locale'       => WC_Stripe_Helper::convert_wc_locale_to_stripe_locale( get_locale() ),
 		];
 
-		$sepa_elements_options = apply_filters(
-			'wc_stripe_sepa_elements_options',
-			[
-				'supportedCountries' => [ 'SEPA' ],
-				'placeholderCountry' => WC()->countries->get_base_country(),
-				'style'              => [ 'base' => [ 'fontSize' => '15px' ] ],
-			]
-		);
-
 		$enabled_billing_fields = [];
 		foreach ( WC()->checkout()->get_checkout_fields( 'billing' ) as $billing_field => $billing_field_options ) {
 			if ( ! isset( $billing_field_options['enabled'] ) || $billing_field_options['enabled'] ) {
@@ -299,13 +296,13 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 		$stripe_params['updatePaymentIntentNonce'] = wp_create_nonce( 'wc_stripe_update_payment_intent_nonce' );
 		$stripe_params['createSetupIntentNonce']   = wp_create_nonce( 'wc_stripe_create_setup_intent_nonce' );
 		$stripe_params['updateFailedOrderNonce']   = wp_create_nonce( 'wc_stripe_update_failed_order_nonce' );
-		$stripe_params['upeAppeareance']           = get_transient( self::UPE_APPEARANCE_TRANSIENT );
+		$stripe_params['upeAppearance']            = get_transient( self::UPE_APPEARANCE_TRANSIENT );
+		$stripe_params['wcBlocksUPEAppearance']    = get_transient( self::WC_BLOCKS_UPE_APPEARANCE_TRANSIENT );
 		$stripe_params['saveUPEAppearanceNonce']   = wp_create_nonce( 'wc_stripe_save_upe_appearance_nonce' );
 		$stripe_params['paymentMethodsConfig']     = $this->get_enabled_payment_method_config();
 		$stripe_params['genericErrorMessage']      = __( 'There was a problem processing the payment. Please check your email inbox and refresh the page to try again.', 'woocommerce-gateway-stripe' );
 		$stripe_params['accountDescriptor']        = $this->statement_descriptor;
 		$stripe_params['addPaymentReturnURL']      = wc_get_account_endpoint_url( 'payment-methods' );
-		$stripe_params['sepaElementsOptions']      = $sepa_elements_options;
 		$stripe_params['enabledBillingFields']     = $enabled_billing_fields;
 
 		if ( is_wc_endpoint_url( 'order-pay' ) ) {
@@ -414,7 +411,6 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 		foreach ( self::UPE_AVAILABLE_METHODS as $payment_method_class ) {
 			$available_payment_methods[] = $payment_method_class::STRIPE_ID;
 		}
-
 		return $available_payment_methods;
 	}
 
@@ -544,6 +540,18 @@ class WC_Stripe_UPE_Payment_Gateway extends WC_Gateway_Stripe {
 				if ( '' !== $selected_upe_payment_type ) {
 					// Only update the payment_method_types if we have a reference to the payment type the customer selected.
 					$request['payment_method_types'] = [ $selected_upe_payment_type ];
+					if ( WC_Stripe_UPE_Payment_Method_CC::STRIPE_ID === $selected_upe_payment_type ) {
+						if ( in_array(
+							WC_Stripe_UPE_Payment_Method_Link::STRIPE_ID,
+							$this->get_upe_enabled_payment_method_ids(),
+							true
+						) ) {
+							$request['payment_method_types'] = [
+								WC_Stripe_UPE_Payment_Method_CC::STRIPE_ID,
+								WC_Stripe_UPE_Payment_Method_Link::STRIPE_ID,
+							];
+						}
+					}
 					$this->set_payment_method_title_for_order( $order, $selected_upe_payment_type );
 					if ( ! $this->payment_methods[ $selected_upe_payment_type ]->is_allowed_on_country( $order->get_billing_country() ) ) {
 						throw new \Exception( __( 'This payment method is not available on the selected country', 'woocommerce-gateway-stripe' ) );

@@ -18,7 +18,7 @@ use \InvalidArgumentException;
  * EU VAT Assistant plugin.
  */
 class WC_Aelia_EU_VAT_Assistant extends Aelia_Plugin {
-	public static $version = '2.0.27.220124';
+	public static $version = '2.0.34.220830';
 
 	public static $plugin_slug = Definitions::PLUGIN_SLUG;
 	public static $text_domain = Definitions::TEXT_DOMAIN;
@@ -373,26 +373,39 @@ class WC_Aelia_EU_VAT_Assistant extends Aelia_Plugin {
 		// VAT Compliance plugin, for EU/UK/Norway rules.
 		// @since x.x
 		// TODO Remove the message when no longer needed (e.g. after the 1st March 2022)
-		if(date('Y-m-d') < '2022-04-01') {
+		if(date('Y-m-d') < '2023-01-01') {
 			Messages::admin_message(wp_kses_post(implode(' ', array(
 					'<strong>',
-					__('Are you selling physical goods to customers in the EU, UK or Norway?', self::$text_domain),
+					__('EU VAT Assistant end of life', self::$text_domain),
+					'</strong>',
+					'<br />',
+					__('As we announced in January 2022, the EU VAT Assistant has reached its end of life on the 30th of June, 2022.', self::$text_domain),
+					__('The plugin is currently in a "grace period" and it remains fully functional, in its current status.', self::$text_domain),
+					__('We will keep it available for download for a while longer, to give our users more time to migrate to an alternative solution.', self::$text_domain),
+					__('During the grace period, we will update the plugin\'s meta data, to indicate the compatibility with specific WordPress and WooCommerce versions,
+							but we will no longer be able to add new features, or provide support via the support forum, for this plugin.', self::$text_domain),
+					'<br />< br/>',
+					'<strong>',
+					__('	', self::$text_domain),
 					'</strong>',
 					'<br />',
 					sprintf(
-						__('Aelia established a collaboration with Simba Hosting, authors of the <a href="%1$s"  target="_blank">WooCommerce EU/UK VAT / IVA Compliance</a>.', self::$text_domain),
+						__('We established a collaboration with Simba Hosting, authors of the <a href="%1$s"  target="_blank">WooCommerce EU/UK VAT / IVA Compliance</a>, ' .
+							 'which can be used to replace our solution.', self::$text_domain),
 						'https://www.simbahosting.co.uk/s3/product/woocommerce-eu-vat-compliance/'
 					),
-					__('That plugin includes all the features to simplify compliance with the VAT regulations that affect the sales of physical good sold to customers in the EU, UK and Norway.', self::$text_domain),
-					__('Aelia recommends the EU/UK VAT Compliance plugin, by Simba Hosting, as an effective alternative, and replacement, to the EU VAT Assistant.', self::$text_domain),
+					__('In addition to the features offered by the EU VAT Assistant, which cover the EU VAT MOSS regulations came into affect in 2015, ' .
+					   'the WooCommerce EU/UK VAT / IVA Compliance includes also handles VAT regulations that affect the sales of physical good sold to customers in the EU, UK and Norway.', self::$text_domain),
 					'<br /><br />',
-					__('You can find more details about this news on our site:', self::$text_domain),
+					__('You can find our original announcement, as well as more details about this topic, on our site:', self::$text_domain),
 					sprintf('<a href="%1$s" target="_blank">%1$s</a>.', 'https://aelia.co/ioss-compliance-aelia-eu-vat-assistant/'),
+					__('If you need more information, or would like to avail of our service to migrate the data from the EU VAT Assistant to the VAT Compliance plugin, please feel free to reach out to us via our contact form:', self::$text_domain),
+					sprintf('<a href="%1$s" target="_blank">%1$s</a>.', 'https://aelia.co/contact'),
 				))),
 				array(
 					'sender_id' => esc_html(self::$plugin_slug),
 					'level' => E_USER_NOTICE,
-					'code' => Definitions::WARN_SOLUTION_FOR_VAT_OSS_COMPLIANCE,
+					'code' => Definitions::WARN_EU_VAT_ASSISTANT_END_OF_LIFE_3RD_WARNING,
 					'dismissable' => true,
 					'permissions' => 'manage_woocommerce',
 					'message_header' => __('Important', self::$text_domain),

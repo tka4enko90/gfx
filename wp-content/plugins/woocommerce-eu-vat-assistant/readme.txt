@@ -2,7 +2,7 @@
 Contributors: daigo75
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LVSZCS2SABN7Y
 Requires at least: 5.0
-Tested up to: 5.9.9
+Tested up to: 6.0.9
 Tags: woocommerce, eu vat, vat compliance, iva, moss, vat rates, eu tax, hmrc, digital vat, tax, woocommerce taxes, aelia
 License: GPLv3
 
@@ -81,10 +81,6 @@ We are also organising to offer an optional migration service, to convert the da
 
 You can read more about the collaboration between Aelia and Simba Hosting in the following article: [VAT OSS Compliance – From Aelia EU VAT Assistant to Simba Hosting's WooCommerce EU/UK VAT/IVA Compliance](https://aelia.co/ioss-compliance-aelia-eu-vat-assistant/).
 
-= What are the development plans for the EU VAT Assistant? =
-
-We plan to maintain the EU VAT Assistant, in its current form, at least until the 30 June 2022. We will keep testing it with newer versions of WooCommerce and provided bug fixed, but we won't implement new features.
-
 = What features are included in the EU VAT Assistant? =
 
 The EU VAT Assistant includes all the features to handle the VAT MOSS regulations for EU countries (see notes about UK Brexit, applicable from the 1st of January 2021). It's based on the same framework we use for our other premium products, such as the [Aelia Currency Switcher for Woocommerce](https://aelia.co/shop/currency-switcher-woocommerce/), [Prices by Country for WooCommerce](https://aelia.co/shop/prices-by-country-woocommerce/), [Aelia Tax Display by Country for WooCommerce](https://aelia.co/shop/tax-display-by-country-for-woocommerce/), and it follows the same quality standards. All the included features are fully functional, without restrictions or time limitations.
@@ -154,6 +150,29 @@ For more information about installation and management of plugins, please refer 
 This is a major update, which includes several important changes aimed at making the EU VAT Assistant more flexible and easier to extend (e.g. to cover the new rules post-Brexit). We aimed at maintaining backward compatibility as much as possible, but **we strongly advise to take a full backup of your site before installing this update and test it on a staging site first**. Should you encounter any issues, you can [download a previous version from the WordPress repository](https://wordpress.org/plugins/woocommerce-eu-vat-assistant/advanced/).
 
 == Changelog ==
+
+= 2.0.34.220830 =
+* Updated supported WooCommerce versions.
+
+= 2.0.33.220804 =
+* Updated supported WooCommerce versions.
+
+= 2.0.32.220704 =
+* Updated supported WooCommerce versions.
+
+= 2.0.31.220607 =
+* Updated supported WooCommerce versions.
+
+= 2.0.30.220502 =
+* Updated supported WooCommerce versions.
+* Updated supported WordPress versions.
+
+= 2.0.29.220330 =
+* Updated supported WooCommerce versions.
+
+= 2.0.28.220224 =
+* Updated supported WooCommerce versions.
+* Updated embedded framework.
 
 = 2.0.27.220124 =
 * Updated supported WooCommerce versions.

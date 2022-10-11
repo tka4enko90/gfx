@@ -87,13 +87,6 @@ function honeypot4cf7_uninstall() {
 *
 *********** */
 function honeypot4cf7_on_activation() {
-    if ( ! current_user_can( 'activate_plugins' ) ) {
-        return;
-    }
-    
-    $plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-    check_admin_referer( "activate-plugin_{$plugin}" );
-
 	// Initialize option values
 	return honeypot4cf7_get_config();
 }

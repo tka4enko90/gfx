@@ -1094,9 +1094,8 @@ final class Affiliate_WP_Editor {
 		$label         = isset( $atts['label'] ) && ! empty( $atts['label'] ) ? $atts['label'] : __( 'Password', 'affiliate-wp' );
 		$label_confirm = isset( $atts['labelConfirm'] ) && ! empty( $atts['labelConfirm'] ) ? $atts['labelConfirm'] : __( 'Confirm Password', 'affiliate-wp' );
 
-		$label_slug = 'affwp-' . sanitize_title( $label );
-		$name       = esc_attr( str_replace( '-', '_', $label_slug ) ) . '_text';
-		$value      = isset( $_REQUEST[ $name ] ) ? $_REQUEST[ $name ] : '';
+		$name  = 'affwp_password_text';
+		$value = isset( $_REQUEST[ $name ] ) ? $_REQUEST[ $name ] : '';
 
 		$placeholder         = isset( $atts['placeholder'] ) && $show_placeholders ? ' placeholder="' . $atts['placeholder'] . '"' : '';
 		$placeholder_confirm = isset( $atts['placeholderConfirm'] ) && $show_placeholders ? ' placeholder="' . $atts['placeholderConfirm'] . '"' : '';
@@ -1231,10 +1230,11 @@ final class Affiliate_WP_Editor {
 				break;
 
 			case 'account':
-				$label_slug = 'affwp-user-email';
-				$name       = 'affwp_user_email';
-				$value      = isset( $user['user_email'] ) ? $user['user_email'] : '';
-				$disabled   = is_user_logged_in() ? ' disabled="disabled"' : '';
+				$label_slug       = 'affwp-user-email';
+				$name             = 'affwp_user_email';
+				$value            = isset( $user['user_email'] ) ? $user['user_email'] : '';
+				$disabled         = is_user_logged_in() ? ' disabled="disabled"' : '';
+				$atts['required'] = true; // Account email is always required.
 				break;
 
 			default:
@@ -1242,7 +1242,6 @@ final class Affiliate_WP_Editor {
 				$name       = esc_attr( str_replace( '-', '_', $label_slug ) ) . '_email';
 				break;
 		}
-
 
 		$required_attr = isset( $atts['required'] ) && $atts['required'] ? 'required' : '';
 		$placeholder   = isset( $atts['placeholder'] ) && $show_placeholders ? ' placeholder="' . $atts['placeholder'] . '"' : '';

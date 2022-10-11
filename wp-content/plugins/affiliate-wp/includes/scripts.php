@@ -9,6 +9,8 @@
  * @since       1.0
  */
 
+use AffWP\Components\Notifications\REST\v1\Notifications_Endpoints;
+
 /**
  * Determines whether the current admin page is an AffiliateWP admin page.
  *
@@ -85,8 +87,8 @@ function affwp_admin_scripts() {
 
 	affwp_enqueue_admin_js();
 
-	// only enqueue for creatives page
-	if ( isset( $_GET['action'] ) && ( $_GET['action'] == 'add_creative' || $_GET['action'] == 'edit_creative' ) ) {
+	// only enqueue for settings and creatives page
+	if ( 'affiliate-wp-settings' === affwp_get_current_screen() || ( isset( $_GET['action'] ) && ( $_GET['action'] == 'add_creative' || $_GET['action'] == 'edit_creative' ) ) ) {
 		wp_enqueue_media();
 	}
 
@@ -96,6 +98,61 @@ function affwp_admin_scripts() {
 	wp_enqueue_script( 'postbox' );
 }
 add_action( 'admin_enqueue_scripts', 'affwp_admin_scripts' );
+
+/**
+ * Enqueue scripts on the Add New User (user-new.php) Page.
+ *
+ * @since  2.9.6
+ * @return void Early bail when not the `user-new.php` screen.
+ */
+function affwp_register_dependant_fields() {
+
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+	wp_register_script( 'affiliate-wp-dependant-fields', AFFILIATEWP_PLUGIN_URL . "assets/js/admin-dependant-fields{$suffix }.js", array( 'jquery' ), AFFILIATEWP_VERSION, true );
+
+	if ( ! affwp_is_add_user_screen() ) {
+		return;
+	}
+
+	wp_enqueue_script( 'affiliate-wp-dependant-fields' );
+}
+add_action( 'admin_enqueue_scripts', 'affwp_register_dependant_fields' );
+
+/**
+ * Is this the add user screen in the admin?
+ *
+ * @since 2.9.6
+ *
+ * @return bool
+ */
+function affwp_is_add_user_screen() {
+
+	if ( ! is_admin() ) {
+		return false;
+	}
+
+	if ( ! function_exists( 'get_current_screen' ) ) {
+		return false;
+	}
+
+	$screen = get_current_screen();
+
+	return 'add' === $screen->action && 'user' === $screen->base;
+}
+
+/**
+ * Add `defer` to the script tag.
+ *
+ * @since 2.9.5
+ */
+function affwp_add_defer( $url ) {
+	// Add `defer` to the AlpineJS script tag.
+	return ( false !== strpos( $url, AFFILIATEWP_PLUGIN_URL . 'assets/js/alpine.min.js' ) )
+		? str_replace( ' src', ' defer src', $url )
+		: $url;
+}
+add_filter( 'script_loader_tag', 'affwp_add_defer' );
 
 /**
  *  Load the admin styles
@@ -120,6 +177,16 @@ function affwp_admin_styles() {
 	// jQuery UI styles are loaded on our admin pages only
 	$ui_style = ( 'classic' == get_user_option( 'admin_color' ) ) ? 'classic' : 'fresh';
 	wp_enqueue_style( 'jquery-ui-css', AFFILIATEWP_PLUGIN_URL . 'assets/css/jquery-ui-' . $ui_style . '.min.css' );
+
+	// In-plugin notifications.
+	wp_enqueue_script( 'affwp-admin-notifications' );
+	wp_localize_script( 'affwp-admin-notifications', 'affwp_notifications_vars', array(
+		'restBase'  => rest_url( ( new Notifications_Endpoints )->namespace ),
+		'restNonce' => wp_create_nonce( 'wp_rest' ),
+	) );
+
+	// Addons page style.
+	wp_register_style( 'affwp_admin_addons', AFFILIATEWP_PLUGIN_URL . "assets/css/admin-addons{$suffix}.css", array(), AFFILIATEWP_VERSION );
 }
 add_action( 'admin_enqueue_scripts', 'affwp_admin_styles' );
 
@@ -143,7 +210,7 @@ function affwp_enqueue_admin_js() {
 		'import_field_required' => __( 'This field must be mapped for the import to proceed.', 'affiliate-wp' ),
 	) );
 
-	$admin_deps = array( 'jquery', 'jquery-ui-autocomplete', 'affwp-batch' );
+	$admin_deps = array( 'jquery', 'jquery-ui-autocomplete', 'affwp-batch', 'wp-util' );
 
 	wp_enqueue_script( 'affwp-admin', AFFILIATEWP_PLUGIN_URL . 'assets/js/admin' . $suffix . '.js', $admin_deps, AFFILIATEWP_VERSION );
 	wp_localize_script( 'affwp-admin', 'affwp_vars', array(
@@ -164,6 +231,13 @@ function affwp_enqueue_admin_js() {
 
 	// Register select2 JS lib.
 	wp_register_script( 'affwp-select2', AFFILIATEWP_PLUGIN_URL . 'assets/js/select2' . $suffix . '.js', array( 'jquery' ), AFFILIATEWP_VERSION );
+
+	// Alpine and in-plugin notifcations.
+	wp_register_script( 'alpinejs', AFFILIATEWP_PLUGIN_URL . 'assets/js/alpine.min.js', array(), '3.4.2', false );
+	wp_register_script( 'affwp-admin-notifications', AFFILIATEWP_PLUGIN_URL . 'assets/js/admin-notifications.js', array( 'alpinejs' ), AFFILIATEWP_VERSION, false );
+
+	// Addons page.
+	wp_register_script( 'affwp_admin_addons', AFFILIATEWP_PLUGIN_URL . "assets/js/admin-addons{$suffix}.js", array( 'jquery' ), AFFILIATEWP_VERSION );
 }
 
 /**

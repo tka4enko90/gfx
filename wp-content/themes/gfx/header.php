@@ -53,7 +53,7 @@ endif; ?>
                             <?php
                             if ($header_logo && $logo_options === 'image') :
                                 if (get_post_mime_type($header_logo) === 'image/svg+xml'){
-                                    echo file_get_contents(wp_get_attachment_image_url($header_logo));
+                                    echo file_get_contents(wp_get_original_image_path($header_logo));
                                 }else{
                                     echo wp_get_attachment_image($header_logo, 'logo');
                                 }

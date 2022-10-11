@@ -23,6 +23,7 @@ import { usePaymentMethodDataContext } from '../../providers/cart-checkout/payme
 import { useShippingDataContext } from '../../providers/cart-checkout/shipping';
 import { useCustomerDataContext } from '../../providers/cart-checkout/customer';
 import { prepareTotalItems } from './utils';
+import { useShippingData } from '../shipping/use-shipping-data';
 
 /**
  * Returns am interface to use as payment method props.
@@ -50,22 +51,21 @@ export const usePaymentMethodInterface = (): PaymentMethodInterface => {
 	const {
 		shippingErrorStatus,
 		shippingErrorTypes,
-		shippingRates,
-		shippingRatesLoading,
-		selectedRates,
-		setSelectedRates,
-		isSelectingRate,
 		onShippingRateSuccess,
 		onShippingRateFail,
 		onShippingRateSelectSuccess,
 		onShippingRateSelectFail,
-		needsShipping,
 	} = useShippingDataContext();
 	const {
-		billingData,
-		shippingAddress,
-		setShippingAddress,
-	} = useCustomerDataContext();
+		shippingRates,
+		isLoadingRates,
+		selectedRates,
+		isSelectingRate,
+		selectShippingRate,
+		needsShipping,
+	} = useShippingData();
+	const { billingAddress, shippingAddress, setShippingAddress } =
+		useCustomerDataContext();
 	const { cartItems, cartFees, cartTotals, extensions } = useStoreCart();
 	const { appliedCoupons } = useStoreCartCoupons();
 	const { noticeContexts, responseTypes } = useEmitResponse();
@@ -95,8 +95,7 @@ export const usePaymentMethodInterface = (): PaymentMethodInterface => {
 				{
 					alternative: '',
 					plugin: 'woocommerce-gutenberg-products-block',
-					link:
-						'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/4228',
+					link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/4228',
 				}
 			);
 			setExpressPaymentError( errorMessage );
@@ -108,7 +107,8 @@ export const usePaymentMethodInterface = (): PaymentMethodInterface => {
 		activePaymentMethod,
 		billing: {
 			appliedCoupons,
-			billingData,
+			billingAddress,
+			billingData: billingAddress,
 			cartTotal: currentCartTotal.current,
 			cartTotalItems: currentCartTotals.current,
 			currency: getCurrencyFromPriceResponse( cartTotals ),
@@ -157,11 +157,11 @@ export const usePaymentMethodInterface = (): PaymentMethodInterface => {
 			isSelectingRate,
 			needsShipping,
 			selectedRates,
-			setSelectedRates,
+			setSelectedRates: selectShippingRate,
 			setShippingAddress,
 			shippingAddress,
 			shippingRates,
-			shippingRatesLoading,
+			shippingRatesLoading: isLoadingRates,
 		},
 		shippingStatus: {
 			shippingErrorStatus,

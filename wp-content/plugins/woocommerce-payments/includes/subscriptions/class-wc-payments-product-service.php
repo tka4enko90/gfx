@@ -109,7 +109,7 @@ class WC_Payments_Product_Service {
 	 */
 	public function get_wcpay_product_id( WC_Product $product, $test_mode = null ) : string {
 		// If the subscription product doesn't have a WC Pay product ID, create one.
-		if ( ! self::has_wcpay_product_id( $product, $test_mode ) && WC_Subscriptions_Product::is_subscription( $product ) ) {
+		if ( ! self::has_wcpay_product_id( $product, $test_mode ) ) {
 			$is_current_environment = null === $test_mode || WC_Payments::get_gateway()->is_in_test_mode() === $test_mode;
 
 			// Only create a new wcpay product if we're trying to fetch a wcpay product ID in the current environment.
@@ -125,14 +125,25 @@ class WC_Payments_Product_Service {
 	 * Gets the WC Pay product ID associated with a WC product.
 	 *
 	 * @param string $type The item type to create a product for.
-	 * return string       The item's WCPay product id.
+	 * @return string       The item's WCPay product id.
 	 */
 	public function get_wcpay_product_id_for_item( string $type ) : string {
-		if ( ! get_option( self::get_wcpay_product_id_option() . '_' . $type ) ) {
-			$this->create_product_for_item_type( $type );
+		$sanitized_type  = self::sanitize_option_key( $type );
+		$option_key_name = self::get_wcpay_product_id_option() . '_' . $sanitized_type;
+		if ( ! get_option( $option_key_name ) ) {
+			$this->create_product_for_item_type( $sanitized_type );
 		}
+		return get_option( $option_key_name );
+	}
 
-		return get_option( self::get_wcpay_product_id_option() . '_' . $type );
+	/**
+	 * Sanitize option key string to replace space with underscore, and remove special characters.
+	 *
+	 * @param string $type Non sanitized input.
+	 * @return string       Sanitized output.
+	 */
+	public static function sanitize_option_key( string $type ) {
+		return sanitize_key( str_replace( ' ', '_', trim( $type ) ) );
 	}
 
 	/**

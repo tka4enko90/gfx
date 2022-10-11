@@ -36,9 +36,8 @@ class Country_Flags {
 	 * @return array
 	 */
 	public static function get_country_flags(array $filter_countries = []): array {
-		// Fetch a list with country => currency association, then flip it to have
-		// the currency as the key
-		$countries = array_keys(WC()->countries->get_allowed_countries());
+		// Fetch a list of countries
+		$countries = array_keys(WC()->countries->get_countries());
 
 		// If a filter was passed, only keep the countries from the filter list
 		if(!empty($filter_countries)) {

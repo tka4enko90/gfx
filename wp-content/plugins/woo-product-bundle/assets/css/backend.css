@@ -122,7 +122,7 @@
     display: inline-block;
 }
 
-.woosb_selected li:hover span.remove, .woosb_results li:hover span.remove {
+.woosb_selected li:hover .woosb-remove, .woosb_results li:hover .woosb-remove {
     background-color: #ff6600;
     color: #fff;
 }
@@ -173,7 +173,7 @@
     text-decoration: none;
 }
 
-.woosb_selected li span.remove, .woosb_results li span.remove {
+.woosb_selected li .woosb-remove, .woosb_results li .woosb-remove {
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -266,7 +266,7 @@
     font-style: italic;
 }
 
-.active[data-slug="woo-product-bundle"] .premium a {
+.wpc-premium, .wpc-premium a, .active[data-slug="woo-product-bundle"] .premium a {
     color: #c9356e;
 }
 

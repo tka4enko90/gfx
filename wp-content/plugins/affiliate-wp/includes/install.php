@@ -9,6 +9,8 @@
  * @since       1.0
  */
 
+use AffWP\Components\Notifications\Notifications_DB;
+
 /**
  * Installs AffiliateWP.
  *
@@ -34,6 +36,7 @@ function affiliate_wp_install() {
 	$affiliate_wp_install->settings       = new Affiliate_WP_Settings;
 	$affiliate_wp_install->rewrites       = new Affiliate_WP_Rewrites;
 	$affiliate_wp_install->REST           = new Affiliate_WP_REST;
+	$affiliate_wp_install->notifications  = new Notifications_DB;
 
 	$affiliate_wp_install->affiliates->create_table();
 	$affiliate_wp_install->affiliate_meta->create_table();
@@ -48,6 +51,7 @@ function affiliate_wp_install() {
 	$affiliate_wp_install->affiliates->payouts->create_table();
 	$affiliate_wp_install->affiliates->coupons->create_table();
 	$affiliate_wp_install->REST->consumers->create_table();
+	$affiliate_wp_install->notifications->create_table();
 
 	if ( ! get_option( 'affwp_is_installed' ) ) {
 
@@ -60,14 +64,32 @@ function affiliate_wp_install() {
 		// Create the Affiliate Area page if it doesn't exist.
 		if ( empty( $affiliates_page ) ) {
 
+			$post_content = '<!-- wp:affiliatewp/affiliate-area -->
+				<!-- wp:affiliatewp/registration -->
+				<!-- wp:affiliatewp/field-name {"type":"name"} /-->
+				<!-- wp:affiliatewp/field-username {"required":true,"type":"username"} /-->
+				<!-- wp:affiliatewp/field-account-email {"type":"account"} /-->
+				<!-- wp:affiliatewp/field-payment-email {"label":"' . __( 'Payment Email', 'affiliate-wp' ) . '","type":"payment"} /-->
+				<!-- wp:affiliatewp/field-website {"label":"' . __( 'Website URL', 'affiliate-wp' ) . '","type":"websiteUrl"} /-->
+				<!-- wp:affiliatewp/field-textarea {"label":"' . __( 'How will you promote us?', 'affiliate-wp' ) . '","type":"promotionMethod"} /-->
+				<!-- wp:affiliatewp/field-register-button /-->
+				<!-- /wp:affiliatewp/registration -->
+				<!-- wp:affiliatewp/login /-->
+				<!-- /wp:affiliatewp/affiliate-area -->
+			';
+
+			if ( class_exists( 'Classic_Editor' ) && 'classic' === get_option( 'classic-editor-replace' ) ) {
+				$post_content = '[affiliate_area]';
+			}
+
 			$affiliate_area = wp_insert_post(
 				array(
 					'post_title'     => __( 'Affiliate Area', 'affiliate-wp' ),
-					'post_content'   => '[affiliate_area]',
+					'post_content'   => $post_content,
 					'post_status'    => 'publish',
 					'post_author'    => get_current_user_id(),
 					'post_type'      => 'page',
-					'comment_status' => 'closed'
+					'comment_status' => 'closed',
 				)
 			);
 
@@ -80,6 +102,10 @@ function affiliate_wp_install() {
 
 		// Update settings.
 		$affiliate_wp_install->settings->set( array(
+			'require_approval'             => true,
+			'allow_affiliate_registration' => true,
+			'revoke_on_refund'             => true,
+			'referral_pretty_urls'         => true,
 			'required_registration_fields' => array(
 				'your_name'   => __( 'Your Name', 'affiliate-wp' ),
 				'website_url' => __( 'Website URL', 'affiliate-wp' )

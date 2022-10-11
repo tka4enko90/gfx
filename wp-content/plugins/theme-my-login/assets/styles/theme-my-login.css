@@ -1,28 +1,22 @@
 .tml {
 	font-size: 1em;
 }
-
 .tml * {
 	box-sizing: border-box;
 }
-
 .tml .tml-field-wrap {
 	margin-bottom: 1em;
 }
-
 .tml .tml-label {
 	display: block;
 	margin: 0.5em 0;
 }
-
 .tml .tml-checkbox + .tml-label {
 	display: inline;
 }
-
 .tml .tml-field {
 	width: 100%;
 }
-
 .tml .tml-description {
 	display: block;
 	font-size: 0.85em;
@@ -36,7 +30,6 @@
 	margin: 0;
 	padding: 0;
 }
-
 .tml .tml-error,
 .tml .tml-message,
 .tml .tml-success,
@@ -47,11 +40,9 @@
 	margin: 0 0 1em;
 	padding: 0.75em;
 }
-
 .tml .tml-error {
 	border-left-color: #dc3232;
 }
-
 .tml .tml-success,
 .tml .tml-action-confirmaction .success {
 	border-left-color: #46b450;
@@ -66,25 +57,21 @@
 	margin-bottom: 1em;
 	padding: 0.5em;
 }
-
 #pass-strength-result.strong {
 	background-color: #c1e1b9;
 	border-color: #83c373;
 	opacity: 1;
 }
-
 #pass-strength-result.good {
 	background-color: #ffe399;
 	border-color: #ffc733;
 	opacity: 1;
 }
-
 #pass-strength-result.bad {
 	background-color: #fbc5a9;
 	border-color: #f78b53;
 	opacity: 1;
 }
-
 #pass-strength-result.short {
 	background-color: #f1adad;
 	border-color: #e35b5b;

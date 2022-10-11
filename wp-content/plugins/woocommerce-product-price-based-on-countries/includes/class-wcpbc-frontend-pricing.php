@@ -316,7 +316,6 @@ class WCPBC_Frontend_Pricing {
 		if ( 'product_query' === $wp_query->get( 'wc_query' ) ) {
 			remove_filter( 'posts_clauses', array( __CLASS__, 'order_by_price_post_clauses' ), 20 );
 			remove_filter( 'posts_clauses', array( __CLASS__, 'filter_price_post_clauses' ), 25, 2 );
-			remove_filter( 'the_posts', array( __CLASS__, 'remove_product_query_filters' ), 20, 2 );
 		}
 		return $posts;
 	}

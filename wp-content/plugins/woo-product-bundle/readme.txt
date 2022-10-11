@@ -3,8 +3,8 @@ Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, woo, wpc, product, bundle, bundles
 Requires at least: 4.0
-Tested up to: 5.9
-Stable tag: 6.0.9
+Tested up to: 6.0
+Stable tag: 6.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,16 +42,7 @@ https://www.youtube.com/watch?v=_CULYbTT0k0
 - Bundles: change the position of bundle list (above/ below Add to Cart button, hide or open in a new tab)
 - Add to Cart & Checkout button texts
 - Advanced Search: adjust search product limit, search items by SKU, exact keyword, phrase search, and repeated products
-
-= Premium Version =
-
-- Add a **variable product** or a **specific variation** to a bundle
-
-= Translators =
-
-Available languages: English (Default), German, French, Norwegian, Romanian, Danish, Vietnamese, Spanish, Italian, Swedish, Chinese
-
-If you have created your own language pack, or have an update for an existing one, you can send [gettext PO and MO file](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") to [us](https://wpclever.net/contact?utm_source=pot&utm_medium=woosb&utm_campaign=wporg "WPClever.net") so we can bundle it into WPC Product Bundles.
+- Add a **variable product** or a **specific variation** to a bundle ([Premium Version](https://wpclever.net/downloads/product-bundles/ "WPC Product Bundles"))
 
 = Not what you needed? =
 
@@ -70,6 +61,10 @@ If you have any suggestions on how to improve this plugin, feel free to [contact
 
 If you love our plugins, please give us a full five-star rating so that we know that our works are valued and appreciated. This will be the drive and motivation for us to further improve our plugins with more useful features. Tell us what you think and suggest some ways for improvement. We highly appreciate your support and love.
 
+= Translators =
+
+If you have created your own language pack, or have an update for an existing one, you can send [gettext PO and MO file](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") to [us](https://wpclever.net/contact?utm_source=pot&utm_medium=woosb&utm_campaign=wporg "WPClever.net") so we can bundle it into WPC Product Bundles.
+
 == Installation ==
 
 1. Please make sure that you installed WooCommerce
@@ -79,6 +74,71 @@ If you love our plugins, please give us a full five-star rating so that we know 
 5. Almost done! click Save and see the result
 
 == Changelog ==
+
+= 6.4.4 =
+* Fixed: Calculate price with tax on the cart page
+
+= 6.4.3 =
+* Fixed: Auto calculate the total of bundle
+
+= 6.4.2 =
+* Fixed: Wrong stock calculation when adding the same variation
+
+= 6.4.1 =
+* Fixed: Sold individually product
+
+= 6.4.0 =
+* Fixed: Error on PHP 8.0
+
+= 6.3.9 =
+* Added: Default custom display price
+
+= 6.3.8 =
+* Fixed: Minor JS issues
+
+= 6.3.7 =
+* Fixed: Quantity plus/minus button
+
+= 6.3.6 =
+* Fixed: Validation for min/max quantity
+* Added: Action hook woosb_above_item/woosb_under_item
+
+= 6.3.5 =
+* Fixed: Notice on settings page
+
+= 6.3.4 =
+* Fixed: Set min quantity as zero for each bundled product
+
+= 6.3.3 =
+* Fixed: Minor CSS/JS issues
+
+= 6.3.2 =
+* Fixed: Saved text doesn't show in some cases
+
+= 6.3.1 =
+* Fixed: Add correct metadata when creating an order manually
+
+= 6.3.0 =
+* Updated: Optimized the code
+
+= 6.2.3 =
+* Fixed: PHP error on the cart/checkout page
+
+= 6.2.2 =
+* Fixed: Filter hook 'woosb_item_visible'
+
+= 6.2.1 =
+* Fixed: Minor CSS/JS issue
+
+= 6.2.0 =
+* Updated: Optimized the code
+
+= 6.1.1 =
+* Fixed: Restore cart item after removing
+
+= 6.1.0 =
+* Added: Context to woosb_init JS function
+* Fixed: Minor CSS/JS issue
 
 = 6.0.9 =
 * Fixed: Minor CSS/JS issue
@@ -239,7 +299,7 @@ If you love our plugins, please give us a full five-star rating so that we know 
 = 5.4.3 =
 * Updated: Compatible with WooCommerce 5.0
 * Updated: Optimized the code
-* Fixed: RTL support
+* Fixed: RTL support for better displaying right-to-left languages
 
 = 5.4.2 =
 * Fixed: Compatible with WPC Frequently Bought Together

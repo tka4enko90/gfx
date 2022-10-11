@@ -45,9 +45,22 @@ final class WC_Cart_Session {
 	 * Register methods for this object on the appropriate WordPress hooks.
 	 */
 	public function init() {
+		/**
+		 * Filters whether hooks should be initialized for the current cart session.
+		 *
+		 * @param bool $must_initialize Will be passed as true, meaning that the cart hooks should be initialized.
+		 * @param bool $session The WC_Cart_Session object that is being initialized.
+		 * @returns bool True if the cart hooks should be actually initialized, false if not.
+		 *
+		 * @since 6.9.0
+		 */
+		if ( ! apply_filters( 'woocommerce_cart_session_initialize', true, $this ) ) {
+			return;
+		}
+
 		add_action( 'wp_loaded', array( $this, 'get_cart_from_session' ) );
 		add_action( 'woocommerce_cart_emptied', array( $this, 'destroy_cart_session' ) );
-		add_action( 'woocommerce_after_calculate_totals', array( $this, 'set_session' ) );
+		add_action( 'woocommerce_after_calculate_totals', array( $this, 'set_session' ), 1000 );
 		add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'set_session' ) );
 		add_action( 'woocommerce_removed_coupon', array( $this, 'set_session' ) );
 
@@ -146,7 +159,9 @@ final class WC_Cart_Session {
 			} elseif ( ! empty( $values['data_hash'] ) && ! hash_equals( $values['data_hash'], wc_get_cart_item_data_hash( $product ) ) ) { // phpcs:ignore PHPCompatibility.PHP.NewFunctions.hash_equalsFound
 				$update_cart_session = true;
 				/* translators: %1$s: product name. %2$s product permalink */
-				wc_add_notice( sprintf( __( '%1$s has been removed from your cart because it has since been modified. You can add it back to your cart <a href="%2$s">here</a>.', 'woocommerce' ), $product->get_name(), $product->get_permalink() ), 'notice' );
+				$message = sprintf( __( '%1$s has been removed from your cart because it has since been modified. You can add it back to your cart <a href="%2$s">here</a>.', 'woocommerce' ), $product->get_name(), $product->get_permalink() );
+				$message = apply_filters( 'woocommerce_cart_item_removed_because_modified_message', $message, $product );
+				wc_add_notice( $message, 'notice' );
 				do_action( 'woocommerce_remove_cart_item_from_session', $key, $values );
 
 			} else {

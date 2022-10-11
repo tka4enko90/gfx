@@ -89,7 +89,7 @@ class Bootstrap {
 	 * @since 2.9
 	 */
 	public function add_dashboard_page() {
-		add_dashboard_page( '', '', 'manage_affiliate_options', 'affiliatewp-onboarding', '' );
+		add_submenu_page( null, '', '', 'manage_affiliate_options', 'affiliatewp-onboarding' );
 	}
 
 	/**
@@ -169,7 +169,7 @@ class Bootstrap {
 		$data = array(
 			'currencies'         => affwp_get_currencies(),
 			'currency'           => affiliate_wp()->settings->get( 'currency', 'USD' ),
-			'revoke_on_refund'   => affiliate_wp()->settings->get( 'revoke_on_refund' ),
+			'revoke_on_refund'   => affiliate_wp()->settings->get( 'revoke_on_refund', 1 ),
 			'referral_rate'      => affiliate_wp()->settings->get( 'referral_rate', 20 ),
 			'referral_rate_type' => affiliate_wp()->settings->get( 'referral_rate_type', 'percentage' ),
 			'flat_rate_basis'    => affiliate_wp()->settings->get( 'flat_rate_basis', 'per_product' ),
@@ -230,22 +230,20 @@ class Bootstrap {
 		}
 
 		$license_data = $license_activation['license_data'];
-		$license_key  = $license_activation['license_key'];
 
-		if ( 'valid' !== $license_data->license || empty( $license_data->success ) ) {
+		if (
+			(
+				! isset( $license_data->license ) ||
+				'valid' !== $license_data->license
+			) ||
+			empty( $license_data->success )
+		) {
 			wp_send_json_error(
 				array(
 					'error' => __( 'This license key doesn&#8217;t appear to be valid. Try again?', 'affiliate-wp' ),
 				)
 			);
 		}
-
-		affiliate_wp()->settings->set( array(
-			'license_status' => $license_data,
-			'license_key'    => $license_key,
-		), true );
-
-		set_transient( 'affwp_license_check', $license_data->license, DAY_IN_SECONDS );
 
 		wp_send_json_success(
 			array(
@@ -265,7 +263,11 @@ class Bootstrap {
 		check_ajax_referer( 'affwpwizard-admin-nonce', 'nonce' );
 
 		$status = affiliate_wp()->settings->get( 'license_status', '' );
-		$status = is_object( $status ) ? $status->license : $status;
+
+		$status = ( is_object( $status ) && isset( $status->license ) )
+			? $status->license
+			: $status;
+
 		$license_key = affiliate_wp()->settings->get_license_key();
 
 		$site_license = array(
@@ -314,7 +316,7 @@ class Bootstrap {
 			'course'     => array(
 				'title'        => __( 'Course integrations', 'affiliate-wp' ),
 				'subtitle'     => '',
-				'integrations' => array( 'lifterlms', 'zippycourses' ),
+				'integrations' => array( 'learndash', 'lifterlms', 'zippycourses' ),
 			),
 			'donation'   => array(
 				'title'        => __( 'Donation integrations', 'affiliate-wp' ),

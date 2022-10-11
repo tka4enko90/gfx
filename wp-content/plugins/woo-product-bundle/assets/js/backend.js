@@ -25,18 +25,17 @@
 
     var title = $('#woosb_search_settings').attr('data-title');
 
-    $('#woosb_search_settings').
-        dialog({
-          minWidth: 540,
-          title: title,
-          modal: true,
-          dialogClass: 'wpc-dialog',
-          open: function() {
-            $('.ui-widget-overlay').bind('click', function() {
-              $('#woosb_search_settings').dialog('close');
-            });
-          },
+    $('#woosb_search_settings').dialog({
+      minWidth: 540,
+      title: title,
+      modal: true,
+      dialogClass: 'wpc-dialog',
+      open: function() {
+        $('.ui-widget-overlay').bind('click', function() {
+          $('#woosb_search_settings').dialog('close');
         });
+      },
+    });
   });
 
   $(document).on('click touch', '#woosb_search_settings_update', function(e) {
@@ -57,13 +56,17 @@
     };
 
     $.post(ajaxurl, data, function(response) {
-      $('#woosb_search_settings').removeClass('woosb_search_settings_updating');
+      $('#woosb_search_settings').
+          removeClass('woosb_search_settings_updating');
     });
   });
 
-  $(document).on('change', 'select[name="_woosb_change_price"]', function() {
-    woosb_active_options();
-  });
+  $(document).
+      on('change',
+          'select[name="_woosb_change_price"], select[name="_woosb_price_format"]',
+          function() {
+            woosb_active_options();
+          });
 
   $(document).on('change', '#product-type', function() {
     woosb_active_settings();
@@ -126,7 +129,7 @@
 
   // actions on search result items
   $(document).on('click touch', '#woosb_results li', function() {
-    $(this).children('span.remove').attr('aria-label', 'Remove').html('×');
+    $(this).children('.woosb-remove').attr('aria-label', 'Remove').html('×');
     $('#woosb_selected ul').append($(this));
     $('#woosb_results').hide();
     $('#woosb_keyword').val('');
@@ -144,7 +147,7 @@
   });
 
   // actions on selected items
-  $(document).on('click touch', '#woosb_selected span.remove', function() {
+  $(document).on('click touch', '#woosb_selected .woosb-remove', function() {
     $(this).parent().remove();
     woosb_get_ids();
     woosb_change_price();
@@ -160,8 +163,7 @@
 
   function woosb_arrange() {
     $('#woosb_selected ul').sortable({
-      handle: '.move',
-      update: function(event, ui) {
+      handle: '.move', update: function(event, ui) {
         woosb_get_ids();
       },
     });
@@ -171,8 +173,8 @@
     var listId = new Array();
 
     $('#woosb_selected li').each(function() {
-      if (woosb_vars.use_sku && ($(this).data('sku') != undefined) &&
-          ($(this).data('sku') != '')) {
+      if (woosb_vars.use_sku && $(this).data('sku') != undefined &&
+          $(this).data('sku') != '') {
         listId.push(encodeURIComponent('sku-' + $(this).data('sku')) + '/' +
             $(this).find('input').val());
       } else {
@@ -188,7 +190,13 @@
   }
 
   function woosb_active_options() {
-    if ($('select[name="_woosb_change_price"]').val() == 'yes_custom') {
+    if ($('select[name="_woosb_price_format"]').val() === 'custom') {
+      $('.woosb_tr_show_if_price_format_custom').show();
+    } else {
+      $('.woosb_tr_show_if_price_format_custom').hide();
+    }
+
+    if ($('select[name="_woosb_change_price"]').val() === 'yes_custom') {
       $('input[name="_woosb_change_price_custom"]').show();
     } else {
       $('input[name="_woosb_change_price_custom"]').hide();
@@ -269,30 +277,24 @@
 
   function woosb_format_money(number, places, symbol, thousand, decimal) {
     number = number || 0;
-    places = !isNaN(places = Math.abs(places)) ? places : 2;
+    places = !isNaN((places = Math.abs(places))) ? places : 2;
     symbol = symbol !== undefined ? symbol : '$';
     thousand = thousand || ',';
     decimal = decimal || '.';
 
-    var negative = number < 0 ? '-' : '',
-        i = parseInt(
-            number = woosb_round(Math.abs(+number || 0), places).
-                toFixed(places),
-            10) + '',
-        j = 0;
+    var negative = number < 0 ? '-' : '', i = parseInt(
+        (number = woosb_round(Math.abs(+number || 0), places).toFixed(places)),
+        10) + '', j = 0;
 
     if (i.length > 3) {
       j = i.length % 3;
     }
 
-    return symbol + negative + (
-        j ? i.substr(0, j) + thousand : ''
-    ) + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) + (
-        places ?
+    return (symbol + negative + (j ? i.substr(0, j) + thousand : '') +
+        i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) + (places ?
             decimal +
             woosb_round(Math.abs(number - i), places).toFixed(places).slice(2) :
-            ''
-    );
+            ''));
   }
 
   function woosb_change_price() {
@@ -326,8 +328,8 @@
           sale = parseFloat(total) -
               parseFloat($('#woosb_discount_amount').val());
         } else if ($('#woosb_discount').val()) {
-          sale = parseFloat(total) *
-              (100 - parseFloat($('#woosb_discount').val())) / 100;
+          sale = (parseFloat(total) *
+              (100 - parseFloat($('#woosb_discount').val()))) / 100;
         }
 
         $('#_regular_price').

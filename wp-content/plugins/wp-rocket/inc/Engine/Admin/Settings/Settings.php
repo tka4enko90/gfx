@@ -2,7 +2,7 @@
 namespace WP_Rocket\Engine\Admin\Settings;
 
 use WP_Rocket\Admin\Options_Data;
-use WP_Rocket\Subscriber\Third_Party\Plugins\Security\Sucuri_Subscriber;
+use WP_Rocket\Addon\Sucuri\Subscriber as SucuriSubscriber;
 
 /**
  * Settings class.
@@ -43,7 +43,7 @@ class Settings {
 	 * @since 3.6
 	 * @see   $this->sanitize_font()
 	 *
-	 * @var string|bool
+	 * @var array
 	 */
 	private $font_formats = [
 		'otf',
@@ -341,22 +341,6 @@ class Settings {
 		// Options: Activate bot preload.
 		$input['manual_preload'] = ! empty( $input['manual_preload'] ) ? 1 : 0;
 
-		// Option: activate sitemap preload.
-		$input['sitemap_preload'] = ! empty( $input['sitemap_preload'] ) ? 1 : 0;
-
-		// Option : XML sitemaps URLs.
-		if ( ! empty( $input['sitemaps'] ) ) {
-			if ( ! is_array( $input['sitemaps'] ) ) {
-				$input['sitemaps'] = explode( "\n", $input['sitemaps'] );
-			}
-			$input['sitemaps'] = array_map( 'trim', $input['sitemaps'] );
-			$input['sitemaps'] = array_map( 'rocket_sanitize_xml', $input['sitemaps'] );
-			$input['sitemaps'] = array_filter( $input['sitemaps'] );
-			$input['sitemaps'] = array_unique( $input['sitemaps'] );
-		} else {
-			$input['sitemaps'] = [];
-		}
-
 		// Option : fonts to preload.
 		$input['preload_fonts'] = ! empty( $input['preload_fonts'] ) ? $this->sanitize_fonts( $input['preload_fonts'] ) : [];
 
@@ -384,7 +368,7 @@ class Settings {
 
 		$input['sucury_waf_api_key'] = trim( $input['sucury_waf_api_key'] );
 
-		if ( ! Sucuri_Subscriber::is_api_key_valid( $input['sucury_waf_api_key'] ) ) {
+		if ( ! SucuriSubscriber::is_api_key_valid( $input['sucury_waf_api_key'] ) ) {
 			$input['sucury_waf_api_key'] = '';
 
 			if ( $input['sucury_waf_cache_sync'] && empty( $input['ignore'] ) ) {

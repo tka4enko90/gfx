@@ -53,7 +53,8 @@ class AMP implements Subscriber_Interface {
 		];
 
 		if ( function_exists( 'is_amp_endpoint' ) ) {
-			$events['update_option_amp-options'] = 'generate_config_file';
+			$events['update_option_amp-options']  = 'generate_config_file';
+			$events['rocket_delay_js_exclusions'] = 'exclude_script_from_delay_js';
 		}
 
 		return $events;
@@ -109,7 +110,17 @@ class AMP implements Subscriber_Interface {
 	 * @since  3.5.2
 	 */
 	public function disable_options_on_amp() {
-		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+		// No endpoint function means we're not running amp here.
+		if ( ! function_exists( 'is_amp_endpoint' ) ) {
+			return;
+		}
+
+		// We can get a false negative from is_amp_endpoint when web stories is active, so we have to make sure neither is in play.
+		if (
+			! is_amp_endpoint()
+			&&
+			! ( is_singular( 'web-story' ) && ! is_embed() && ! post_password_required() )
+		) {
 			return;
 		}
 
@@ -166,5 +177,18 @@ class AMP implements Subscriber_Interface {
 				'(.*).js',
 			]
 		);
+	}
+
+	/**
+	 * Adds the switching script from AMP to delay JS excluded files
+	 *
+	 * @since 3.11.1
+	 *
+	 * @param  array $excluded List of excluded files.
+	 * @return array        List of excluded files.
+	 */
+	public function exclude_script_from_delay_js( $excluded ) {
+		$excluded[] = 'amp-mobile-version-switcher';
+		return $excluded;
 	}
 }
