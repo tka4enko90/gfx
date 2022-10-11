@@ -129,7 +129,7 @@ if(!function_exists('default_currency_decimals')) {
 			'MMK' => 2, // Myanmar Kyat
 			'MNT' => 2, // Mongolian Tugrik
 			'MOP' => 2, // Macau Pataca
-			'MRO' => 2, // Mauritania Ouguiya
+			'MRU' => 2, // Mauritania Ouguiya
 			'MTL' => 2, // Maltese Lira
 			'MUR' => 2, // Mauritius Rupee
 			'MVR' => 2, // Maldives Rufiyaa
@@ -266,7 +266,7 @@ if(!function_exists('aelia_wc_registered_order_types')) {
 			$result = wc_get_order_types();
 			// Remove the "refund" order type, if requested
 			if(!$include_refunds && isset($result['shop_order_refund'])) {
-				unset($result['shop_order_refuns']);
+				unset($result['shop_order_refund']);
 			}
 		}
 		else {
@@ -363,3 +363,86 @@ if(!function_exists('aelia_apply_deprecated_filters')) {
 	}
 }
 
+if(!function_exists('aelia_set_object_read')) {
+	/**
+	 * Sets the "object read" property against an object. The property can have two values:
+	 * - true: this will make any changes to the object's property go to the "changes" list. These changes
+	 *         will then be committed to the database when the save() method is called.
+	 * - false: this will make changes directly to the object's "data" list, but it won't track them to
+	 *          save them against the database.
+	 *
+	 * @param WC_Data $obj
+	 * @param bool $object_read
+	 * @return bool The function returns the original value of the "object_read" property. This can be
+	 * used to restore it at a later stage.
+	 * @since 2.2.7.220502
+	 */
+	function aelia_set_object_read(\WC_Data $obj, bool $object_read): bool {
+		$original_value = $obj->get_object_read();
+		$obj->set_object_read($object_read);
+		return $original_value;
+	}
+}
+
+if(!function_exists('aelia_set_object_aux_data')) {
+	/**
+	 * Adds or replace the value of a piece of data in the data map.
+	 *
+	 * @param object $object
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
+	 * @since 2.3.0.220730
+	 */
+	function aelia_set_object_aux_data(object $object, string $name, $value): void {
+		\Aelia\WC\Object_Data_Tracking\Object_Data_Tracker::set_value($object, $name, $value);
+	}
+}
+
+if(!function_exists('aelia_get_object_aux_data')) {
+	/**
+	 * Returns the value of a piece of data from the data map linked to an object. If
+	 * the data is not found, null is returned.
+	 *
+	 * @param object $object
+	 * @param string $name
+	 * @return mixed
+	 * @since 2.3.0.220730
+	 */
+	function aelia_get_object_aux_data(object $object, $name) {
+		return \Aelia\WC\Object_Data_Tracking\Object_Data_Tracker::get_value($object, $name);
+	}
+}
+
+if(!function_exists('aelia_delete_object_aux_data')) {
+	/**
+	 * Adds or replace the value of a piece of data in the data map.
+	 *
+	 * @param object $object
+	 * @param string $name
+	 * @return void
+	 * @since 2.3.0.220730
+	 */
+	function aelia_delete_object_aux_data(object $object, string $name): void {
+		\Aelia\WC\Object_Data_Tracking\Object_Data_Tracker::delete_value($object, $name);
+	}
+}
+
+if(!function_exists('aelia_maybe_set_object_prop')) {
+	/**
+	 * Sets an object property, if that property exists against the object.
+	 * This function will be useful to set object properties that may be removed in
+	 * the future.
+	 *
+	 * @param object $object
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
+	 * @since 2.3.0.220730
+	 */
+	function aelia_maybe_set_object_prop(object $object, string $name, $value): void {
+		if(property_exists($object, $name)) {
+			$object->{$name} = $value;
+		}
+	}
+}

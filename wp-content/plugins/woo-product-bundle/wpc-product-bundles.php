@@ -3,20 +3,20 @@
 Plugin Name: WPC Product Bundles for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: WPC Product Bundles is a plugin help you bundle a few products, offer them at a discount and watch the sales go up!
-Version: 6.0.9
+Version: 6.4.4
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: woo-product-bundle
 Domain Path: /languages/
 Requires at least: 4.0
-Tested up to: 5.9
+Tested up to: 6.0
 WC requires at least: 3.0
-WC tested up to: 6.3
+WC tested up to: 6.9
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WOOSB_VERSION' ) && define( 'WOOSB_VERSION', '6.0.9' );
+! defined( 'WOOSB_VERSION' ) && define( 'WOOSB_VERSION', '6.4.4' );
 ! defined( 'WOOSB_FILE' ) && define( 'WOOSB_FILE', __FILE__ );
 ! defined( 'WOOSB_URI' ) && define( 'WOOSB_URI', plugin_dir_url( __FILE__ ) );
 ! defined( 'WOOSB_DIR' ) && define( 'WOOSB_DIR', plugin_dir_path( __FILE__ ) );
@@ -29,7 +29,6 @@ defined( 'ABSPATH' ) || exit;
 include 'includes/wpc-dashboard.php';
 include 'includes/wpc-menu.php';
 include 'includes/wpc-kit.php';
-include 'includes/wpc-notice.php';
 
 if ( ! function_exists( 'woosb_init' ) ) {
 	add_action( 'plugins_loaded', 'woosb_init', 12 );
@@ -50,10 +49,8 @@ if ( ! function_exists( 'woosb_init' ) ) {
 		include_once 'includes/class-compatible.php';
 
 		// start
-		$GLOBALS['woosb'] = WPCleverWoosb();
+		WPCleverWoosb();
 	}
-} else {
-	add_action( 'admin_notices', 'woosb_notice_premium' );
 }
 
 if ( ! function_exists( 'woosb_notice_wc' ) ) {
@@ -61,17 +58,6 @@ if ( ! function_exists( 'woosb_notice_wc' ) ) {
 		?>
         <div class="error">
             <p><strong>WPC Product Bundles</strong> requires WooCommerce version 3.0 or greater.</p>
-        </div>
-		<?php
-	}
-}
-
-if ( ! function_exists( 'woosb_notice_premium' ) ) {
-	function woosb_notice_premium() {
-		?>
-        <div class="error">
-            <p>Seems you're using both free and premium version of <strong>WPC Product Bundles</strong>. Please
-                deactivate the free version when using the premium version.</p>
         </div>
 		<?php
 	}

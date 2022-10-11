@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5cd6e5d96e868482405f723d504f438d
+class ComposerStaticInit58bf01805e397422e6783e33f7b67e7e
 {
     public static $classMap = array (
         'Aelia\\WC\\EU_VAT_Assistant\\Definitions' => __DIR__ . '/../..' . '/lib/classes/definitions/definitions.php',
@@ -81,7 +81,7 @@ class ComposerStaticInit5cd6e5d96e868482405f723d504f438d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit5cd6e5d96e868482405f723d504f438d::$classMap;
+            $loader->classMap = ComposerStaticInit58bf01805e397422e6783e33f7b67e7e::$classMap;
 
         }, null, ClassLoader::class);
     }

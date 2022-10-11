@@ -53,6 +53,7 @@ abstract class AbstractJSOptimization extends AbstractOptimization {
 		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/pdf.min.js';
 		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/three.min.js';
 		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/3d-flip-book.min.js';
+		$excluded_files[] = '/google-site-kit/dist/assets/js/(.*)\.js';
 
 		/**
 		 * Filter JS files to exclude from minification/concatenation.
@@ -254,6 +255,20 @@ abstract class AbstractJSOptimization extends AbstractOptimization {
 			'voucher.getavo.it/public/js/yanovis.Voucher.js',
 			'js-eu1.hsforms.net',
 			'statcounter.com/counter/counter.js',
+			'snapppt.com',
+			'use.typekit.com',
+			'secure.gravatar.com/js/gprofiles.js',
+			'cdn.jsdelivr.net/npm/hockeystack',
+			'widget.prod.faslet.net',
+			'ga.getresponse.com/script/ga.js',
+			'cognitoforms.com',
+			'usercentrics.eu',
+			'cdn.amcharts.com',
+			'umami',
+			'cdn.popt.in/pixel.js',
+			'm2d.m2.ai',
+			'pubguru.net',
+			'trustindex.io',
 		];
 
 		$excluded_external = array_merge( $defaults, $this->options->get( 'exclude_js', [] ) );

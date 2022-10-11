@@ -2,8 +2,8 @@
 Contributors: oscargare
 Tags: price based country, dynamic price based country, price by country, dynamic price, woocommerce, geoip, country-targeted pricing
 Requires at least: 3.8
-Tested up to: 5.9
-Stable tag: 2.2.1
+Tested up to: 6.0
+Stable tag: 2.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,23 @@ You should do the test in a private browsing window to prevent data stored in th
 5. /assets/screenshot-6.png
 
 == Changelog ==
+
+= 2.2.5 (2022-09-01) =
+* Added: Tested up WooCommerce 6.9.
+* Fixed: Using remove_filter( "the_posts",... ) in a "the_posts" callback causes the following "the_posts" callback not to be executed.
+
+= 2.2.4 (2022-08-05) =
+* Added: Tested up WooCommerce 6.8.
+* Fixed: Minor bugs.
+
+= 2.2.3 (2022-05-25) =
+* Added: Tested up WooCommerce 6.5.
+* Added: Tested up WordPress 6.0.
+
+= 2.2.2 (2022-03-23) =
+* Fixed: The pricing fields are visible on the variable products when the "WooCommerce Subscriptions" plugin is enabled.
+* Fixed: The net sales amount of the Products Report in Analytics is not converted to the base currency.
+* Tweak: Copy the order metadata to the refund orders to improve the accuracy of the reports.
 
 = 2.2.1 (2022-03-03) =
 * Added: Tested up WooCommerce 6.3.

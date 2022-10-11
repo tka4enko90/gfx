@@ -25,18 +25,20 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				$url = get_permalink( $product_id );
 			}
 
-			return apply_filters( 'woocommerce_product_add_to_cart_url', $url, $this );
+			$url = apply_filters( 'woocommerce_product_add_to_cart_url', $url, $this );
+
+			return apply_filters( 'woosb_product_add_to_cart_url', $url, $this );
 		}
 
 		public function add_to_cart_text() {
 			if ( $this->is_purchasable() && $this->is_in_stock() ) {
 				if ( ! $this->has_variables() && ! $this->is_optional() ) {
-					$text = WPCleverWoosb_Helper::woosb_localization( 'button_add', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
+					$text = WPCleverWoosb_Helper::localization( 'button_add', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
 				} else {
-					$text = WPCleverWoosb_Helper::woosb_localization( 'button_select', esc_html__( 'Select options', 'woo-product-bundle' ) );
+					$text = WPCleverWoosb_Helper::localization( 'button_select', esc_html__( 'Select options', 'woo-product-bundle' ) );
 				}
 			} else {
-				$text = WPCleverWoosb_Helper::woosb_localization( 'button_read', esc_html__( 'Read more', 'woo-product-bundle' ) );
+				$text = WPCleverWoosb_Helper::localization( 'button_read', esc_html__( 'Read more', 'woo-product-bundle' ) );
 			}
 
 			$text = apply_filters( 'woocommerce_product_add_to_cart_text', $text, $this );
@@ -45,7 +47,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function single_add_to_cart_text() {
-			$text = WPCleverWoosb_Helper::woosb_localization( 'button_single', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
+			$text = WPCleverWoosb_Helper::localization( 'button_single', esc_html__( 'Add to cart', 'woo-product-bundle' ) );
 
 			$text = apply_filters( 'woocommerce_product_single_add_to_cart_text', $text, $this );
 
@@ -53,7 +55,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function is_on_sale( $context = 'view' ) {
-			if ( ! $this->is_fixed_price() && ( $this->get_discount_amount() || $this->get_discount() ) ) {
+			if ( ! $this->is_fixed_price() && ( $this->get_discount_amount() || $this->get_discount_percentage() ) ) {
 				return true;
 			}
 
@@ -63,7 +65,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		public function get_sale_price( $context = 'view' ) {
 			if ( ( $context === 'view' ) && ! $this->is_fixed_price() ) {
 				$discount_amount     = $this->get_discount_amount();
-				$discount_percentage = $this->get_discount();
+				$discount_percentage = $this->get_discount_percentage();
 				$discount            = $discount_amount || $discount_percentage;
 
 				if ( $discount ) {
@@ -77,10 +79,10 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 								continue;
 							}
 
-							$_price = WPCleverWoosb_Helper::woosb_get_price( $_product ) * $item['qty'];
+							$_price = WPCleverWoosb_Helper::get_price( $_product ) * $item['qty'];
 
 							if ( $discount_percentage ) {
-								// if haven't discount_amount, apply discount percentage
+								// when haven't discount_amount, apply the discount percentage
 								$sale_price += round( $_price * ( 100 - $discount_percentage ) / 100, wc_get_price_decimals() );
 							} else {
 								$sale_price += $_price;
@@ -114,14 +116,14 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function get_manage_stock( $context = 'view' ) {
-			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' );
+			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes';
 			$parent_manage         = parent::get_manage_stock( $context );
 
 			if ( ( $items = $this->items ) && ! $this->is_optional() ) {
 				foreach ( $items as $item ) {
 					$_product = wc_get_product( $item['id'] );
 
-					if ( ! $_product || $_product->is_type( 'woosb' ) || ( ( $exclude_unpurchasable === 'yes' ) && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
+					if ( ! $_product || $_product->is_type( 'woosb' ) || ( $exclude_unpurchasable && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
 						continue;
 					}
 
@@ -149,7 +151,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function get_stock_status( $context = 'view' ) {
-			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' );
+			$exclude_unpurchasable = get_option( '_woosb_exclude_unpurchasable', 'no' ) === 'yes';
 			$parent_status         = parent::get_stock_status( $context );
 
 			if ( ( $items = $this->items ) && ! $this->is_optional() ) {
@@ -160,7 +162,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 					$_qty     = $item['qty'];
 					$_product = wc_get_product( $item['id'] );
 
-					if ( ! $_product || $_product->is_type( 'woosb' ) || ( ( $exclude_unpurchasable === 'yes' ) && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
+					if ( ! $_product || $_product->is_type( 'woosb' ) || ( $exclude_unpurchasable && ( ! $_product->is_purchasable() || ! $_product->is_in_stock() ) ) ) {
 						continue;
 					}
 
@@ -301,35 +303,38 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		// extra functions
 
 		public function has_variables() {
+			$has_variables = false;
+
 			if ( $items = $this->items ) {
 				foreach ( $items as $item ) {
 					$_product = wc_get_product( $item['id'] );
 
 					if ( $_product && $_product->is_type( 'variable' ) ) {
-						return true;
+						$has_variables = true;
+						break;
 					}
 				}
 			}
 
-			return false;
+			return apply_filters( 'woosb_has_variables', $has_variables, $this );
 		}
 
 		public function is_optional() {
 			$product_id = $this->id;
 
-			return get_post_meta( $product_id, 'woosb_optional_products', true ) === 'on';
+			return apply_filters( 'woosb_is_optional', get_post_meta( $product_id, 'woosb_optional_products', true ) === 'on', $this );
 		}
 
 		public function is_manage_stock() {
 			$product_id = $this->id;
 
-			return get_post_meta( $product_id, 'woosb_manage_stock', true ) === 'on';
+			return apply_filters( 'woosb_is_manage_stock', get_post_meta( $product_id, 'woosb_manage_stock', true ) === 'on', $this );
 		}
 
 		public function is_fixed_price() {
 			$product_id = $this->id;
 
-			return get_post_meta( $product_id, 'woosb_disable_auto_price', true ) === 'on';
+			return apply_filters( 'woosb_is_fixed_price', get_post_meta( $product_id, 'woosb_disable_auto_price', true ) === 'on', $this );
 		}
 
 		public function get_discount_amount() {
@@ -341,10 +346,10 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				$discount_amount = (float) $discount_amount;
 			}
 
-			return $discount_amount;
+			return apply_filters( 'woosb_get_discount_amount', $discount_amount, $this );
 		}
 
-		public function get_discount() {
+		public function get_discount_percentage() {
 			$product_id          = $this->id;
 			$discount_percentage = 0;
 
@@ -353,13 +358,19 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 				$discount_percentage = (float) $discount_percentage;
 			}
 
-			return $discount_percentage;
+			return apply_filters( 'woosb_get_discount_percentage', $discount_percentage, $this );
+		}
+
+		public function get_discount() {
+			$discount = $this->get_discount_amount() ?: $this->get_discount_percentage() . '%';
+
+			return apply_filters( 'woosb_get_discount', $discount, $this );
 		}
 
 		public function get_ids() {
 			$product_id = $this->id;
 
-			return get_post_meta( $product_id, 'woosb_ids', true );
+			return apply_filters( 'woosb_get_ids', get_post_meta( $product_id, 'woosb_ids', true ), $this );
 		}
 
 		public function build_items( $ids = null ) {
@@ -397,7 +408,7 @@ if ( ! class_exists( 'WC_Product_Woosb' ) && class_exists( 'WC_Product' ) ) {
 		}
 
 		public function get_items() {
-			return $this->items;
+			return apply_filters( 'woosb_get_items', $this->items, $this );
 		}
 	}
 }

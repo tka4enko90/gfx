@@ -119,7 +119,8 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 		$member = new RCP_Member( $user_id );
 
 		// Check if an affiliate coupon was used.
-		$is_discount = ! empty( $_POST['rcp_discount'] );
+		$is_coupon_referral = false;
+		$is_discount        = ! empty( $_POST['rcp_discount'] );
 		if ( $is_discount ) {
 			$rcp_discounts       = new RCP_Discounts;
 			$discount_obj        = $rcp_discounts->get_by( 'code', $_POST['rcp_discount'] );
@@ -127,6 +128,7 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 
 			if ( $coupon_affiliate_id ) {
 				$this->affiliate_id = $coupon_affiliate_id;
+				$is_coupon_referral = true;
 			}
 		}
 
@@ -147,8 +149,9 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 		$referral_id = $this->insert_draft_referral(
 			$this->affiliate_id,
 			array(
-				'reference'   => $key,
-				'description' => $subscription,
+				'reference'          => $key,
+				'description'        => $subscription,
+				'is_coupon_referral' => $is_coupon_referral,
 			)
 		);
 		if ( ! $referral_id ) {
@@ -355,7 +358,7 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 	 * @access  public
 	 * @since   1.0
 	*/
-	public function reference_link( $reference = 0, $referral ) {
+	public function reference_link( $reference, $referral ) {
 
 		if( empty( $referral->context ) || 'rcp' != $referral->context ) {
 
@@ -434,7 +437,7 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 	 * @access  public
 	 * @since   1.1
 	*/
-	public function update_discount_affiliate( $discount_id = 0, $args ) {
+	public function update_discount_affiliate( $discount_id, $args ) {
 
 		global $wpdb;
 
@@ -563,7 +566,7 @@ class Affiliate_WP_RCP extends Affiliate_WP_Base {
 	 * @access  public
 	 * @since   1.7
 	*/
-	public function store_subscription_meta( $level_id = 0, $args ) {
+	public function store_subscription_meta( $level_id, $args ) {
 
 		global $rcp_levels_db;
 

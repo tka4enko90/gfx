@@ -77,6 +77,9 @@ if ( ! class_exists( 'WCPBC_Admin_Analytics' ) ) :
 					'coupons_stats_interval'   => array(
 						'discount_amount' => false,
 					),
+					'products_stats_interval'  => array(
+						'product_net_revenue' => false,
+					),
 					'products_stats_total'     => array(
 						'product_net_revenue' => false,
 					),

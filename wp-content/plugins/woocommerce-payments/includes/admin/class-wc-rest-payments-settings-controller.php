@@ -23,6 +23,9 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 		'account_branding_icon',
 		'account_branding_primary_color',
 		'account_branding_secondary_color',
+		'deposit_schedule_interval',
+		'deposit_schedule_monthly_anchor',
+		'deposit_schedule_weekly_anchor',
 	];
 
 	/**
@@ -123,9 +126,8 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 						'type'        => 'string',
 					],
 					'account_business_url'              => [
-						'description'       => __( 'The business’s publicly available website.', 'woocommerce-payments' ),
-						'type'              => 'string',
-						'validate_callback' => [ $this, 'validate_business_support_uri' ],
+						'description' => __( 'The business’s publicly available website.', 'woocommerce-payments' ),
+						'type'        => 'string',
 					],
 					'account_business_support_address'  => [
 						'description'       => __( 'A publicly available mailing address for sending support issues to.', 'woocommerce-payments' ),
@@ -157,6 +159,18 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 					'account_branding_secondary_color'  => [
 						'description' => __( 'A CSS hex color value representing the secondary branding color for this account.', 'woocommerce-payments' ),
 						'type'        => 'string',
+					],
+					'deposit_schedule_interval'         => [
+						'description' => __( 'An interval for deposit scheduling.', 'woocommerce-payments' ),
+						'type'        => 'string',
+					],
+					'deposit_schedule_weekly_anchor'    => [
+						'description' => __( 'Weekly anchor for deposit scheduling when interval is set to weekly', 'woocommerce-payments' ),
+						'type'        => 'string',
+					],
+					'deposit_schedule_monthly_anchor'   => [
+						'description' => __( 'Monthly anchor for deposit scheduling when interval is set to monthly', 'woocommerce-payments' ),
+						'type'        => [ 'integer', 'null' ],
 					],
 					'is_payment_request_enabled'        => [
 						'description'       => __( 'If WooCommerce Payments express checkouts should be enabled.', 'woocommerce-payments' ),
@@ -201,12 +215,17 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_platform_checkout_enabled'      => [
-						'description'       => __( 'If WooCommerce Payments platform checkout should be enabled.', 'woocommerce-payments' ),
+						'description'       => __( 'If WooPay should be enabled.', 'woocommerce-payments' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'platform_checkout_custom_message'  => [
-						'description'       => __( 'Custom message to display to platform checkout customers.', 'woocommerce-payments' ),
+						'description'       => __( 'Custom message to display to WooPay customers.', 'woocommerce-payments' ),
+						'type'              => 'string',
+						'validate_callback' => 'rest_validate_request_arg',
+					],
+					'platform_checkout_store_logo'      => [
+						'description'       => __( 'Store logo to display to WooPay customers.', 'woocommerce-payments' ),
 						'type'              => 'string',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
@@ -292,30 +311,6 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Validate the business support URL.
-	 *
-	 * @param string          $value The value being validated.
-	 * @param WP_REST_Request $request The request made.
-	 * @param string          $param The parameter name, used in error messages.
-	 * @return true|WP_Error
-	 */
-	public function validate_business_support_uri( string $value, WP_REST_Request $request, string $param ) {
-		$string_validation_result = rest_validate_request_arg( $value, $request, $param );
-		if ( true !== $string_validation_result ) {
-			return $string_validation_result;
-		}
-
-		if ( '' !== $value && ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
-			return new WP_Error(
-				'rest_invalid_pattern',
-				__( 'Error: Invalid business URL: ', 'woocommerce-payments' ) . $value
-			);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Validate the business support address.
 	 *
 	 * @param array           $value The value being validated.
@@ -382,6 +377,13 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 				'is_card_present_eligible'          => $this->wcpay_gateway->is_card_present_eligible(),
 				'is_platform_checkout_enabled'      => 'yes' === $this->wcpay_gateway->get_option( 'platform_checkout' ),
 				'platform_checkout_custom_message'  => $this->wcpay_gateway->get_option( 'platform_checkout_custom_message' ),
+				'platform_checkout_store_logo'      => $this->wcpay_gateway->get_option( 'platform_checkout_store_logo' ),
+				'deposit_schedule_interval'         => $this->wcpay_gateway->get_option( 'deposit_schedule_interval' ),
+				'deposit_schedule_monthly_anchor'   => $this->wcpay_gateway->get_option( 'deposit_schedule_monthly_anchor' ),
+				'deposit_schedule_weekly_anchor'    => $this->wcpay_gateway->get_option( 'deposit_schedule_weekly_anchor' ),
+				'deposit_delay_days'                => $this->wcpay_gateway->get_option( 'deposit_delay_days' ),
+				'deposit_status'                    => $this->wcpay_gateway->get_option( 'deposit_status' ),
+				'deposit_completed_waiting_period'  => $this->wcpay_gateway->get_option( 'deposit_completed_waiting_period' ),
 			]
 		);
 	}
@@ -406,6 +408,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 		$this->update_account( $request );
 		$this->update_is_platform_checkout_enabled( $request );
 		$this->update_platform_checkout_custom_message( $request );
+		$this->update_platform_checkout_store_logo( $request );
 
 		return new WP_REST_Response( [], 200 );
 	}
@@ -576,9 +579,15 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	private function update_account( WP_REST_Request $request ) {
 		$updated_fields_callback = function ( $value, string $key ) {
 			return in_array( $key, static::ACCOUNT_FIELDS_TO_UPDATE, true ) &&
-					$this->wcpay_gateway->get_option( $key ) !== $value;
+				$this->wcpay_gateway->get_option( $key ) !== $value;
 		};
-		$updated_fields          = array_filter( $request->get_params(), $updated_fields_callback, ARRAY_FILTER_USE_BOTH );
+		// Filter out fields that are unchanged or not in the list of fields to update.
+		$updated_fields = array_filter( $request->get_params(), $updated_fields_callback, ARRAY_FILTER_USE_BOTH );
+
+		// If we are updating an anchor for the deposit schedule then we must also send through the interval.
+		if ( ! isset( $updated_fields['deposit_schedule_interval'] ) && array_intersect( array_keys( $updated_fields ), [ 'deposit_schedule_monthly_anchor', 'deposit_schedule_weekly_anchor' ] ) ) {
+			$updated_fields['deposit_schedule_interval'] = $this->wcpay_gateway->get_option( 'deposit_schedule_interval' );
+		}
 
 		$this->wcpay_gateway->update_account_settings( $updated_fields );
 	}
@@ -677,5 +686,20 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 		$platform_checkout_custom_message = $request->get_param( 'platform_checkout_custom_message' );
 
 		$this->wcpay_gateway->update_option( 'platform_checkout_custom_message', $platform_checkout_custom_message );
+	}
+
+	/**
+	 * Updates the store logo that will appear for platform checkout customers.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 */
+	private function update_platform_checkout_store_logo( WP_REST_Request $request ) {
+		if ( ! $request->has_param( 'platform_checkout_store_logo' ) ) {
+			return;
+		}
+
+		$platform_checkout_store_logo = $request->get_param( 'platform_checkout_store_logo' );
+
+		$this->wcpay_gateway->update_option( 'platform_checkout_store_logo', $platform_checkout_store_logo );
 	}
 }

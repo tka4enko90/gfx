@@ -1361,9 +1361,6 @@ function affwp_add_affiliate( $data = array() ) {
 		$user_id = absint( $data['user_id'] );
 	}
 
-	// Enable referral notifications by default for new users.
-	update_user_meta( $user_id, 'affwp_referral_notifications', true );
-
 	$args = array(
 		'user_id'          => $user_id,
 		'status'           => $status,
@@ -1388,11 +1385,39 @@ function affwp_add_affiliate( $data = array() ) {
 			affwp_update_affiliate_meta( $affiliate_id, 'notes', $args['notes'] );
 		}
 
+		// Enable referral notifications by default for new affiliates.
+		affwp_update_affiliate_meta( $affiliate_id, 'referral_notifications', true );
+
 		return $affiliate_id;
 	}
 
 	return false;
 
+}
+
+/**
+ * Get the date an affiliate was registered.
+ *
+ * @since 2.9.7
+ *
+ * @param  int $affiliate_id The Affiliate's ID.
+ * @return string            Date registered, or empty string if none.
+ */
+function affwp_get_affiliate_date_registered( $affiliate_id = 0 ) {
+
+	if ( false === affwp_get_affiliate_username( $affiliate_id ) ) {
+		return ''; // Not an affiliate.
+	}
+
+	global $wpdb;
+
+	$registered_by = $wpdb->get_var(
+		$wpdb->prepare( "SELECT date_registered FROM {$wpdb->prefix}affiliate_wp_affiliates WHERE affiliate_id = %s", $affiliate_id )
+	);
+
+	return is_string( $registered_by )
+		? $registered_by
+		: '';
 }
 
 /**
@@ -1747,6 +1772,26 @@ function affwp_get_affiliate_area_page_id() {
 	 * @param int $affiliate_page_id Affiliate Area page ID.
 	 */
 	return apply_filters( 'affwp_affiliate_area_page_id', $affiliate_page_id );
+}
+
+/**
+ * Retrieves the page ID for the Affiliate Terms Of Use.
+ *
+ * @since 2.9.6
+ *
+ * @return int Affiliate Terms Of Use page ID.
+ */
+function affwp_get_affiliate_terms_of_use_page_id() {
+	$affiliate_terms_page_id = affiliate_wp()->settings->get( 'terms_of_use', 0 );
+
+	/**
+	 * Filters the Affiliate Terms Of Use page ID.
+	 *
+	 * @since 2.9.6
+	 *
+	 * @param int $affiliate_terms_page_id Affiliate Terms Of Use page ID.
+	 */
+	return apply_filters( 'affwp_affiliate_terms_of_use_page_id', $affiliate_terms_page_id );
 }
 
 /**

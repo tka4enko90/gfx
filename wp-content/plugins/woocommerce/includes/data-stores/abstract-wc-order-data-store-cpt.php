@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @version  3.0.0
  */
-abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP implements WC_Object_Data_Store_Interface, WC_Abstract_Order_Data_Store_Interface {
+abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP implements WC_Abstract_Order_Data_Store_Interface, WC_Object_Data_Store_Interface {
 
 	/**
 	 * Internal meta type used to store order data.
@@ -261,7 +261,7 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 	protected function get_post_title() {
 		// @codingStandardsIgnoreStart
 		/* translators: %s: Order date */
-		return sprintf( __( 'Order &ndash; %s', 'woocommerce' ), strftime( _x( '%b %d, %Y @ %I:%M %p', 'Order date parsed by strftime', 'woocommerce' ) ) );
+		return sprintf( __( 'Order &ndash; %s', 'woocommerce' ), (new DateTime('now'))->format( _x( 'M d, Y @ h:i A', 'Order date parsed by DateTime::format', 'woocommerce' ) ) );
 		// @codingStandardsIgnoreEnd
 	}
 
@@ -434,5 +434,16 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 	 */
 	public function update_payment_token_ids( $order, $token_ids ) {
 		update_post_meta( $order->get_id(), '_payment_tokens', $token_ids );
+	}
+
+	/**
+	 * Get the order's title.
+	 *
+	 * @param WC_Order $order Order object.
+	 *
+	 * @return string Order title.
+	 */
+	public function get_title( WC_Order $order ) {
+		return get_the_title( $order->get_id() );
 	}
 }

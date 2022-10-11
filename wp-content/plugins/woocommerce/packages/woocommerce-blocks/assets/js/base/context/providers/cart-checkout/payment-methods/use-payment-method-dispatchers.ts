@@ -8,12 +8,11 @@ import { useCallback, useMemo } from '@wordpress/element';
  */
 import { actions, ActionType } from './actions';
 import { STATUS } from './constants';
-import { useCustomerDataContext } from '../customer';
-import { useShippingDataContext } from '../shipping';
 import type {
 	PaymentStatusDispatchers,
 	PaymentMethodDispatchers,
 } from './types';
+import { useCustomerData } from '../../../hooks/use-customer-data';
 
 export const usePaymentMethodDataDispatchers = (
 	dispatch: React.Dispatch< ActionType >
@@ -21,8 +20,7 @@ export const usePaymentMethodDataDispatchers = (
 	dispatchActions: PaymentMethodDispatchers;
 	setPaymentStatus: () => PaymentStatusDispatchers;
 } => {
-	const { setBillingData } = useCustomerDataContext();
-	const { setShippingAddress } = useShippingDataContext();
+	const { setBillingAddress, setShippingAddress } = useCustomerData();
 
 	const dispatchActions = useMemo(
 		(): PaymentMethodDispatchers => ( {
@@ -61,10 +59,10 @@ export const usePaymentMethodDataDispatchers = (
 			failed: (
 				errorMessage,
 				paymentMethodData,
-				billingData = undefined
+				billingAddress = undefined
 			) => {
-				if ( billingData ) {
-					setBillingData( billingData );
+				if ( billingAddress ) {
+					setBillingAddress( billingAddress );
 				}
 				dispatch(
 					actions.failed( {
@@ -75,11 +73,11 @@ export const usePaymentMethodDataDispatchers = (
 			},
 			success: (
 				paymentMethodData,
-				billingData = undefined,
+				billingAddress = undefined,
 				shippingData = undefined
 			) => {
-				if ( billingData ) {
-					setBillingData( billingData );
+				if ( billingAddress ) {
+					setBillingAddress( billingAddress );
 				}
 				if (
 					typeof shippingData !== undefined &&
@@ -96,7 +94,7 @@ export const usePaymentMethodDataDispatchers = (
 				);
 			},
 		} ),
-		[ dispatch, setBillingData, setShippingAddress ]
+		[ dispatch, setBillingAddress, setShippingAddress ]
 	);
 
 	return {

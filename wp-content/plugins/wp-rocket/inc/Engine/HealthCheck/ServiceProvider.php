@@ -22,6 +22,7 @@ class ServiceProvider extends AbstractServiceProvider {
 	protected $provides = [
 		'health_check',
 		'cache_dir_size_check',
+		'action_scheduler_check',
 	];
 
 	/**
@@ -30,12 +31,14 @@ class ServiceProvider extends AbstractServiceProvider {
 	 * @return void
 	 */
 	public function register() {
-		$this->getContainer()->share( 'health_check', 'WP_Rocket\Engine\HealthCheck\HealthCheck' )
+		$this->getContainer()->share( 'health_check', HealthCheck::class )
 			->addArgument( $this->getContainer()->get( 'options' ) )
 			->addTag( 'admin_subscriber' );
-		$this->getContainer()->share( 'cache_dir_size_check', 'WP_Rocket\Engine\HealthCheck\CacheDirSizeCheck' )
+		$this->getContainer()->share( 'cache_dir_size_check', CacheDirSizeCheck::class )
 			->addArgument( rocket_get_constant( 'WP_ROCKET_MINIFY_CACHE_PATH' ) )
 			->addArgument( rocket_get_constant( 'WP_ROCKET_WEB_MAIN' ) )
+			->addTag( 'common_subscriber' );
+		$this->getContainer()->share( 'action_scheduler_check', ActionSchedulerCheck::class )
 			->addTag( 'common_subscriber' );
 	}
 }

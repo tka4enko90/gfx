@@ -285,7 +285,7 @@ class WCPBC_Pricing_Zones {
 
 		foreach ( self::get_zones() as $zone ) {
 			if ( $base_currency !== $zone->get_currency() ) {
-				$rates[ $zone->get_currency() ] = $zone->get_exchange_rate();
+				$rates[ $zone->get_currency() ] = $zone->get_real_exchange_rate();
 			}
 		}
 

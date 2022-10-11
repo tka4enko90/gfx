@@ -1,7 +1,7 @@
 === Honeypot for Contact Form 7 ===
 Tags: honeypot, antispam, anti-spam, captcha, spam, bots, form, forms, contact form 7, contactform7, contact form, cf7
 Requires at least: 4.8
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: trunk
 Requires PHP: 5.6
 Contributors: nocean, DaoByDesign
@@ -90,6 +90,9 @@ I realize not everyone loves ads, but daddy's gotta pay the bills. I'm extremely
 2. Honeypot CF7 Form Tag Settings
 
 == Changelog ==
+= 2.1.1 =
+Fixes small bug when enabling in bulk with other plugins.
+
 = 2.1 =
 Added new feature: additional submission time check to improve bot-stopping power! Also, fixed small HTML issue and tidied up shortcode interface.
 

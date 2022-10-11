@@ -28,6 +28,7 @@ class WCPBC_Frontend {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'load_scripts' ), 1 );
 		add_action( 'wc_price_based_country_before_frontend_init', array( __CLASS__, 'set_customer_country' ), 20 );
 		add_action( 'wc_price_based_country_frontend_init', array( __CLASS__, 'frontend_init' ) );
+		add_action( 'woocommerce_order_refunded', array( __CLASS__, 'order_refunded' ), 10, 2 );
 		add_action( 'wp_footer', array( __CLASS__, 'test_store_message' ) );
 		add_action( 'wcpbc_manual_country_selector', array( __CLASS__, 'output_country_selector' ) );
 		add_shortcode( 'wcpbc_country_selector', array( __CLASS__, 'shortcode_country_selector' ) );
@@ -327,6 +328,26 @@ class WCPBC_Frontend {
 		// Add metadata.
 		update_post_meta( $order_id, '_wcpbc_base_exchange_rate', $base_exchange_rate );
 		update_post_meta( $order_id, '_wcpbc_pricing_zone', $pricing_zone_data );
+	}
+
+	/**
+	 * Copy the order metadata to the refund order.
+	 *
+	 * @since 2.2.2
+	 * @param int $order_id Order ID.
+	 * @param int $refund_id Refund order ID.
+	 */
+	public static function order_refunded( $order_id, $refund_id ) {
+		$base_exchange_rate = get_post_meta( $order_id, '_wcpbc_base_exchange_rate', true );
+		$pricing_zone_data  = get_post_meta( $order_id, '_wcpbc_pricing_zone', true );
+
+		if ( $base_exchange_rate ) {
+			update_post_meta( $refund_id, '_wcpbc_base_exchange_rate', $base_exchange_rate );
+		}
+
+		if ( $pricing_zone_data ) {
+			update_post_meta( $refund_id, '_wcpbc_pricing_zone', $pricing_zone_data );
+		}
 	}
 
 	/**

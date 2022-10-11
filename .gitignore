@@ -1,5 +1,8 @@
 node_modules
 
+# ignore all webp
+*.webp
+
 *~
 .DS_Store
 .svn

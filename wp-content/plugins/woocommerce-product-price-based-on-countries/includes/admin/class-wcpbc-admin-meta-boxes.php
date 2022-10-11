@@ -35,7 +35,7 @@ class WCPBC_Admin_Meta_Boxes {
 	 * Output the zone pricing for simple products
 	 */
 	public static function options_general_product_data() {
-		$wrapper_class = array( 'options_group', 'show_if_simple', 'show_if_external' );
+		$wrapper_class = array( 'options_group', 'show_if_simple', 'show_if_external', 'hide_if_variable' );
 		if ( ! wcpbc_is_pro() ) {
 			foreach ( array_keys( wcpbc_product_types_supported( 'pro', 'product-data' ) ) as $product_type ) {
 				$wrapper_class[] = 'hide_if_' . $product_type;
