@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 /*
 Plugin Name: Easy WP SMTP
-Version: 1.5.0
+Version: 1.5.1
 Plugin URI: https://wp-ecommerce.net/easy-wordpress-smtp-send-emails-from-your-wordpress-site-using-a-smtp-server-2197
 Author: wpecommerce, alexanderfoxc
 Author URI: https://wp-ecommerce.net/
@@ -687,7 +687,7 @@ $this->log( $line . "\r\n" );
 			echo esc_html( $err_msg );
 			exit;
 		}
-		$sd_code = filter_input( INPUT_POST, 'sd_code', FILTER_SANITIZE_STRING );
+                $sd_code = isset( $_POST['sd_code'] ) ? sanitize_text_field( stripslashes ( $_POST['sd_code'] ) ) : '';
 		if ( $trans !== $sd_code ) {
 			echo esc_html( $err_msg );
 			exit;

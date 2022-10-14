@@ -741,6 +741,22 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                                                placeholder="<?php esc_attr_e( 'Sorry, you can only choose at max a total quantity of [max] products before adding this bundle to the cart.', 'woo-product-bundle' ); ?>"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Total minimum required', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_total_min]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::localization( 'alert_total_min' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'The total must meet the minimum amount of [min].', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e( 'Total maximum required', 'woo-product-bundle' ); ?></th>
+                                    <td>
+                                        <input type="text" name="woosb_localization[alert_total_max]" class="large-text"
+                                               value="<?php echo esc_attr( WPCleverWoosb_Helper::localization( 'alert_total_max' ) ); ?>"
+                                               placeholder="<?php esc_attr_e( 'The total must meet the maximum amount of [max].', 'woo-product-bundle' ); ?>"/>
+                                    </td>
+                                </tr>
                                 <tr class="submit">
                                     <th colspan="2">
 										<?php settings_fields( 'woosb_localization' ); ?>
@@ -942,7 +958,9 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 					'alert_selection'          => WPCleverWoosb_Helper::localization( 'alert_selection', esc_html__( 'Please select a purchasable variation for [name] before adding this bundle to the cart.', 'woo-product-bundle' ) ),
 					'alert_empty'              => WPCleverWoosb_Helper::localization( 'alert_empty', esc_html__( 'Please choose at least one product before adding this bundle to the cart.', 'woo-product-bundle' ) ),
 					'alert_min'                => WPCleverWoosb_Helper::localization( 'alert_min', esc_html__( 'Please choose at least a total quantity of [min] products before adding this bundle to the cart.', 'woo-product-bundle' ) ),
-					'alert_max'                => WPCleverWoosb_Helper::localization( 'alert_max', esc_html__( 'Sorry, you can only choose at max a total quantity of [max] products before adding this bundle to the cart.', 'woo-product-bundle' ) )
+					'alert_max'                => WPCleverWoosb_Helper::localization( 'alert_max', esc_html__( 'Sorry, you can only choose at max a total quantity of [max] products before adding this bundle to the cart.', 'woo-product-bundle' ) ),
+					'alert_total_min'          => WPCleverWoosb_Helper::localization( 'alert_total_min', esc_html__( 'The total must meet the minimum amount of [min].', 'woo-product-bundle' ) ),
+					'alert_total_max'          => WPCleverWoosb_Helper::localization( 'alert_total_max', esc_html__( 'The total must meet the maximum amount of [max].', 'woo-product-bundle' ) ),
 				)
 			);
 		}
@@ -1116,14 +1134,16 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 				}
 
 				if ( ( $items = $product->get_items() ) && ! empty( $items ) ) {
-					$items     = WPCleverWoosb_Helper::minify_items( $items );
-					$qty       = isset( $_REQUEST['quantity'] ) ? (int) $_REQUEST['quantity'] : 1;
-					$count     = 0;
-					$optional  = get_post_meta( $product_id, 'woosb_optional_products', true ) === 'on';
-					$min_each  = (float) ( get_post_meta( $product_id, 'woosb_limit_each_min', true ) ?: 0 );
-					$max_each  = (float) ( get_post_meta( $product_id, 'woosb_limit_each_max', true ) ?: 10000 );
-					$min_whole = (float) ( get_post_meta( $product_id, 'woosb_limit_whole_min', true ) ?: 1 );
-					$max_whole = (float) ( get_post_meta( $product_id, 'woosb_limit_whole_max', true ) ?: 10000 );
+					$count       = $total = 0;
+					$items       = WPCleverWoosb_Helper::minify_items( $items );
+					$qty         = isset( $_REQUEST['quantity'] ) ? (int) $_REQUEST['quantity'] : 1;
+					$min_each    = (float) ( get_post_meta( $product_id, 'woosb_limit_each_min', true ) ?: 0 );
+					$max_each    = (float) ( get_post_meta( $product_id, 'woosb_limit_each_max', true ) ?: - 1 );
+					$min_whole   = (float) ( get_post_meta( $product_id, 'woosb_limit_whole_min', true ) ?: 1 );
+					$max_whole   = (float) ( get_post_meta( $product_id, 'woosb_limit_whole_max', true ) ?: - 1 );
+					$total_min   = (float) ( get_post_meta( $product_id, 'woosb_total_limits_min', true ) ?: 0 );
+					$total_max   = (float) ( get_post_meta( $product_id, 'woosb_total_limits_max', true ) ?: - 1 );
+					$check_total = ! $product->is_fixed_price() && ( $product->is_optional() || $product->has_variables() ) && ( get_post_meta( $product_id, 'woosb_total_limits', true ) === 'on' );
 
 					foreach ( $items as $item ) {
 						$_id      = $item['id'];
@@ -1131,7 +1151,11 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 						$_product = wc_get_product( $_id );
 						$count    += $_qty;
 
-						if ( $optional && ( ( $_qty < $min_each ) || ( $_qty > $max_each ) ) ) {
+						if ( $check_total ) {
+							$total += wc_get_price_to_display( $_product, array( 'qty' => $_qty ) );
+						}
+
+						if ( $product->is_optional() && ( ( $min_each > 0 && $_qty < $min_each ) || ( $max_each > 0 && $_qty > $max_each ) ) ) {
 							wc_add_notice( esc_html__( 'You cannot add this bundle to the cart.', 'woo-product-bundle' ), 'error' );
 
 							return false;
@@ -1191,10 +1215,30 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 						}
 					}
 
-					if ( $optional && ( ( $count < $min_whole ) || ( $count > $max_whole ) ) ) {
+					if ( $product->is_optional() && ( ( $min_whole > 0 && $count < $min_whole ) || ( $max_whole > 0 && $count > $max_whole ) ) ) {
 						wc_add_notice( esc_html__( 'You cannot add this bundle to the cart.', 'woo-product-bundle' ), 'error' );
 
 						return false;
+					}
+
+					if ( $check_total ) {
+						if ( $discount_amount = $product->get_discount_amount() ) {
+							$total -= $discount_amount;
+						} elseif ( $discount_percentage = $product->get_discount_percentage() ) {
+							$total = $total * ( 100 - $discount_percentage ) / 100;
+						}
+
+						if ( $total_min > 0 && $total < $total_min ) {
+							wc_add_notice( esc_html__( 'You cannot add this bundle to the cart.', 'woo-product-bundle' ), 'error' );
+
+							return false;
+						}
+
+						if ( $total_max > 0 && $total > $total_max ) {
+							wc_add_notice( esc_html__( 'You cannot add this bundle to the cart.', 'woo-product-bundle' ), 'error' );
+
+							return false;
+						}
 					}
 				} else {
 					wc_add_notice( esc_html__( 'You cannot add this bundle to the cart.', 'woo-product-bundle' ), 'error' );
@@ -2077,6 +2121,26 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                         </td>
                     </tr>
                     <tr class="woosb_tr_space">
+                        <th><?php esc_html_e( 'Total limits', 'woo-product-bundle' ); ?></th>
+                        <td>
+                            <input id="woosb_total_limits" name="woosb_total_limits"
+                                   type="checkbox" <?php echo( get_post_meta( $post_id, 'woosb_total_limits', true ) === 'on' ? 'checked' : '' ); ?>/>
+                            <label for="woosb_total_limits"><?php esc_html_e( 'Configure total limits for the current bundle.', 'woo-product-bundle' ); ?></label>
+                            <span class="woocommerce-help-tip"
+                                  data-tip="<?php esc_attr_e( 'When a bundle includes variable products or has the Custom quantity option enabled, bundle\'s price will vary depending on the item selection. Thus, this option can be enabled to limit the bundle total\'s min-max.', 'woo-product-bundle' ); ?>"></span>
+                            <span class="woosb_show_if_total_limits">
+                                Min <input id="woosb_total_limits_min" name="woosb_total_limits_min" type="number"
+                                           min="0"
+                                           value="<?php echo esc_attr( get_post_meta( $post_id, 'woosb_total_limits_min', true ) ); ?>"
+                                           style="width: 80px"/>
+                                Max <input id="woosb_total_limits_max" name="woosb_total_limits_max" type="number"
+                                           min="0"
+                                           value="<?php echo esc_attr( get_post_meta( $post_id, 'woosb_total_limits_max', true ) ); ?>"
+                                           style="width: 80px"/> <?php echo get_woocommerce_currency_symbol(); ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="woosb_tr_space">
                         <th><?php esc_html_e( 'Shipping fee', 'woo-product-bundle' ); ?></th>
                         <td style="font-style: italic">
                             <select id="woosb_shipping_fee" name="woosb_shipping_fee">
@@ -2243,6 +2307,20 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 
 			if ( isset( $_POST['woosb_limit_whole_max'] ) ) {
 				update_post_meta( $post_id, 'woosb_limit_whole_max', sanitize_text_field( $_POST['woosb_limit_whole_max'] ) );
+			}
+
+			if ( isset( $_POST['woosb_total_limits'] ) ) {
+				update_post_meta( $post_id, 'woosb_total_limits', 'on' );
+			} else {
+				update_post_meta( $post_id, 'woosb_total_limits', 'off' );
+			}
+
+			if ( isset( $_POST['woosb_total_limits_min'] ) ) {
+				update_post_meta( $post_id, 'woosb_total_limits_min', sanitize_text_field( $_POST['woosb_total_limits_min'] ) );
+			}
+
+			if ( isset( $_POST['woosb_total_limits_max'] ) ) {
+				update_post_meta( $post_id, 'woosb_total_limits_max', sanitize_text_field( $_POST['woosb_total_limits_max'] ) );
 			}
 
 			if ( isset( $_POST['woosb_before_text'] ) && ( $_POST['woosb_before_text'] !== '' ) ) {
@@ -2550,6 +2628,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
 			$order               = 1;
 
 			if ( $items = $product->get_items() ) {
+				$total_limit     = get_post_meta( $product_id, 'woosb_total_limits', true ) === 'on';
+				$total_limit_min = get_post_meta( $product_id, 'woosb_total_limits_min', true );
+				$total_limit_max = get_post_meta( $product_id, 'woosb_total_limits_max', true );
+
 				do_action( 'woosb_before_wrap', $product );
 
 				echo '<div class="woosb-wrap woosb-bundled" data-id="' . esc_attr( $product_id ) . '">';
@@ -2568,9 +2650,10 @@ if ( ! class_exists( 'WPCleverWoosb' ) && class_exists( 'WC_Product' ) ) {
                      data-price-suffix="<?php echo esc_attr( htmlentities( $product->get_price_suffix() ) ); ?>"
                      data-variables="<?php echo esc_attr( $product->has_variables() ? 'yes' : 'no' ); ?>"
                      data-optional="<?php echo esc_attr( $product->is_optional() ? 'yes' : 'no' ); ?>"
-                     data-min="<?php echo esc_attr( get_post_meta( $product_id, 'woosb_limit_whole_min', true ) ?: 1 ); ?>"
-                     data-max="<?php echo esc_attr( get_post_meta( $product_id, 'woosb_limit_whole_max', true ) ?: '' ); ?>">
-
+                     data-min="<?php echo esc_attr( get_post_meta( $product_id, 'woosb_limit_whole_min', true ) ?: 0 ); ?>"
+                     data-max="<?php echo esc_attr( get_post_meta( $product_id, 'woosb_limit_whole_max', true ) ?: '-1' ); ?>"
+                     data-total-min="<?php echo esc_attr( $total_limit && $total_limit_min ? $total_limit_min : 0 ); ?>"
+                     data-total-max="<?php echo esc_attr( $total_limit && $total_limit_max ? $total_limit_max : '-1' ); ?>">
 					<?php
 					foreach ( $items as $item ) {
 						$_product = wc_get_product( $item['id'] );

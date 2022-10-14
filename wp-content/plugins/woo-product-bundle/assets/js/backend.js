@@ -96,6 +96,15 @@
     }
   });
 
+  // set total limits
+  $(document).on('click touch', '#woosb_total_limits', function() {
+    if ($(this).is(':checked')) {
+      $('.woosb_show_if_total_limits').show();
+    } else {
+      $('.woosb_show_if_total_limits').hide();
+    }
+  });
+
   // checkbox
   $(document).on('change', '#woosb_disable_auto_price', function() {
     if ($(this).is(':checked')) {
@@ -233,6 +242,12 @@
         $('.woosb_tr_show_if_optional_products').show();
       } else {
         $('.woosb_tr_show_if_optional_products').hide();
+      }
+
+      if ($('#woosb_total_limits').is(':checked')) {
+        $('.woosb_show_if_total_limits').show();
+      } else {
+        $('.woosb_show_if_total_limits').hide();
       }
 
       if ($('#woosb_disable_auto_price').is(':checked')) {
