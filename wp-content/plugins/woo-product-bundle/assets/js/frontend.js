@@ -109,30 +109,134 @@
 
 function woosb_init($wrap, context = null) {
   woosb_check_ready($wrap, context);
-  woosb_calc_price($wrap, context);
   woosb_save_ids($wrap, context);
 
   jQuery(document).trigger('woosb_init', [$wrap, context]);
 }
 
 function woosb_check_ready($wrap) {
+  var qty = 0;
   var total = 0;
+  var total_sale = 0;
   var selection_name = '';
   var is_selection = false;
   var is_empty = true;
   var is_min = false;
   var is_max = false;
+  var is_total_min = false;
+  var is_total_max = false;
   var wid = $wrap.attr('data-id');
   var $products = $wrap.find('.woosb-products');
   var $alert = $wrap.find('.woosb-alert');
   var $ids = jQuery('.woosb-ids-' + wid);
   var $btn = $ids.closest('form.cart').find('.single_add_to_cart_button');
+  var price_suffix = $products.attr('data-price-suffix');
+  var $total = $wrap.find('.woosb-total');
+  var $price = jQuery('.woosb-price-' + wid);
+  var $woobt = jQuery('.woobt-wrap-' + wid);
+  var total_woobt = parseFloat($woobt.length ? $woobt.attr('data-total') : 0);
+  var discount = parseFloat($products.attr('data-discount'));
+  var discount_amount = parseFloat($products.attr('data-discount-amount'));
+  var fixed_price = $products.attr('data-fixed-price') === 'yes';
+  var is_optional = $products.attr('data-optional') === 'yes';
+  var has_variables = $products.attr('data-variables') === 'yes';
+  var saved = '';
+  var fix = Math.pow(10, Number(woosb_vars.price_decimals) + 1);
+  var is_discount = discount > 0 && discount < 100;
+  var is_discount_amount = discount_amount > 0;
+  var qty_min = parseFloat($products.attr('data-min'));
+  var qty_max = parseFloat($products.attr('data-max'));
+  var total_min = parseFloat($products.attr('data-total-min'));
+  var total_max = parseFloat($products.attr('data-total-max'));
 
-  if (!$products.length || ($products.attr('data-variables') === 'no' &&
-      $products.attr('data-optional') === 'no')) {
+  if (!$products.length || (!has_variables && !is_optional)) {
     // don't need to do anything
     return;
   }
+
+  // calculate price
+
+  if (!fixed_price) {
+    $products.find('.woosb-product').each(function() {
+      var $this = jQuery(this);
+
+      if (parseFloat($this.attr('data-price')) > 0) {
+        var this_price = parseFloat($this.attr('data-price')) *
+            parseFloat($this.attr('data-qty'));
+        total += this_price;
+
+        if (!is_discount_amount && is_discount) {
+          this_price *= (100 - discount) / 100;
+          this_price = Math.round(this_price * fix) / fix;
+        }
+
+        total_sale += this_price;
+      }
+    });
+
+    // fix js number https://www.w3schools.com/js/js_numbers.asp
+    total = woosb_round(total, woosb_vars.price_decimals);
+
+    if (is_discount_amount && discount_amount < total) {
+      total_sale = total - discount_amount;
+      saved = woosb_format_price(discount_amount);
+    } else if (is_discount) {
+      saved = woosb_round(discount, 2) + '%';
+    } else {
+      total_sale = total;
+    }
+
+    var total_html = woosb_price_html(total, total_sale);
+    var total_all_html = woosb_price_html(total + total_woobt,
+        total_sale + total_woobt);
+
+    if (saved !== '') {
+      total_html += ' <small class="woocommerce-price-suffix">' +
+          woosb_vars.saved_text.replace('[d]', saved) + '</small>';
+    }
+
+    // change the bundle total
+    $total.html(woosb_vars.price_text + ' ' + total_html + price_suffix).
+        slideDown();
+
+    if (woosb_vars.change_price !== 'no') {
+      // change the main price
+
+      if (woosb_vars.change_price === 'yes_custom' &&
+          woosb_vars.price_selector != null && woosb_vars.price_selector !==
+          '') {
+        $price = jQuery(woosb_vars.price_selector);
+      }
+
+      if ($woobt.length) {
+        // woobt
+        $price.html(total_all_html + price_suffix);
+      } else {
+        if (typeof $price.attr('data-o_price') === 'undefined') {
+          $price.attr('data-o_price', woosb_encode_entities($price.html()));
+        }
+
+        $price.html(total_html + price_suffix);
+      }
+    }
+
+    if ($woobt.length) {
+      // woobt
+      $woobt.find('.woobt-products').
+          attr('data-product-price-html', total_html);
+      $woobt.find('.woobt-product-this').
+          attr('data-price', total_sale).
+          attr('data-regular-price', total);
+
+      woobt_init($woobt);
+    }
+
+    jQuery(document).
+        trigger('woosb_calc_price',
+            [total_sale, total, total_html, price_suffix, $wrap]);
+  }
+
+  // check ready
 
   $products.find('.woosb-product').each(function() {
     var $this = jQuery(this);
@@ -148,23 +252,36 @@ function woosb_check_ready($wrap) {
 
     if (parseFloat($this.attr('data-qty')) > 0) {
       is_empty = false;
-      total += parseFloat($this.attr('data-qty'));
+      qty += parseFloat($this.attr('data-qty'));
     }
   });
 
-  // check min
-  if ($products.attr('data-optional') === 'yes' && $products.attr('data-min') &&
-      total < parseFloat($products.attr('data-min'))) {
-    is_min = true;
+  if (is_optional) {
+    // check min
+    if (qty_min > 0 && qty < qty_min) {
+      is_min = true;
+    }
+
+    // check max
+    if (qty_max > 0 && qty > qty_max) {
+      is_max = true;
+    }
   }
 
-  // check max
-  if ($products.attr('data-optional') === 'yes' && $products.attr('data-max') &&
-      total > parseFloat($products.attr('data-max'))) {
-    is_max = true;
+  if (!fixed_price) {
+    // check total min
+    if (total_min > 0 && total_sale < total_min) {
+      is_total_min = true;
+    }
+
+    // check total max
+    if (total_max > 0 && total_sale > total_max) {
+      is_total_max = true;
+    }
   }
 
-  if (is_selection || is_empty || is_min || is_max) {
+  if (is_selection || is_empty || is_min || is_max || is_total_min ||
+      is_total_max) {
     $btn.addClass('woosb-disabled');
 
     if (is_selection) {
@@ -173,13 +290,19 @@ function woosb_check_ready($wrap) {
     } else if (is_empty) {
       $alert.html(woosb_vars.alert_empty).slideDown();
     } else if (is_min) {
-      $alert.html(
-          woosb_vars.alert_min.replace('[min]', $products.attr('data-min')).
-              replace('[selected]', total)).slideDown();
+      $alert.html(woosb_vars.alert_min.replace('[min]', qty_min).
+          replace('[selected]', qty)).slideDown();
     } else if (is_max) {
-      $alert.html(
-          woosb_vars.alert_max.replace('[max]', $products.attr('data-max')).
-              replace('[selected]', total)).slideDown();
+      $alert.html(woosb_vars.alert_max.replace('[max]', qty_max).
+          replace('[selected]', qty)).slideDown();
+    } else if (is_total_min) {
+      $alert.html(woosb_vars.alert_total_min.replace('[min]',
+          woosb_format_price(total_min)).
+          replace('[total]', woosb_format_price(total_sale))).slideDown();
+    } else if (is_total_max) {
+      $alert.html(woosb_vars.alert_total_max.replace('[max]',
+          woosb_format_price(total_max)).
+          replace('[total]', woosb_format_price(total_sale))).slideDown();
     }
 
     jQuery(document).trigger('woosb_check_ready', [
@@ -190,103 +313,15 @@ function woosb_check_ready($wrap) {
 
     // ready
     jQuery(document).trigger('woosb_check_ready', [
-      true, is_selection, is_empty, is_min, is_max, $wrap]);
+      true,
+      is_selection,
+      is_empty,
+      is_min,
+      is_max,
+      is_total_min,
+      is_total_max,
+      $wrap]);
   }
-}
-
-function woosb_calc_price($wrap) {
-  var total = 0;
-  var total_sale = 0;
-  var wid = $wrap.attr('data-id');
-  var $products = $wrap.find('.woosb-products');
-  var price_suffix = $products.attr('data-price-suffix');
-  var $total = $wrap.find('.woosb-total');
-  var $price = jQuery('.woosb-price-' + wid);
-  var $woobt = jQuery('.woobt-wrap-' + wid);
-  var total_woobt = parseFloat($woobt.length ? $woobt.attr('data-total') : 0);
-  var discount = parseFloat($products.attr('data-discount'));
-  var discount_amount = parseFloat($products.attr('data-discount-amount'));
-  var fixed_price = $products.attr('data-fixed-price');
-  var saved = '';
-  var fix = Math.pow(10, Number(woosb_vars.price_decimals) + 1);
-  var is_discount = discount > 0 && discount < 100;
-  var is_discount_amount = discount_amount > 0;
-
-  $products.find('.woosb-product').each(function() {
-    var $this = jQuery(this);
-    if (parseFloat($this.attr('data-price')) > 0) {
-      var this_price = parseFloat($this.attr('data-price')) *
-          parseFloat($this.attr('data-qty'));
-      total += this_price;
-      if (!is_discount_amount && is_discount) {
-        this_price *= (100 - discount) / 100;
-        this_price = Math.round(this_price * fix) / fix;
-      }
-      total_sale += this_price;
-    }
-  });
-
-  // fix js number https://www.w3schools.com/js/js_numbers.asp
-  total = woosb_round(total, woosb_vars.price_decimals);
-
-  if (is_discount_amount && discount_amount < total) {
-    total_sale = total - discount_amount;
-    saved = woosb_format_price(discount_amount);
-  } else if (is_discount) {
-    saved = woosb_round(discount, 2) + '%';
-  } else {
-    total_sale = total;
-  }
-
-  if (fixed_price === 'yes') {
-    total_sale = parseFloat($products.attr('data-price'));
-  }
-
-  var total_html = woosb_price_html(total, total_sale);
-  var total_all_html = woosb_price_html(total + total_woobt,
-      total_sale + total_woobt);
-
-  if (saved !== '') {
-    total_html += ' <small class="woocommerce-price-suffix">' +
-        woosb_vars.saved_text.replace('[d]', saved) + '</small>';
-  }
-
-  // change the bundle total
-  $total.html(woosb_vars.price_text + ' ' + total_html + price_suffix).
-      slideDown();
-
-  if (woosb_vars.change_price !== 'no' && $products.attr('data-fixed-price') ===
-      'no') {
-    if (woosb_vars.change_price === 'yes_custom' && woosb_vars.price_selector !=
-        null && woosb_vars.price_selector !== '') {
-      $price = jQuery(woosb_vars.price_selector);
-    }
-
-    // change the main price
-    if ($woobt.length) {
-      // woobt
-      $price.html(total_all_html + price_suffix);
-    } else {
-      if (typeof $price.attr('data-o_price') === 'undefined') {
-        $price.attr('data-o_price', woosb_encode_entities($price.html()));
-      }
-
-      $price.html(total_html + price_suffix);
-    }
-  }
-
-  if ($woobt.length) {
-    // woobt
-    $woobt.find('.woobt-products').attr('data-product-price-html', total_html);
-    $woobt.find('.woobt-product-this').
-        attr('data-price', total_sale).
-        attr('data-regular-price', total);
-
-    woobt_init($woobt);
-  }
-
-  jQuery(document).trigger('woosb_calc_price', [
-    total_sale, total, total_html, price_suffix, $wrap]);
 }
 
 function woosb_save_ids($wrap) {

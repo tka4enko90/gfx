@@ -4,7 +4,7 @@ Donate link: https://wpclever.net
 Tags: woocommerce, woo, wpc, product, bundle, bundles
 Requires at least: 4.0
 Tested up to: 6.0
-Stable tag: 6.4.4
+Stable tag: 6.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ If you have created your own language pack, or have an update for an existing on
 5. Almost done! click Save and see the result
 
 == Changelog ==
+
+= 6.5.0 =
+* Added: Configure total limits for a bundle
 
 = 6.4.4 =
 * Fixed: Calculate price with tax on the cart page
