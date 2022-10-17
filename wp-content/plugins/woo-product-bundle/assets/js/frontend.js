@@ -4,32 +4,29 @@
   var woosb_timeout = null;
 
   $(function() {
-    if ($('.woosb-wrap').length) {
-      $('.woosb-wrap').each(function() {
-        woosb_init($(this), 'ready');
-      });
+    if (!$('.woosb-wrap').length) {
+      return;
     }
+
+    $('.woosb-wrap').each(function() {
+      woosb_init($(this));
+    });
   });
 
   $(document).on('woosq_loaded', function() {
     // product bundles in quick view popup
-    woosb_init($('#woosq-popup .woosb-wrap'), 'woosq');
+    woosb_init($('#woosq-popup .woosb-wrap'));
   });
 
   $(document).
-      on('click touch',
-          '.woosb-quantity-input-plus, .woosb-quantity-input-minus',
+      on('click touch', '.woosb-qty-input-plus, .woosb-qty-input-minus',
           function() {
             // get values
-            var $qty = $(this).closest('.woosb-quantity').find('.woosb-qty');
-
-            if (!$qty.length) {
-              $qty = $(this).closest('.woosb-quantity').find('.qty');
-            }
-
-            var val = parseFloat($qty.val()),
+            var $qty = $(this).closest('.woosb-qty-input').find('.qty'),
+                val = parseFloat($qty.val()),
                 max = parseFloat($qty.attr('max')),
-                min = parseFloat($qty.attr('min')), step = $qty.attr('step');
+                min = parseFloat($qty.attr('min')),
+                step = $qty.attr('step');
 
             // format values
             if (!val || val === '' || val === 'NaN') {
@@ -52,14 +49,18 @@
             }
 
             // change the value
-            if ($(this).is('.woosb-quantity-input-plus')) {
-              if (max && (max == val || val > max)) {
+            if ($(this).is('.woosb-qty-input-plus')) {
+              if (max && (
+                  max == val || val > max
+              )) {
                 $qty.val(max);
               } else {
                 $qty.val((val + step).toFixed(woosb_decimal_places(step)));
               }
             } else {
-              if (min && (min == val || val < min)) {
+              if (min && (
+                  min == val || val < min
+              )) {
                 $qty.val(min);
               } else if (val > 0) {
                 $qty.val((val - step).toFixed(woosb_decimal_places(step)));
@@ -78,171 +79,59 @@
     }
   });
 
-  if ($('.woosb-qty').length) {
-    $(document).on('change', '.woosb-qty', function() {
-      var $this = $(this);
+  $(document).on('change', '.woosb-qty .qty', function() {
+    var $this = $(this);
 
-      woosb_check_qty($this);
-    });
+    woosb_check_qty($this);
+  });
 
-    $(document).on('keyup', '.woosb-qty', function() {
-      var $this = $(this);
+  $(document).on('keyup', '.woosb-qty .qty', function() {
+    var $this = $(this);
 
-      if (woosb_timeout != null) clearTimeout(woosb_timeout);
-      woosb_timeout = setTimeout(woosb_check_qty, 1000, $this);
-    });
-  } else {
-    $(document).on('change', '.woosb-quantity .qty', function() {
-      var $this = $(this);
-
-      woosb_check_qty($this);
-    });
-
-    $(document).on('keyup', '.woosb-quantity .qty', function() {
-      var $this = $(this);
-
-      if (woosb_timeout != null) clearTimeout(woosb_timeout);
-      woosb_timeout = setTimeout(woosb_check_qty, 1000, $this);
-    });
-  }
+    if (woosb_timeout != null) clearTimeout(woosb_timeout);
+    woosb_timeout = setTimeout(woosb_check_qty, 1000, $this);
+  });
 })(jQuery);
 
-function woosb_init($wrap, context = null) {
-  woosb_check_ready($wrap, context);
-  woosb_save_ids($wrap, context);
+function woosb_init($wrap) {
+  woosb_check_ready($wrap);
+  woosb_calc_price($wrap);
+  woosb_save_ids($wrap);
 
-  jQuery(document).trigger('woosb_init', [$wrap, context]);
+  jQuery(document).trigger('woosb_init', [$wrap]);
 }
 
 function woosb_check_ready($wrap) {
-  var qty = 0;
   var total = 0;
-  var total_sale = 0;
   var selection_name = '';
   var is_selection = false;
   var is_empty = true;
   var is_min = false;
   var is_max = false;
-  var is_total_min = false;
-  var is_total_max = false;
   var wid = $wrap.attr('data-id');
   var $products = $wrap.find('.woosb-products');
   var $alert = $wrap.find('.woosb-alert');
   var $ids = jQuery('.woosb-ids-' + wid);
   var $btn = $ids.closest('form.cart').find('.single_add_to_cart_button');
-  var price_suffix = $products.attr('data-price-suffix');
-  var $total = $wrap.find('.woosb-total');
-  var $price = jQuery('.woosb-price-' + wid);
-  var $woobt = jQuery('.woobt-wrap-' + wid);
-  var total_woobt = parseFloat($woobt.length ? $woobt.attr('data-total') : 0);
-  var discount = parseFloat($products.attr('data-discount'));
-  var discount_amount = parseFloat($products.attr('data-discount-amount'));
-  var fixed_price = $products.attr('data-fixed-price') === 'yes';
-  var is_optional = $products.attr('data-optional') === 'yes';
-  var has_variables = $products.attr('data-variables') === 'yes';
-  var saved = '';
-  var fix = Math.pow(10, Number(woosb_vars.price_decimals) + 1);
-  var is_discount = discount > 0 && discount < 100;
-  var is_discount_amount = discount_amount > 0;
-  var qty_min = parseFloat($products.attr('data-min'));
-  var qty_max = parseFloat($products.attr('data-max'));
-  var total_min = parseFloat($products.attr('data-total-min'));
-  var total_max = parseFloat($products.attr('data-total-max'));
 
-  if (!$products.length || (!has_variables && !is_optional)) {
+  // remove ajax add to cart
+  $btn.removeClass('ajax_add_to_cart');
+
+  if (!$products.length ||
+      (($products.attr('data-variables') === 'no') &&
+          ($products.attr('data-optional') === 'no'))) {
     // don't need to do anything
     return;
   }
 
-  // calculate price
-
-  if (!fixed_price) {
-    $products.find('.woosb-product').each(function() {
-      var $this = jQuery(this);
-
-      if (parseFloat($this.attr('data-price')) > 0) {
-        var this_price = parseFloat($this.attr('data-price')) *
-            parseFloat($this.attr('data-qty'));
-        total += this_price;
-
-        if (!is_discount_amount && is_discount) {
-          this_price *= (100 - discount) / 100;
-          this_price = Math.round(this_price * fix) / fix;
-        }
-
-        total_sale += this_price;
-      }
-    });
-
-    // fix js number https://www.w3schools.com/js/js_numbers.asp
-    total = woosb_round(total, woosb_vars.price_decimals);
-
-    if (is_discount_amount && discount_amount < total) {
-      total_sale = total - discount_amount;
-      saved = woosb_format_price(discount_amount);
-    } else if (is_discount) {
-      saved = woosb_round(discount, 2) + '%';
-    } else {
-      total_sale = total;
-    }
-
-    var total_html = woosb_price_html(total, total_sale);
-    var total_all_html = woosb_price_html(total + total_woobt,
-        total_sale + total_woobt);
-
-    if (saved !== '') {
-      total_html += ' <small class="woocommerce-price-suffix">' +
-          woosb_vars.saved_text.replace('[d]', saved) + '</small>';
-    }
-
-    // change the bundle total
-    $total.html(woosb_vars.price_text + ' ' + total_html + price_suffix).
-        slideDown();
-
-    if (woosb_vars.change_price !== 'no') {
-      // change the main price
-
-      if (woosb_vars.change_price === 'yes_custom' &&
-          woosb_vars.price_selector != null && woosb_vars.price_selector !==
-          '') {
-        $price = jQuery(woosb_vars.price_selector);
-      }
-
-      if ($woobt.length) {
-        // woobt
-        $price.html(total_all_html + price_suffix);
-      } else {
-        if (typeof $price.attr('data-o_price') === 'undefined') {
-          $price.attr('data-o_price', woosb_encode_entities($price.html()));
-        }
-
-        $price.html(total_html + price_suffix);
-      }
-    }
-
-    if ($woobt.length) {
-      // woobt
-      $woobt.find('.woobt-products').
-          attr('data-product-price-html', total_html);
-      $woobt.find('.woobt-product-this').
-          attr('data-price', total_sale).
-          attr('data-regular-price', total);
-
-      woobt_init($woobt);
-    }
-
-    jQuery(document).
-        trigger('woosb_calc_price',
-            [total_sale, total, total_html, price_suffix, $wrap]);
-  }
-
-  // check ready
-
   $products.find('.woosb-product').each(function() {
     var $this = jQuery(this);
 
-    if (parseFloat($this.attr('data-qty')) > 0 &&
-        parseInt($this.attr('data-id')) === 0) {
+    if ((
+        parseFloat($this.attr('data-qty')) > 0
+    ) && (
+        parseInt($this.attr('data-id')) === 0
+    )) {
       is_selection = true;
 
       if (selection_name === '') {
@@ -252,76 +141,161 @@ function woosb_check_ready($wrap) {
 
     if (parseFloat($this.attr('data-qty')) > 0) {
       is_empty = false;
-      qty += parseFloat($this.attr('data-qty'));
+      total += parseFloat($this.attr('data-qty'));
     }
   });
 
-  if (is_optional) {
-    // check min
-    if (qty_min > 0 && qty < qty_min) {
-      is_min = true;
-    }
-
-    // check max
-    if (qty_max > 0 && qty > qty_max) {
-      is_max = true;
-    }
+  // check min
+  if ((
+      $products.attr('data-optional') === 'yes'
+  ) && $products.attr('data-min') && (
+      total < parseFloat($products.attr('data-min'))
+  )) {
+    is_min = true;
   }
 
-  if (!fixed_price) {
-    // check total min
-    if (total_min > 0 && total_sale < total_min) {
-      is_total_min = true;
-    }
-
-    // check total max
-    if (total_max > 0 && total_sale > total_max) {
-      is_total_max = true;
-    }
+  // check max
+  if ((
+      $products.attr('data-optional') === 'yes'
+  ) && $products.attr('data-max') && (
+      total > parseFloat($products.attr('data-max'))
+  )) {
+    is_max = true;
   }
 
-  if (is_selection || is_empty || is_min || is_max || is_total_min ||
-      is_total_max) {
+  if (is_selection || is_empty || is_min || is_max) {
     $btn.addClass('woosb-disabled');
 
     if (is_selection) {
-      $alert.html(woosb_vars.alert_selection.replace('[name]',
-          '<strong>' + selection_name + '</strong>')).slideDown();
+      $alert.
+          html(woosb_vars.alert_selection.replace('[name]',
+              '<strong>' + selection_name + '</strong>')).slideDown();
     } else if (is_empty) {
       $alert.html(woosb_vars.alert_empty).slideDown();
     } else if (is_min) {
-      $alert.html(woosb_vars.alert_min.replace('[min]', qty_min).
-          replace('[selected]', qty)).slideDown();
+      $alert.html(
+          woosb_vars.alert_min.replace('[min]', $products.attr('data-min')).
+              replace('[selected]', total)).slideDown();
     } else if (is_max) {
-      $alert.html(woosb_vars.alert_max.replace('[max]', qty_max).
-          replace('[selected]', qty)).slideDown();
-    } else if (is_total_min) {
-      $alert.html(woosb_vars.alert_total_min.replace('[min]',
-          woosb_format_price(total_min)).
-          replace('[total]', woosb_format_price(total_sale))).slideDown();
-    } else if (is_total_max) {
-      $alert.html(woosb_vars.alert_total_max.replace('[max]',
-          woosb_format_price(total_max)).
-          replace('[total]', woosb_format_price(total_sale))).slideDown();
+      $alert.html(
+          woosb_vars.alert_max.replace('[max]', $products.attr('data-max')).
+              replace('[selected]', total)).slideDown();
     }
 
-    jQuery(document).trigger('woosb_check_ready', [
-      false, is_selection, is_empty, is_min, is_max, $wrap]);
+    jQuery(document).
+        trigger('woosb_check_ready',
+            [false, is_selection, is_empty, is_min, is_max, $wrap]);
   } else {
     $alert.html('').slideUp();
     $btn.removeClass('woosb-disabled');
 
     // ready
-    jQuery(document).trigger('woosb_check_ready', [
-      true,
-      is_selection,
-      is_empty,
-      is_min,
-      is_max,
-      is_total_min,
-      is_total_max,
-      $wrap]);
+    jQuery(document).
+        trigger('woosb_check_ready',
+            [true, is_selection, is_empty, is_min, is_max, $wrap]);
   }
+}
+
+function woosb_calc_price($wrap) {
+  var total = 0;
+  var total_sale = 0;
+  var wid = $wrap.attr('data-id');
+  var $products = $wrap.find('.woosb-products');
+  var price_suffix = $products.attr('data-price-suffix');
+  var $total = $wrap.find('.woosb-total');
+  var $price = jQuery('.woosb-price-' + wid);
+  var $woobt = jQuery('.woobt-wrap-' + wid);
+  var total_woobt = parseFloat($woobt.length ? $woobt.attr('data-total') : 0);
+  var discount = parseFloat($products.attr('data-discount'));
+  var discount_amount = parseFloat($products.attr('data-discount-amount'));
+  var fixed_price = $products.attr('data-fixed-price');
+  var saved = '';
+  var fix = Math.pow(10, Number(woosb_vars.price_decimals) + 1);
+  var is_discount = discount > 0 && discount < 100;
+  var is_discount_amount = discount_amount > 0;
+
+  $products.find('.woosb-product').each(function() {
+    var $this = jQuery(this);
+    if (parseFloat($this.attr('data-price')) > 0) {
+      var this_price = parseFloat($this.attr('data-price')) *
+          parseFloat($this.attr('data-qty'));
+      total += this_price;
+      if (!is_discount_amount && is_discount) {
+        this_price *= (100 - discount) / 100;
+        this_price = Math.round(this_price * fix) / fix;
+      }
+      total_sale += this_price;
+    }
+  });
+
+  // fix js number https://www.w3schools.com/js/js_numbers.asp
+  total = woosb_round(total, woosb_vars.price_decimals);
+
+  if (is_discount_amount && discount_amount < total) {
+    total_sale = total - discount_amount;
+    saved = woosb_format_price(discount_amount);
+  } else if (is_discount) {
+    saved = woosb_round(discount, 2) + '%';
+  } else {
+    total_sale = total;
+  }
+
+  if (fixed_price === 'yes') {
+    total_sale = parseFloat($products.attr('data-price'));
+  }
+
+  var total_html = woosb_price_html(total, total_sale);
+  var total_all_html = woosb_price_html(total + total_woobt,
+      total_sale + total_woobt);
+
+  if (saved !== '') {
+    total_html += ' <small class="woocommerce-price-suffix">' +
+        woosb_vars.saved_text.replace('[d]', saved) + '</small>';
+  }
+
+  // change the bundle total
+  $total.html(woosb_vars.price_text + ' ' + total_html + price_suffix).
+      slideDown();
+
+  if ((
+      woosb_vars.change_price !== 'no'
+  ) && (
+      $products.attr('data-fixed-price') === 'no'
+  ) && (
+      (
+          $products.attr('data-variables') === 'yes'
+      ) || (
+          $products.attr('data-optional') === 'yes'
+      )
+  )) {
+    if ((woosb_vars.change_price === 'yes_custom') &&
+        (woosb_vars.price_selector != null) &&
+        (woosb_vars.price_selector !== '')) {
+      $price = jQuery(woosb_vars.price_selector);
+    }
+
+    // change the main price
+    if ($woobt.length) {
+      // woobt
+      $price.html(total_all_html + price_suffix);
+    } else {
+      $price.html(total_html + price_suffix);
+    }
+  }
+
+  if ($woobt.length) {
+    // woobt
+    $woobt.find('.woobt-products').attr('data-product-price-html', total_html);
+    $woobt.find('.woobt-product-this').
+        attr('data-price', total_sale).
+        attr('data-regular-price', total);
+
+    woobt_init($woobt);
+  }
+
+  jQuery(document).
+      trigger('woosb_calc_price',
+          [total_sale, total, total_html, price_suffix, $wrap]);
 }
 
 function woosb_save_ids($wrap) {
@@ -336,7 +310,7 @@ function woosb_save_ids($wrap) {
     var qty = parseFloat($this.attr('data-qty'));
     var attrs = $this.attr('data-attrs');
 
-    if (id > 0 && qty > 0) {
+    if ((id > 0) && (qty > 0)) {
       if (attrs != undefined) {
         attrs = encodeURIComponent(attrs);
       } else {
@@ -358,15 +332,19 @@ function woosb_check_qty($qty) {
   var min = parseFloat($qty.attr('min'));
   var max = parseFloat($qty.attr('max'));
 
-  if (qty === '' || isNaN(qty)) {
+  if ((qty === '') || isNaN(qty)) {
     qty = 0;
   }
 
-  if (!isNaN(min) && qty < min) {
+  if (!isNaN(min) && (
+      qty < min
+  )) {
     qty = min;
   }
 
-  if (!isNaN(max) && qty > max) {
+  if (!isNaN(max) && (
+      qty > max
+  )) {
     qty = max;
   }
 
@@ -385,12 +363,11 @@ function woosb_check_qty($qty) {
 
     if (parseFloat($products.attr('data-discount')) > 0 &&
         $products.attr('data-fixed-price') === 'no') {
-      var new_price = (ori_price *
-          (100 - parseFloat($products.attr('data-discount')))) / 100;
+      var new_price = ori_price *
+          (100 - parseFloat($products.attr('data-discount'))) / 100;
 
       $product.find('.woosb-price-new').
-          html(woosb_price_html(ori_price, new_price) + price_suffix).
-          show();
+          html(woosb_price_html(ori_price, new_price) + price_suffix).show();
     } else {
       $product.find('.woosb-price-new').
           html(woosb_price_html(ori_price) + price_suffix).
@@ -400,7 +377,7 @@ function woosb_check_qty($qty) {
 
   jQuery(document).trigger('woosb_check_qty', [qty, $qty]);
 
-  woosb_init($wrap, 'woosb_check_qty');
+  woosb_init($wrap);
 }
 
 function woosb_change_price($product, price, regular_price, price_html) {
@@ -412,10 +389,11 @@ function woosb_change_price($product, price, regular_price, price_html) {
 
   // calculate new price
   if (woosb_vars.bundled_price === 'subtotal') {
-    var ori_price = parseFloat(price) * parseFloat($product.attr('data-qty'));
+    var ori_price = parseFloat(price) *
+        parseFloat($product.attr('data-qty'));
 
-    if (woosb_vars.bundled_price_from === 'regular_price' && regular_price !==
-        undefined) {
+    if (woosb_vars.bundled_price_from === 'regular_price' &&
+        regular_price !== undefined) {
       ori_price = parseFloat(regular_price) *
           parseFloat($product.attr('data-qty'));
     }
@@ -423,35 +401,35 @@ function woosb_change_price($product, price, regular_price, price_html) {
     var new_price = ori_price;
 
     if (parseFloat($products.attr('data-discount')) > 0) {
-      new_price = (ori_price *
-          (100 - parseFloat($products.attr('data-discount')))) / 100;
+      new_price = ori_price *
+          (100 - parseFloat($products.attr('data-discount'))) / 100;
     }
 
     $product.find('.woosb-price-new').
-        html(woosb_price_html(ori_price, new_price) + price_suffix).
-        show();
+        html(woosb_price_html(ori_price, new_price) + price_suffix).show();
   } else {
     if (parseFloat($products.attr('data-discount')) > 0) {
       var ori_price = parseFloat(price);
 
-      if (woosb_vars.bundled_price_from === 'regular_price' && regular_price !==
-          undefined) {
+      if (woosb_vars.bundled_price_from === 'regular_price' &&
+          regular_price !== undefined) {
         ori_price = parseFloat(regular_price);
       }
 
-      var new_price = (ori_price *
-          (100 - parseFloat($products.attr('data-discount')))) / 100;
+      var new_price = ori_price *
+          (100 - parseFloat($products.attr('data-discount'))) / 100;
       $product.find('.woosb-price-new').
-          html(woosb_price_html(ori_price, new_price) + price_suffix).
-          show();
+          html(woosb_price_html(ori_price, new_price) + price_suffix).show();
     } else {
-      if (woosb_vars.bundled_price_from === 'regular_price' && regular_price !==
-          undefined) {
+      if (woosb_vars.bundled_price_from === 'regular_price' &&
+          regular_price !== undefined) {
         $product.find('.woosb-price-new').
             html(woosb_price_html(regular_price) + price_suffix).
             show();
       } else if (price_html !== '') {
-        $product.find('.woosb-price-new').html(price_html).show();
+        $product.find('.woosb-price-new').
+            html(price_html).
+            show();
       }
     }
   }
@@ -463,24 +441,29 @@ function woosb_round(value, decimals) {
 
 function woosb_format_money(number, places, symbol, thousand, decimal) {
   number = number || 0;
-  places = !isNaN((places = Math.abs(places))) ? places : 2;
+  places = !isNaN(places = Math.abs(places)) ? places : 2;
   symbol = symbol !== undefined ? symbol : '$';
   thousand = thousand || ',';
   decimal = decimal || '.';
 
-  var negative = number < 0 ? '-' : '', i = parseInt(
-      (number = woosb_round(Math.abs(+number || 0), places).toFixed(places)),
-      10) + '', j = 0;
+  var negative = number < 0 ? '-' : '',
+      i = parseInt(
+          number = woosb_round(Math.abs(+number || 0), places).toFixed(places),
+          10) + '',
+      j = 0;
 
   if (i.length > 3) {
     j = i.length % 3;
   }
 
-  return (symbol + negative + (j ? i.substr(0, j) + thousand : '') +
-      i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) + (places ?
+  return symbol + negative + (
+      j ? i.substr(0, j) + thousand : ''
+  ) + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) + (
+      places ?
           decimal +
           woosb_round(Math.abs(number - i), places).toFixed(places).slice(2) :
-          ''));
+          ''
+  );
 }
 
 function woosb_format_price(price) {
@@ -525,8 +508,7 @@ function woosb_format_price(price) {
 function woosb_price_html(regular_price, sale_price) {
   var price_html = '';
 
-  if (parseFloat(woosb_round(sale_price, woosb_vars.price_decimals)) <
-      parseFloat(woosb_round(regular_price, woosb_vars.price_decimals))) {
+  if (sale_price < regular_price) {
     price_html = '<del>' + woosb_format_price(regular_price) + '</del> <ins>' +
         woosb_format_price(sale_price) + '</ins>';
   } else {
@@ -543,21 +525,11 @@ function woosb_decimal_places(num) {
     return 0;
   }
 
-  return Math.max(0, // Number of digits right of decimal point.
-      (match[1] ? match[1].length : 0) - // Adjust for scientific notation.
-      (match[2] ? +match[2] : 0));
+  return Math.max(
+      0,
+      // Number of digits right of decimal point.
+      (match[1] ? match[1].length : 0)
+      // Adjust for scientific notation.
+      - (match[2] ? +match[2] : 0));
 }
 
-function woosb_encode_entities(str) {
-  return String(str).
-      replace(/&/g, '&amp;').
-      replace(/</g, '&lt;').
-      replace(/>/g, '&gt;').
-      replace(/"/g, '&quot;');
-}
-
-function woosb_decode_entities(str) {
-  var textArea = document.createElement('textarea');
-  textArea.innerHTML = str;
-  return textArea.value;
-}
