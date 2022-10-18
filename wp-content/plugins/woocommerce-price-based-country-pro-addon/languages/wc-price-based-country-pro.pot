@@ -2,15 +2,15 @@
 # This file is distributed under the same license as the WooCommerce Price Based on Country Pro Add-on plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Price Based on Country Pro Add-on 2.16.0\n"
+"Project-Id-Version: WooCommerce Price Based on Country Pro Add-on 2.18.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-price-based-country-pro-addon\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-21T11:02:43+00:00\n"
-"PO-Revision-Date: 2022-03-21T11:02:43+00:00\n"
+"POT-Creation-Date: 2022-05-25T09:20:42+00:00\n"
+"PO-Revision-Date: 2022-05-25T09:20:42+00:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: wc-price-based-country-pro\n"
 
@@ -48,17 +48,17 @@ msgid "Do you want to update the order lines with the price of the country befor
 msgstr ""
 
 #: includes/admin/class-wcpbc-admin-pro.php:137
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:89
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:90
 msgid "Currency Format"
 msgstr ""
 
 #: includes/admin/class-wcpbc-admin-pro.php:139
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:100
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:101
 msgid "Preview:"
 msgstr ""
 
 #: includes/admin/class-wcpbc-admin-pro.php:140
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:90
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:91
 msgid "Enter the currency format. Supports the following placeholders: [code] = currency code, [symbol] = currency symbol, [symbol-alt] = alternative currency symbol (US$, CA$, ...), [price] = product price."
 msgstr ""
 
@@ -132,15 +132,15 @@ msgstr ""
 msgid "%s fee"
 msgstr ""
 
-#: includes/admin/class-wcpbc-admin-pro.php:680
+#: includes/admin/class-wcpbc-admin-pro.php:689
 msgid "Price Based on Country: Regenerate orders exchange rate"
 msgstr ""
 
-#: includes/admin/class-wcpbc-admin-pro.php:681
+#: includes/admin/class-wcpbc-admin-pro.php:690
 msgid "Regenerate"
 msgstr ""
 
-#: includes/admin/class-wcpbc-admin-pro.php:682
+#: includes/admin/class-wcpbc-admin-pro.php:691
 msgid "This tool will regenerate the exchange rate of the orders that do not have an exchange rate stored in the metadata. It should fix reports issues."
 msgstr ""
 
@@ -189,77 +189,81 @@ msgid "Next integer ( 1785.42 to 1786 )"
 msgstr ""
 
 #: includes/admin/views/html-admin-page-pricing-zone-pro.php:54
-msgid "5 ( 1785.42 to 1790 )"
+msgid "5 ( 1782.42 to 1785 )"
 msgstr ""
 
 #: includes/admin/views/html-admin-page-pricing-zone-pro.php:55
-msgid "50 ( 1785.42 to 1800 )"
+msgid "10 ( 1785.42 to 1790 )"
 msgstr ""
 
 #: includes/admin/views/html-admin-page-pricing-zone-pro.php:56
+msgid "50 ( 1785.42 to 1800 )"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:57
 msgid "500 ( 1785.42 to 2000 )"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:64
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:65
 msgid "Round After Tax"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:68
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:72
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:69
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:73
 msgid "Round the price after WooCommerce adds the taxes"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:75
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:76
 msgid "Check this box if you want to display rounded prices with tax included in the shop."
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:82
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:83
 msgid "Currency Options"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:83
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:84
 msgid "The following options affect how prices are displayed on the frontend."
 msgstr ""
 
 #. Translators: HTML tags.
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:97
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:98
 msgid "Leave empty to use %1$sdefault currency format%2$s."
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:107
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:108
 msgid "Thousand Separator"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:108
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:109
 msgid "This sets the thousand separator of displayed prices."
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:118
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:119
 msgid "Decimal Separator"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:119
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:120
 msgid "This sets the decimal separator of displayed prices."
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:128
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:129
 msgid "Trailing Zeros"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:132
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:136
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:133
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:137
 msgid "Hide trailing zeros on prices"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:145
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:146
 msgid "Number of Decimals"
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:146
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:147
 msgid "This sets the number of decimal points shown in displayed prices."
 msgstr ""
 
-#: includes/admin/views/html-admin-page-pricing-zone-pro.php:154
+#: includes/admin/views/html-admin-page-pricing-zone-pro.php:155
 msgid "Taxes"
 msgstr ""
 
@@ -279,19 +283,32 @@ msgstr ""
 
 #. translators: HTML tags.
 #: includes/admin/views/html-notice-renew.php:17
-msgid "Your license key for %1$sPrice Based on Country Pro%2$s has expired. It's time to %1$srenew and save %3$s off%2$s the original price."
+msgid "Your license key for %1$sPrice Based on Country Pro has expired%2$s. Buy a new license to get support and updates."
+msgstr ""
+
+#: includes/admin/views/html-notice-renew.php:21
+msgid "Buy a new license"
+msgstr ""
+
+#: includes/admin/views/html-notice-renew.php:22
+msgid "I have already bought a license."
 msgstr ""
 
 #. translators: HTML tags.
-#: includes/admin/views/html-notice-renew.php:20
-msgid "Your license key for %1$sPrice Based on Country Pro%2$s is expiring within %3$s days. It's time to %1$srenew and save %4$s off%2$s the original price."
+#: includes/admin/views/html-notice-renew.php:29
+msgid "Your license key for %1$sPrice Based on Country Pro%2$s is expiring within %3$s days. It's time to %1$srenew and get a %4$s off%2$s."
 msgstr ""
 
-#: includes/admin/views/html-notice-renew.php:25
+#. translators: HTML tags.
+#: includes/admin/views/html-notice-renew.php:32
+msgid "Your license key for %1$sPrice Based on Country Pro%2$s is expiring within %3$s days. It's time to %1$srenew and get a discount%2$s."
+msgstr ""
+
+#: includes/admin/views/html-notice-renew.php:37
 msgid "Renew your license now"
 msgstr ""
 
-#: includes/admin/views/html-notice-renew.php:26
+#: includes/admin/views/html-notice-renew.php:38
 msgid "I already renewed my license."
 msgstr ""
 
@@ -450,67 +467,67 @@ msgid "No ranges have been found. If you want manage ranges cost by zone, add ra
 msgstr ""
 
 #. translators: 1: expired date, 2,3: HTML tags.
-#: includes/admin/class-wcpbc-license-settings.php:139
+#: includes/admin/class-wcpbc-license-settings.php:141
 msgid "The licence expired on %1$s. %2$sRenew your license now%3$s"
 msgstr ""
 
 #. translators: 1,2: HTML tags.
-#: includes/admin/class-wcpbc-license-settings.php:143
+#: includes/admin/class-wcpbc-license-settings.php:145
 msgid "The license does not exist or expired more than 30 days ago. %1$sBuy a license%2$s."
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:171
+#: includes/admin/class-wcpbc-license-settings.php:173
 msgid "Unable to activate the license."
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:179
+#: includes/admin/class-wcpbc-license-settings.php:181
 msgid "Unable to activate the license. Check the status log file."
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:201
+#: includes/admin/class-wcpbc-license-settings.php:203
 msgid "Unable to deactivate the license."
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:299
+#: includes/admin/class-wcpbc-license-settings.php:301
 msgid "License status"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:303
+#: includes/admin/class-wcpbc-license-settings.php:305
 msgid "Toggle activation"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:307
+#: includes/admin/class-wcpbc-license-settings.php:309
 msgid "License Key"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:309
+#: includes/admin/class-wcpbc-license-settings.php:311
 msgid "Enter your Price Based on Country Pro license key"
 msgstr ""
 
 #. translators: License status.
-#: includes/admin/class-wcpbc-license-settings.php:374
+#: includes/admin/class-wcpbc-license-settings.php:376
 msgid "you are %s receiving updates"
 msgstr ""
 
 #. translators: License status.
-#: includes/admin/class-wcpbc-license-settings.php:374
+#: includes/admin/class-wcpbc-license-settings.php:376
 msgid "%1$snot%2$s"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:422
+#: includes/admin/class-wcpbc-license-settings.php:424
 msgid "Deactivate License"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:423
+#: includes/admin/class-wcpbc-license-settings.php:425
 msgid "Deactivate your license so you can activate it  on another WooCommerce site"
 msgstr ""
 
-#: includes/admin/class-wcpbc-license-settings.php:425
+#: includes/admin/class-wcpbc-license-settings.php:427
 msgid "First add your Price Based on Country license key."
 msgstr ""
 
 #. translators: Expire date.
-#: includes/admin/class-wcpbc-license-settings.php:454
+#: includes/admin/class-wcpbc-license-settings.php:456
 msgid "Your Price Based on Country Pro license will expire on %s"
 msgstr ""
 
@@ -608,7 +625,7 @@ msgid "Error updating the exchange rate. The API returned 1 as the exchange rate
 msgstr ""
 
 #: includes/class-wcpbc-update-exchange-rates.php:251
-msgid "Orders exchange rate regenerated."
+msgid "Orders exchange rate regenerated, and the Analytics cache have been cleared."
 msgstr ""
 
 #. translators: 1: HTML tag, 2: HTML tag, 3: WooCommerce version.

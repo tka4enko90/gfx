@@ -73,12 +73,13 @@ if ( ! class_exists( 'WCPBC_License_Settings' ) && class_exists( 'WC_Settings_AP
 			$this->license_data = wp_parse_args(
 				$this->get_option( 'license_data' ),
 				array(
-					'status'         => '',
-					'expires'        => '',
-					'product_id'     => '',
-					'renewal_period' => '',
-					'renewal_url'    => '',
-					'timeout'        => '0',
+					'status'                   => '',
+					'expires'                  => '',
+					'product_id'               => '',
+					'renewal_period'           => '',
+					'renewal_url'              => '',
+					'renewal_percent_discount' => '',
+					'timeout'                  => '0',
 				)
 			);
 		}
@@ -107,12 +108,13 @@ if ( ! class_exists( 'WCPBC_License_Settings' ) && class_exists( 'WC_Settings_AP
 			$data = wp_parse_args(
 				$data,
 				array(
-					'status'         => '',
-					'expires'        => '',
-					'product_id'     => '',
-					'renewal_period' => '',
-					'renewal_url'    => '',
-					'timeout'        => '0',
+					'status'                   => '',
+					'expires'                  => '',
+					'product_id'               => '',
+					'renewal_period'           => '',
+					'renewal_url'              => '',
+					'renewal_percent_discount' => '',
+					'timeout'                  => '0',
 				)
 			);
 			foreach ( $data as $prop => $value ) {

@@ -219,7 +219,7 @@ if ( ! class_exists( 'WCPBC_Update_Exchange_Rates' ) ) :
 					FROM {$wpdb->posts} AS posts
 						INNER JOIN {$wpdb->postmeta} AS _order_currency ON _order_currency.post_id = posts.ID AND _order_currency.meta_key = '_order_currency'
 						LEFT JOIN {$wpdb->postmeta} AS _base_exchange_rate ON _base_exchange_rate.post_id = posts.ID AND _base_exchange_rate.meta_key = '_wcpbc_base_exchange_rate'
-					WHERE posts.post_type = 'shop_order'
+					WHERE posts.post_type IN ( 'shop_order', 'shop_order_refund' )
 						AND ( trim(coalesce( _base_exchange_rate.meta_value, '')) = '' OR _base_exchange_rate.meta_value = '1' )
 						AND _order_currency.meta_value <> %s",
 					wcpbc_get_base_currency()
@@ -248,7 +248,7 @@ if ( ! class_exists( 'WCPBC_Update_Exchange_Rates' ) ) :
 				}
 			}
 
-			return __( 'Orders exchange rate regenerated.', 'wc-price-based-country-pro' );
+			return __( 'Orders exchange rate regenerated, and the Analytics cache have been cleared.', 'wc-price-based-country-pro' );
 		}
 	}
 endif;
