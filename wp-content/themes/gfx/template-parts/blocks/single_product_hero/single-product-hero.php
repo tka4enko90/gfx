@@ -62,12 +62,12 @@
 
                                 <?php
                                 $hero_show_whats_inside_button = get_field('hero_show_whats_inside_button');
-                                if ($product_trailer_youtube || (isset($product_type) && $product_type == 'woosb')) : ?>
+                                if ($product_trailer_youtube || $hero_show_whats_inside_button ) : ?>
                                     <div class="buttons-holder">
                                         <?php if ($product_trailer_youtube) : ?>
                                             <button class="primary-button open-product-trailer-popup"><?php _e('Play Trailer', 'gfx'); ?></button>
                                         <?php endif; ?>
-                                        <?php if (isset($product_type) && $product_type == 'woosb' && $hero_show_whats_inside_button) : ?>
+                                        <?php if ( $hero_show_whats_inside_button ) : ?>
                                             <button class="secondary-button scroll-down-link"><?php _e('What’s Inside?', 'gfx'); ?></button>
                                         <?php endif; ?>
                                     </div>

@@ -773,3 +773,10 @@ img.alignright, .wp-caption.alignright {
   border-radius: 8px;
   background: $text-color;
 }
+
+:root{
+  scrollbar-face-color: $text-color;
+  scrollbar-track-color: $black;
+  scrollbar-color: $text-color $black;
+  scrollbar-width: thin;
+}
