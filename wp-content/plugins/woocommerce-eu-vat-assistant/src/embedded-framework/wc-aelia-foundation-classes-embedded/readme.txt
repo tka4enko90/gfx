@@ -73,6 +73,9 @@ This update improves compatibility with PHP 8.2. [We recommend to read the relea
 
 == Changelog ==
 
+= 2.3.2.221012 =
+* Updated supported WooCommerce versions.
+
 = 2.3.1.220830 =
 * Tweak - Added namespacing of Monolog dependency, to prevent the error caused by the version of that library bundled with WP Rocket.
 * Updated supported WooCommerce versions.

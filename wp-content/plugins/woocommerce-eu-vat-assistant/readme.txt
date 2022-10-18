@@ -151,6 +151,9 @@ This is a major update, which includes several important changes aimed at making
 
 == Changelog ==
 
+= 2.0.35.221012 =
+* Updated supported WooCommerce versions.
+
 = 2.0.34.220830 =
 * Updated supported WooCommerce versions.
 
