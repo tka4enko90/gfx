@@ -44,7 +44,7 @@ jQuery(document).ready( function($){
 		refresh_bundled_items: function() {
 			$('.bundle_data[data-bundle_id][data-bundle_price_data], .bundle_data[data-bundle_id][data-bundle_form_data]').each( function(){
 				var bundle_id = $(this).data('bundle_id');
-				if ( typeof geolocation_pro.products[ bundle_id ].bundle_price_data !== 'undefined' ) {
+				if ( geolocation_pro.products[ bundle_id ] && typeof geolocation_pro.products[ bundle_id ].bundle_price_data !== 'undefined' ) {
 					$(this).data( 'bundle_price_data', geolocation_pro.products[ bundle_id ].bundle_price_data );
 					if ( $(this).data('bundle_form_data') ) {
 						$(this).data( 'bundle_form_data', geolocation_pro.products[ bundle_id ].bundle_price_data );
@@ -60,7 +60,7 @@ jQuery(document).ready( function($){
 				var bundle_id  = $(this).data('bundle_id');
 				var product_id = $(this).data('product_id');
 
-				if (typeof geolocation_pro.products[ bundle_id ].bundled_items[ product_id ] !== 'undefined') {
+				if ( geolocation_pro.products[ bundle_id ] && typeof geolocation_pro.products[ bundle_id ].bundled_items[ product_id ] !== 'undefined') {
 					var bundled_item = geolocation_pro.products[ bundle_id ].bundled_items[ product_id ];
 					$price_html = $('<div>'+ bundled_item.price_html+'</div>').find('.wcpbc-price.wcpbc-price-' + bundled_item.id + ':first');
 

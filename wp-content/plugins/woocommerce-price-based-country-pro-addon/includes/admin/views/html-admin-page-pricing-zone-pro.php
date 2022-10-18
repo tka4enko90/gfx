@@ -51,7 +51,8 @@
 			<option <?php selected( $round_nearest, '0.05' ); ?> value="0.05" ><?php esc_html_e( '0.05 ( 1785.42 to 1785.45 )', 'wc-price-based-country-pro' ); ?></option>
 			<option <?php selected( $round_nearest, '0.5' ); ?> value="0.5"><?php esc_html_e( '0.50 ( 1785.42 to 1785.50 )', 'wc-price-based-country-pro' ); ?></option>
 			<option <?php selected( $round_nearest, '1' ); ?> value="1"><?php esc_html_e( 'Next integer ( 1785.42 to 1786 )', 'wc-price-based-country-pro' ); ?></option>
-			<option <?php selected( $round_nearest, '5' ); ?> value="5"><?php esc_html_e( '5 ( 1785.42 to 1790 )', 'wc-price-based-country-pro' ); ?></option>
+			<option <?php selected( $round_nearest, '5' ); ?> value="5"><?php esc_html_e( '5 ( 1782.42 to 1785 )', 'wc-price-based-country-pro' ); ?></option>
+			<option <?php selected( $round_nearest, '10' ); ?> value="10"><?php esc_html_e( '10 ( 1785.42 to 1790 )', 'wc-price-based-country-pro' ); ?></option>
 			<option <?php selected( $round_nearest, '50' ); ?> value="50"><?php esc_html_e( '50 ( 1785.42 to 1800 )', 'wc-price-based-country-pro' ); ?></option>
 			<option <?php selected( $round_nearest, '500' ); ?> value="500"><?php esc_html_e( '500 ( 1785.42 to 2000 )', 'wc-price-based-country-pro' ); ?></option>
 		</select>

@@ -130,7 +130,8 @@ input[type="submit"] {
   line-height: 1;
   padding: 14px 31px;
   box-shadow: 0px 0px 15px 1px rgba($red, 0);
-  transition: box-shadow $transition, background-color $transition, border-color $transition;
+  opacity: 1;
+  transition: opacity $transition, box-shadow $transition, background-color $transition, border-color $transition;
   text-align: center;
 
   @media (max-width: $xs) {
@@ -138,7 +139,7 @@ input[type="submit"] {
   }
 
   &:hover {
-    box-shadow: 0px 0px 15px 1px rgba($white, 0.5);
+    opacity: .8
   }
 
   &.arrow-left {

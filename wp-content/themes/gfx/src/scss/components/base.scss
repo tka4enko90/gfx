@@ -551,9 +551,8 @@ img.alignright, .wp-caption.alignright {
       background-color: rgba(0, 0, 0, 0) !important;
       max-width: 130px;
       padding: 8px 20px;
-
       &:hover {
-        box-shadow: 0px 0px 15px 1px rgba($white, 0.5);
+        opacity: .8
       }
     }
   }
@@ -756,4 +755,21 @@ img.alignright, .wp-caption.alignright {
   &--red{
     color: $red;
   }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $black;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  background: $text-color;
 }

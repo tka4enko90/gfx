@@ -657,11 +657,20 @@ if ( ! class_exists( 'WCPBC_Admin_Pro' ) ) :
 			$options      = WCPBC_License_Settings::instance();
 			$license_data = $options->get_license_data();
 			if ( 'yes' === $license_data['renewal_period'] ) {
-				$expires     = new DateTime( $license_data['expires'] );
-				$now         = new DateTime();
-				$interval    = $expires->diff( $now );
-				$days        = $interval->format( '%a' );
-				$renewal_url = empty( $license_data['renewal_url'] ) ? 'https://www.pricebasedcountry.com/pricing/?utm_source=activate-license&utm_medium=banner&utm_campaign=Renew' : $license_data['renewal_url'];
+				$expires          = new DateTime( $license_data['expires'] );
+				$now              = new DateTime();
+				$interval         = $now->diff( $expires, false );
+				$days             = $interval->format( '%r%a' );
+				$percent_discount = empty( $license_data['renewal_percent_discount'] ) ? false : $license_data['renewal_percent_discount'];
+				$renewal_url      = add_query_arg(
+					array(
+						'utm_medium'   => 'banner',
+						'utm_source'   => 'activate-license',
+						'utm_campaign' => 'Renew',
+
+					),
+					empty( $license_data['renewal_url'] ) ? 'https://www.pricebasedcountry.com/pricing/' : $license_data['renewal_url']
+				);
 				// include the view.
 				include dirname( __FILE__ ) . '/views/html-notice-renew.php';
 			}

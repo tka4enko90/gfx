@@ -18,7 +18,7 @@ class WC_Product_Price_Based_Country_Pro {
 	 *
 	 * @var string
 	 */
-	public static $version = '2.16.0';
+	public static $version = '2.18.0';
 
 	/**
 	 * Admin notices.

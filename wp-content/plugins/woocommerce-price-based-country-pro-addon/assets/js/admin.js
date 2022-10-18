@@ -338,7 +338,7 @@
 
 			if ( $( '#wc_price_based_currency_format_preview' ).length > 0 ){
 				$('#woocommerce_currency').addClass('wc_price_based_country_preview_currency');
-				$('.settings-panel.wcpbc-zone-settings select[name="currency"]').addClass('wc_price_based_country_preview_currency');
+				$('.wcpbc-zone-settings select[name="currency"]').addClass('wc_price_based_country_preview_currency');
 				$('#wc_price_based_currency_format').addClass('wc_price_based_country_preview_format');
 				$('#woocommerce_price_num_decimals').addClass('wc_price_based_country_preview_num_decimals');
 				$('#woocommerce_price_decimal_sep').addClass('wc_price_based_country_preview_decimal_sep');

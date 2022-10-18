@@ -1,5 +1,20 @@
 *** WooCommerce Price Based on Country Pro Add-on Changelog ***
 
+2022.05.25 - version 2.18.0
+* Added: Compatible with WooCommerce 6.5+.
+* Added: Compatible with WordPress 6.0.
+* Added: New option for the Round to nearest feature.
+
+2022.05.02 - version 2.17.1
+* Fixed: Javascript error when "Load product price in the background" is enabled on composite products that contain a bundle product.
+
+2022.04.12 - version 2.17.0
+* Added: Compatible with WooCommerce 6.4+.
+* Added: License handle improvements.
+
+2022.03.23 - version 2.16.1
+* Fixed: The regenerate exchange rate tool does not update refund orders.
+
 2022.03.21 - version 2.16.0
 * Added: New admin tool to regenerate exchange rate of orders.
 
