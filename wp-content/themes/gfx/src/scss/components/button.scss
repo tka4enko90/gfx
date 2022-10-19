@@ -109,6 +109,15 @@ input[type="submit"] {
     }
   }
 
+  &.discord {
+    padding: 13px 31px 12px;
+    display: inline-flex;
+    align-items: center;
+    svg{
+      margin-right: 8px;
+    }
+  }
+
   &.blue {
     background-color: $light-blue;
 

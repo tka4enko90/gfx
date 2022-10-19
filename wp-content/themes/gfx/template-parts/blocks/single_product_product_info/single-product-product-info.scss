@@ -274,7 +274,7 @@
       }
 
       .add-to-cart-btn-holder {
-        margin-top: 55px;
+        margin-top: 35px;
 
         @media (max-width: $md) {
           padding-top: 40px;
@@ -283,6 +283,12 @@
         .added_to_cart.wc-forward {
           display: none !important;
         }
+
+        .download, .discord {
+          margin-top: 15px;
+          margin-right: 15px;
+        }
+
       }
     }
   }

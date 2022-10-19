@@ -11,21 +11,25 @@
 	}
 
 	function downloadAll(event) {
-		let linksArr = event.target.dataset.links.slice( 0,-1 ).split( "," ),
-			link     = document.createElement( 'a' );
+		setTimeout(function() { 
+			let linksArr = event.target.dataset.links.slice( 0,-1 ).split( "," ),
+				link     = document.createElement( 'a' );
 
-		link.style.display = 'none';
+			link.style.display = 'none';
 
-		document.body.appendChild( link );
+			document.body.appendChild( link );
 
-		for (let i = 0; i < linksArr.length; i++) {
-			link.setAttribute( 'href', linksArr[i] );
-			link.setAttribute( 'download', linksArr[i].split( '/' ).pop() );
+			for (let i = 0; i < linksArr.length; i++) {
+				link.setAttribute( 'href', linksArr[i] );
+				link.setAttribute( 'download', linksArr[i].split( '/' ).pop() );
 
-			link.click();
-		}
+				link.click();
+			}
 
-		document.body.removeChild( link );
+			document.body.removeChild( link );
+
+		}, 3000);
+
 	}
 
 	if ($thanksPopup.length && $downloadBtn.length || $downloadSomeLinksBtn.length) {

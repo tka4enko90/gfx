@@ -73,7 +73,8 @@ endif; ?>
 					foreach ( $downloads as $key => $each_download ) {
 						echo '
                             <div class="thanks-popup-wrapper-repeat">
-                                    If the download didn’t start automatically, <a class="thanks-popup-wrapper-repeat-link" download href="' . $each_download['file'] . '">click here</a>
+								Your download will start in a few seconds…<br>
+								If not, <a class="thanks-popup-wrapper-repeat-link" download href="' . $each_download['file'] . '">click here</a>
                             </div>
                         ';
 					}
@@ -88,7 +89,8 @@ endif; ?>
 					}
 					echo '
                         <div class="thanks-popup-wrapper-repeat">
-                            If the download didn’t start automatically, <button class="thanks-popup-wrapper-repeat-link js-thanks-popup-repeat-btn" data-links="' . $link_array . '" >click here</button>
+							Your download will start in a few seconds…<br>
+							If not, <button class="thanks-popup-wrapper-repeat-link js-thanks-popup-repeat-btn" data-links="' . $link_array . '" >click here</button>
                         </div>
                         ';
 					?>
