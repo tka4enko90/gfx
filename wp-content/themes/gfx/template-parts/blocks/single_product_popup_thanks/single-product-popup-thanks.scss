@@ -153,7 +153,9 @@
     font-size: 16px;
     line-height: 24px;
     color: #7080a3;
-
+    p {
+      margin-bottom: 35px;
+    }
     br{
       @media (max-width: $xs) {
         display: none;

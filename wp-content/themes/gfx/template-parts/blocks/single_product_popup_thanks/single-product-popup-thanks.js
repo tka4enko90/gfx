@@ -1,7 +1,6 @@
 (function ($) {
 	let $thanksPopup          = $( '.js-thanks-popup' ),
 		$thanksPopupOverlay   = $( '.js-thanks-popup-overlay' ),
-		$downloadBtn          = $( '.js-download-btn' ),
 		$downloadSomeLinksBtn = $( '.js-download-some-links-btn' ),
 		$thanksPopupRepeatBtn = $( '.js-thanks-popup-repeat-btn' ),
 		$closeBtn             = $( '.js-close-btn' );
@@ -32,8 +31,7 @@
 
 	}
 
-	if ($thanksPopup.length && $downloadBtn.length || $downloadSomeLinksBtn.length) {
-		$downloadBtn.click( popupToggle );
+	if ($thanksPopup.length && $downloadSomeLinksBtn.length) {
 		$closeBtn.click( popupToggle );
 		$thanksPopupOverlay.click( popupToggle );
 		$thanksPopupRepeatBtn.click( downloadAll );
