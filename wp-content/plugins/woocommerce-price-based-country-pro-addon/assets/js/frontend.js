@@ -20,10 +20,6 @@ jQuery(document).ready( function($){
 					$('#product-addons-total').data('price', this.products[product_id].display_price);
 					$('#product-addons-total').data('raw-price', this.products[product_id].raw_price);
 				}
-
-				$(document.body).on( 'wc_price_based_country_after_ajax_geolocation', function(){
-					$('.wc-price-based-country-addons-total-wrapper.loading').removeClass('loading');
-				});
 			}
 		},
 
@@ -349,14 +345,20 @@ jQuery(document).ready( function($){
 				}
 			});
 
+			$(document.body).on('wc_price_based_country_refresh_areas', function(){
+				// Product Addons compatibilty - Remove loading class
+				$('.wc-price-based-country-addons-total-wrapper.loading').removeClass('loading');
+			});
+
 			$(document.body).on( 'wc_price_based_country_after_ajax_geolocation', function(e, zone_id ) {
 
+				// Content shortcode.
 				var zone_class = (zone_id ? 'content-' + zone_id : 'no-zone');
 				$('.wcpbc-content').hide();
 				$('.wcpbc-content.' + zone_class ).show();
 				$('.wcpbc-content').addClass('refreshed');
 
-				// Addons compatibilty - init image swatch
+				// Product Addons compatibilty - init image swatch
 				if (  $( '.wc-pao-addon-image-swatch').length > 0 ) {
 					$( '.wc-pao-addon-image-swatch' ).tipTip( { delay: 200 } );
 				}

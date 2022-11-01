@@ -230,7 +230,7 @@ if ( ! class_exists( 'WCPBC_Admin_Analytics' ) ) :
 
 			$clauses[] = static::join_meta( array( 'meta_key' => '_order_currency' ) );
 			$clauses[] = static::join_meta( array( 'meta_key' => '_wcpbc_base_exchange_rate' ) );
-			$clauses[] = 'LEFT JOIN (' . self::get_rates_query() . ') wcpbc_rates ON wcpbc_rates.currency = meta__order_currency.meta_value';
+			$clauses[] = 'LEFT JOIN (' . self::get_rates_query() . ') wcpbc_rates ON convert(wcpbc_rates.currency using utf8) = convert(meta__order_currency.meta_value using utf8)';
 
 			return $clauses;
 		}

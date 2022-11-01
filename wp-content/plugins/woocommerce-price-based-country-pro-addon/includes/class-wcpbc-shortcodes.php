@@ -111,10 +111,12 @@ if ( ! class_exists( 'WCPBC_Shortcodes' ) ) :
 						$_product->set_price( $_product->get_meta( "_{$zone_slug}_price" ) );
 
 						add_filter( 'wc_price_args', array( __CLASS__, 'product_price_args' ) );
+						add_filter( 'wc_price_based_country_ajax_geo_skip_wrapper', array( __CLASS__, 'return_true' ) );
 
 						$price_html = $_product->get_price_html();
 
 						remove_filter( 'wc_price_args', array( __CLASS__, 'product_price_args' ) );
+						remove_filter( 'wc_price_based_country_ajax_geo_skip_wrapper', array( __CLASS__, 'return_true' ) );
 
 						self::$product_price_currency = false;
 					} else {
@@ -126,6 +128,15 @@ if ( ! class_exists( 'WCPBC_Shortcodes' ) ) :
 			}
 
 			return $price_html;
+		}
+
+		/**
+		 * Custom return true function. Make sure we remove our callback.
+		 *
+		 * @return bool
+		 */
+		public function return_true() {
+			return true;
 		}
 
 		/**

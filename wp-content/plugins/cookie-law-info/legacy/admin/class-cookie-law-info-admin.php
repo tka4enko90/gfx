@@ -149,6 +149,13 @@ class Cookie_Law_Info_Admin {
 		 */
 		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE ) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cookie-law-info-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
+			wp_localize_script(
+				$this->plugin_name,
+				'ckyConfigs',
+				array(
+					'redirectUrl' => esc_url( admin_url( 'admin.php?page=cookie-law-info' ) )
+				)
+			);
 		}
 
 	}

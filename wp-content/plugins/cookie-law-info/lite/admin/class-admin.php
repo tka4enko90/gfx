@@ -75,6 +75,7 @@ class Admin {
 		self::$modules     = $this->get_default_modules();
 		$this->load();
 		$this->add_notices();
+		$this->add_review_notice();
 		$this->load_modules();
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'load_plugin' ) );
@@ -108,6 +109,29 @@ class Admin {
 				'type'        => 'info',
 			)
 		);
+
+	}
+
+	/**
+	 * Add review notice
+	 *
+	 * @return void
+	 */
+	public function add_review_notice() {
+		$expiry    = 15 * DAY_IN_SECONDS;
+		$settings  = new \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings();
+		$installed = $settings->get_installed_date();
+		if ( $installed && ( $installed + $expiry > time() ) ) {
+			return;
+		}
+		$notice = Notice::get_instance();
+		$notice->add(
+			'review_notice',
+			array(
+				'expiration' => $expiry,
+			)
+		);
+
 	}
 	/**
 	 * Get the default modules array
@@ -126,6 +150,7 @@ class Admin {
 			'policies',
 			'cache',
 			'uninstall_feedback',
+			'review_feedback',
 		);
 		return $modules;
 	}

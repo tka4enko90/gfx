@@ -81,19 +81,18 @@ class Notice {
 	 * Marks the given notice as dismissed
 	 *
 	 * @since 3.0.0
-	 * @param string $notice Programmatic Notice Name.
+	 * @param string  $notice Programmatic Notice Name.
+	 * @param integer $expiry Notice expiry.
 	 * @return void
 	 */
-	public function dismiss( $notice ) {
-		$current   = $this->notices[ $notice ];
+	public function dismiss( $notice, $expiry = 0 ) {
 		$dismissed = $this->get_dismissed();
-		if ( isset( $current['expiration'] ) && $current['expiration'] ) {
-			$dismissed[ $notice ] = time() + $current['expiration'];
+		if ( 0 !== $expiry ) {
+			$dismissed[ $notice ] = time() + $expiry;
 		} else {
 			$dismissed[ $notice ] = false;
 		}
 		update_option( 'cky_admin_notices', $dismissed );
-
 	}
 
 

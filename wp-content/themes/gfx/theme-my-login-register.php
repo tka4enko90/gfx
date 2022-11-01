@@ -14,10 +14,9 @@
 
                             <div class="form-holder">
                                 <?php the_content(); ?>
-                            </div>
-
-                            <div class="have-an-account-text">
-                                Already have an account? <a href="<?php echo wp_login_url(); ?>">Log in</a>
+                                <div class="have-an-account-text">
+                                    Already have an account? <a href="<?php echo wp_login_url(); ?>">Log in</a>
+                                </div>
                             </div>
 
                             <?php $register_page_bottom_text = get_field('register_page_bottom_text'); ?>

@@ -181,20 +181,6 @@ class Frontend {
 		echo '<script id="cookieyes" type="text/javascript" src="' . esc_url( $this->settings->get_script_url() ) . '"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 	}
 	/**
-	 * Enqeue front end styles
-	 *
-	 * @return void
-	 */
-	public function enqueue_styles() {
-		if ( true === $this->settings->is_connected() || ! $this->template || true === cky_disable_banner() ) {
-			return;
-		}
-		$type = $this->banner->get_type();
-		wp_register_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/style-' . $type . '.css', array(), $this->version );
-		wp_enqueue_style( $this->plugin_name );
-	}
-
-	/**
 	 * Load active banner.
 	 *
 	 * @return void

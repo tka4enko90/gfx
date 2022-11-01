@@ -51,6 +51,7 @@ if ( ! class_exists( 'WCPBC_Integrations_Pro' ) ) :
 				'WC_Measurement_Price_Calculator'  => dirname( __FILE__ ) . '/integrations/class-wcpbc-measurement-price-calculator.php',
 				'woocommerce_msrp_main'            => dirname( __FILE__ ) . '/integrations/class-wcpbc-msrp.php',
 				'WC_Checkout_Add_Ons_Loader'       => dirname( __FILE__ ) . '/integrations/class-wcpbc-checkout-add-ons.php',
+				'WC_Table_Rate_Shipping'           => dirname( __FILE__ ) . '/integrations/class-wcpbc-table-rate-shipping.php',
 			);
 
 			foreach ( $integrations as $class => $integration_file ) {

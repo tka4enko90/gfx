@@ -13,7 +13,7 @@ use stdClass;
 use CookieYes\Lite\Includes\Rest_Controller;
 use CookieYes\Lite\Admin\Modules\Settings\Includes\Settings;
 use CookieYes\Lite\Admin\Modules\Settings\Includes\Controller;
-
+use CookieYes\Lite\Includes\Notice;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -308,8 +308,9 @@ class Api extends Rest_Controller {
 	public function update_notice( $request ) {
 		$response = array( 'status' => false );
 		$notice   = isset( $request['notice'] ) ? $request['notice'] : false;
+		$expiry   = isset( $request['expiry'] ) ? intval( $request['expiry'] ) : 0;
 		if ( $notice ) {
-			\CookieYes\Lite\Includes\Notice::get_instance()->dismiss( $notice );
+			Notice::get_instance()->dismiss( $notice, $expiry );
 			$response['status'] = true;
 		}
 		return rest_ensure_response( $response );

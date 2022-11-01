@@ -3,7 +3,7 @@ Contributors: oscargare
 Tags: price based country, dynamic price based country, price by country, dynamic price, woocommerce, geoip, country-targeted pricing
 Requires at least: 3.8
 Tested up to: 6.0
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,10 @@ You should do the test in a private browsing window to prevent data stored in th
 5. /assets/screenshot-6.png
 
 == Changelog ==
+
+= 2.2.6 (2022-10-25) =
+* Added: Tested up WooCommerce 7.0.
+* Fixed: "Illegal mix of collations" error on Analytics queries when the table charset differs from the default server charset.
 
 = 2.2.5 (2022-09-01) =
 * Added: Tested up WooCommerce 6.9.

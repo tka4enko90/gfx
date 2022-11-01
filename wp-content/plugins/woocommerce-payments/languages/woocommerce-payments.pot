@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the WooCommerce Payments package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Payments 4.8.1\n"
+"Project-Id-Version: WooCommerce Payments 4.9.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-payments\n"
-"POT-Creation-Date: 2022-10-04 17:14:20+00:00\n"
+"POT-Creation-Date: 2022-10-20 15:42:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: includes/admin/class-wc-payments-admin.php:311
 #: includes/admin/class-wc-payments-admin.php:802
-#: includes/class-wc-payments.php:459
+#: includes/class-wc-payments.php:464
 #: dist/settings.js:1
 #: client/settings/express-checkout-settings/index.js:79
 msgid "Settings"
@@ -388,7 +388,7 @@ msgid "Invalid payment method. Please input a new card number."
 msgstr ""
 
 #: includes/class-platform-checkout-tracker.php:67
-#: includes/class-wc-payments.php:1021
+#: includes/class-wc-payments.php:1030
 msgid "You aren’t authorized to do that."
 msgstr ""
 
@@ -875,6 +875,11 @@ msgstr ""
 msgid ""
 "Next we’ll ask you to share a few details about your business to create "
 "your account."
+msgstr ""
+
+#: includes/class-wc-payment-token-wcpay-link.php:53
+#. translators: customer email
+msgid "Stripe Link email %s"
 msgstr ""
 
 #: includes/class-wc-payment-token-wcpay-sepa.php:53
@@ -1375,7 +1380,7 @@ msgstr ""
 msgid "Account ID"
 msgstr ""
 
-#: includes/class-wc-payments-token-service.php:210
+#: includes/class-wc-payments-token-service.php:218
 msgid "SEPA IBAN"
 msgstr ""
 
@@ -1452,7 +1457,7 @@ msgid "United States (US)"
 msgstr ""
 
 #: includes/class-wc-payments-utils.php:262
-#: includes/wc-payment-api/class-wc-payments-api-client.php:767
+#: includes/wc-payment-api/class-wc-payments-api-client.php:768
 #: dist/index.js:1
 #: client/disputes/index.tsx:135
 #: client/transactions/list/index.tsx:161
@@ -1460,7 +1465,7 @@ msgid "Order #"
 msgstr ""
 
 #: includes/class-wc-payments-utils.php:272
-#: includes/wc-payment-api/class-wc-payments-api-client.php:765
+#: includes/wc-payment-api/class-wc-payments-api-client.php:766
 #: dist/index.js:1
 #: client/transactions/list/index.tsx:167
 msgid "Subscription #"
@@ -1492,9 +1497,9 @@ msgstr ""
 
 #: includes/class-wc-payments-webhook-processing-service.php:225
 #: includes/class-wc-payments-webhook-processing-service.php:301
-#: includes/class-wc-payments-webhook-processing-service.php:436
-#: includes/class-wc-payments-webhook-processing-service.php:468
-#: includes/class-wc-payments-webhook-processing-service.php:499
+#: includes/class-wc-payments-webhook-processing-service.php:434
+#: includes/class-wc-payments-webhook-processing-service.php:466
+#: includes/class-wc-payments-webhook-processing-service.php:497
 #. translators: %1: charge ID
 msgid "Could not find order via charge ID: %1$s"
 msgstr ""
@@ -1506,74 +1511,76 @@ msgid ""
 "Payments (<code>%2$s</code>)."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:507
+#: includes/class-wc-payments-webhook-processing-service.php:505
 msgid "Payment dispute funds have been withdrawn"
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:510
+#: includes/class-wc-payments-webhook-processing-service.php:508
 msgid "Payment dispute funds have been reinstated"
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:513
+#: includes/class-wc-payments-webhook-processing-service.php:511
 msgid "Payment dispute has been updated"
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:518
+#: includes/class-wc-payments-webhook-processing-service.php:516
 #. translators: %1: the dispute message, %2: the dispute details URL
 msgid "%1$s. See <a href=\"%2$s\">dispute overview</a> for more details."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:571
+#: includes/class-wc-payments-webhook-processing-service.php:569
 #. translators: %1: ID being fetched
 msgid "%1$s not found in array"
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:615
+#: includes/class-wc-payments-webhook-processing-service.php:613
 #. translators: %1: intent ID
 msgid "Could not find order via intent ID: %1$s"
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:642
+#: includes/class-wc-payments-webhook-processing-service.php:640
 msgid "The customer's bank account has been closed."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:645
+#: includes/class-wc-payments-webhook-processing-service.php:643
 msgid "The customer has notified their bank that this payment was unauthorized."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:648
+#: includes/class-wc-payments-webhook-processing-service.php:646
 msgid "The customer's account has insufficient funds to cover this payment."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:651
+#: includes/class-wc-payments-webhook-processing-service.php:649
 msgid "The customer's bank account could not be located."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:654
+#: includes/class-wc-payments-webhook-processing-service.php:652
 msgid ""
 "Microdeposit transfers failed. Please check the account, institution and "
 "transit numbers."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:657
+#: includes/class-wc-payments-webhook-processing-service.php:655
 msgid "You have exceeded the number of allowed verification attempts."
 msgstr ""
 
-#: includes/class-wc-payments-webhook-processing-service.php:661
+#: includes/class-wc-payments-webhook-processing-service.php:659
 msgid "The payment was not able to be processed."
 msgstr ""
 
-#: includes/class-wc-payments.php:1093
+#: includes/class-wc-payments.php:1102
 #: includes/wc-payment-api/class-wc-payments-http.php:114
 #. translators: %1: original error message.
 msgid "Http request failed. Reason: %1$s"
 msgstr ""
 
-#: includes/class-wc-payments.php:1132
+#: includes/class-wc-payments.php:1141
 msgid "Contact information"
 msgstr ""
 
-#: includes/class-wc-payments.php:1139
+#: includes/class-wc-payments.php:1148
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:142
 msgid "Email address"
 msgstr ""
 
@@ -2181,35 +2188,35 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:979
+#: includes/wc-payment-api/class-wc-payments-api-client.php:980
 msgid "Max file size exceeded."
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:1344
+#: includes/wc-payment-api/class-wc-payments-api-client.php:1345
 msgid "Customer ID is required"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:1387
+#: includes/wc-payment-api/class-wc-payments-api-client.php:1388
 msgid "Product ID is required"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:1411
+#: includes/wc-payment-api/class-wc-payments-api-client.php:1412
 msgid "Price ID is required"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:1786
+#: includes/wc-payment-api/class-wc-payments-api-client.php:1787
 msgid "Address country and line 1 are required."
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:2035
+#: includes/wc-payment-api/class-wc-payments-api-client.php:2036
 msgid "Unable to encode body for request to WooCommerce Payments API."
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:2192
+#: includes/wc-payment-api/class-wc-payments-api-client.php:2193
 msgid "Unable to decode response from WooCommerce Payments API"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:2226
+#: includes/wc-payment-api/class-wc-payments-api-client.php:2227
 msgid "Server error. Please try again."
 msgstr ""
 
@@ -2386,7 +2393,7 @@ msgid ""
 "subscription%7$s.%8$s"
 msgstr ""
 
-#: includes/wc-payment-api/class-wc-payments-api-client.php:2231
+#: includes/wc-payment-api/class-wc-payments-api-client.php:2232
 #. translators: This is an error API response.
 msgctxt "API error message to throw as Exception"
 msgid "Error: %1$s"
@@ -2494,7 +2501,7 @@ msgstr ""
 
 #: dist/index.js:1
 #: client/additional-methods-setup/upe-preview-methods-selector/setup-complete-task.js:45
-#: client/connect-account-page/strings.js:60
+#: client/connect-account-page/strings.js:192
 msgid "Setup complete!"
 msgstr ""
 
@@ -3140,7 +3147,7 @@ msgstr ""
 #: dist/index.js:1
 #: dist/settings.js:1
 #: client/components/file-upload/index.tsx:42
-#: client/settings/express-checkout-settings/file-upload.tsx:147
+#: client/settings/express-checkout-settings/file-upload.tsx:145
 msgid "Remove file"
 msgstr ""
 
@@ -3332,6 +3339,7 @@ msgstr ""
 #: dist/platform-checkout.js:1
 #: dist/index.js:1
 #: client/components/platform-checkout/save-user/checkout-page-save-user.js:97
+#: client/connect-account-page/strings.js:143
 #: client/settings/phone-input/index.tsx:88
 msgid "Mobile phone number"
 msgstr ""
@@ -3475,6 +3483,11 @@ msgid "Accept payments and manage your business."
 msgstr ""
 
 #: dist/index.js:1
+#: client/connect-account-page/info-modal/index.tsx:60
+msgid "Got it"
+msgstr ""
+
+#: dist/index.js:1
 #: client/connect-account-page/modal/index.js:50
 msgid ""
 "It appears you're attempting to set up WooCommerce Payments from an "
@@ -3494,8 +3507,163 @@ msgid "Continue"
 msgstr ""
 
 #: dist/index.js:1
+#: client/connect-account-page/strings.js:102
+msgid ""
+"If you're setting up WooCommerce Payments for someone else, it's best to "
+"have that person complete the account creation process. As you can see "
+"above, we ask for very specific information about the business owner - and "
+"you might not have all the details at hand. It's not always possible to "
+"change account information once it's been saved, especially if the site "
+"accepts live transactions before the correct account information is entered."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:108
+msgid "Is my data safe with WooCommerce?"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:112
+msgid ""
+"We take every step required to safeguard your personal data. WooCommerce "
+"Payments is built in partnership with Stripe to store your data in a safe "
+"and secure manner."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:118
+msgid "How quickly will you confirm my identity and allow me to process payments?"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:122
+msgid ""
+"We'll do our best to work with Stripe to confirm your identity as quickly "
+"as we can. Typically, we'll confirm your application within a couple of "
+"days."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:128
+msgid ""
+"What information should I have at hand before I start the “Know Your "
+"Customer” process?"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:132
+msgid "Here's a brief list of the information you'll need to finish payment signup:"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:137
+msgid "Business owner info:"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:139
+msgid "Legal name"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:140
+msgid "Date of birth"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:141
+msgid "Home address"
+msgstr ""
+
+#: dist/index.js:1
+#: dist/settings.js:1
+#: client/connect-account-page/strings.js:144
+#: client/settings/deposits/index.js:241
+msgid "Bank account information"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:145
+msgid "Social Security number (SSN) or Taxpayer Identification Number"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:152
+msgid "Business info:"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:154
+msgid "Country where your business is based"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:158
+msgid "Type of businesss"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:159
+msgid "Industry"
+msgstr ""
+
+#: dist/index.js:1
 #: client/connect-account-page/strings.js:16
 msgid "Finish setup to enable credit card payments"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:160
+msgid "Company address"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:161
+msgid "Company phone number"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:162
+msgid "Company URL"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:167
+msgid "You’re only steps away from getting paid"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:173
+msgid "Create and connect your account"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:177
+msgid "To ensure safe and secure transactions, a WordPress.com account is required."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:184
+msgid "Provide a few business details"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:185
+msgid ""
+"Next we’ll ask you to verify your business and payment details to enable "
+"deposits."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:193
+msgid ""
+"You’re ready to start using the features and benefits of WooCommerce "
+"Payments."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:199
+msgid "By clicking “Finish setup”, you agree to the <a>Terms of Service</a>"
 msgstr ""
 
 #: dist/index.js:1
@@ -3505,6 +3673,16 @@ msgid ""
 "and payments in over 100 currencies. Track cash flow and manage recurring "
 "revenue directly from your store’s dashboard - with no setup costs or "
 "monthly fees."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:216
+msgid "We've temporarily paused new account creation."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:220
+msgid "We'll notify you when we resume!"
 msgstr ""
 
 #: dist/index.js:1
@@ -3521,52 +3699,64 @@ msgid "Accepted payment methods"
 msgstr ""
 
 #: dist/index.js:1
-#: client/connect-account-page/strings.js:35
-msgid "You’re only steps away from getting paid"
-msgstr ""
-
-#: dist/index.js:1
-#: client/connect-account-page/strings.js:41
-msgid "Create and connect your account"
-msgstr ""
-
-#: dist/index.js:1
-#: client/connect-account-page/strings.js:45
-msgid "To ensure safe and secure transactions, a WordPress.com account is required."
+#: client/connect-account-page/strings.js:37
+msgid ""
+"In order to receive payouts with <a>WooCommerce Payments</a>, you'll need "
+"to share business details to verify who you are."
 msgstr ""
 
 #: dist/index.js:1
 #: client/connect-account-page/strings.js:52
-msgid "Provide a few business details"
+msgid "Learn more about how to receive payouts."
 msgstr ""
 
 #: dist/index.js:1
-#: client/connect-account-page/strings.js:53
+#: client/connect-account-page/strings.js:59
+msgid "Verifying your information with WooCommerce Payments"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:64
+msgid "Why we ask for personal financial information"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:68
 msgid ""
-"Next we’ll ask you to verify your business and payment details to enable "
-"deposits."
+"As you continue the process of signing up for WooCommerce Payments, we'll "
+"ask for information about your business, including the business owner's "
+"date of birth and tax ID number. We know you may wonder why we ask for this "
+"information, and how it will be used. The “Know Your Customer” process, "
+"explained below, helps us provide a safe, ethical environment for all "
+"financial transactions."
 msgstr ""
 
 #: dist/index.js:1
-#: client/connect-account-page/strings.js:61
+#: client/connect-account-page/strings.js:74
+msgid "What is “Know Your Customer”?"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:78
 msgid ""
-"You’re ready to start using the features and benefits of WooCommerce "
-"Payments."
-msgstr ""
-
-#: dist/index.js:1
-#: client/connect-account-page/strings.js:67
-msgid "By clicking “Finish setup”, you agree to the <a>Terms of Service</a>"
+"“Know Your Customer” standards are used by banks and other financial "
+"institutions to confirm that customers are who they say they are. By "
+"confirming their customers' identities, banks and financial institutions "
+"can help keep transactions safe from fraud and other suspicious activities."
 msgstr ""
 
 #: dist/index.js:1
 #: client/connect-account-page/strings.js:84
-msgid "We've temporarily paused new account creation."
+msgid "Why do I have to share this information?"
 msgstr ""
 
 #: dist/index.js:1
 #: client/connect-account-page/strings.js:88
-msgid "We'll notify you when we resume!"
+msgid ""
+"Before we build a payment relationship with a customer, we ask for the "
+"information listed above to validate the business owner's identity and tax "
+"ID number, and to ensure that we can connect the listed bank account with "
+"the business itself."
 msgstr ""
 
 #: dist/index.js:1
@@ -3579,6 +3769,23 @@ msgstr ""
 #: client/subscription-product-onboarding/modal.js:41
 #: client/subscriptions-empty-state/index.js:86
 msgid "Finish setup"
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:92
+msgid ""
+"The ultimate goal of the “Know Your Customer” process is to help your "
+"business get up and running with payments as soon as possible while "
+"protecting your business and your customers. We follow the same regulations "
+"as other financial institutions so that we can ensure we operate in an "
+"ethical and trustworthy manner. We want to protect your business and the "
+"payments that we manage for you. The “Know Your Customer” process helps us "
+"protect you."
+msgstr ""
+
+#: dist/index.js:1
+#: client/connect-account-page/strings.js:98
+msgid "What else should I keep in mind while completing this process?"
 msgstr ""
 
 #: dist/multi-currency-switcher-block.js:1
@@ -4785,7 +4992,9 @@ msgstr ""
 #: dist/index.js:1
 #: dist/settings.js:1
 #: dist/multi-currency.js:1
+#: dist/multi-currency-analytics.js:1
 #: client/disputes/filters/config.ts:41
+#: client/multi-currency-analytics/index.js:137
 #: client/multi-currency-setup/tasks/add-currencies-task/index.js:286
 #: client/multi-currency/multi-currency-settings/enabled-currencies-list/modal.js:190
 #: client/transactions/filters/config.ts:57
@@ -5650,6 +5859,13 @@ msgid "Card readers"
 msgstr ""
 
 #: dist/multi-currency-analytics.js:1
+#: dist/index.js:1
+#: client/multi-currency-analytics/index.js:131
+#: client/transactions/filters/config.ts:126
+msgid "Customer currency"
+msgstr ""
+
+#: dist/multi-currency-analytics.js:1
 #: client/multi-currency-analytics/index.js:24
 msgid "Remove customer currency filter"
 msgstr ""
@@ -5682,13 +5898,6 @@ msgstr ""
 #: client/multi-currency-analytics/index.js:55
 #. Sentence fragment, logical, "Is Not" refers to searching for orders not matching a chosen currency.
 msgid "Is Not"
-msgstr ""
-
-#: dist/multi-currency-analytics.js:1
-#: dist/index.js:1
-#: client/multi-currency-analytics/index.js:97
-#: client/transactions/filters/config.ts:126
-msgid "Customer currency"
 msgstr ""
 
 #: dist/index.js:1
@@ -6594,12 +6803,12 @@ msgid "Things to do"
 msgstr ""
 
 #: dist/index.js:1
-#: client/overview/task-list/index.js:180
+#: client/overview/task-list/index.js:181
 msgid "Hide tasks"
 msgstr ""
 
 #: dist/index.js:1
-#: client/overview/task-list/index.js:181
+#: client/overview/task-list/index.js:182
 msgid "Show tasks"
 msgstr ""
 
@@ -7485,11 +7694,6 @@ msgid "Deposit schedule"
 msgstr ""
 
 #: dist/settings.js:1
-#: client/settings/deposits/index.js:241
-msgid "Bank account information"
-msgstr ""
-
-#: dist/settings.js:1
 #: client/settings/deposits/index.js:247
 msgid ""
 "Manage and update your deposit account information to receive payments and "
@@ -7717,17 +7921,17 @@ msgid "Payment methods that require the new payments experience:"
 msgstr ""
 
 #: dist/settings.js:1
-#: client/settings/express-checkout-settings/file-upload.tsx:141
+#: client/settings/express-checkout-settings/file-upload.tsx:139
 msgid "Upload custom logo"
 msgstr ""
 
 #: dist/settings.js:1
-#: client/settings/express-checkout-settings/file-upload.tsx:146
+#: client/settings/express-checkout-settings/file-upload.tsx:144
 msgid "Replace"
 msgstr ""
 
 #: dist/settings.js:1
-#: client/settings/express-checkout-settings/file-upload.tsx:148
+#: client/settings/express-checkout-settings/file-upload.tsx:146
 #: client/settings/express-checkout-settings/platform-checkout-settings.js:81
 msgid ""
 "Use a custom logo to WooPay if the one taken from your store doesn’t look "

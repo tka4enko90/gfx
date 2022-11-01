@@ -14,10 +14,12 @@
 
                         <div class="form-holder">
                             <?php the_content(); ?>
-                        </div>
-
-                        <div class="lost-password-link">
-                            <a href="<?php echo wp_lostpassword_url(); ?>">Lost your password?</a>
+                            <div class="lost-password-link">
+                                <a href="<?php echo wp_lostpassword_url(); ?>">Lost your password?</a>
+                            </div>
+                            <div class="have-an-account-text">
+                                Don't have an account? <a href="<?php echo wp_registration_url(); ?>">Sign Up</a>
+                            </div>
                         </div>
 
                         <?php $register_page_bottom_text = get_field('register_page_bottom_text'); ?>

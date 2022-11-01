@@ -1,3 +1,7 @@
+= 2.2.6 (2022-10-25) =
+* Added: Tested up WooCommerce 7.0.
+* Fixed: "Illegal mix of collations" error on Analytics queries when the table charset differs from the default server charset.
+
 = 2.2.5 (2022-09-01) =
 * Added: Tested up WooCommerce 6.9.
 * Fixed: Using remove_filter( "the_posts",... ) in a "the_posts" callback causes the following "the_posts" callback not to be executed.

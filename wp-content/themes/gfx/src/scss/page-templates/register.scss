@@ -22,14 +22,15 @@
   .form-col {
     width: 100%;
     max-width: 542px;
+    margin: 0 auto;
 
     @media (max-width: $md) {
       max-width: 100%;
     }
 
     & > h1 {
-      margin-bottom: 50px;
-
+      margin-bottom: 42px;
+      text-align: center;
       @media (max-width: $sm) {
         margin-bottom: 30px;
       }
@@ -43,9 +44,14 @@
       padding: 49px 54px 34px 49px;
       border-radius: 10px;
       background-color: rgba($dark-blue, 0.851);
-
+      position: relative;
       @media (max-width: $sm) {
         padding: 40px 30px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
       }
 
       .tml-indicator-wrap, .tml-indicator_hint-wrap, .tml-links {
@@ -54,21 +60,25 @@
 
       .tml-submit-wrap {
         text-align: center;
+        order: 2;
 
         button[type="submit"] {
-          min-width: 149px;
+          width: 100%;
         }
       }
+    }
+
+    .tml-rememberme-wrap {
+      order: 1;
+      margin-bottom: 40px;
     }
 
     .have-an-account-text, .lost-password-link {
       font-size: 18px;
       color: $text-color;
       line-height: 1.362;
-      margin-top: 30px;
-
+      text-align: center;
       @media (max-width: $xs) {
-        margin-top: 30px;
         font-size: 16px;
       }
 
@@ -81,10 +91,25 @@
         }
       }
     }
+    .lost-password-link {
+      text-align: right;
+      font-size: 14px;
+      margin-top: 0;
+      width: 155px;
+      position: absolute;
+      top: 258px;
+      right: 54px;
+      @media (max-width: $sm) {
+        right: 40px;
+        top: 253px;
+      }
+      @media (max-width: $xs) {
+        top: 239px;
+      }
+    }
 
     .description-text {
-      margin-top: 43px;
-      font-size: 14px;
+      margin-top: 20px;
       color: $text-color;
       line-height: 1.429;
 
@@ -94,13 +119,18 @@
 
       p {
         margin: 0;
+        text-align: center;
       }
 
       a {
-        color: $white;
-
+        color: $text-color;
+        padding: 0 5%;
+        line-height: 1;
+        &:first-child {
+          border-right: 1px solid $text-color;
+        }
         &:hover {
-          color: $red;
+          color: $white;
         }
       }
     }
@@ -118,6 +148,106 @@
       margin-left: 0;
     }
   }
+
+  .the_champ_outer_login_container {
+    order: 3;
+  }
+
+  .the_champ_error {
+    display: none;
+  }
+
+  .the_champ_social_login_title {
+    color: $text-color;
+    margin: 30px 0;
+    text-align: center;
+  }
+  ul.the_champ_login_ul { 
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 20px!important;
+    flex-wrap: wrap;
+    li {
+      width: calc((100% / 3) - 5px)!important;
+      margin: 0 0 10px!important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      @media (max-width: $xs) {
+        width: 100%!important;
+      }
+      &:nth-child(1) {
+        order: 3;
+      }
+      &:nth-child(2) {
+        order: 2;
+      }
+      &:nth-child(3) {
+        order: 1;
+      }
+      .theChampLogin { 
+        margin: 0;
+        width: 100%;
+        height: 50px;
+        border: 1px solid $text-color!important;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: $font-family-base;
+        font-size: 16px;
+        font-style: normal;
+        transition: border-color $transition;
+        .theChampLoginSvg {
+          width: 35px;
+          height: 35px;
+          margin-right: 4px;
+        }
+        &:hover {
+          border: 1px solid $white!important;
+        }
+      }
+      .theChampFacebookLogoContainer {
+        background-color: transparent;
+        border-radius: 0;
+        margin: 0;
+        width: auto;
+        height: auto;
+      }
+      .theChampFacebookBackground {
+        background-color: transparent!important;
+        &::after {
+          content: "Facebook";
+        }
+      }
+      .theChampYoutubeBackground {
+        background-color: transparent!important;
+        &::after {
+          content: "YouTube";
+        }
+      }
+      .theChampTwitchBackground {
+        background-color: transparent!important;
+        &::after {
+          content: "Twitch";
+        }
+      }
+      .theChampFacebookLoginSvg {
+        padding-top: 0;
+        background: url("../../img/icons-facebook.svg") center no-repeat;
+        background-size: auto 70%!important;
+     }
+      .theChampYoutubeLoginSvg {
+        background: url("../../img/icons-youtube-play.svg") center no-repeat;
+        background-size: auto 70%!important;
+      }
+      .theChampTwitchLoginSvg {
+        background: url("../../img/icons-twitch.svg") center no-repeat;
+        background-size: auto 70%!important;
+      }
+    }
+  }
 }
 
 .login-section {
@@ -127,5 +257,15 @@
     @media (max-width: $md) {
       padding-top: 60px;
     }
+  }
+
+  .the_champ_social_login_title::before {
+    content: "Or Log In ";
+  }
+}
+
+.register-section {
+  .the_champ_social_login_title::before {
+    content: "Or Sign Up ";
   }
 }
