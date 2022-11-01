@@ -87,6 +87,9 @@ if ( ! class_exists( 'WCPBC_Update_Exchange_Rates' ) ) :
 				$to_currency[] = $zone->get_currency();
 			}
 
+			// Log the info.
+			self::log( 'Begin update exchange rates.', 'info' );
+
 			$rates = self::get_exchange_rate_from_api( array_unique( $to_currency ) );
 
 			if ( $rates ) {

@@ -30,6 +30,7 @@ class Settings extends Modules {
 		$controller = Includes\Controller::get_instance();
 		add_filter( 'cky_admin_scripts_config', array( $controller, 'load_common_settings' ) );
 		add_action( 'cky_after_connect', array( $controller, 'delete_cache' ) );
+		$this->load_default();
 		$this->load_apis();
 	}
 
@@ -49,5 +50,19 @@ class Settings extends Modules {
 	 */
 	public function menu_page_template() {
 		echo '<div id="cky-app"></div>';
+	}
+
+	/**
+	 * Load default settings to the database.
+	 *
+	 * @return void
+	 */
+	public function load_default() {
+		if ( false === cky_first_time_install() ) {
+			return;
+		}
+		$settings = new \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings();
+		$default  = $settings->get_defaults();
+		$settings->update( $default );
 	}
 }

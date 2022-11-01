@@ -3,13 +3,13 @@
  * Plugin Name: WooCommerce Price Based on Country Pro Add-on
  * Plugin URI: https://www.pricebasedcountry.com/
  * Description: Supercharge Price Based on Country with professionals features
- * Version: 2.18.0
+ * Version: 2.20.1
  * Author: Oscar Gare
  * Author URI: https://www.pricebasedcountry.com/
  * Domain Path: /languages/
  * Text Domain: wc-price-based-country-pro
  * WC requires at least: 3.4
- * WC tested up to: 6.5
+ * WC tested up to: 6.9
  * License: GPLv2
  *
  * @package WCPBC

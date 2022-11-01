@@ -257,7 +257,13 @@ class WCPBC_Pricing_Zone_Pro extends WCPBC_Pricing_Zone {
 		$tax_totals = WC_Tax::calc_exclusive_tax( $price, $tax_rates );
 		$price_tax  = $price + array_sum( $tax_totals );
 
-		$rounded_price = $this->round_to_nearest( $price_tax );
+		$rounded_price = apply_filters(
+			'wc_price_based_country_round_price_after_taxes',
+			$this->round_to_nearest( $price_tax ),
+			$price_tax,
+			$this,
+			$product
+		);
 
 		$tax_totals = WC_Tax::calc_inclusive_tax( $rounded_price, $tax_rates );
 

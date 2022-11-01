@@ -1,5 +1,21 @@
 *** WooCommerce Price Based on Country Pro Add-on Changelog ***
 
+2022.10.04 - version 2.20.1
+* Added: Compatible with WooCommerce 6.9+.
+* Fixed: Product Add-ons compatibility - Sometimes, the "refresh price via AJAX" feature does not make visible the add-ons subtotal.
+
+2022.08.23 - version 2.20.0
+* Added: Compatible with WooCommerce 6.8+.
+* Added: New filter 'wc_price_based_country_round_price_after_taxes'.
+
+2022.06.23 - version 2.19.1
+* Fixed: PHP error on "Table Rate Shipping by WooCommerce" compatibility module.
+
+2022.06.21 - version 2.19.0
+* Added: Compatible with WooCommerce 6.6+.
+* Added: Compatibility with "Table Rate Shipping by WooCommerce".
+* Fixed: The "Ajax geolocation" overwrites the "price shortcode" when the user passes the zone as a shortcode parameter.
+
 2022.05.25 - version 2.18.0
 * Added: Compatible with WooCommerce 6.5+.
 * Added: Compatible with WordPress 6.0.

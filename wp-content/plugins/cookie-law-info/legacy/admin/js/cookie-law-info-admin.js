@@ -112,7 +112,9 @@
 									cli_notify_msg.success( cli_reset_settings_success_message );
 									setTimeout(
 										function(){
-											window.location.reload( true );
+											if( !!ckyConfigs.redirectUrl ) {
+												window.location.href = ckyConfigs.redirectUrl;
+											}
 										},
 										1000
 									);

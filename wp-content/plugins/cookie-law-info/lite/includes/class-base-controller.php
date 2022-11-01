@@ -281,7 +281,7 @@ abstract class Base_Controller {
 	protected function table_exist() {
 		global $wpdb;
 		foreach ( $this->get_tables() as $table_name ) {
-			if ( $table_name !== $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			if ( strtolower( $table_name ) !== strtolower( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$this->update_missing_tables( $table_name );
 				return false;
 			}

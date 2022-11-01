@@ -272,4 +272,13 @@ class Settings extends Store {
 	public function get_selected_languages() {
 		return cky_sanitize_text( $this->get( 'languages', 'selected' ) );
 	}
+
+	/**
+	 * First installed date of the plugin.
+	 *
+	 * @return string
+	 */
+	public function get_installed_date() {
+		return $this->get( 'site', 'installed' );
+	}
 }
