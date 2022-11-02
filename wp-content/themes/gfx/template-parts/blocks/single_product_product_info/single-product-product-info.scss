@@ -117,8 +117,20 @@
 
       .description {
         h5 {
-          margin-bottom: 30px;
+          margin-bottom: 25px;
           color: $white;
+        }
+
+        .badges {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          margin-bottom: 15px;
+          margin-right: -20px;
+          img {
+            margin-bottom: 10px;
+            margin-right: 20px;
+          }
         }
 
         .text {
