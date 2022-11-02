@@ -85,9 +85,18 @@ if ( isset( $product ) && $product instanceof WC_Product ) :
 						if ( empty( $product_image ) && empty( $attachment_ids ) ) :
 							?>
 							full-width<?php endif; ?>">
-							<?php if ( has_excerpt() ) : ?>
+							<?php if ( has_excerpt() ) : 
+								$badges = get_field( 'badges' );
+								?>
 								<div class="description">
 									<h5><?php _e( 'Description', 'gfx' ); ?></h5>
+									<?php if ($badges) : ?>
+										<div class="badges">
+											<?php foreach ($badges as $item ) : ?>
+												<?php echo wp_get_attachment_image ( $item['image_id'], 'gfx_small'); ?>
+											<?php endforeach; ?>
+										</div>
+									<?php endif; ?>
 									<div class="text">
 										<?php the_excerpt(); ?>
 									</div>
