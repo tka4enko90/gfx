@@ -3,7 +3,7 @@
 Plugin Name: Super Socializer
 Plugin URI: https://super-socializer-wordpress.heateor.com
 Description: A complete 360 degree solution to provide all the social features like Social Login, Social Commenting, Social Sharing, Social Media follow and more
-Version: 7.13.42
+Version: 7.13.43
 Author: Team Heateor
 Author URI: https://www.heateor.com
 Text Domain: super-socializer
@@ -11,7 +11,7 @@ Domain Path: /languages
 License: GPL2+
 */
 defined('ABSPATH') or die("Cheating........Uh!!");
-define('THE_CHAMP_SS_VERSION', '7.13.42');
+define('THE_CHAMP_SS_VERSION', '7.13.43');
 
 // attributes to allow in the HTML of the social share and social media follow icons
 $heateorSsDefaultAttribs = array(
@@ -2294,13 +2294,13 @@ function the_champ_frontend_scripts(){
 				global $heateor_fcm_options;
 				if(defined('HEATEOR_FB_COM_MOD_VERSION') && version_compare('1.2.4', HEATEOR_FB_COM_MOD_VERSION) < 0 && isset($heateor_fcm_options['gdpr_enable'])){
 					?>
-					<script type="text/javascript">var theChampFacebookCommentsOptinText = '<?php echo esc_js(str_replace($heateor_fcm_options['ppu_placeholder'], '<a href="'. $heateor_fcm_options['privacy_policy_url'] .'" target="_blank">'. $heateor_fcm_options['ppu_placeholder'] .'</a>', wp_strip_all_tags($heateor_fcm_options['privacy_policy_optin_text']))) ?>';</script>
+					<script type="text/javascript">var theChampFacebookCommentsOptinText = '<?php echo html_entity_decode(esc_js(str_replace($heateor_fcm_options['ppu_placeholder'], '<a href="'. $heateor_fcm_options['privacy_policy_url'] .'" target="_blank">'. $heateor_fcm_options['ppu_placeholder'] .'</a>', wp_strip_all_tags($heateor_fcm_options['privacy_policy_optin_text'])))) ?>';</script>
 					<?php
 				}
 				global $heateor_fcn_options;
 				if(defined('HEATEOR_FB_COM_NOT_VERSION') && version_compare('1.1.6', HEATEOR_FB_COM_NOT_VERSION) < 0 && isset($heateor_fcn_options['gdpr_enable'])){
 					?>
-					<script type="text/javascript">var theChampFacebookCommentsNotifierOptinText = '<?php echo esc_js(str_replace($heateor_fcn_options['ppu_placeholder'], '<a href="'. $heateor_fcn_options['privacy_policy_url'] .'" target="_blank">'. $heateor_fcn_options['ppu_placeholder'] .'</a>', wp_strip_all_tags($heateor_fcn_options['privacy_policy_optin_text']))) ?>';</script>
+					<script type="text/javascript">var theChampFacebookCommentsNotifierOptinText = '<?php echo html_entity_decode(esc_js(str_replace($heateor_fcn_options['ppu_placeholder'], '<a href="'. $heateor_fcn_options['privacy_policy_url'] .'" target="_blank">'. $heateor_fcn_options['ppu_placeholder'] .'</a>', wp_strip_all_tags($heateor_fcn_options['privacy_policy_optin_text'])))) ?>';</script>
 					<?php
 				}
 				?>
