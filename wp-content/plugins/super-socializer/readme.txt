@@ -3,8 +3,8 @@ Contributors: Heateor, kamirkhan, mohammadfarhankhan, the_champ, Hungarian Trans
 Donate link: https://www.heateor.com/donate?action=Super+Socializer
 Tags: social login, social share, line login, social commenting, social comments, social plugin, profile data, social analytics, online identity, social profile storage, single sign-on, social media follow, facebook login, twitter login, linkedin login, google login, vkontakte login, Windows Live Login, Microsoft Login, Wordpress login, Yahoo login, Spotify login, Dribbble login, Kakao login, Github login, Twitch login, Instagram login, dropbox login, foursquare login, disqus login, reddit login, amazon login, stackoverflow login, stack overflow login, discord login, mail.ru login, mailru login, mail ru login, gettr share, parler share, odnoklassniki login, yandex login, odnoklassniki, yandex, odnoklassniki login button, yandex login button, Rutube, Rutube share, Rutube sharing, youtube login
 Requires at least: 2.5.0
-Tested up to: 6.0.3
-Stable tag: 7.13.42
+Tested up to: 6.1
+Stable tag: 7.13.43
 License: GPLv2 or later
 
 The unique Social Plugin to let you integrate Social Login, Social Share, Social Comments and Social Media follow at your website
@@ -213,6 +213,10 @@ Yes, we can help you with it. Just drop an email at support[ at ]heateor[ dot ]c
 8. **Social Commenting**: Disqus Commenting selected
 
 == Changelog ==
+= 7.13.43 [2 November 2022] =
+* [Bugfix] Link to the Privacy Policy page was broken in the GDPR opt-in for Facebook Comments when using the add-ons <a href="https://www.heateor.com/facebook-comments-moderation/" target="_blank">Facebook Comments Moderation</a> and <a href="https://www.heateor.com/facebook-comments-notifier/" target="_blank">Facebook Comments Notifier</a>
+* [Improvement] This plugin doesn't save any cookies in the browsers of your website visitors
+
 = 7.13.42 [30 October 2022] =
 * [Improvement] Improved Youtube login icon
 
@@ -2528,3 +2532,7 @@ Yes, we can help you with it. Just drop an email at support[ at ]heateor[ dot ]c
 
 = 7.13.42 [30 October 2022] =
 * [Improvement] Improved Youtube login icon
+
+= 7.13.43 [2 November 2022] =
+* [Bugfix] Link to the Privacy Policy page was broken in the GDPR opt-in for Facebook Comments when using the add-ons <a href="https://www.heateor.com/facebook-comments-moderation/" target="_blank">Facebook Comments Moderation</a> and <a href="https://www.heateor.com/facebook-comments-notifier/" target="_blank">Facebook Comments Notifier</a>
+* [Improvement] This plugin doesn't save any cookies in the browsers of your website visitors
