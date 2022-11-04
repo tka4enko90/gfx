@@ -70,14 +70,14 @@
                 }
             });
         } else {
-            hasChildrenListItem.on('click', function () {
+            hasChildrenListItem.on('click', function (e) {
                 var self = $(this);
 
                 var link = self.find('a:first');
                 var subMenu = link.next('.sub-menu');
                 var subMenus = $('.header .menu > li.menu-item-has-children > .sub-menu');
 
-                if (subMenus.length && hasChildrenLink.length) {
+                if (subMenus.length && subMenu.is(':visible')) {
                     subMenus.slideUp(200);
                     hasChildrenLink.removeClass('opened');
                 }
@@ -85,6 +85,7 @@
                 if (subMenu.length && !subMenu.is(':visible') && link.length) {
                     link.addClass('opened');
                     subMenu.slideDown(200).css('display', 'flex');
+                    e.preventDefault();
                 }
             });
         }

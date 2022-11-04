@@ -271,7 +271,7 @@
           //background-color: $submenu-blue-bg;
           padding: 72px 40px 82px;
           z-index: 2;
-
+          overflow: hidden;
           @media (max-width: $md) {
             position: static;
             flex-direction: column;
@@ -387,7 +387,7 @@
       overflow: auto;
       display: none;
       position: absolute;
-      top: 65px;
+      top: 60px;
       left: 0;
       background-color: $submenu-blue-bg;
       width: 100%;
@@ -533,4 +533,146 @@ body.logged-in .header {
 }
 body:not(.logged-in) .header li.my-account {
   display: none;
+}
+
+
+.redesign-menu {
+  position: relative;
+  >ul.sub-menu {
+    border: 1px solid #0e1a2e;
+    background-color: $dark;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-direction: column;
+    width: 560px;
+    left: -40px!important;
+    right: auto!important;
+    padding: 0 20px 0!important;
+    @media (max-width: $md) {
+      width: 100%;
+      left: 0!important;
+      padding: 10px 0 0!important;
+    }
+    &::before {
+      display: none;
+    }
+    >li {
+      width: 60%;
+      padding: 10px 20px 10px 0;
+      @media (max-width: $md) {
+        width: 100%;
+        padding: 10px 0 0;
+
+      }
+      >a {
+        display: flex;
+        align-items: center;
+        @media (max-width: $md) {
+          width: 220px;
+          margin: 0 auto;
+        }
+        .wrap-icon {
+          width: 48px;
+          margin-right: 20px;
+        }
+        .menu-title {
+          display: flex;
+          flex-direction: column;
+          @media (max-width: $md) {
+            text-align: left;
+          }
+        }
+        .title {
+          color: $white;
+          transition: color $transition;
+        }
+        .description {
+          color: $text-color;
+          font-size: 12px;
+          max-width: 150px;
+        }
+        &:hover {
+          .title {
+            color: $red;
+          }
+        }
+      }
+      &.current-menu-item {
+        a {
+          .title {
+            color: $red;
+          }
+        }
+      }
+    }
+    .menu-sidebar {
+      position: absolute;
+      right: 0;
+      width: 40%;
+      top: 0;
+      bottom: 0;
+      background-color: $dark-blue;
+      @media (max-width: $md) {
+        position: static;
+        width: 100%;
+        border-radius: 10px;
+      }
+      >a {
+        display: none;
+      }
+      >ul.sub-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 20px 10px;
+        height: 100%;
+        li {
+          margin-bottom: 10px!important;
+          &.not-a-link {
+            margin-bottom: 16px;
+            >a {
+              color: $text-color!important;
+              cursor: default;
+              font-size: 14px;
+              &:hover {
+                color: $text-color!important;
+              }
+            }
+          }
+
+          &.shop-all-btn {
+            margin-bottom: 0!important;
+            >a {
+              color: $text-color;
+              font-size: 14px;
+              &:hover {
+                color: $white;
+              }
+            }
+            .wrap-icon {
+              order: 2;
+              margin-left: 10px;
+              margin-right: 0;
+            }
+          }
+        }
+        a {
+          display: flex;
+          align-items: center;
+          color: #c2ccdb;
+          @media (max-width: $md) {
+            justify-content: center;
+          }
+          &:hover {
+            color: $red;
+          }
+          .wrap-icon {
+            width: 17px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    
+  }
 }
