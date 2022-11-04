@@ -243,3 +243,38 @@ function remove_checkout_fields_for_free_cart( $fields ) {
 
     return $fields;
 }
+
+ // Add Menu Icons
+ add_filter('wp_nav_menu_objects', 'gfx_wp_nav_menu_objects', 10, 2);
+
+ function gfx_wp_nav_menu_objects( $items, $args ) {
+     
+     // loop
+     foreach( $items as &$item ) {
+         
+         // vars
+         $icon = get_field('menu_icon', $item);
+         $description = get_field('description', $item);
+ 
+         // append icon and description
+         if( $item->menu_item_parent > 0 ) {
+            if ( $description ) {
+                $title = '<div class="menu-title"><span class="title">' . $item->title . '</span><span class="description">' . $description . '</span></div>';
+            } else {
+                $title = $item->title;
+            }
+
+            if ( $icon ) {
+                $item->title = '<div class="wrap-icon"><img class="style-svg" src="'.$icon.'" alt="Icon"></div>'.$title;
+            } else {
+                $item->title = $title;
+            }
+             
+        }
+         
+    }
+     
+    // return
+    return $items;
+     
+ }
