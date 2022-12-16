@@ -1,11 +1,11 @@
 <?php
-	$background_id    = get_field( 'product_banner_background', 'option' );
-	$text             = get_field( 'product_promotional_text', 'option' );
-	$text_color       = get_field( 'product_promotional_text_color', 'option' );
-	$promo_code       = get_field( 'product_promotional_code', 'option' );
-	$promo_code_color = get_field( 'product_promo_code_color', 'option' );
-	$button_text      = get_field( 'product_promotional_button_text', 'option' );
-	$button_color     = get_field( 'product_promotional_button_color', 'option' );
+	$background_id    = !empty(get_field( 'product_banner_background' )) ? get_field( 'product_banner_background' ) : get_field( 'product_banner_background_option', 'option' );
+	$text             = !empty(get_field( 'product_promotional_text')) ? get_field( 'product_promotional_text') : get_field( 'product_promotional_text_option','option');
+	$text_color       = !empty(get_field( 'product_promotional_text_color' )) ? get_field( 'product_promotional_text_color' ) : get_field( 'product_promotional_text_color_option','option' );
+	$promo_code       = !empty(get_field( 'product_promotional_code')) ? get_field( 'product_promotional_code') : get_field( 'product_promotional_code_option', 'option');
+	$promo_code_color = !empty(get_field( 'product_promo_code_color')) ? get_field( 'product_promo_code_color') :  get_field( 'product_promo_code_color_option', 'option');
+	$button_text      = !empty(get_field( 'product_promotional_button_text')) ? get_field( 'product_promotional_button_text') : get_field( 'product_promotional_button_text_option', 'option');
+	$button_color     = !empty(get_field( 'product_promotional_button_color')) ? get_field( 'product_promotional_button_color') : get_field( 'product_promotional_button_color_option', 'option');
 ?>
 
 <?php
