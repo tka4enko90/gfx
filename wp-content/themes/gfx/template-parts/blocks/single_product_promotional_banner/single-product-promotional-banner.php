@@ -17,7 +17,7 @@ if ( $text && $promo_code && $button_text ) :
 	<div class="single-product-promotional-banner">
 		<?php if ( $background_id ) : ?>
 			<div class="single-product-promotional-banner-overlay">
-				<?php echo wp_get_attachment_image( $background_id, 'gfx_product_banner' ); ?>
+				<?php echo wp_get_attachment_image( $background_id, 'gfx_wc_gallery_large' ); ?>
 			</div>
 		<?php endif; ?>
 
